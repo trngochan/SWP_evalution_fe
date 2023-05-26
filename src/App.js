@@ -4,6 +4,7 @@ import LoginStudent from './pages/logins/LoginStudent';
 import InforStudent from './pages/home/InforStudent';
 import InforTeacher from './pages/home/InforTeacher';
 import LoginTeacher from './pages/logins/LoginTeacher';
+import LoginAdmin from './pages/logins/LoginAdmin';
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/loginstudent" element={<LoginStudent />} />
           <Route path="/loginteacher" element={<LoginTeacher />} />
-          {/* <Route path="/loginadmin" element={<LoginStudent />} /> */}
+          <Route path="/loginadmin" element={<LoginAdmin />} />
           <Route path="/student" element={<InforStudent />} />
           <Route path="/teacher" element={<InforTeacher />} />  
         </Routes>

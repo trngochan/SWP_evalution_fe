@@ -1,0 +1,26 @@
+.wrapper {
+    display: flex;
+    justify-content: right;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #ccc;
+    align-items: baseline;
+}
+
+.name {
+    font-size: 1.6rem;
+    margin-bottom: 0;
+}
+
+.btn {
+    margin-left: 20px;
+    padding: 5px 12px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(102, 201, 130);
+    color: white;
+    font-weight: 600px;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
