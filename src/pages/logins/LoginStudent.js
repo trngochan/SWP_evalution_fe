@@ -29,6 +29,7 @@ const LoginStudent = () => {
         console.log(data);
         if (data.data.length > 0) {
           setCookie("token", data.token, { path: "/" });
+          console.log(data);
           navigate("/student");
         }
       })

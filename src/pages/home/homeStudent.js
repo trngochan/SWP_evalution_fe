@@ -24,7 +24,6 @@ function InforStudent() {
   return (
     <div>
       <Header/>
-      
       <Infor name={username}/>
     </div>
   );
