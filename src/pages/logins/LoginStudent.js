@@ -39,35 +39,39 @@ const LoginStudent = () => {
   };
 
   return (
-    <div className={cx("wrapper")}>
-      <Header/>
-      <div className={cx('content')}>
-        <h2>Login for Student</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>username:</label>
+    <>
+    <Header />
+    <div className={cx('login')}>
+      <form onSubmit={handleSubmit} className={cx('form')}>
+        <h2 className={cx('heading')}>Login</h2>
+          <div className={cx('form-group')}>
+            <label className={cx('form-label')}>Username:</label>
             <input
-              className={cx('input')}
+              className={cx('form-control')}
+              placeholder="VD: email@gmail.com"
               type="text"
               value={username}
               onChange={(e) => setusername(e.target.value)}
               name="username"
             />
+            <span className={cx('form-message')}></span>
           </div>
-          <div>
-            <label>Password:</label>
+          <div className={cx('form-group')}>
+            <label className={cx('form-label')}>Password:</label>
             <input
-              className={cx('input')}
+              className={cx('form-control')}
+              placeholder="Nhập mật khẩu"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               name="username"
             />
+            <span className={cx('form-message')}></span>
           </div>
-          <button className="submit" type="submit">Login</button>
-        </form>
-      </div>
+          <button type="submit" className={cx('form-submit')}>Login</button>
+      </form>
     </div>
+    </>
   );
 };
 

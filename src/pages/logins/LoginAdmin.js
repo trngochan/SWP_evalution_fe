@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import FormLogin from "~/components/formLogin";
+
+import classNames from "classnames/bind";
+import styles from "./login.module.scss";
+import Header from "~/components/layouts/header"; 
+
+const cx = classNames.bind(styles);
 
 function LoginAdmin() {
   const [username, setusername] = useState("");
@@ -30,7 +35,35 @@ function LoginAdmin() {
       });
   }
   return (
-  <FormLogin></FormLogin>
+    <div className={cx("wrapper")}>
+      <Header/>
+      <div className={cx('content')}>
+        <h2>Login for Student</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>username:</label>
+            <input
+              className={cx('input')}
+              type="text"
+              value={username}
+              onChange={(e) => setusername(e.target.value)}
+              name="username"
+            />
+          </div>
+          <div>
+            <label>Password:</label>
+            <input
+              className={cx('input')}
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              name="username"
+            />
+          </div>
+          <button className="submit" type="submit">Login</button>
+        </form>
+      </div>
+    </div>
   );
 }
 
