@@ -48,7 +48,7 @@ const LoginStudent = () => {
             <label className={cx('form-label')}>Username:</label>
             <input
               className={cx('form-control')}
-              placeholder="VD: email@gmail.com"
+              placeholder="EX: email@gmail.com"
               type="text"
               value={username}
               onChange={(e) => setusername(e.target.value)}
@@ -60,7 +60,7 @@ const LoginStudent = () => {
             <label className={cx('form-label')}>Password:</label>
             <input
               className={cx('form-control')}
-              placeholder="Nhập mật khẩu"
+              placeholder="Enter password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

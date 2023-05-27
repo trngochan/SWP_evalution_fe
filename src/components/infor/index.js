@@ -16,7 +16,8 @@ function Infor({ name }) {
 
   return (
     <div className={cx("wrapper")}>
-        <button className={cx('btn')}><p className={cx("name")}>{name}</p></button>
+        {/* <button className={cx('btn')}><p className={cx("name")}>{name}</p></button> */}
+        <button className={cx('btn')}><p className={cx("name")}>Minh Tuan</p></button>
       <button onClick={handleLogout} className={cx('btn',"btn-primary", "btn-logout")}>Logout</button>
     </div>
   );

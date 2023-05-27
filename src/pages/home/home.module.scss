@@ -15,3 +15,23 @@
     margin-top: 100px;
 }
 
+.btn {
+  background-color: transparent;
+  border-color: transparent;
+  color:  rgb(255, 111, 59);
+
+  &:hover {
+    color:  rgb(243, 75, 14);
+  }
+}
+
+.col {
+  width: 300px;
+}
+
+.pass {
+  color: rgb(18, 122, 18);
+  font-weight: 600;
+}
+  
+
