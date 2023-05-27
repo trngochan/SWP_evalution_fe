@@ -37,10 +37,10 @@ function HomeTeacher() {
     <div class="row mt-3">
     <div class="col-2">
     <select class="form-select" aria-label="Default select example">
-      <option selected>Open this select menu</option>
-      <option value="1">Teacher 1</option>
-      <option value="2">Teacher 2</option>
-      <option value="3">Teacher 3</option>
+      <option selected>Select semester</option>
+      <option value="1">Semester 1</option>
+      <option value="2">Semester 2</option>
+      <option value="3">Semester 3</option>
     </select>
     </div>
     <div class="col-10">

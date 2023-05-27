@@ -6,6 +6,7 @@ import Header from "~/components/layouts/header";
 
 import classNames from 'classnames/bind';
 import styles from './home.module.scss'
+import Footer from "~/components/layouts/footer";
 
 const cx = classNames.bind(styles);
 
@@ -34,8 +35,9 @@ function InforStudent() {
         <thead>
           <tr>
             <th scope="col">TEACHER</th>
-            <th scope="col">VALUE</th>
-            <th scope="col">VALUE</th>
+            <th scope="col">PRESENTATION</th>
+            <th scope="col">DEMO</th>
+            <th scope="col">ANSWER</th>
             <th scope="col">TOTAL</th>
           </tr>
         </thead>
@@ -45,11 +47,13 @@ function InforStudent() {
             <td>5.0</td>
             <td>8.8</td>
             <td>7.5</td>
+            <td>7.5</td>
           </tr>
           <tr>
             <th scope="row">Teacher 1</th>
             <td>5.0</td>
             <td>8.8</td>
+            <td>7.5</td>
             <td>7.5</td>
           </tr>
         </tbody>
@@ -69,6 +73,7 @@ function InforStudent() {
           </tr>
         </tbody>
       </table>
+      <Footer />
     </div>
   );
 }
