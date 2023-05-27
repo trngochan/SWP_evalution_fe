@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function InforTeacher() {
+function HomeTeacher() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
@@ -23,4 +23,4 @@ function InforTeacher() {
   return <h1>Hello teacher</h1>;
 }
 
-export default InforTeacher;
+export default HomeTeacher;

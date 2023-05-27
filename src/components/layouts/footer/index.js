@@ -26,7 +26,7 @@ function Footer() {
                         </ul>
                     </div>
                     <div className={cx('col-12 copyright mt-3')}>
-                        <p class={cx('float-left')}>
+                        <p className={cx('float-left')}>
                             <a href="#">Back to top</a>
                         </p>
                         <p className={cx('text-right text-muted')}>created with <i className={cx('fa fa-heart')}></i> by <i>Team08</i></p>
