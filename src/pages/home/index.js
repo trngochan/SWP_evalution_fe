@@ -2,7 +2,7 @@ import React from "react";
 import Header from "~/components/layouts/header";
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
-import Loginbutton from "~/components/Link";
+import LoginButton from "~/components/Link";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -18,13 +18,13 @@ function Home() {
         <Container>
           <Row className={cx("links")}>
             <Col>
-              <Loginbutton to={"/loginstudent"}>Login for Student</Loginbutton>
+              <LoginButton to={"/loginstudent"}>Login for Student</LoginButton>
             </Col>
             <Col>
-              <Loginbutton to={"/loginteacher"}>Login for Teacher</Loginbutton>
+              <LoginButton to={"/loginteacher"}>Login for Teacher</LoginButton>
             </Col>
             <Col>
-              <Loginbutton to={"/loginadmin"}>Login for Admin</Loginbutton>
+              <LoginButton to={"/loginadmin"}>Login for Admin</LoginButton>
             </Col>
             <p className={cx("separate")}></p>
           </Row>

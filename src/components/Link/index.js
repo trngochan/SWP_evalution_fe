@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles); 
 
-function Loginbutton({children, to}) {
+function LoginButton({children, to}) {
     return ( 
         <Link className={cx("btn")} to= {to}>
             <button className={cx('btn-list')}>
@@ -14,4 +14,4 @@ function Loginbutton({children, to}) {
     );
 }
 
-export default Loginbutton;
+export default LoginButton;
