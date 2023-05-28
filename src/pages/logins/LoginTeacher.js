@@ -14,7 +14,7 @@ function LoginTeacher() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const [cookies, setCookie, removeCookie] = useCookies("token");
+  const [cookies, setCookie, removeCookie] = useCookies();
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -25,13 +25,12 @@ function LoginTeacher() {
       })
       .then((res) => res.data)
       .then((data) => {
-        if (data.data.length > 0) {
           setCookie("token", data.token, { path: "/" });
-        }
-        if (data.data.length > 0) navigate("/teacher");
+          setCookie("user", data.data[0], { path: "/" });
+          navigate("/teacher");
       })
       .catch((err) => {
-        console.log(err);
+        navigate('/')
       });
   }
   return (

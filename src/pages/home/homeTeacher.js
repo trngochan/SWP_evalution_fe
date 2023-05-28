@@ -1,80 +1,89 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
 import Footer from "~/components/layouts/footer";
 
-import classNames from 'classnames/bind';
-import styles from './home.module.scss'
+import classNames from "classnames/bind";
+import styles from "./home.module.scss";
+import { useCookies } from "react-cookie";
 
-const cx = classNames.bind(styles); 
+const cx = classNames.bind(styles);
 
 function HomeTeacher() {
-  const [username, setUsername] = useState("");
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies();
+  var EvaluationList = [];
+  const [evaluationList, setevaluationList] = useState([]);
 
-  axios
-    .get("http://localhost:9000/getuser", { withCredentials: true })
-    .then((res) => res.data)
-    .then((data) => {
-      console.log(data);
-      if (data) {
-        setUsername(data.username);
-      } else {
-        navigate("/");
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (!cookies.user) navigate("/");
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:9000/evalution/${cookies.user.id}/teacher`, {
+        withCredentials: true,
+      })
+      .then((res) => res.data)
+      .then((data) => {
+        setevaluationList(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  function handleShowStd() {
+    navigate(`/teache`)
+  }
+
   return (
-  <>
-    <Header />
-    <Infor />
-    <div class="row mt-3">
-    <div class="col-2">
-    <select class="form-select" aria-label="Default select example">
-      <option selected>Select semester</option>
-      <option value="1">Semester 1</option>
-      <option value="2">Semester 2</option>
-      <option value="3">Semester 3</option>
-    </select>
-    </div>
-    <div class="col-10">
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Phòng</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>
-        <button className={cx('btn')}>Phòng số 1</button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>
-      <button className={cx('btn')}>Phòng số 2</button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>
-        <button className={cx('btn')}>Phòng số 3</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-  </div>
-    <Footer />
-  </>
+    <>
+      <Header />
+      <Infor name={cookies.user.username} />
+      <div className="row mt-3">
+        <div className="col-2">
+          <select
+            className="form-select"
+            aria-label="Default select example"
+            defaultValue={""}
+          >
+            <option value="0">Select semester</option>
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+          </select>
+        </div>
+        <div className="col-10">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Room</th>
+                <th scope="col">Time start</th>
+                <th scope="col">Time end</th>
+                <th scope="col">Semester ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              {evaluationList.map((item, index) => (
+                <tr key={index}>
+                  <td > <a onClick={handleShowStd}>{item.Name}</a> </td>
+                  <td>{item.Room} </td>
+                  <td>{item.EndTime} </td>
+                  <td>{item.StartTime} </td>
+                  <td>{item.SemesterId} </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 

@@ -14,7 +14,7 @@ const LoginStudent = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const [cookies, setCookie, removeCookie] = useCookies("token");
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,10 +26,9 @@ const LoginStudent = () => {
       })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         if (data.data.length > 0) {
           setCookie("token", data.token, { path: "/" });
-          console.log(data);
+          setCookie("user", data.data[0], { path: "/"});
           navigate("/student");
         }
       })

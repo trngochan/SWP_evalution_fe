@@ -14,7 +14,7 @@ function LoginAdmin() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const [cookies, setCookie, removeCookie] = useCookies("token");
+  const [cookies, setCookie, removeCookie] = useCookies();
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -26,12 +26,13 @@ function LoginAdmin() {
       .then((data) => {
         if(data.data.length > 0) {
           setCookie('token', data.token, {path: '/'});
+          setCookie('user', data.data[0], {path: '/'});
         }
-        if(data.data.length > 0) navigate('/student')
         
       })
       .catch((err) => {
         console.log(err);
+        navigate('/')
       });
   }
   return (

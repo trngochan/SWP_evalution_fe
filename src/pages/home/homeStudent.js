@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
+import { useCookies } from "react-cookie";
 
 import classNames from 'classnames/bind';
 import styles from './home.module.scss'
@@ -11,27 +12,17 @@ import Footer from "~/components/layouts/footer";
 const cx = classNames.bind(styles);
 
 function InforStudent() {
-  const [username, setUsername] = useState("");
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies();
 
-  axios
-    .get("http://localhost:9000/getuser", { withCredentials: true })
-    .then((res) => res.data)
-    .then((data) => {
-      console.log(data);
-      if (data) {
-        setUsername(data.username);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      // navigate("/");
-    });
+  if(!cookies.user) {
+    navigate('/');
+  } 
   return (
     <div>
       <Header/>
-      <Infor name={username}/>
-      <table class="table mt-3">
+      <Infor name={cookies.user.username}/>
+      <table className="table mt-3">
         <thead>
           <tr>
             <th scope="col">TEACHER</th>
@@ -59,7 +50,7 @@ function InforStudent() {
         </tbody>
       </table>
 
-      <table class="table mt-5">
+      <table className="table mt-5">
         <thead>
           <tr>
             <th scope="col" className={cx('col')}>COURSE TOTAL	AVERAGE</th>
