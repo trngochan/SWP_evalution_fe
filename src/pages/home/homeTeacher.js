@@ -9,6 +9,7 @@ import Footer from "~/components/layouts/footer";
 
 import classNames from 'classnames/bind';
 import styles from './home.module.scss'
+import Button from "~/components/button";
 
 const cx = classNames.bind(styles); 
 
@@ -33,7 +34,7 @@ function HomeTeacher() {
   return (
   <>
     <Header />
-    <Infor />
+    {/* <Infor /> */}
     <div class="row mt-3">
     <div class="col-2">
     <select class="form-select" aria-label="Default select example">
@@ -54,19 +55,19 @@ function HomeTeacher() {
     <tr>
       <th scope="row">1</th>
       <td>
-        <button className={cx('btn')}>Phòng số 1</button>
+        <Button primary small to={'/evaluation'}>Hội đồng số 1</Button>
       </td>
     </tr>
     <tr>
       <th scope="row">2</th>
       <td>
-      <button className={cx('btn')}>Phòng số 2</button>
+      <Button primary small to={'/evaluation'}>Hội đồng số 2</Button>
       </td>
     </tr>
     <tr>
       <th scope="row">3</th>
       <td>
-        <button className={cx('btn')}>Phòng số 3</button>
+      <Button primary small to={'/evaluation'}>Hội đồng số 3</Button>
       </td>
     </tr>
   </tbody>

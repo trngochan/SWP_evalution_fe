@@ -21,7 +21,7 @@ function InforStudent() {
   return (
     <div>
       <Header/>
-      <Infor name={cookies.user.username}/>
+      {/* <Infor name={cookies.user?.username}/> */}
       <table className="table mt-3">
         <thead>
           <tr>

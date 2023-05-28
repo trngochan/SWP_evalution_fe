@@ -6,6 +6,8 @@ import HomeTeacher from './pages/home/homeTeacher';
 import LoginTeacher from './pages/logins/LoginTeacher';
 import LoginAdmin from './pages/logins/LoginAdmin';
 import HomeAdmin from './pages/home/homeAdmin';
+import Evaluation from './pages/evaluation';
+import TeacherBoardScore from './pages/boardScore';
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
           <Route path="/student" element={<HomeStudent />} />
           <Route path="/teacher" element={<HomeTeacher />} />  
           <Route path="/admin" element={<HomeAdmin />} />  
+          <Route path="/evaluation" element={<Evaluation />} />  
+          <Route path="/teacherboardscore" element={<TeacherBoardScore />} />  
         </Routes>
       </Router>
     </div>
