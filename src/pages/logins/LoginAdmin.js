@@ -27,6 +27,7 @@ function LoginAdmin() {
         if(data.data.length > 0) {
           setCookie('token', data.token, {path: '/'});
           setCookie('user', data.data[0], {path: '/'});
+          navigate("/admin");
         }
         
       })

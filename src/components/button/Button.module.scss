@@ -8,16 +8,25 @@
     font-size: 1.6rem;
     color: white;
     font-weight: 500;
-    background-color: rgb(255, 111, 59);
     border: 1px solid transparent;
+    background-color: transparent;
+    color: var(--primary);
     user-select: none; 
 
     + .wrapper {
-        margin-left: 8px; 
+        border-top:1px solid rgba(109, 107, 107,0.03);
+    }
+    &:hover {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(152, 147, 146);
     }
 
-    &:hover {
-        border-color: var(--primary);
-        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(242, 90, 35);
-    }
+    
 }    
+
+.primary {
+    background-color: rgb(255, 111, 59);
+}
+
+.active {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(152, 147, 146);
+}
