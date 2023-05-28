@@ -8,10 +8,10 @@ import styles from "../logins/login.module.scss";
 
 const cx = classNames.bind(styles);
 
-function AddStudentList() {
+function AddTeacherList() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
+  const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [role, setRole] = useState("");
@@ -41,29 +41,17 @@ function AddStudentList() {
     <>
     <div className={cx('login')}>
       <form onSubmit={handleSubmit} className={cx('form')}>
-        <h2 className={cx('heading')}>Add Student</h2>
-          <div className={cx('form-group')}>
-            <label className={cx('form-label')}>Code:</label>
-            <input
-              className={cx('form-control')}
-              placeholder="Enter Code"
-              type="text"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              name="username"
-            />
-          </div>
+        <h2 className={cx('heading')}>Add Teacher</h2>
           <div className={cx('form-group')}>
             <label className={cx('form-label')}>Name:</label>
             <input
               className={cx('form-control')}
               placeholder="Enter Name"
-              type="password"
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               name="username"
             />
-            <span className={cx('form-message')}></span>
           </div>
           <div className={cx('form-group')}>
             <label className={cx('form-label')}>Birthday:</label>
@@ -74,8 +62,19 @@ function AddStudentList() {
               onChange={(e) => setPassword(e.target.value)}
               name="username"
             />
-            <span className={cx('form-message')}></span>
           </div>
+          <div className={cx('form-group')}>
+            <label className={cx('form-label')}>Phone Number:</label>
+            <input
+              className={cx('form-control')}
+              placeholder="Enter Name"
+              type="number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              name="username"
+            />
+          </div>
+          
           <div className={cx('form-group')}>
             <label className={cx('form-label')}>Address:</label>
             <input
@@ -86,7 +85,6 @@ function AddStudentList() {
               onChange={(e) => setAddress(e.target.value)}
               name="username"
             />
-            <span className={cx('form-message')}></span>
           </div>
           <div className={cx('form-group')}>
             <label className={cx('form-label')}>Username:</label>
@@ -98,7 +96,6 @@ function AddStudentList() {
               onChange={(e) => setUsername(e.target.value)}
               name="username"
             />
-            <span className={cx('form-message')}></span>
           </div>
           <div className={cx('form-group')}>
             <label className={cx('form-label')}>Password:</label>
@@ -110,7 +107,6 @@ function AddStudentList() {
               onChange={(e) => setPassword(e.target.value)}
               name="username"
             />
-            <span className={cx('form-message')}></span>
           </div>
           <div className={cx('form-group')}>
             <label className={cx('form-label')}>Role:</label>
@@ -122,7 +118,6 @@ function AddStudentList() {
               onChange={(e) => setRole(e.target.value)}
               name="username"
             />
-            <span className={cx('form-message')}></span>
           </div>
           <button type="submit" className={cx('form-submit')}>Add</button>
       </form>
@@ -131,4 +126,4 @@ function AddStudentList() {
   );
 }
 
-export default AddStudentList;
+export default AddTeacherList;

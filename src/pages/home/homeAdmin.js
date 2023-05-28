@@ -6,6 +6,7 @@ import classNames from "classnames/bind";
 import styles from "./home.module.scss";
 import { useState } from "react";
 import AddStudentList from "../create/AddStudentList";
+import AddTeacherList from "../create/AddTeacherList";
 
 const cx = classNames.bind(styles);
 
@@ -28,7 +29,8 @@ function HomeAdmin() {
             </div>
           </div>
           <div className={cx("col-9")}>
-            {show == "addstd" && <AddStudentList/>}
+            {show === "addstd" && <AddStudentList/>}
+            {show === "addteach" && <AddTeacherList/>}
           </div>
         </div>
       </div>

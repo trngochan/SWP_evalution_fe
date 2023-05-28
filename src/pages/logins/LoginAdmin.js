@@ -52,7 +52,6 @@ function LoginAdmin() {
               onChange={(e) => setusername(e.target.value)}
               name="username"
             />
-            <span className={cx('form-message')}></span>
           </div>
           <div className={cx('form-group')}>
             <label className={cx('form-label')}>Password:</label>
