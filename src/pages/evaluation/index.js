@@ -10,7 +10,6 @@ const cx = classNames.bind(styles);
 
 function Evaluation() {
     const projects = ["Bán máy tính", "Bán điện thoại", "Quản lý nhân sự", "Web chấm điểm"];
-    // const evaluation = ["hội đồng 1", "hội đồng 2",]
     return (
         <>
         <Header />
