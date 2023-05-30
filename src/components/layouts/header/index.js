@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 function Header() {
   return (
     <div className={cx("container")}>
-        <img className={cx("logo")} alt="FPT" src={fptImage} />
+        <img className={cx("logo")} alt="FPT" src={fptImage}/>
         <h1 className={cx("title")}>FPT evalution project</h1>
     </div>
   );

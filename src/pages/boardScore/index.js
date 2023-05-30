@@ -1,7 +1,8 @@
 import { useState } from "react";
-import styles from './boardscore.module.scss';
+import styles from './boardScore.module.scss';
 import classNames from "classnames/bind";
 import Header from "~/components/layouts/header";
+import Footer from "~/components/layouts/footer";
 
 const cx = classNames.bind(styles);
 
@@ -68,6 +69,7 @@ function TeacherBoardScore() {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
