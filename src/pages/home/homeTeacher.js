@@ -15,15 +15,14 @@ const cx = classNames.bind(styles);
 
 function HomeTeacher() {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies();
-  var EvaluationList = [];
+  const [cookies, setCookie] = useCookies();
   const [evaluationList, setevaluationList] = useState([]);
 
   if (!cookies.user) navigate("/");
 
   useEffect(() => {
     axios
-      .get(`http://localhost:9000/evalution/${cookies.user.id}/teacher`, {
+      .get(`/evalution/${cookies.user.id}/teacher`, {
         withCredentials: true,
       })
       .then((res) => res.data)
@@ -36,8 +35,11 @@ function HomeTeacher() {
       });
   }, []);
 
-  function handleShowStd() {
-    navigate(`/teacherboardscore`)
+  function handleShowStd(avaluationId, templateId, lectureinboardID) {
+    setCookie("evaluation_id", avaluationId);
+    setCookie("template_id", templateId);
+    setCookie("lectureinboard_id", lectureinboardID);
+    navigate(`/evaluation`)
   }
 
   return (
@@ -71,7 +73,7 @@ function HomeTeacher() {
             <tbody>
               {evaluationList.map((item, index) => (
                 <tr key={index}>
-                  <td > <a onClick={handleShowStd}>{item.Name}</a> </td>
+                  <td onClick={()=> handleShowStd(item.Id, item.TemplateId, item.lectureinboardID)}> {item.Name}</td>
                   <td>{item.Room} </td>
                   <td>{item.EndTime} </td>
                   <td>{item.StartTime} </td>

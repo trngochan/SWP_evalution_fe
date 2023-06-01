@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
 import { useCookies } from "react-cookie";
@@ -12,16 +11,17 @@ import Footer from "~/components/layouts/footer";
 const cx = classNames.bind(styles);
 
 function InforStudent() {
-  const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies();
-
+  const [cookies] = useCookies();
   if(!cookies.user) {
-    navigate('/');
+    window.location.href = '/';
   } 
+
+
+  
   return (
     <div>
       <Header/>
-      {/* <Infor name={cookies.user?.username}/> */}
+      <Infor name={cookies.user?.username}/>
       <table className="table mt-3">
         <thead>
           <tr>

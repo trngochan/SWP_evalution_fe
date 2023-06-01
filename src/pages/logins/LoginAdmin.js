@@ -19,7 +19,7 @@ function LoginAdmin() {
     event.preventDefault();
 
     axios
-      .post("http://localhost:9000/loginadmin", {
+      .post("/loginadmin", {
         username,password
       })
       .then((res) => res.data)

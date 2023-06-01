@@ -37,7 +37,7 @@ function AddStudentList() {
     }),
     onSubmit: (values) => {
       axios
-        .post("http://localhost:9000/student/add", values)
+        .post("/student/add", values)
         .then((res) => res.data)
         .then((data) => {
           // navigate("/admin");

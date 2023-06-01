@@ -20,7 +20,7 @@ const LoginStudent = () => {
     e.preventDefault();
     // Xử lý đăng nhập với username và password ở đây
     axios
-      .post("http://localhost:9000/loginstudent", {
+      .post("/loginstudent", {
         username,
         password,
       })
