@@ -19,7 +19,7 @@ function LoginTeacher() {
     event.preventDefault();
 
     axios
-      .post("http://localhost:9000/loginteacher", {
+      .post("/loginteacher", {
         username,
         password,
       })
@@ -30,6 +30,7 @@ function LoginTeacher() {
           navigate("/teacher");
       })
       .catch((err) => {
+        console.log(err);
         navigate('/')
       });
   }

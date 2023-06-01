@@ -22,7 +22,7 @@ function AddTeacherList() {
   //   event.preventDefault();
 
   //   axios
-  //     .post("http://localhost:9000/loginteacher", {
+  //     .post("/loginteacher", {
   //       username,
   //       password,
   //     })
