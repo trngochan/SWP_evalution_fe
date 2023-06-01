@@ -1,10 +1,10 @@
 import React from "react";
 import classNames from "classnames/bind";
+import { Link } from "react-router-dom";
 
 import styles from './evaluation.module.scss';
 import Footer from "~/components/layouts/footer";
 import Header from "~/components/layouts/header";
-import Button from "~/components/button";
 
 const cx = classNames.bind(styles);
 
@@ -22,9 +22,7 @@ function Evaluation() {
                 <ul>
                     {projects.map((project, index) => (
                     <li key={index}>
-                        <Button small to={"/teacherboardscore"}>
-                            {project}
-                        </Button>
+                        <Link classNames={cx('project')} to={"/teacherboardscore"}>{project}</Link>
                     </li>  
                     ))}
                 </ul>

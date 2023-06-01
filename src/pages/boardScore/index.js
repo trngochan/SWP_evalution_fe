@@ -3,6 +3,7 @@ import styles from "./boardscore.module.scss";
 import classNames from "classnames/bind";
 import Header from "~/components/layouts/header";
 import Button from "~/components/button";
+import Footer from "~/components/layouts/footer";
 
 const cx = classNames.bind(styles);
 
@@ -16,7 +17,7 @@ function TeacherBoardScore() {
     "Anh Hoàng",
     "Thủy Trúc",
   ];
-  const socreColums = ["Present", "DEMO", "Total"];
+  const socreColums = ["PRESENTATION", "DEMO", "ANSWER", "TOTAL"];
 
   const handleSubmit = (e, index) => {
     e.preventDefault();
@@ -65,7 +66,7 @@ function TeacherBoardScore() {
             </tbody>
           </table>
           <div className={cx("btn-submit")}>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button primary onClick={handleSubmit}>Submit</Button>
           </div>
         </div>
       </div>
