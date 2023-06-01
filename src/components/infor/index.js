@@ -10,8 +10,9 @@ function Infor({ name }) {
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleLogout = () => {
-    removeCookie("token");
-    removeCookie("user");
+    Object.keys(cookies).forEach(cookieName => {
+      removeCookie(cookieName, { path: '/' });
+    });
     navigate('/');
   }
 

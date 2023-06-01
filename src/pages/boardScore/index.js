@@ -129,7 +129,7 @@ function TeacherBoardScore() {
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
