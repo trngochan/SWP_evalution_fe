@@ -11,14 +11,15 @@ import Footer from "~/components/layouts/footer";
 const cx = classNames.bind(styles);
 
 function InforStudent() {
-  const [cookies] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies();
   if (!cookies.user) {
-    window.location.href = "/";
+    // window.location.href = "/";
   }
 
   const [listCourse, setListCourse] = useState([]);
   const [scores, setScores] = useState();
   const [ListColum, setListColumn] = useState([]);
+  const [listTeacher, setListTeacher] = useState([]);
 
   useEffect(() => {
     axios
@@ -32,20 +33,30 @@ function InforStudent() {
       .catch((error) => console.log(error));
   }, []);
 
-  function showScore(id, SubjectId) {
-    const req1 = axios.get(`/score/${id}/course`, {
+  function showScore(courseId, SubjectId) {
+    setCookie("course_id", courseId);
+    const req1 = axios.get(`/score/${courseId}/course`, {
       withCredentials: true,
     });
-    const req2 = axios.get(`/scorecolumn/${SubjectId}/subject`);
+    const req2 = axios.get(`/scorecolumn/${SubjectId}/subject`, {
+      withCredentials: true,
+    });
+    const req3 = axios.get(`/teacher/courAndStd`, {
+      withCredentials: true,
+    });
 
     return axios
-      .all([req1, req2])
+      .all([req1, req2, req3])
       .then(
-        axios.spread((response1, response2) => {
+        axios.spread((score, listColumns, listTeach) => {
           // Xử lý response từ request1 và request2
-          console.log(response1.data)
-          setScores(response1.data);
-          setListColumn(response2.data);
+          setScores(score.data);
+          setListColumn(listColumns.data);
+          setListTeacher(listTeach.data);
+          console.log(listColumns.data);
+          console.log(listTeach.data);
+          console.log(score.data);
+          // setListTeacher(listTeach.data);
         })
       )
       .catch((error) => {
@@ -77,19 +88,26 @@ function InforStudent() {
               <thead>
                 <tr>
                   <th scope="col"></th>
-                  {ListColum.map((score, index) => {
-                    return <th key={index} scope="col">{score.name}</th>;
+                  {ListColum.map((column, index) => {
+                    return (
+                      <th key={index} scope="col">
+                        {column.name}
+                      </th>
+                    );
                   })}
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">Teacher 1</th>
-                  <td>5.0</td>
-                  <td>8.8</td>
-                  <td>7.5</td>
-                  <td>7.5</td>
-                </tr>
+                {listTeacher.map((teacher, index) => {
+                  return (
+                    <tr key={index}>
+                      <th scope="row">{teacher.Name}</th>
+                      {scores.filter((score) => score.LectureInBoardId === teacher.lectureinboardId).map((score, i) => {
+                        return <td key={i}>{score.Score}</td>
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
 
