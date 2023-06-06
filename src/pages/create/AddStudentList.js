@@ -5,8 +5,8 @@ import { useCookies } from "react-cookie";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import classNames from "classnames/bind";
 import styles from "../logins/login.module.scss";
+import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +33,7 @@ function AddStudentList() {
       password: Yup.string()
         .min(5, "Your password must be at least 5 characters long")
         .required("Your password is required"),
-      code: Yup.string().min(5, "Your code must be at least 5 characters long"),
+      code: Yup.string().min(5, "Your code must be at least 5 characters long").required("Your code is required"),
     }),
     onSubmit: (values) => {
       axios

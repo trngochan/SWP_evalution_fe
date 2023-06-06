@@ -7,6 +7,9 @@ import styles from "./home.module.scss";
 import { useState } from "react";
 import AddStudentList from "../create/AddStudentList";
 import AddTeacherList from "../create/AddTeacherList";
+import AddSemester from "../create/AddSemester";
+import AddSubject from "../create/AddSubject";
+import AddCourse from "../create/AddCourse";
 
 const cx = classNames.bind(styles);
 
@@ -24,13 +27,19 @@ function HomeAdmin() {
                 Add Student
               </Button>
               <Button onClick={()=>setShow("addteach")}  to="">Add Teacher</Button>
-              <Button onClick={()=>setShow("createeva")} to="">Create Evaluation</Button>
+              <Button onClick={()=>setShow("semester")} to="">Add semester</Button>
+              <Button onClick={()=>setShow("subject")} to="">Add subject</Button>
+              <Button onClick={()=>setShow("course")} to="">Add course</Button>
               <Button onClick={()=>setShow("addproject")} to="">Add Project</Button>
+              <Button onClick={()=>setShow("createeva")} to="">Create Evaluation</Button>
             </div>
           </div>
           <div className={cx("col-9")}>
             {show === "addstd" && <AddStudentList/>}
             {show === "addteach" && <AddTeacherList/>}
+            {show === "semester" && <AddSemester/>}
+            {show === "subject" && <AddSubject/>}
+            {show === "course" && <AddCourse/>}
           </div>
         </div>
       </div>

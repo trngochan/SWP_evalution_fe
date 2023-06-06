@@ -78,7 +78,7 @@ function TeacherBoardScore() {
     }
   };
 
-  console.log(ScoreStudents);
+  console.log(studentList);
 
   return (
     <div>
@@ -91,7 +91,7 @@ function TeacherBoardScore() {
               <tr>
                 <th></th>
                 {ScoreList.map((column, i) => {
-                  return <th key={i}>{column.name}</th>;
+                  return <th key={i}>{column.name} ({column.percent})</th>;
                 })}
               </tr>
             </thead>
@@ -99,7 +99,7 @@ function TeacherBoardScore() {
               {studentList?.map((student, i) => {
                 return (
                   <tr key={i}>
-                    <th>{student.Name}</th>
+                    <th>{student.CODE} - {student.Name}</th>
                     {ScoreList.map((column, i) => {
                       return (
                         <td key={i}>
