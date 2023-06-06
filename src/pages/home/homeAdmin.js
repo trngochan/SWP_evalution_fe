@@ -27,9 +27,9 @@ function HomeAdmin() {
                 Add Student
               </Button>
               <Button onClick={()=>setShow("addteach")}  to="">Add Teacher</Button>
-              <Button onClick={()=>setShow("semester")} to="">Add semester</Button>
-              <Button onClick={()=>setShow("subject")} to="">Add subject</Button>
-              <Button onClick={()=>setShow("course")} to="">Add course</Button>
+              <Button onClick={()=>setShow("semester")} to="">Add Semester</Button>
+              <Button onClick={()=>setShow("subject")} to="">Add Subject</Button>
+              <Button onClick={()=>setShow("course")} to="">Add Course</Button>
               <Button onClick={()=>setShow("addproject")} to="">Add Project</Button>
               <Button onClick={()=>setShow("createeva")} to="">Create Evaluation</Button>
             </div>

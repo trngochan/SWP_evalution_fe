@@ -49,7 +49,6 @@ function AddStudentList() {
     },
   });
   return (
-    <>
       <div className={cx("login")}>
         <form onSubmit={formik.handleSubmit} className={cx("form")}>
           <h2 className={cx("heading")}>Add Student</h2>
@@ -147,7 +146,6 @@ function AddStudentList() {
           </button>
         </form>
       </div>
-    </>
   );
 }
 

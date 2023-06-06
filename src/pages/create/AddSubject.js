@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import styles from "./add.module.scss";
+import styles from "../logins/login.module.scss";
 import classNames from "classnames/bind";
 
 
@@ -23,8 +23,9 @@ function AddSubject() {
   });
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
+    <div className={cx("login")}>
+      <form onSubmit={formik.handleSubmit} className={cx("form")}>
+      <h2 className={cx("heading")}>Add Subject</h2>
       <div className={cx("form-group")}>
           <label className={cx("form-label")}>Name:</label>
           <input

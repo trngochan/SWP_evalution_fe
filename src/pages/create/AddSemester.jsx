@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import classNames from "classnames/bind";
 import axios from "axios";
-import styles from "./add.module.scss";
+import styles from "../logins/login.module.scss";
 
 const cx = classNames.bind(styles);
 
@@ -35,8 +35,9 @@ function AddSemester() {
   });
 
   return (
-    <div className={cx("form")}>
-      <form onSubmit={formik.handleSubmit}>
+    <div className={cx("login")}>
+      <form onSubmit={formik.handleSubmit} className={cx("form")}>
+      <h2 className={cx("heading")}>Add Semester</h2>
         <div className={cx("form-group")}>
           <label className={cx("form-label")}>Year:</label>
           <input
