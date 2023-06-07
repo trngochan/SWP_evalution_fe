@@ -1,5 +1,5 @@
 import axios from "axios";
-import styles from "./add.module.scss";
+import styles from "../logins/login.module.scss";
 import classNames from "classnames/bind";
 import { useFormik, Field } from "formik";
 import { useEffect, useState } from "react";
@@ -16,10 +16,10 @@ function AddCourse() {
       name: "",
     },
     validationSchema: yup.object({
-      subjectId: yup.string().required("required"),
-      semesterId: yup.string().required("required"),
-      LectureId: yup.string().required("required"),
-      name: yup.string().required("required"),
+      subjectId: yup.string().required("Required"),
+      semesterId: yup.string().required("Required"),
+      LectureId: yup.string().required("Required"),
+      name: yup.string().required("Required"),
     }),
     onSubmit:async (values) => {
         try {
@@ -36,33 +36,34 @@ function AddCourse() {
   const [semesters, setSemesters] = useState([]);
   const [subjects, setSubjects] = useState([]);
 
-  useEffect(() => {
-    try {
-      async function fetchData() {
-        const r1 = await axios.get("/teacher/getall");
-        const r2 = await axios.get("/semester/getall");
-        const r3 = await axios.get("/subject/getAll");
+  // useEffect(() => {
+  //   try {
+  //     async function fetchData() {
+  //       const r1 = await axios.get("/teacher/getall");
+  //       const r2 = await axios.get("/semester/getall");
+  //       const r3 = await axios.get("/subject/getAll");
 
-        return axios.all([r1, r2, r3]).then(
-          axios.spread((r1, r2, r3) => {
-            setSemesters(r2.data);
-            setSubjects(r3.data);
-            setTeachers(r1.data);
-          })
-        );
-      }
+  //       return axios.all([r1, r2, r3]).then(
+  //         axios.spread((r1, r2, r3) => {
+  //           setSemesters(r2.data);
+  //           setSubjects(r3.data);
+  //           setTeachers(r1.data);
+  //         })
+  //       );
+  //     }
 
-      fetchData();
-    } catch (error) {}
-  }, []);
+  //     fetchData();
+  //   } catch (error) {}
+  // }, []);
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
+    <div className={cx('login')}>
+      <form onSubmit={formik.handleSubmit} className={cx("form")}>
+        <h2 className={cx('heading')}>Add Course</h2>
         <div className={cx("form-group")}>
           <label className={cx("form-label", "mb-2")}>Semester:</label>
           <select
-            className="form-select"
+            className={cx('form-select')}
             name="semesterId"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
@@ -80,7 +81,7 @@ function AddCourse() {
         <div className={cx("form-group", "mb-2")}>
           <label className={cx("form-label")}>Subject:</label>
           <select
-            className="form-select"
+            className={cx('form-select')}
             name="subjectId"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
@@ -98,7 +99,7 @@ function AddCourse() {
         <div className={cx("form-group", "mb-2")}>
           <label className={cx("form-label")}>Lecturer:</label>
           <select
-            className="form-select"
+            className={cx('form-select')}
             name="LectureId"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}

@@ -47,6 +47,19 @@
     border-color: #1dbfaf;
 }
 
+.form-select {
+    height: 40px;
+    padding: 1px 7px;
+    border: 1px solid #b3b3b3;
+    border-radius: 3px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.form-select:hover {
+    border-color: #1dbfaf;
+}
+
 .form-message {
     font-size: 1.2rem;
     line-height: 1.6rem;
