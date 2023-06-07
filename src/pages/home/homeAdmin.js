@@ -10,6 +10,7 @@ import AddTeacherList from "../create/AddTeacherList";
 import AddSemester from "../create/AddSemester";
 import AddSubject from "../create/AddSubject";
 import AddCourse from "../create/AddCourse";
+import Public from "../create/Public";
 
 const cx = classNames.bind(styles);
 
@@ -32,6 +33,7 @@ function HomeAdmin() {
               <Button onClick={()=>setShow("course")} to="">Add Course</Button>
               <Button onClick={()=>setShow("addproject")} to="">Add Project</Button>
               <Button onClick={()=>setShow("createeva")} to="">Create Evaluation</Button>
+              <Button onClick={()=>setShow("public")} to="">Public</Button>
             </div>
           </div>
           <div className={cx("col-9")}>
@@ -40,6 +42,7 @@ function HomeAdmin() {
             {show === "semester" && <AddSemester/>}
             {show === "subject" && <AddSubject/>}
             {show === "course" && <AddCourse/>}
+            {show === "public" && <Public />}
           </div>
         </div>
       </div>

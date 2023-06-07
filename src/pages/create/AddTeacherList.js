@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import classNames from "classnames/bind";
-import styles from "../logins/login.module.scss";
+import styles from "./add.module.scss";
 
 const cx = classNames.bind(styles);
 

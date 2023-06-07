@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import styles from "../logins/login.module.scss";
+import styles from "./add.module.scss";
 import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);

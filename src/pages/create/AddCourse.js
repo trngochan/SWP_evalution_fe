@@ -1,5 +1,5 @@
 import axios from "axios";
-import styles from "../logins/login.module.scss";
+import styles from "./add.module.scss";
 import classNames from "classnames/bind";
 import { useFormik, Field } from "formik";
 import { useEffect, useState } from "react";
