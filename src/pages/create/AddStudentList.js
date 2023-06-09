@@ -48,13 +48,11 @@ function AddStudentList() {
           if (data.status === 200) {
             setError("");
             setSucess(data.message);
-            navigate("/admin");
             formik.resetForm();
           } else {
             setSucess("");
             setError(data.message);
           }
-          console.log(data);
         })
         .catch((err) => {
           console.log(err);

@@ -61,27 +61,6 @@ function AddTeacherList() {
     },
   });
 
-  // const navigate = useNavigate();
-
-  // const [cookies, setCookie, removeCookie] = useCookies("token");
-  function handleSubmit(event) {
-    //   event.preventDefault();
-    //   axios
-    //     .post("/loginteacher", {
-    //       username,
-    //       password,
-    //     })
-    //     .then((res) => res.data)
-    //     .then((data) => {
-    //       if (data.data.length > 0) {
-    //         setCookie("token", data.token, { path: "/" });
-    //       }
-    //       if (data.data.length > 0) navigate("/teacher");
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-  }
   return (
     <>
       <div className={cx("login")}>
@@ -175,6 +154,8 @@ function AddTeacherList() {
               </span>
             )}
           </div>
+          {error.length > 0 && <p>{error}</p>}
+          {sucess.length > 0 && <p>{sucess}</p>}
           <button type="submit" className={cx("form-submit")}>
             Add
           </button>
