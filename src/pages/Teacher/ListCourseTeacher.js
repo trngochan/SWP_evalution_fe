@@ -34,6 +34,7 @@ function ListCourseTeacher() {
 
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
+    console.log(courses)
   }
 
   function handleChooseCourse(course) {

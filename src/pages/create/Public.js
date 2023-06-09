@@ -1,49 +1,63 @@
-import React from 'react';
+import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Public() {
-  const data = [
-    {
-      Name: 'Course 1',
-      ProjectId: '1',
-      CourseId: '1',
-      Note: 'Note 1',
-      Public: true,
-      Teacher: '2/3',
-    },
-    {
-      Name: 'Course 2',
-      ProjectId: '2',
-      CourseId: '2',
-      Note: 'Note 2',
-      Public: false,
-      Teacher: '3/3',
-    },
-  ];
+  const [listProject, setListProject] = useState([]);
+
+  useEffect(() => {
+    try {
+      async function fetchData() {
+        const response = await axios.get("/project/getall");
+        const data = response.data;
+
+        for (let i = 0; i < data.length; i++) {
+          const response1 = await axios.get(`/teacher/${data[i].Id}/quaninboard`);
+          const response2 = await axios.get(`/teacher/${data[i].Id}/quanmarked`);
+          data[i].teacherMark = {
+            teacherQuan : response1.data[0].totalTeacher,
+            teacherQuanMarked : response2.data[0].totalTeachersMark
+          };
+        }
+        setListProject(data)
+      }
+
+      fetchData();
+    } catch (error) {}
+  }, []);
+
+  function handlePublic() {
+    
+  }
 
   return (
     <div>
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Project ID</th>
             <th>Course ID</th>
+            <th>Project ID</th>
+            <th>Name</th>
             <th>Note</th>
             <th>Tổng Quan</th>
             <th>Public</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
-            <tr key={index}>
-              <td>{item.Name}</td>
-              <td>{item.ProjectId}</td>
-              <td>{item.CourseId}</td>
-              <td>{item.Note}</td>
-              <td>{item.Teacher}</td>
-              <td>{item.Public ? 'Yes' : 'No'}</td>
-            </tr>
-          ))}
+          {listProject.map((item, index) => {
+            return (
+              <tr key={index}>
+                <td>{item.CourseId}</td>
+                <td>{item.Id}</td>
+                <td>{item.Name}</td>
+                <td>{item.Notion}</td>
+                <td>
+                  {item.teacherMark.teacherQuanMarked}/{item.teacherMark.teacherQuan}
+                </td>
+                <td onClick={()=> handlePublic()}>{item.Public ? "Yes" : "No"}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

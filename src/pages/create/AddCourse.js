@@ -36,25 +36,25 @@ function AddCourse() {
   const [semesters, setSemesters] = useState([]);
   const [subjects, setSubjects] = useState([]);
 
-  // useEffect(() => {
-  //   try {
-  //     async function fetchData() {
-  //       const r1 = await axios.get("/teacher/getall");
-  //       const r2 = await axios.get("/semester/getall");
-  //       const r3 = await axios.get("/subject/getAll");
+  useEffect(() => {
+    try {
+      async function fetchData() {
+        const r1 = await axios.get("/teacher/getall");
+        const r2 = await axios.get("/semester/getall");
+        const r3 = await axios.get("/subject/getAll");
 
-  //       return axios.all([r1, r2, r3]).then(
-  //         axios.spread((r1, r2, r3) => {
-  //           setSemesters(r2.data);
-  //           setSubjects(r3.data);
-  //           setTeachers(r1.data);
-  //         })
-  //       );
-  //     }
+        return axios.all([r1, r2, r3]).then(
+          axios.spread((r1, r2, r3) => {
+            setSemesters(r2.data);
+            setSubjects(r3.data);
+            setTeachers(r1.data);
+          })
+        );
+      }
 
-  //     fetchData();
-  //   } catch (error) {}
-  // }, []);
+      fetchData();
+    } catch (error) {}
+  }, []);
 
   return (
     <div className={cx('login')}>

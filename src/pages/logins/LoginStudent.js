@@ -14,6 +14,9 @@ const LoginStudent = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+
+
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleSubmit = (e) => {
@@ -26,11 +29,13 @@ const LoginStudent = () => {
       })
       .then((res) => res.data)
       .then((data) => {
-        if (data.data.length > 0) {
-          setCookie("token", data.token, { path: "/" });
-          setCookie("user", data.data[0], { path: "/"});
+        if(data.data.status === 200) {
+          setCookie("token", data.data.token, { path: "/" });
+          setCookie("user", data.data.data[0], { path: "/" });
           navigate("/student");
-        }
+         } else {
+            setError(data.data.message)
+         }
       })
       .catch((err) => {
         navigate("/");
@@ -66,6 +71,7 @@ const LoginStudent = () => {
             />
             <span className={cx('form-message')}></span>
           </div>
+          {error.length > 0 && <p>{error}</p>}
           <button type="submit" className={cx('form-submit')}>Login</button>
       </form>
     </div>

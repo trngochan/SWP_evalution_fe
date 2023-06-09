@@ -14,6 +14,8 @@ function LoginTeacher() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+
   const [cookies, setCookie, removeCookie] = useCookies();
   function handleSubmit(event) {
     event.preventDefault();
@@ -23,11 +25,17 @@ function LoginTeacher() {
         username,
         password,
       })
-      .then((res) => res.data)
+      .then((res) => {
+        return res.data;
+      })
       .then((data) => {
-          setCookie("token", data.token, { path: "/" });
-          setCookie("user", data.data[0], { path: "/" });
+         if(data.data.status === 200) {
+          setCookie("token", data.data.token, { path: "/" });
+          setCookie("user", data.data.data[0], { path: "/" });
           navigate("/teacher");
+         } else {
+            setError(data.data.message)
+         }
       })
       .catch((err) => {
         console.log(err);
@@ -63,6 +71,7 @@ function LoginTeacher() {
             />
             <span className={cx('form-message')}></span>
           </div>
+          {error.length > 0 && <p>{error}</p>}
           <button type="submit" className={cx('form-submit')}>Login</button>
       </form>
     </div>
