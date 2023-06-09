@@ -22,11 +22,10 @@ function AddSemester() {
     }),
     onSubmit: (values) => {
       axios
-        .post("/student/add", values)
+        .post("/semester/add", values)
         .then((res) => res.data)
         .then((data) => {
-          // navigate("/admin");
-          console.log("thanh cong");
+          console.log(data);
         })
         .catch((err) => {
           console.log(err);
@@ -85,7 +84,7 @@ function AddSemester() {
           <input
             className={cx("form-control")}
             placeholder="Enter year"
-            type="tedatext"
+            type="date"
             name="endTime"
             value={formik.values.endTime}
             onChange={formik.handleChange}
