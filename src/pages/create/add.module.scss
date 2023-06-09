@@ -99,6 +99,24 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
+
+.percent-input {
+  position: relative;
+}
+
+.percent-input-field {
+  padding-right: 25px; /* Để tạo không gian cho phần trăm (%) bên trong ô input */
+}
+
+.percent-symbol {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
   
 // tr:hover {
 //     background-color: #f5f5f5;

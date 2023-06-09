@@ -11,6 +11,10 @@ import AddSemester from "../create/AddSemester";
 import AddSubject from "../create/AddSubject";
 import AddCourse from "../create/AddCourse";
 import Public from "../create/Public";
+import AddTemplate from "../create/AddTemplate";
+import AddProject from "../create/AddProject";
+import AddBoard from "../create/AddBoard";
+import AddScoreColumn from "../create/AddScoreColumn";
 
 const cx = classNames.bind(styles);
 
@@ -32,6 +36,9 @@ function HomeAdmin() {
               <Button onClick={()=>setShow("subject")} to="">Add Subject</Button>
               <Button onClick={()=>setShow("course")} to="">Add Course</Button>
               <Button onClick={()=>setShow("addproject")} to="">Add Project</Button>
+              <Button onClick={()=>setShow("addtemplate")} to="">Add Template</Button>
+              <Button onClick={()=>setShow("addboard")} to="">Add Board</Button>
+              <Button onClick={()=>setShow("addscorecolumn")} to="">Add Score Column</Button>
               <Button onClick={()=>setShow("createeva")} to="">Create Evaluation</Button>
               <Button onClick={()=>setShow("public")} to="">Public</Button>
             </div>
@@ -43,6 +50,10 @@ function HomeAdmin() {
             {show === "subject" && <AddSubject/>}
             {show === "course" && <AddCourse/>}
             {show === "public" && <Public />}
+            {show === "addproject" && <AddProject />}
+            {show === "addtemplate" && <AddTemplate />}
+            {show === "addboard" && <AddBoard />}
+            {show === "addscorecolumn" && <AddScoreColumn />}
           </div>
         </div>
       </div>
