@@ -8,7 +8,7 @@ import LoginAdmin from './pages/logins/LoginAdmin';
 import HomeAdmin from './pages/home/homeAdmin';
 import Evaluation from './pages/evaluation';
 import TeacherBoardScore from './pages/boardScore';
-import StudentsInCourse from './pages/Teacher/StudentsInCourse';
+import StudentsInCourse from './pages/Teacher/ListStudent';
 
 
 function App() {

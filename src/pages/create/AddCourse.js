@@ -16,10 +16,10 @@ function AddCourse() {
       name: "",
     },
     validationSchema: yup.object({
-      subjectId: yup.string().required("Required"),
-      semesterId: yup.string().required("Required"),
-      LectureId: yup.string().required("Required"),
-      name: yup.string().required("Required"),
+      subjectId: yup.string().required("Subject ID Required"),
+      semesterId: yup.string().required("Semester ID Required"),
+      LectureId: yup.string().required("Lecture ID Required"),
+      name: yup.string().required("Name is Required"),
     }),
     onSubmit:async (values) => {
         try {
@@ -36,25 +36,25 @@ function AddCourse() {
   const [semesters, setSemesters] = useState([]);
   const [subjects, setSubjects] = useState([]);
 
-  useEffect(() => {
-    try {
-      async function fetchData() {
-        const r1 = await axios.get("/teacher/getall");
-        const r2 = await axios.get("/semester/getall");
-        const r3 = await axios.get("/subject/getAll");
+  // useEffect(() => {
+  //   try {
+  //     async function fetchData() {
+  //       const r1 = await axios.get("/teacher/getall");
+  //       const r2 = await axios.get("/semester/getall");
+  //       const r3 = await axios.get("/subject/getAll");
 
-        return axios.all([r1, r2, r3]).then(
-          axios.spread((r1, r2, r3) => {
-            setSemesters(r2.data);
-            setSubjects(r3.data);
-            setTeachers(r1.data);
-          })
-        );
-      }
+  //       return axios.all([r1, r2, r3]).then(
+  //         axios.spread((r1, r2, r3) => {
+  //           setSemesters(r2.data);
+  //           setSubjects(r3.data);
+  //           setTeachers(r1.data);
+  //         })
+  //       );
+  //     }
 
-      fetchData();
-    } catch (error) {}
-  }, []);
+  //     fetchData();
+  //   } catch (error) {}
+  // }, []);
 
   return (
     <div className={cx('login')}>
@@ -76,6 +76,9 @@ function AddCourse() {
               </option>
             ))}
           </select>
+          {formik.errors.semesterId && formik.touched.semesterId && (
+            <span className={cx("form-message")}>{formik.errors.semesterId}</span>
+          )}
         </div>
 
         <div className={cx("form-group", "mb-2")}>
@@ -94,6 +97,9 @@ function AddCourse() {
               </option>
             ))}
           </select>
+          {formik.errors.subjectId && formik.touched.subjectId && (
+            <span className={cx("form-message")}>{formik.errors.subjectId}</span>
+          )}
         </div>
 
         <div className={cx("form-group", "mb-2")}>
@@ -108,6 +114,9 @@ function AddCourse() {
              <option value="">Select Lecturer</option>
             {teachers.map((teacher, i) => <option key={i} value={teacher.id}>{teacher.name}</option>)}
           </select>
+          {formik.errors.LectureId && formik.touched.LectureId && (
+            <span className={cx("form-message")}>{formik.errors.LectureId}</span>
+          )}
         </div>
 
         <div className={cx("form-group")}>
