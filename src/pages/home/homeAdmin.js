@@ -1,62 +1,109 @@
-import Footer from "~/components/layouts/footer";
-import Header from "~/components/layouts/header";
-import Button from "~/components/button";
-
+import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
-import { useState } from "react";
-import Public from "../create/Public";
+import Button from "~/components/button";
 import ListStdAdmin from "../admin/listStudentAdmin";
-import ListBoardAdmin from "../admin/listEvaluation";
-import ListCourseAdmin from "../admin/listCourse";
-import ListProjectAdmin from "../admin/listProjectAdmin";
-import ListSubjectAdmin from "../admin/listSubjectsAdmin";
-import ListTemplatesAdmin from "../admin/listTemplates";
 import ListTeacherAdmin from "../admin/listTeacherAdmin";
 import ListSemesterAdmin from "../admin/listSemesterAdmin";
+import ListSubjectAdmin from "../admin/listSubjectsAdmin";
+import ListCourseAdmin from "../admin/listCourse";
+import Public from "../create/Public";
+import ListProjectAdmin from "../admin/listProjectAdmin";
+import ListTemplatesAdmin from "../admin/listTemplates";
+import ListBoardAdmin from "../admin/listEvaluation";
 import ListScoreColumnAdmin from "../admin/listScoreColumnAdmin";
 
 const cx = classNames.bind(styles);
 
 function HomeAdmin() {
-  const [show, setShow] = useState('addstd');
+  const [activeButton, setActiveButton] = useState("");
+
+  const handleButtonClick = (buttonName) => {
+    setActiveButton(buttonName);
+  };
+
   return (
     <>
-      <Header />
-
       <div className={cx("container")}>
         <div className={cx("row")}>
           <div className={cx("col-3")}>
             <div className={cx("feature-list")}>
-              <Button onClick={()=>setShow("std")} to="">
-                  Student
+              <Button
+                onClick={() => handleButtonClick("std")}
+                primary={activeButton === "std"}
+              >
+                Student
               </Button>
-              <Button onClick={()=>setShow("board")} to="">Evaluation Board</Button>
-              <Button onClick={()=>setShow("course")} to="">Course</Button>
-              <Button onClick={()=>setShow("project")} to="">Project</Button>
-              <Button onClick={()=>setShow("subject")} to="">Subject</Button>
-              <Button onClick={()=>setShow("template")} to="">Template</Button>
-              <Button onClick={()=>setShow("teach")}  to="">Teacher</Button>
-              <Button onClick={()=>setShow("semester")} to="">Semester</Button>
-              <Button onClick={()=>setShow("public")} to="">Public</Button>
-              <Button onClick={()=>setShow("scorecolumn")} to="">Score Column</Button>
+              <Button
+                onClick={() => handleButtonClick("board")}
+                primary={activeButton === "board"}
+              >
+                Evaluation Board
+              </Button>
+              <Button
+                onClick={() => handleButtonClick("course")}
+                primary={activeButton === "course"}
+              >
+                Course
+              </Button>
+              <Button
+                onClick={() => handleButtonClick("project")}
+                primary={activeButton === "project"}
+              >
+                Project
+              </Button>
+              <Button
+                onClick={() => handleButtonClick("subject")}
+                primary={activeButton === "subject"}
+              >
+                Subject
+              </Button>
+              <Button
+                onClick={() => handleButtonClick("template")}
+                primary={activeButton === "template"}
+              >
+                Template
+              </Button>
+              <Button
+                onClick={() => handleButtonClick("teach")}
+                primary={activeButton === "teach"}
+              >
+                Teacher
+              </Button>
+              <Button
+                onClick={() => handleButtonClick("semester")}
+                primary={activeButton === "semester"}
+              >
+                Semester
+              </Button>
+              <Button
+                onClick={() => handleButtonClick("public")}
+                primary={activeButton === "public"}
+              >
+                Public
+              </Button>
+              <Button
+                onClick={() => handleButtonClick("scorecolumn")}
+                primary={activeButton === "scorecolumn"}
+              >
+                Score Column
+              </Button>
             </div>
           </div>
           <div className={cx("col-9")}>
-            {show === "std" && <ListStdAdmin/>}
-            {show === "teach" && <ListTeacherAdmin/>}
-            {show === "semester" && <ListSemesterAdmin/>}
-            {show === "subject" && <ListSubjectAdmin/>}
-            {show === "course" && <ListCourseAdmin/>}
-            {show === "public" && <Public />}
-            {show === "project" && <ListProjectAdmin />}
-            {show === "template" && <ListTemplatesAdmin />}
-            {show === "board" && <ListBoardAdmin />}
-            {show === "scorecolumn" && <ListScoreColumnAdmin />}
+            {activeButton === "std" && <ListStdAdmin />}
+            {activeButton === "teach" && <ListTeacherAdmin />}
+            {activeButton === "semester" && <ListSemesterAdmin />}
+            {activeButton === "subject" && <ListSubjectAdmin />}
+            {activeButton === "course" && <ListCourseAdmin />}
+            {activeButton === "public" && <Public />}
+            {activeButton === "project" && <ListProjectAdmin />}
+            {activeButton === "template" && <ListTemplatesAdmin />}
+            {activeButton === "board" && <ListBoardAdmin />}
+            {activeButton === "scorecolumn" && <ListScoreColumnAdmin />}
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
     </>
   );
 }
