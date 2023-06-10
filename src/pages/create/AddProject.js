@@ -13,6 +13,7 @@ function AddProject() {
     const formik = useFormik({
         initialValues: {
             id: "",
+            cousreId: "",
             name: "",
             notion: "",
         },
@@ -20,6 +21,7 @@ function AddProject() {
           id: yup.number().required("ID is required"),
           name: yup.string().required("Name is required"),
           notion: yup.string().required("Notion is required"),
+          courseId: yup.string().required("Course Id is required"),
         }),
         onSubmit: (values) => {
             console.log(values)
@@ -76,22 +78,25 @@ function AddProject() {
         </div>
 
         <div className={cx("form-group")}>
-          <label className={cx("form-label", "mb-2")}>Course Id:</label>
-          <select
-            className={cx('form-select')}
-            name="cousreId"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.cousreId}
-          >
-            <option value="">Select Course Id</option>
-            {cousreId.map((item, i) => (
-              <option key={i} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </div>
+  <label className={cx("form-label", "mb-2")}>Course Id:</label>
+  <select
+    className={cx('form-select')}
+    name="courseId" 
+    onBlur={formik.handleBlur}
+    onChange={formik.handleChange}
+    value={formik.values.courseId} 
+  >
+    <option value="">Select Course Id</option>
+    {cousreId.map((item, i) => (
+      <option key={i} value={item}>
+        {item}
+      </option>
+    ))}
+  </select>
+  {formik.errors.courseId && formik.touched.courseId && (
+    <span className={cx("form-message")}>{formik.errors.courseId}</span>
+  )}
+</div>
 
         
         <button type="submit" className={cx("form-submit")}>
