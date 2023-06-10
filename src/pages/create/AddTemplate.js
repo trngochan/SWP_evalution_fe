@@ -14,14 +14,14 @@ function AddTemplate() {
         initialValues: {
           id: "",
           name: "",
-        //   subjectId: [""],
+          subjectId: "",
           status: "",
           applydate: "",
         },
         validationSchema: yup.object({
           name: yup.string().required("Name is required"),
           id: yup.number().required("ID is required"),
-        //   subjectId: yup.array().required("Subject"),
+          subjectId: yup.string().required("Subject ID is required"),
           status: yup.string().required("Status is required"),
           applydate: yup.date().required("Apply date is required"),
         }),
@@ -80,6 +80,9 @@ function AddTemplate() {
               </option>
             ))}
           </select>
+          {formik.errors.subjectId && formik.touched.subjectId && (
+            <span className={cx("form-message")}>{formik.errors.subjectId}</span>
+          )}
         </div>
 
         <div className={cx("form-group")}>

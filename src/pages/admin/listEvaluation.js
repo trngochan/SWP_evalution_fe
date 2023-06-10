@@ -2,7 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "~/components/button";
 import { useNavigate } from "react-router-dom";
+import classNames from "classnames/bind";
+
 import AddBoard from "../create/AddBoard";
+import styles from './admin.module.scss'
+
+const cx = classNames.bind(styles);
 
 function ListBoardAdmin() {
   const [boards, setBoards] = useState([]);
@@ -11,33 +16,33 @@ function ListBoardAdmin() {
 
   const [semId, setSemId] = useState(0);
 
-  useEffect(() => {
-    async function fetchData() {
-      const req1 = await axios.get(`/evalution/getall`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const req1 = await axios.get(`/evalution/getall`, {
+  //       withCredentials: true,
+  //     });
+  //     const req2 = await axios.get(`/semester/getall`, {
+  //       withCredentials: true,
+  //     });
 
-      return axios.all([req1, req2]).then(
-        axios.spread((listAvaluation, listSemester) => {
-          // Xử lý response từ request1 và requests
-          setBoards(listAvaluation.data);
-          setsemesterList(listSemester.data);
-        })
-      );
-    }
+  //     return axios.all([req1, req2]).then(
+  //       axios.spread((listAvaluation, listSemester) => {
+  //         // Xử lý response từ request1 và requests
+  //         setBoards(listAvaluation.data);
+  //         setsemesterList(listSemester.data);
+  //       })
+  //     );
+  //   }
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
   }
   return (
-    <div className="row mt-3">
-      <Button onClick={() => setShowAdd(!isShowAdd)}>
+    <div>
+      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
         {isShowAdd ? "View" : "Add"}
       </Button>
       {isShowAdd ? (
@@ -46,14 +51,14 @@ function ListBoardAdmin() {
         <>
           <div className="col-2">
             <select
-              className="form-select"
+              className={cx('form-select')}
               aria-label="Default select example"
               defaultValue={""}
               onClick={(e) => {
                 handleChooseSem(e.target.value);
               }}
             >
-              <option value="0">All semmester</option>
+              <option value="0">All semester</option>
               {semesterList.map((semester, i) => {
                 return (
                   <option key={i} value={semester.Id}>

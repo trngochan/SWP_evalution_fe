@@ -15,11 +15,13 @@ function AddScoreColumn() {
             id: "",
             name: "",
             percent: "",
+            templateId: "",
         },
         validationSchema: yup.object({
           id: yup.number().required("ID is required"),
           name: yup.string().required("Name is required"),
           percent: yup.number().required("Percent is required"),
+          templateId: yup.string().required("Template Id is required"),
         }),
         onSubmit: (values) => {
             console.log(values)
@@ -95,6 +97,9 @@ function AddScoreColumn() {
               </option>
             ))}
           </select>
+          {formik.errors.templateId && formik.touched.templateId && (
+            <span className={cx("form-message")}>{formik.errors.templateId}</span>
+          )}
         </div>
       
         <button type="submit" className={cx("form-submit")}>

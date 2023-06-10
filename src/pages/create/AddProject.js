@@ -22,36 +22,36 @@ function AddProject() {
       notion: yup.string().required("Notion is required"),
     }),
     onSubmit: (values) => {
-      axios
-        .post("/project/add", values)
-        .then((res) => res.data)
-        .then((data) => {
-          console.log(data);
-          if (data.status === 200) {
-            setMessage(data.message);
-            formik.resetForm();
-          } else {
-            setMessage(data.message);
-          }
-        });
+      // axios
+      //   .post("/project/add", values)
+      //   .then((res) => res.data)
+      //   .then((data) => {
+      //     console.log(data);
+      //     if (data.status === 200) {
+      //       setMessage(data.message);
+      //       formik.resetForm();
+      //     } else {
+      //       setMessage(data.message);
+      //     }
+      //   });
     },
   });
 
-  useEffect(() => {
-    try {
-      async function fetchData() {
-        const r1 = await axios.get("/course/getall");
+  // useEffect(() => {
+  //   try {
+  //     async function fetchData() {
+  //       const r1 = await axios.get("/course/getall");
 
-        return axios.all([r1]).then(
-          axios.spread((r1) => {
-            setCourses(r1.data);
-          })
-        );
-      }
+  //       return axios.all([r1]).then(
+  //         axios.spread((r1) => {
+  //           setCourses(r1.data);
+  //         })
+  //       );
+  //     }
 
-      fetchData();
-    } catch (error) {}
-  }, []);
+  //     fetchData();
+  //   } catch (error) {}
+  // }, []);
 
   return (
     <div className={cx("login")}>
