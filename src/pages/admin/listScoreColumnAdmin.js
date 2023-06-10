@@ -3,11 +3,11 @@ import Button from "~/components/button";
 import classNames from "classnames/bind";
 
 import styles from './admin.module.scss'
-import AddCourse from "../create/AddCourse";
+import AddScoreColumn from "../create/AddScoreColumn";
 
 const cx = classNames.bind(styles);
 
-function ListCourseAdmin() {
+function ListScoreColumnAdmin() {
     const [isShowAdd, setShowAdd] = useState(false);
 
     const semesterList = ["1", "2"]
@@ -17,7 +17,7 @@ function ListCourseAdmin() {
         {isShowAdd ? "View" : "Add"}
       </Button>
       {isShowAdd ? (
-        <AddCourse />
+        <AddScoreColumn />
       ) : (
         <>
           <div className="col-2">
@@ -27,7 +27,7 @@ function ListCourseAdmin() {
               defaultValue={""}
             //   onClick    
             >
-              <option value="0">All Course</option>
+              <option value="0">All Semester</option>
               {semesterList.map((semester, i) => {
                 return (
                   <option key={i} >
@@ -41,10 +41,10 @@ function ListCourseAdmin() {
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">Semester</th>
-                  <th scope="col">Subject</th>
-                  <th scope="col">Lecturer</th>
+                  <th scope="col">ID</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Percent</th>
+                  <th scope="col">Template Id</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,4 +63,4 @@ function ListCourseAdmin() {
   );
 }
 
-export default ListCourseAdmin;
+export default ListScoreColumnAdmin;
