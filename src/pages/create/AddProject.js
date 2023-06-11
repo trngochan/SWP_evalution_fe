@@ -16,10 +16,12 @@ function AddProject() {
     initialValues: {
       name: "",
       notion: "",
+      courseId:"",
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       notion: yup.string().required("Notion is required"),
+      courseId: yup.string().required("Course ID is required"),
     }),
     onSubmit: (values) => {
       // axios
@@ -92,10 +94,10 @@ function AddProject() {
           <label className={cx("form-label", "mb-2")}>Course Id:</label>
           <select
             className={cx("form-select")}
-            name="cousreId"
+            name="courseId"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
-            value={formik.values.cousreId}
+            value={formik.values.courseId}
           >
             <option value="" defaultValue>Select Course Id</option>
             {courses.map((item, i) => (
@@ -104,6 +106,9 @@ function AddProject() {
               </option>
             ))}
           </select>
+          {formik.errors.courseId && formik.touched.courseId && (
+            <span className={cx("form-message")}>{formik.errors.courseId}</span>
+          )}
         </div>
         {message.length > 0 && <p>{message}</p>}
         <button type="submit" className={cx("form-submit")}>

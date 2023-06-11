@@ -15,10 +15,10 @@ function AddSemester() {
       endTime: "",
     },
     validationSchema: yup.object({
-      year: yup.number().required("Is required"),
-      session: yup.string().required("Is required"),
-      startTime: yup.date().required("Is required"),
-      endTime: yup.date().required("Is required"),
+      year: yup.number().required("Year is required"),
+      session: yup.string().required("Session is required"),
+      startTime: yup.date().required("Start Time is required"),
+      endTime: yup.date().required("End Time is required"),
     }),
     onSubmit: (values) => {
       axios

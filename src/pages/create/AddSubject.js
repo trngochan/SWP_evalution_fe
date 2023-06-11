@@ -15,7 +15,7 @@ function AddSubject() {
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
-      description: yup.string().required("Name is required"),
+      description: yup.string().required("Description is required"),
     }),
     onSubmit: (values) => {
         console.log(values)
