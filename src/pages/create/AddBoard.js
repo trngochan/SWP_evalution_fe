@@ -16,12 +16,18 @@ function AddBoard() {
         initialValues: {
           id: "",
           name: "",
+          semesterId: "",
+          subjectId: "",
+          templateId: "",
           startTime: "",
           endTime: "",
         },
         validationSchema: yup.object({
           name: yup.string().required("Name is required"),
           id: yup.number().required("ID is required"),
+          semesterId: yup.string().required("Subject ID is required"),
+          subjectId: yup.string().required("Subject ID is required"),
+          templateId: yup.string().required("Template ID is required"),
           startTime: yup.date().required("Start Time required"),
           endTime: yup.date().required("End Time required"),
         }),
@@ -80,6 +86,9 @@ function AddBoard() {
               </option>
             ))}
           </select>
+          {formik.errors.semesterId && formik.touched.semesterId && (
+            <span className={cx("form-message")}>{formik.errors.semesterId}</span>
+          )}
         </div>
 
         <div className={cx("form-group")}>
@@ -98,6 +107,9 @@ function AddBoard() {
               </option>
             ))}
           </select>
+          {formik.errors.subjectId && formik.touched.subjectId && (
+            <span className={cx("form-message")}>{formik.errors.subjectId}</span>
+          )}
         </div>
 
         <div className={cx("form-group")}>
@@ -116,6 +128,9 @@ function AddBoard() {
               </option>
             ))}
           </select>
+          {formik.errors.templateId && formik.touched.templateId && (
+            <span className={cx("form-message")}>{formik.errors.templateId}</span>
+          )}
         </div>
         
         <div className={cx("form-group")}>

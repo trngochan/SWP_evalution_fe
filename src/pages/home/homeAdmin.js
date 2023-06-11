@@ -12,6 +12,7 @@ import ListProjectAdmin from "../admin/listProjectAdmin";
 import ListTemplatesAdmin from "../admin/listTemplates";
 import ListBoardAdmin from "../admin/listEvaluation";
 import ListScoreColumnAdmin from "../admin/listScoreColumnAdmin";
+import Header from "~/components/layouts/header";
 
 const cx = classNames.bind(styles);
 
@@ -24,6 +25,7 @@ function HomeAdmin() {
 
   return (
     <>
+      <Header />
       <div className={cx("container")}>
         <div className={cx("row")}>
           <div className={cx("col-3")}>
