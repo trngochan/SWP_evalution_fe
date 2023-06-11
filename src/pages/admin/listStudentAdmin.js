@@ -7,31 +7,33 @@ function ListStdAdmin() {
   const [students, setStudent] = useState([]);
   const [isShowAdd, setShowAdd] = useState(false);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const req1 = await axios.get("/student/getall", {
-  //       withCredentials: true,
-  //     });
+  useEffect(() => {
+    async function fetchData() {
+      const req1 = await axios.get("/student/getall", {
+        withCredentials: true,
+      });
 
-  //     return axios.all([req1]).then(
-  //       axios.spread((listStudent) => {
-  //         // Xử lý response từ request1 và requests
-  //         setStudent(listStudent.data);
-  //       })
-  //     );
-  //   }
+      return axios.all([req1]).then(
+        axios.spread((listStudent) => {
+          // Xử lý response từ request1 và requests
+          setStudent(listStudent.data);
+        })
+      );
+    }
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   return (
     <>
       <div>
         <h2 className="mt-3 mb-3">List students</h2>
-         <Button primary onClick={() => setShowAdd(!isShowAdd)}>{isShowAdd ? "View" : "Add"}</Button>
+        <Button primary onClick={() => setShowAdd(!isShowAdd)}>
+          {isShowAdd ? "View" : "Add"}
+        </Button>
       </div>
       {isShowAdd ? (
-        <AddStudentList/>
+        <AddStudentList />
       ) : (
         <>
           <table className="table table-striped">

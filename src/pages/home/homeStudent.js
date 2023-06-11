@@ -102,9 +102,14 @@ function InforStudent() {
                   return (
                     <tr key={index}>
                       <th scope="row">{teacher.Name}</th>
-                      {scores.filter((score) => score.LectureInBoardId === teacher.lectureinboardId).map((score, i) => {
-                        return <td key={i}>{score.Score}</td>
-                      })}
+                      {scores
+                        .filter(
+                          (score) =>
+                            score.LectureInBoardId === teacher.lectureinboardId
+                        )
+                        .map((score, i) => {
+                          return <td key={i}>{score.Score}</td>;
+                        })}
                     </tr>
                   );
                 })}
