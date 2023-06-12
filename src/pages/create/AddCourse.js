@@ -21,14 +21,14 @@ function AddCourse() {
       LectureId: yup.string().required("Lecture ID Required"),
       name: yup.string().required("Name is Required"),
     }),
-    onSubmit:async (values) => {
-        try {
-            const respone = await axios.post('/course/add', values);
+    onSubmit: async (values) => {
+      try {
+        const respone = await axios.post("/course/add", values);
 
-            console.log(respone.data);
-        } catch (error) {
-            console.log(error);
-        }
+        console.log(respone.data);
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -36,34 +36,34 @@ function AddCourse() {
   const [semesters, setSemesters] = useState([]);
   const [subjects, setSubjects] = useState([]);
 
-  // useEffect(() => {
-  //   try {
-  //     async function fetchData() {
-  //       const r1 = await axios.get("/teacher/getall");
-  //       const r2 = await axios.get("/semester/getall");
-  //       const r3 = await axios.get("/subject/getAll");
+  useEffect(() => {
+    try {
+      async function fetchData() {
+        const r1 = await axios.get("/teacher/getall");
+        const r2 = await axios.get("/semester/getall");
+        const r3 = await axios.get("/subject/getAll");
 
-  //       return axios.all([r1, r2, r3]).then(
-  //         axios.spread((r1, r2, r3) => {
-  //           setSemesters(r2.data);
-  //           setSubjects(r3.data);
-  //           setTeachers(r1.data);
-  //         })
-  //       );
-  //     }
+        return axios.all([r1, r2, r3]).then(
+          axios.spread((r1, r2, r3) => {
+            setSemesters(r2.data);
+            setSubjects(r3.data);
+            setTeachers(r1.data);
+          })
+        );
+      }
 
-  //     fetchData();
-  //   } catch (error) {}
-  // }, []);
+      fetchData();
+    } catch (error) {}
+  }, []);
 
   return (
-    <div className={cx('login')}>
+    <div className={cx("login")}>
       <form onSubmit={formik.handleSubmit} className={cx("form")}>
-        <h2 className={cx('heading')}>Add Course</h2>
+        <h2 className={cx("heading")}>Add Course</h2>
         <div className={cx("form-group")}>
           <label className={cx("form-label", "mb-2")}>Semester:</label>
           <select
-            className={cx('form-select')}
+            className={cx("form-select")}
             name="semesterId"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
@@ -77,14 +77,16 @@ function AddCourse() {
             ))}
           </select>
           {formik.errors.semesterId && formik.touched.semesterId && (
-            <span className={cx("form-message")}>{formik.errors.semesterId}</span>
+            <span className={cx("form-message")}>
+              {formik.errors.semesterId}
+            </span>
           )}
         </div>
 
         <div className={cx("form-group", "mb-2")}>
           <label className={cx("form-label")}>Subject:</label>
           <select
-            className={cx('form-select')}
+            className={cx("form-select")}
             name="subjectId"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
@@ -98,24 +100,32 @@ function AddCourse() {
             ))}
           </select>
           {formik.errors.subjectId && formik.touched.subjectId && (
-            <span className={cx("form-message")}>{formik.errors.subjectId}</span>
+            <span className={cx("form-message")}>
+              {formik.errors.subjectId}
+            </span>
           )}
         </div>
 
         <div className={cx("form-group", "mb-2")}>
           <label className={cx("form-label")}>Lecturer:</label>
           <select
-            className={cx('form-select')}
+            className={cx("form-select")}
             name="LectureId"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             value={formik.values.LectureId}
           >
-             <option value="">Select Lecturer</option>
-            {teachers.map((teacher, i) => <option key={i} value={teacher.id}>{teacher.name}</option>)}
+            <option value="">Select Lecturer</option>
+            {teachers.map((teacher, i) => (
+              <option key={i} value={teacher.id}>
+                {teacher.name}
+              </option>
+            ))}
           </select>
           {formik.errors.LectureId && formik.touched.LectureId && (
-            <span className={cx("form-message")}>{formik.errors.LectureId}</span>
+            <span className={cx("form-message")}>
+              {formik.errors.LectureId}
+            </span>
           )}
         </div>
 

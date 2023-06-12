@@ -12,23 +12,25 @@ function Public() {
         const data = response.data;
 
         for (let i = 0; i < data.length; i++) {
-          const response1 = await axios.get(`/teacher/${data[i].Id}/quaninboard`);
-          const response2 = await axios.get(`/teacher/${data[i].Id}/quanmarked`);
+          const response1 = await axios.get(
+            `/teacher/${data[i].Id}/quaninboard`
+          );
+          const response2 = await axios.get(
+            `/teacher/${data[i].Id}/quanmarked`
+          );
           data[i].teacherMark = {
-            teacherQuan : response1.data[0].totalTeacher,
-            teacherQuanMarked : response2.data[0].totalTeachersMark
+            teacherQuan: response1.data[0].totalTeacher,
+            teacherQuanMarked: response2.data[0].totalTeachersMark,
           };
         }
-        setListProject(data)
+        setListProject(data);
       }
 
       fetchData();
     } catch (error) {}
   }, []);
 
-  function handlePublic() {
-    
-  }
+  function handlePublic() {}
 
   return (
     <div>
@@ -52,9 +54,12 @@ function Public() {
                 <td>{item.Name}</td>
                 <td>{item.Notion}</td>
                 <td>
-                  {item.teacherMark.teacherQuanMarked}/{item.teacherMark.teacherQuan}
+                  {item.teacherMark.teacherQuanMarked}/
+                  {item.teacherMark.teacherQuan}
                 </td>
-                <td onClick={()=> handlePublic()}><button>public</button></td>
+                <td onClick={() => handlePublic()}>
+                  <button>public</button>
+                </td>
               </tr>
             );
           })}

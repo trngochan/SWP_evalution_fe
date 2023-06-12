@@ -17,52 +17,58 @@ function InforStudent() {
   }
 
   const [listCourse, setListCourse] = useState([]);
+  const [semesters, setSemesters] = useState([]);
   const [scores, setScores] = useState();
-  const [ListColum, setListColumn] = useState([]);
-  const [listTeacher, setListTeacher] = useState([]);
+  const [semId, setSemId] = useState(0);
+  const [status, setStatus] = useState(0);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`/course/${cookies.user.id}/student`, {
+    async function fetchData() {
+      const req1 = await axios.get(`/course/${cookies.user.id}/student`, {
         withCredentials: true,
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        setListCourse(data);
-      })
-      .catch((error) => console.log(error));
+      });
+      const req2 = await axios.get(`/semester/getall`, {
+        withCredentials: true,
+      });
+
+      return axios.all([req1, req2]).then(
+        axios.spread((listCourse, listSemester) => {
+          // Xử lý response từ request1 và requests
+          setListCourse(listCourse.data);
+          setSemesters(listSemester.data);
+        })
+      );
+    }
+
+    fetchData();
   }, []);
 
-  function showScore(courseId, SubjectId) {
-    setCookie("course_id", courseId);
-    const req1 = axios.get(`/score/${courseId}/course`, {
-      withCredentials: true,
-    });
-    const req2 = axios.get(`/scorecolumn/${SubjectId}/subject`, {
-      withCredentials: true,
-    });
-    const req3 = axios.get(`/teacher/courAndStd`, {
-      withCredentials: true,
-    });
+  function handleChooseSem(semesterId) {
+    setSemId(semesterId);
+  }
 
-    return axios
-      .all([req1, req2, req3])
-      .then(
-        axios.spread((score, listColumns, listTeach) => {
-          // Xử lý response từ request1 và request2
-          setScores(score.data);
-          setListColumn(listColumns.data);
-          setListTeacher(listTeach.data);
-          console.log(listColumns.data);
-          console.log(listTeach.data);
-          console.log(score.data);
-          // setListTeacher(listTeach.data);
-        })
-      )
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
+  async function showScore(courseId) {
+    const response = await axios.post(
+      "score/get",
+      {
+        id: cookies.user.id,
+        courseId: courseId,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    if (response.data.status === 201) {
+      setScores(response.data.data.score);
+      setStatus(response.data.data.status);
+    } else {
+      if (response.data.status === 204) {
+        setScores(0.0);
+        setMessage(response.data.message);
+      }
+    }
   }
 
   return (
@@ -72,66 +78,54 @@ function InforStudent() {
       <div className={cx("container")}>
         <div className="row">
           <div className="col-3">
-            {listCourse.map((course, i) => {
-              return (
-                <li
-                  key={i}
-                  onClick={() => showScore(course.CourseId, course.SubjectId)}
-                >
-                  {course.name}
-                </li>
-              );
-            })}
+            <select
+              className={cx("form-select")}
+              aria-label="Default select example"
+              defaultValue={""}
+              onClick={(e) => {
+                handleChooseSem(e.target.value);
+              }}
+            >
+              <option value="0">All semester</option>
+              {semesters.map((semester, i) => {
+                return (
+                  <option key={i} value={semester.Id}>
+                    {semester.Year} - {semester.Session}{" "}
+                  </option>
+                );
+              })}
+            </select>
+            {listCourse
+              .filter(function (item) {
+                if (parseInt(semId) === 0) return true;
+                else return parseInt(item.SemesterId) === parseInt(semId);
+              })
+              .map((course, i) => {
+                return (
+                  <li key={i} onClick={() => showScore(course.CourseId)}>
+                    {course.name}
+                  </li>
+                );
+              })}
           </div>
           <div className="col-9">
-            <table className="table mt-3">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  {ListColum.map((column, index) => {
-                    return (
-                      <th key={index} scope="col">
-                        {column.name}
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {listTeacher.map((teacher, index) => {
-                  return (
-                    <tr key={index}>
-                      <th scope="row">{teacher.Name}</th>
-                      {scores
-                        .filter(
-                          (score) =>
-                            score.LectureInBoardId === teacher.lectureinboardId
-                        )
-                        .map((score, i) => {
-                          return <td key={i}>{score.Score}</td>;
-                        })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-
             <table className="table mt-5">
               <thead>
                 <tr>
                   <th scope="col" className={cx("col")}>
                     COURSE TOTAL AVERAGE
                   </th>
-                  <th scope="col">7.0</th>
+                  <th scope="col">{scores}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <th scope="row">STATUS</th>
-                  <td className={cx("pass")}>PASS</td>
+                  <td className={cx("pass")}>{status ? "PASS" : "NOT PASS"}</td>
                 </tr>
               </tbody>
             </table>
+            {message && <p>{message}</p>}
           </div>
         </div>
       </div>
