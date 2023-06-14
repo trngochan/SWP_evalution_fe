@@ -33,16 +33,16 @@ function HomeAdmin() {
           <div className={cx("col-3")}>
             <div className={cx("feature-list")}>
               <Button
-                onClick={() => handleButtonClick("std")}
-                primary={activeButton === "std"}
-              >
-                Student
-              </Button>
-              <Button
                 onClick={() => handleButtonClick("board")}
                 primary={activeButton === "board"}
               >
                 Evaluation Board
+              </Button>
+              <Button
+                onClick={() => handleButtonClick("subject")}
+                primary={activeButton === "subject"}
+              >
+                Subject
               </Button>
               <Button
                 onClick={() => handleButtonClick("course")}
@@ -57,23 +57,26 @@ function HomeAdmin() {
                 Project
               </Button>
               <Button
-                onClick={() => handleButtonClick("subject")}
-                primary={activeButton === "subject"}
+                onClick={() => handleButtonClick("std")}
+                primary={activeButton === "std"}
               >
-                Subject
+                Student
               </Button>
-              <Button
-                onClick={() => handleButtonClick("template")}
-                primary={activeButton === "template"}
-              >
-                Template
-              </Button>
+
               <Button
                 onClick={() => handleButtonClick("teach")}
                 primary={activeButton === "teach"}
               >
                 Teacher
               </Button>
+
+              <Button
+                onClick={() => handleButtonClick("template")}
+                primary={activeButton === "template"}
+              >
+                Template
+              </Button>
+
               <Button
                 onClick={() => handleButtonClick("semester")}
                 primary={activeButton === "semester"}
@@ -95,13 +98,15 @@ function HomeAdmin() {
             </div>
           </div>
           <div className={cx("col-9")}>
+            {activeButton === "course" && (
+              <ListCourseAdmin setActiveButton={setActiveButton} />
+            )}
+            {activeButton === "project" && <ListProjectAdmin />}
             {activeButton === "std" && <ListStdAdmin />}
             {activeButton === "teach" && <ListTeacherAdmin />}
             {activeButton === "semester" && <ListSemesterAdmin />}
             {activeButton === "subject" && <ListSubjectAdmin />}
-            {activeButton === "course" && <ListCourseAdmin />}
             {activeButton === "public" && <Public />}
-            {activeButton === "project" && <ListProjectAdmin />}
             {activeButton === "template" && <ListTemplatesAdmin />}
             {activeButton === "board" && <ListBoardAdmin />}
             {activeButton === "scorecolumn" && <ListScoreColumnAdmin />}

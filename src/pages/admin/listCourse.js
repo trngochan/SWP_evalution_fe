@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import Button from "~/components/button";
 import axios from "axios";
-import AddCourse from "../create/AddCourse";
-
+import { useCookies } from "react-cookie";
 import classNames from "classnames/bind";
+
+import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
 
 const cx = classNames.bind(styles);
 
-function ListCourseAdmin() {
+function ListCourseAdmin({ setActiveButton }) {
+  const [cookies, setCookie, removeCookie] = useCookies();
+
   const [isShowAdd, setShowAdd] = useState(false);
 
   const [courses, setCourse] = useState([]);
@@ -18,7 +21,7 @@ function ListCourseAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/evalution/getall`, {
+      const req1 = await axios.get(`/course/getall`, {
         withCredentials: true,
       });
       const req2 = await axios.get(`/semester/getall`, {
@@ -26,9 +29,9 @@ function ListCourseAdmin() {
       });
 
       return axios.all([req1, req2]).then(
-        axios.spread((listAvaluation, listSemester) => {
+        axios.spread((listCourse, listSemester) => {
           // Xử lý response từ request1 và requests
-          setCourse(listAvaluation.data);
+          setCourse(listCourse.data);
           setsemesterList(listSemester.data);
         })
       );
@@ -41,11 +44,14 @@ function ListCourseAdmin() {
     setSemId(semesterId);
   }
 
+  function handleShowProjects(id) {
+    setActiveButton("project");
+    setCookie("course_id", id);
+  }
+
+  console.log(courses);
   return (
     <div>
-      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-        {isShowAdd ? "View" : "Add"}
-      </Button>
       {isShowAdd ? (
         <AddCourse />
       ) : (
@@ -75,9 +81,7 @@ function ListCourseAdmin() {
                 <tr>
                   <th scope="col">Course ID</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Room</th>
-                  <th scope="col">Start Time</th>
-                  <th scope="col">End Time</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -88,11 +92,19 @@ function ListCourseAdmin() {
                   })
                   .map((course, i) => (
                     <tr key={i}>
-                      <td>{course.Id}</td>
-                      <td>{course.Name}</td>
-                      <td>{course.Room}</td>
-                      <td>{course.StartTime}</td>
-                      <td>{course.EndTime}</td>
+                      <td>{course.id}</td>
+                      <td
+                        onClick={() => {
+                          handleShowProjects(course.id);
+                        }}
+                      >
+                        {course.name}
+                      </td>
+                      <td>
+                        <Button to={`/coursedetails/${course.id}`}>
+                          Details
+                        </Button>
+                      </td>
                     </tr>
                   ))}
               </tbody>
@@ -100,6 +112,9 @@ function ListCourseAdmin() {
           </div>
         </>
       )}
+      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
+        {isShowAdd ? "View" : "Add"}
+      </Button>
     </div>
   );
 }

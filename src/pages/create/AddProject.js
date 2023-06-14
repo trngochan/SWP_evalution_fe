@@ -8,7 +8,6 @@ import axios from "axios";
 const cx = classNames.bind(styles);
 
 function AddProject() {
-  const cousreId = ["course1", "course2"];
   const [courses, setCourses] = useState([]);
   const [message, setMessage] = useState("");
 
