@@ -36,7 +36,10 @@ function TeacherBoardScore() {
           setStudentList(response1.data);
           setScoreList(response2.data);
           response1.data.map((std) => {
-            setScoreStudents((prev) => [...prev, { stdinprjId: std.stdinprjId }]);
+            setScoreStudents((prev) => [
+              ...prev,
+              { stdinprjId: std.stdinprjId },
+            ]);
           });
         })
         .catch((error) => {
@@ -47,27 +50,11 @@ function TeacherBoardScore() {
     fetchData();
   }, []);
 
-  console.log(ScoreList)
+  console.log(ScoreList);
 
   const handleSubmit = (e) => {
     for (let i = 0; i < ScoreStudents.length; i++) {
       e.preventDefault();
-
-      // const updatedScores = [...scores];
-      // const presentationScore = parseFloat(
-      //   e.target.elements.presentationScore.value
-      // );
-      // const demoScore = parseFloat(e.target.elements.demoScore.value);
-      // const answerScore = parseFloat(e.target.elements.answerScore.value);
-      // const totalScore = (
-      //   demoScore * 0.3 +
-      //   presentationScore * 0.4 +
-      //   answerScore * 0.3
-      // ).toFixed(2);
-
-      // updatedScores[index] = totalScore;
-      // setScores(updatedScores);
-
 
       axios
         .post("/score/insert", ScoreStudents[i], {
@@ -92,7 +79,11 @@ function TeacherBoardScore() {
               <tr>
                 <th></th>
                 {ScoreList.map((column, i) => {
-                  return <th key={i}>{column.name} ({column.percent})</th>;
+                  return (
+                    <th key={i}>
+                      {column.name} ({column.percent})
+                    </th>
+                  );
                 })}
               </tr>
             </thead>
@@ -100,7 +91,9 @@ function TeacherBoardScore() {
               {studentList?.map((student, i) => {
                 return (
                   <tr key={i}>
-                    <th>{student.CODE} - {student.Name}</th>
+                    <th>
+                      {student.CODE} - {student.Name}
+                    </th>
                     {ScoreList.map((column, i) => {
                       return (
                         <td key={i}>
@@ -125,7 +118,9 @@ function TeacherBoardScore() {
             </tbody>
           </table>
           <div className={cx("btn-submit")}>
-            <Button primary onClick={handleSubmit}>Submit</Button>
+            <Button primary onClick={handleSubmit}>
+              Submit
+            </Button>
           </div>
         </div>
       </div>

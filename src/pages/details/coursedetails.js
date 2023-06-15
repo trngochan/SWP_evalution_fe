@@ -6,13 +6,22 @@ import React from "react";
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
 import Button from "~/components/button";
+import styles from "./details.module.scss";
+import classNames from "classnames/bind";
+import Divider from "~/components/Divider";
+
+const cx = classNames.bind(styles);
 
 function CourseDetails() {
   const [project, setProject] = useState([]);
   const [student, setStudent] = useState([]);
   const [studentNotCour, setStudentNotCour] = useState([]);
+  const [projectNotCour, setProjectNotCour] = useState([]);
+  const [inforCourse, setInforCourse] = useState({});
 
   const { course } = useParams();
+
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,11 +32,14 @@ function CourseDetails() {
         withCredentials: true,
       });
 
-      return axios.all([req1, req2]).then(
-        axios.spread((listStd, listPrj) => {
+      const req3 = await axios.get(`/course/${course}/getbyid`);
+
+      return axios.all([req1, req2, req3]).then(
+        axios.spread((listStd, listPrj, inforCourse) => {
           // Xử lý response từ request1 và requests
           setProject(listPrj.data);
           setStudent(listStd.data);
+          setInforCourse(inforCourse.data?.[0]);
         })
       );
     }
@@ -46,7 +58,7 @@ function CourseDetails() {
       course,
       student,
     });
-    window.location.reload();
+    setRerender(!rerender);
     console.log(response);
   }
 
@@ -55,9 +67,27 @@ function CourseDetails() {
       <Header />
       <Infor />
       <div className="row">
-        <div>
-          <Button onClick={handleShowStudentNotInCourse}>Add student</Button>
+        <h2 className={cx("title")}>Information details of course</h2>
+        <div className="col-6">
+          <table className="table table-striped">
+            <tbody>
+              <tr>
+                <th scope="row">Subject ID</th>
+                <td>{inforCourse.SubjectId}</td>
+              </tr>
+              <tr>
+                <th>Course ID</th>
+                <td>{inforCourse.id}</td>
+              </tr>
+              <tr>
+                <th>Name</th>
+                <td>{inforCourse.name}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
+      <div className="row">
         <section>
           <h2 className="mb-3 mt-5">List project of this course</h2>
           <table>
@@ -76,7 +106,7 @@ function CourseDetails() {
                     <tr key={index}>
                       <td>{item.prjId}</td>
                       <td>{item.Name}</td>
-                      <td>{item.Notion}</td>
+                      <td>{item.notion}</td>
                       <td>
                         <Button to={`/projectdetails/${item.prjId}`}>
                           Details
@@ -91,6 +121,8 @@ function CourseDetails() {
             </tbody>
           </table>
         </section>
+
+        <Divider />
 
         <section>
           <h2 className="mt-5 mb-3">List student in course</h2>
@@ -126,8 +158,18 @@ function CourseDetails() {
           </table>
         </section>
 
+        <Divider />
+
         <section>
-          <h2 className="mt-5 mb-3">List student no in course</h2>
+          <div className="d-flex justify-content-between">
+            <h2 className="">List student no in course</h2>
+            <button
+              className={cx("btn-showadd")}
+              onClick={handleShowStudentNotInCourse}
+            >
+              Add student
+            </button>
+          </div>
           <table>
             <thead>
               <tr>

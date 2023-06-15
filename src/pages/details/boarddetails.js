@@ -1,11 +1,16 @@
 import Button from "~/components/button";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import styles from "./details.module.scss";
+import classNames from "classnames/bind";
 
 import axios from "axios";
 
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
+import Divider from "~/components/Divider";
+
+const cx = classNames.bind(styles);
 
 function BoardDetail() {
   const [show, setShow] = useState("add");
@@ -137,24 +142,6 @@ function BoardDetail() {
       <Header />
       <Infor />
       <div className="row">
-        <Button
-          small
-          onClick={() => {
-            handShowleProInBoard();
-          }}
-        >
-          Add project
-        </Button>
-        <Button
-          small
-          onClick={() => {
-            handleShowAddTeacher(board);
-          }}
-        >
-          Add teachers
-        </Button>
-      </div>
-      <div className="row">
         <h2 className="mb-5 mt-5">List teacher in evaluation board...</h2>
         <div className="row">
           <table>
@@ -182,13 +169,24 @@ function BoardDetail() {
                 );
               })}
             </tbody>
-            {success && <p>{success}</p>}
-            {error && <p>{error}</p>}
           </table>
         </div>
-        <div className="row ">
+
+        <Divider />
+
+        <div className="row">
           <div className="col-12">
-            <h2 className="mb-3 mt-5">List teacher other...</h2>
+            <div className="d-flex justify-content-between">
+              <h2 className="">List teacher other...</h2>
+              <button
+                className={cx("btn-showadd")}
+                onClick={() => {
+                  handleShowAddTeacher(board);
+                }}
+              >
+                Click here to show teacher into evaluation
+              </button>
+            </div>
             <table>
               <thead>
                 <tr>
@@ -226,8 +224,11 @@ function BoardDetail() {
           </div>
         </div>
 
+        <Divider />
+
         <div className="row">
-          <h2 className="mb-5 mt-5">List project of evalution...</h2>
+          <h2 className="">List project of evalution...</h2>
+
           <table>
             <thead>
               <tr>
@@ -264,13 +265,24 @@ function BoardDetail() {
                 );
               })}
             </tbody>
-            {success && <p>{success}</p>}
-            {error && <p>{error}</p>}
           </table>
         </div>
       </div>
+
+      <Divider />
+
       <div className="row">
-        <h2 className="mb-5 mt-5">List teacher out evalution...</h2>
+        <div className="d-flex justify-content-between ">
+          <h2 className="mb-5 mt-5">List teacher out evalution...</h2>
+          <button
+            className={cx("btn-showadd")}
+            onClick={() => {
+              handShowleProInBoard();
+            }}
+          >
+            Click here to show list project no has evaluation
+          </button>
+        </div>
 
         <div className="row">
           <div className="col 5">

@@ -1,23 +1,33 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import styles from "./details.module.scss";
+import classNames from "classnames/bind";
+
 import Button from "~/components/button";
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
+import Divider from "~/components/Divider";
+
+const cx = classNames.bind(styles);
 
 function ProjectDetails() {
   const [students, setStudents] = useState([]);
   const [studentNoInPro, setStudentNoInPro] = useState([]);
+  const [rerender, setRerender] = useState(false);
+  const [inforProject, setInforProject] = useState({});
 
   const { project } = useParams();
 
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get(`/student/${project}/project`);
+      const response1 = await axios.get(`/project/${project}/getbyid`);
       setStudents(response.data);
+      setInforProject(response1.data?.[0]);
     }
     fetchData();
-  });
+  }, [rerender]);
 
   async function handleShowStdInPrj() {
     const response = await axios.get(`/student/${project}/getstdinprj`);
@@ -32,7 +42,8 @@ function ProjectDetails() {
     });
 
     if (response.status === 200) {
-      window.location.reload();
+      setRerender(!rerender);
+      handleShowStdInPrj();
     }
   }
 
@@ -40,6 +51,31 @@ function ProjectDetails() {
     <>
       <Header />
       <Infor />
+      <div className="row">
+        <h2 className={cx("title")}>Information details of project</h2>
+        <div className="col-6">
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <th scope="row">CourseID</th>
+                <td>{inforProject.CourseId}</td>
+              </tr>
+              <tr>
+                <th>Project ID</th>
+                <td>{inforProject.Id}</td>
+              </tr>
+              <tr>
+                <th>Topic</th>
+                <td>{inforProject.Name}</td>
+              </tr>
+              <tr>
+                <th>Notion</th>
+                <td>{inforProject.Notion}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <section>
         <h2 className="mt-5 mb-3">List student in project...</h2>
         <table className="table table-striped">
@@ -69,17 +105,19 @@ function ProjectDetails() {
           </tbody>
         </table>
       </section>
+      <Divider />
       <section>
-        <h2 className="mt-5 mb-3">
-          List student no in project but in course...
-        </h2>
-        <Button
-          onClick={() => {
-            handleShowStdInPrj();
-          }}
-        >
-          Click here to add student into project
-        </Button>
+        <div className="d-flex justify-content-between">
+          <h2 className="">List student no in project but in course...</h2>
+          <button
+            className={cx("btn-showadd")}
+            onClick={() => {
+              handleShowStdInPrj();
+            }}
+          >
+            Click here to add student into project
+          </button>
+        </div>
         <table className="table table-striped">
           <thead>
             <tr>

@@ -12,6 +12,7 @@ import StudentsInCourse from "./pages/Teacher/ListStudent";
 import BoardDetail from "./pages/details/boarddetails";
 import CourseDetails from "./pages/details/coursedetails";
 import ProjectDetails from "./pages/details/ProjectDetails";
+import SubjectDetails from "./pages/details/subjectDetails";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/boarddetails/:board" element={<BoardDetail />} />
           <Route path="/coursedetails/:course" element={<CourseDetails />} />
           <Route path="/projectdetails/:project" element={<ProjectDetails />} />
+          <Route path="/subjectdetails/:subject" element={<SubjectDetails />} />
           <Route path="/studentsInCourse" element={<StudentsInCourse />} />
         </Routes>
       </Router>

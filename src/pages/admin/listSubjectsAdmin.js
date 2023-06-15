@@ -1,16 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "~/components/button";
 import classNames from "classnames/bind";
 
-import styles from './admin.module.scss'
+import styles from "./admin.module.scss";
 import AddSubject from "../create/AddSubject";
+import axios from "axios";
 
 const cx = classNames.bind(styles);
 
 function ListSubjectAdmin() {
-    const [isShowAdd, setShowAdd] = useState(false);
+  const [isShowAdd, setShowAdd] = useState(false);
+  const [subjects, setSubjects] = useState([]);
+  const [semesters, setSemesters] = useState([]);
 
-    const semesterList = ["1", "2"]
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get("subject/getall");
+      const response1 = await axios.get("semester/getall");
+
+      setSubjects(response.data);
+      setSemesters(response1.data);
+    }
+
+    fetchData();
+  }, []);
+
+  console.log(semesters);
   return (
     <div>
       <Button primary onClick={() => setShowAdd(!isShowAdd)}>
@@ -20,36 +35,29 @@ function ListSubjectAdmin() {
         <AddSubject />
       ) : (
         <>
-          <div className="col-2">
-            <select
-              className={cx('form-select')}
-              aria-label="Default select example"
-              defaultValue={""}
-            //   onClick    
-            >
-              <option value="0">All Semester</option>
-              {semesterList.map((semester, i) => {
-                return (
-                  <option key={i} >
-                    {semester}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="col-10">
+          <div className="col-12">
             <table className="table">
               <thead>
                 <tr>
+                  <th scope="col">ID</th>
                   <th scope="col">Name</th>
                   <th scope="col">Description</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-                    <tr >
-                        <td>1</td>
-                        <td>2</td>
-                      </tr>
+                {subjects.map((subject, i) => (
+                  <tr key={i}>
+                    <td>{subject.Id}</td>
+                    <td>{subject.Name}</td>
+                    <td>{subject.Description}</td>
+                    <td>
+                      <Button to={`/subjectdetails/${subject.Id}`}>
+                        Details
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
