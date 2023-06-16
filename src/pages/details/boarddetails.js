@@ -32,6 +32,7 @@ function BoardDetail() {
         setShow("project");
         setMessage("");
         const respone = await axios.get(`/project/${board}/evalution`);
+
         const data = respone.data;
 
         for (let i = 0; i < data.length; i++) {

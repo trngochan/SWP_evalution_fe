@@ -50,23 +50,25 @@ function TeacherBoardScore() {
     fetchData();
   }, []);
 
-  console.log(ScoreList);
+  console.log(ScoreStudents);
+
+  console.log(cookies);
 
   const handleSubmit = (e) => {
     for (let i = 0; i < ScoreStudents.length; i++) {
       e.preventDefault();
 
       axios
-        .post("/score/insert", ScoreStudents[i], {
-          withCredentials: true,
+        .post("/score/insert", {
+          score: ScoreStudents[i],
+          lectureinboardId: cookies.lectureinboard_id,
+          courseID: cookies.course_id,
         })
         .then((res) => res.data)
         .then((data) => console.log(data))
         .catch((err) => console.log(err));
     }
   };
-
-  console.log(studentList);
 
   return (
     <div>
