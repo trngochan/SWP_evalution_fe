@@ -16,7 +16,6 @@ function CourseDetails() {
   const [project, setProject] = useState([]);
   const [student, setStudent] = useState([]);
   const [studentNotCour, setStudentNotCour] = useState([]);
-  const [projectNotCour, setProjectNotCour] = useState([]);
   const [inforCourse, setInforCourse] = useState({});
 
   const { course } = useParams();
@@ -45,7 +44,7 @@ function CourseDetails() {
     }
 
     fetchData();
-  }, []);
+  }, [rerender]);
 
   async function handleShowStudentNotInCourse() {
     const response = await axios.get(`/student/${course}/getstdnotincour`);
@@ -58,8 +57,8 @@ function CourseDetails() {
       course,
       student,
     });
+    handleShowStudentNotInCourse();
     setRerender(!rerender);
-    console.log(response);
   }
 
   return (

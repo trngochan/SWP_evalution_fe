@@ -58,15 +58,17 @@ function TeacherBoardScore() {
     for (let i = 0; i < ScoreStudents.length; i++) {
       e.preventDefault();
 
-      axios
-        .post("/score/insert", {
-          score: ScoreStudents[i],
-          lectureinboardId: cookies.lectureinboard_id,
-          courseID: cookies.course_id,
-        })
-        .then((res) => res.data)
-        .then((data) => console.log(data))
-        .catch((err) => console.log(err));
+      console.log(ScoreStudents);
+
+      // axios
+      //   .post("/score/insert", {
+      //     score: ScoreStudents[i],
+      //     lectureinboardId: cookies.lectureinboard_id,
+      //     courseID: cookies.course_id,
+      //   })
+      //   .then((res) => res.data)
+      //   .then((data) => console.log(data))
+      //   .catch((err) => console.log(err));
     }
   };
 
@@ -126,7 +128,7 @@ function TeacherBoardScore() {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

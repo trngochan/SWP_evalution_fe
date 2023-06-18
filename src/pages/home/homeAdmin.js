@@ -98,9 +98,7 @@ function HomeAdmin() {
             </div>
           </div>
           <div className={cx("col-9")}>
-            {activeButton === "course" && (
-              <ListCourseAdmin setActiveButton={setActiveButton} />
-            )}
+            {activeButton === "course" && <ListCourseAdmin />}
             {activeButton === "project" && <ListProjectAdmin />}
             {activeButton === "std" && <ListStdAdmin />}
             {activeButton === "teach" && <ListTeacherAdmin />}

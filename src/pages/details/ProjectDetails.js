@@ -47,6 +47,15 @@ function ProjectDetails() {
     }
   }
 
+  async function handRemoveStd(id) {
+    const response = await axios.delete(`/studentinproject/${id}/remove`);
+
+    if (response.status === 200) {
+      setRerender(!rerender);
+      handleShowStdInPrj();
+    }
+  }
+
   return (
     <>
       <Header />
@@ -84,6 +93,7 @@ function ProjectDetails() {
               <th>Student CODE</th>
               <th>Name</th>
               <th>Address</th>
+              <th>Remove</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -93,6 +103,11 @@ function ProjectDetails() {
                 <td>{student.CODE}</td>
                 <td>{student.Name}</td>
                 <td>{student.Address}</td>
+                <td>
+                  <Button onClick={() => handRemoveStd(student.stdinprjId)}>
+                    Remove
+                  </Button>
+                </td>
                 <td
                   style={{
                     display: "flex",

@@ -7,7 +7,7 @@ import * as yup from "yup";
 
 const cx = classNames.bind(styles);
 
-function AddCourse() {
+function AddCourse({ setShowAdd }) {
   const formik = useFormik({
     initialValues: {
       subjectId: "",
@@ -24,6 +24,9 @@ function AddCourse() {
     onSubmit: async (values) => {
       try {
         const respone = await axios.post("/course/add", values);
+        if (respone.data.status === 200) {
+          setShowAdd(false);
+        }
 
         console.log(respone.data);
       } catch (error) {

@@ -43,14 +43,13 @@ function ListBoardAdmin() {
   }
 
   return (
-    <div>
-      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-        {isShowAdd ? "View" : "Add"}
-      </Button>
+    <div className="row mt-3">
       {isShowAdd ? (
-        <AddBoard />
+        <div className="col-11">
+          <AddBoard />
+        </div>
       ) : (
-        <>
+        <div className="col-11">
           <div className="col-2">
             <select
               className={cx("form-select")}
@@ -105,9 +104,13 @@ function ListBoardAdmin() {
               </tbody>
             </table>
           </div>
-        </>
+        </div>
       )}
-
+      <div className="col-1">
+        <Button primary onClick={() => setShowAdd(!isShowAdd)}>
+          {isShowAdd ? "View" : "Add"}
+        </Button>
+      </div>
       <Footer />
     </div>
   );

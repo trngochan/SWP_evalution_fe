@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./details.module.scss";
 import classNames from "classnames/bind";
+import { Modal, Button as Btn } from "react-bootstrap";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import moment from "moment";
 
 import axios from "axios";
 
@@ -19,47 +23,67 @@ function BoardDetail() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [listProOutBoard, setListProOutBoard] = useState([]);
-  const [boardId, setBoardId] = useState(0);
-  const [message, setMessage] = useState("");
   const [teachers, setTeachers] = useState([]);
   const [teachersnotinboard, setTeachersnotinboard] = useState([]);
 
+  const [rerender, setRerender] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [showModalTeachers, setShowModalTeachers] = useState(false);
+  const [showModalProjects, setShowModalProjects] = useState(false);
+
+  const handleOpenTeachers = () => {
+    setShowModalTeachers(true);
+  };
+
+  const handleOpenProjects = () => {
+    setShowModalProjects(true);
+  };
+
+  const handleCloseTeachers = () => {
+    setShowModalTeachers(false);
+  };
+
+  const handleCloseProjects = () => {
+    setShowModalProjects(false);
+  };
+
   const { board } = useParams();
 
-  useEffect(function () {
-    try {
-      async function fetchData() {
-        setShow("project");
-        setMessage("");
-        const respone = await axios.get(`/project/${board}/evalution`);
+  useEffect(
+    function () {
+      try {
+        async function fetchData() {
+          setShow("project");
+          const respone = await axios.get(`/project/${board}/evalution`);
 
-        const data = respone.data;
+          const data = respone.data;
 
-        for (let i = 0; i < data.length; i++) {
-          const response1 = await axios.get(
-            `/teacher/${data[i].id}/quaninboard`
-          );
-          const response2 = await axios.get(
-            `/teacher/${data[i].id}/quanmarked`
-          );
-          data[i].teacherMark = {
-            teacherQuan: response1.data[0].totalTeacher,
-            teacherQuanMarked: response2.data[0].totalTeachersMark,
-          };
+          for (let i = 0; i < data.length; i++) {
+            const response1 = await axios.get(
+              `/teacher/${data[i].id}/quaninboard`
+            );
+            const response2 = await axios.get(
+              `/teacher/${data[i].id}/quanmarked`
+            );
+            data[i].teacherMark = {
+              teacherQuan: response1.data[0].totalTeacher,
+              teacherQuanMarked: response2.data[0].totalTeachersMark,
+            };
 
-          const respone1 = await axios.get(`/teacher/${board}/linb`);
-          setTeachers(respone1.data);
+            const respone1 = await axios.get(`/teacher/${board}/linb`);
+            setTeachers(respone1.data);
+          }
+          setListProject(data);
         }
-        setListProject(data);
-      }
-      fetchData();
-    } catch (error) {}
-  }, []);
+        fetchData();
+      } catch (error) {}
+    },
+    [rerender]
+  );
 
   async function handShowleProInBoard() {
     try {
       setShow("add");
-      setMessage("");
       const respone = await axios.get(`/project/${board}/projectsnoboard`);
       const data = respone.data;
       if (data.status === 201) {
@@ -74,7 +98,6 @@ function BoardDetail() {
       if (response.data.status === 200) {
         setError("");
         setSuccess(response.data.message);
-        setMessage("");
       } else {
         setSuccess("");
         setError(response.data.message);
@@ -101,7 +124,6 @@ function BoardDetail() {
     });
     if (respone.status === 200) {
       window.location.reload();
-      setMessage(respone.data.message);
     } else {
       setError("Error: at handleAddTeacherInBoard");
     }
@@ -121,20 +143,26 @@ function BoardDetail() {
       const order = orderInput.value; // Lấy giá trị của ô input order tương ứng
       const protectTime = protectTimeInput.value; // Lấy giá trị của ô input protect time tương ứng
 
-      const response = await axios.post("/projectinboard/insert", {
-        projectId: projectId,
-        boardId: board,
-        intendTime: intendTime,
-        order: order,
-        protectTime: protectTime,
-      });
+      if (intendTime.length > 0 && protectTime.length > 0 && order.length > 0) {
+        const response = await axios.post("/projectinboard/insert", {
+          projectId: projectId,
+          boardId: board,
+          intendTime: intendTime,
+          order: order,
+          protectTime: protectTime,
+        });
 
-      if (response.status === 200) {
-        setShow("");
-        setMessage(response.data.message);
+        if (response.status === 200) {
+          setRerender(!rerender);
+          handleCloseProjects();
+          handShowleProInBoard();
+          setError("");
+        }
+      } else {
+        setError("Some input fields are missing");
       }
     } else {
-      console.error("Some input fields are missing");
+      setError("Some input fields are missing");
     }
   }
 
@@ -142,6 +170,24 @@ function BoardDetail() {
     <>
       <Header />
       <Infor />
+      <button
+        className={cx("btn-showadd")}
+        onClick={() => {
+          handleOpenTeachers();
+          handleShowAddTeacher(board);
+        }}
+      >
+        Click here to show teacher into evaluation
+      </button>
+      <button
+        className={cx("btn-showadd")}
+        onClick={() => {
+          handleOpenProjects();
+          handShowleProInBoard();
+        }}
+      >
+        Click here to show list project no has evaluation
+      </button>
       <div className="row">
         <h2 className="mb-5 mt-5">List teacher in evaluation board...</h2>
         <div className="row">
@@ -171,58 +217,6 @@ function BoardDetail() {
               })}
             </tbody>
           </table>
-        </div>
-
-        <Divider />
-
-        <div className="row">
-          <div className="col-12">
-            <div className="d-flex justify-content-between">
-              <h2 className="">List teacher other...</h2>
-              <button
-                className={cx("btn-showadd")}
-                onClick={() => {
-                  handleShowAddTeacher(board);
-                }}
-              >
-                Click here to show teacher into evaluation
-              </button>
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Teacher ID</th>
-                  <th>Name</th>
-                  <th>PhoneNumber</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {teachersnotinboard.map((item, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <tr>
-                        <td>{item.Id}</td>
-                        <td>{item.Name}</td>
-                        <td>{item.PhoneNumber}</td>
-                        <td>
-                          <Button
-                            onClick={() => {
-                              handleAddTeacherInBoard(item.Id);
-                            }}
-                          >
-                            Add
-                          </Button>
-                        </td>
-                      </tr>
-                    </React.Fragment>
-                  );
-                })}
-              </tbody>
-              {success && <p>{success}</p>}
-              {error && <p>{error}</p>}
-            </table>
-          </div>
         </div>
 
         <Divider />
@@ -272,72 +266,47 @@ function BoardDetail() {
 
       <Divider />
 
-      <div className="row">
-        <div className="d-flex justify-content-between ">
-          <h2 className="mb-5 mt-5">List teacher out evalution...</h2>
-          <button
-            className={cx("btn-showadd")}
-            onClick={() => {
-              handShowleProInBoard();
-            }}
-          >
-            Click here to show list project no has evaluation
-          </button>
-        </div>
+      {/* Modal */}
+      <Modal
+        show={showModalTeachers}
+        onHide={handleCloseTeachers}
+        dialogClassName="custom-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <h2 className="">List teacher other...</h2>
+          </Modal.Title>
+        </Modal.Header>
 
-        <div className="row">
-          <div className="col 5">
-            {listProOutBoard.length > 0 ? (
+        <Modal.Body>
+          <div className="row">
+            <div className="col-12">
+              <div className="d-flex justify-content-between"></div>
               <table>
                 <thead>
                   <tr>
-                    <th>Project ID</th>
+                    <th>Teacher ID</th>
                     <th>Name</th>
-                    <th>Note</th>
+                    <th>PhoneNumber</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {listProOutBoard.map((item, index) => {
+                  {teachersnotinboard.map((item, index) => {
                     return (
                       <React.Fragment key={index}>
                         <tr>
                           <td>{item.Id}</td>
                           <td>{item.Name}</td>
-                          <td>{item.Notion}</td>
+                          <td>{item.PhoneNumber}</td>
                           <td>
                             <Button
                               onClick={() => {
-                                handleAddProjectInBoard(item.Id, index);
+                                handleAddTeacherInBoard(item.Id);
                               }}
                             >
                               Add
                             </Button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <input
-                              min={1}
-                              name={`intendTime_${index}`}
-                              placeholder="Enter intend time..."
-                              type="time"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              min={1}
-                              name={`order_${index}`}
-                              placeholder="Enter order..."
-                              type="number"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              name={`protectTime_${index}`}
-                              placeholder="Enter protect time..."
-                              type="number"
-                            />
                           </td>
                         </tr>
                       </React.Fragment>
@@ -347,19 +316,99 @@ function BoardDetail() {
                 {success && <p>{success}</p>}
                 {error && <p>{error}</p>}
               </table>
-            ) : (
-              <h4
-                className="ml-5"
-                style={{
-                  marginLeft: "10px",
-                }}
-              >
-                All project had to evaluate...
-              </h4>
-            )}
+            </div>
           </div>
-        </div>
-      </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* modal add project */}
+      <Modal
+        show={showModalProjects}
+        onHide={handleCloseProjects}
+        dialogClassName="custom-modal"
+        className={cx("custom-modal")}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <h2>List project out evaluation...</h2>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {listProOutBoard.length > 0 ? (
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%" }}>
+                <thead>
+                  <tr>
+                    <th>Project ID</th>
+                    <th>Name</th>
+                    <th>Note</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listProOutBoard.map((item, index) => (
+                    <React.Fragment key={index}>
+                      <tr key={index}>
+                        <td>{item.Id}</td>
+                        <td>{item.Name}</td>
+                        <td>{item.Notion}</td>
+                        <td>
+                          <Button
+                            onClick={() => {
+                              handleAddProjectInBoard(item.Id, index);
+                            }}
+                          >
+                            Add
+                          </Button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input
+                            min={1}
+                            name={`intendTime_${index}`}
+                            placeholder="Enter intend time..."
+                            type="time"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            min={1}
+                            name={`order_${index}`}
+                            placeholder="Enter order..."
+                            type="number"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            name={`protectTime_${index}`}
+                            placeholder="Enter protect time..."
+                            type="number"
+                          />
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
+              {error && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "14px",
+                  }}
+                >
+                  {error}
+                </p>
+              )}
+            </div>
+          ) : (
+            <h4 className="ml-5" style={{ marginLeft: "10px" }}>
+              All projects have been evaluated...
+            </h4>
+          )}
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

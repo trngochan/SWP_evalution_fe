@@ -16,11 +16,11 @@ const LoginStudent = () => {
 
   const [error, setError] = useState("");
 
-
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(1);
     // Xử lý đăng nhập với username và password ở đây
     axios
       .post("/loginstudent", {
@@ -29,13 +29,13 @@ const LoginStudent = () => {
       })
       .then((res) => res.data)
       .then((data) => {
-        if(data.data.status === 200) {
+        if (data.data.status === 200) {
           setCookie("token", data.data.token, { path: "/" });
           setCookie("user", data.data.data[0], { path: "/" });
           navigate("/student");
-         } else {
-            setError(data.data.message)
-         }
+        } else {
+          setError(data.data.message);
+        }
       })
       .catch((err) => {
         navigate("/");
@@ -44,14 +44,14 @@ const LoginStudent = () => {
 
   return (
     <>
-    <Header />
-    <div className={cx('login')}>
-      <form onSubmit={handleSubmit} className={cx('form')}>
-        <h2 className={cx('heading')}>Login</h2>
-          <div className={cx('form-group')}>
-            <label className={cx('form-label')}>Username:</label>
+      <Header />
+      <div className={cx("login")}>
+        <form onSubmit={handleSubmit} className={cx("form")}>
+          <h2 className={cx("heading")}>Login</h2>
+          <div className={cx("form-group")}>
+            <label className={cx("form-label")}>Username:</label>
             <input
-              className={cx('form-control')}
+              className={cx("form-control")}
               placeholder="EX: email@gmail.com"
               type="text"
               value={username}
@@ -59,22 +59,24 @@ const LoginStudent = () => {
               name="username"
             />
           </div>
-          <div className={cx('form-group')}>
-            <label className={cx('form-label')}>Password:</label>
+          <div className={cx("form-group")}>
+            <label className={cx("form-label")}>Password:</label>
             <input
-              className={cx('form-control')}
+              className={cx("form-control")}
               placeholder="Enter password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               name="username"
             />
-            <span className={cx('form-message')}></span>
+            <span className={cx("form-message")}></span>
           </div>
           {error.length > 0 && <p>{error}</p>}
-          <button type="submit" className={cx('form-submit')}>Login</button>
-      </form>
-    </div>
+          <button type="submit" className={cx("form-submit")}>
+            Login
+          </button>
+        </form>
+      </div>
     </>
   );
 };

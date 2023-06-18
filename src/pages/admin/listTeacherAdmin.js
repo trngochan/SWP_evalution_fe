@@ -169,7 +169,7 @@ function ListTeacherAdmin() {
               <input
                 className={"form-control"}
                 placeholder="Enter address"
-                type="string"
+                type="text"
                 name="address"
                 value={formik.values.address}
                 onChange={formik.handleChange}

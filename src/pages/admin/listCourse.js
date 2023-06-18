@@ -9,7 +9,7 @@ import styles from "./admin.module.scss";
 
 const cx = classNames.bind(styles);
 
-function ListCourseAdmin({ setActiveButton }) {
+function ListCourseAdmin() {
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const [isShowAdd, setShowAdd] = useState(false);
@@ -38,22 +38,20 @@ function ListCourseAdmin({ setActiveButton }) {
     }
 
     fetchData();
-  }, []);
+  }, [isShowAdd]);
 
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
   }
 
   function handleShowProjects(id) {
-    setActiveButton("project");
     setCookie("course_id", id);
   }
 
-  console.log(courses);
   return (
     <div>
       {isShowAdd ? (
-        <AddCourse />
+        <AddCourse setShowAdd={setShowAdd} />
       ) : (
         <>
           <div className="col-2">
@@ -65,7 +63,7 @@ function ListCourseAdmin({ setActiveButton }) {
                 handleChooseSem(e.target.value);
               }}
             >
-              <option value="0">All Course</option>
+              <option value="0">All semester</option>
               {semesterList.map((semester, i) => {
                 return (
                   <option value={semester.Id} key={i}>
