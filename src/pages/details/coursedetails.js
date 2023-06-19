@@ -17,6 +17,40 @@ function CourseDetails() {
   const [student, setStudent] = useState([]);
   const [studentNotCour, setStudentNotCour] = useState([]);
   const [inforCourse, setInforCourse] = useState({});
+  const [showTableListProjects, setShowTableListProjects] = useState(true);
+  const [showTableListStudents, setShowTableListStudents] = useState(false);
+  const [showTableListStudentsNotInCourse, setShowTableListStudentsNotInCourse] = useState(false);
+  const [isProjectsButtonPrimary, setIsProjectsButtonPrimary] = useState(true);
+  const [isStudentsButtonPrimary, setIsStudentsButtonPrimary] = useState(false);
+  const [isStudentsNotInCourseButtonPrimary, setIsStudentsNotInCourseButtonPrimary] = useState(false);
+
+
+  const handleShowTableProjects = () => {
+    setShowTableListProjects(true);
+    setShowTableListStudents(false);
+    setShowTableListStudentsNotInCourse(false);
+    setIsProjectsButtonPrimary(true);
+    setIsStudentsButtonPrimary(false);
+    setIsStudentsNotInCourseButtonPrimary(false);
+  };
+
+  const handleShowTableStudents = () => {
+    setShowTableListStudents(true);
+    setShowTableListProjects(false);
+    setShowTableListStudentsNotInCourse(false);
+    setIsStudentsButtonPrimary(true);
+    setIsProjectsButtonPrimary(false);
+    setIsStudentsNotInCourseButtonPrimary(false);
+  };
+
+  const handleShowTableStudentsNotInCourse = () => {
+    setShowTableListStudentsNotInCourse(true);
+    setShowTableListProjects(false);
+    setShowTableListStudents(false);
+    setIsStudentsNotInCourseButtonPrimary(true);
+    setIsProjectsButtonPrimary(false);
+    setIsStudentsButtonPrimary(false);
+  };
 
   const { course } = useParams();
 
@@ -86,9 +120,30 @@ function CourseDetails() {
           </table>
         </div>
       </div>
-      <div className="row">
-        <section>
-          <h2 className="mb-3 mt-5">List project of this course</h2>
+
+      <div className={cx('title-table')}>
+        <Button className={cx("mb-5 mt-5 show")} 
+            onClick={handleShowTableProjects}
+            primary={isProjectsButtonPrimary}
+          >
+            List projects
+          </Button>
+          <Button className={cx("mb-5 mt-5 show")} 
+            onClick={handleShowTableStudents}
+            primary={isStudentsButtonPrimary}
+            >
+            List students
+          </Button>
+          <Button className={cx("mb-5 mt-5 show")} 
+            onClick={handleShowTableStudentsNotInCourse}
+            primary={isStudentsNotInCourseButtonPrimary}
+            >
+            List students no in course
+          </Button>
+        </div>
+      
+      <div className="table-list">
+        {showTableListProjects &&(<section>
           <table>
             <thead>
               <tr>
@@ -119,12 +174,11 @@ function CourseDetails() {
               )}
             </tbody>
           </table>
-        </section>
+        </section>)}
 
-        <Divider />
 
-        <section>
-          <h2 className="mt-5 mb-3">List student in course</h2>
+        {showTableListStudents && (
+          <section>
           <table>
             <thead>
               <tr>
@@ -156,12 +210,11 @@ function CourseDetails() {
             </tbody>
           </table>
         </section>
+        )}
 
-        <Divider />
-
-        <section>
+        {showTableListStudentsNotInCourse && (
+          <section>
           <div className="d-flex justify-content-between">
-            <h2 className="">List student no in course</h2>
             <button
               className={cx("btn-showadd")}
               onClick={handleShowStudentNotInCourse}
@@ -204,6 +257,7 @@ function CourseDetails() {
             </tbody>
           </table>
         </section>
+        )}
       </div>
     </>
   );

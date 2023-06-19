@@ -85,8 +85,33 @@ function ProjectDetails() {
           </table>
         </div>
       </div>
+
+      <div className={cx('title-table')}>
+        <Button className={cx("mb-5 mt-5 show")} 
+            // onClick={handleShowTableProjects}
+            // primary={isProjectsButtonPrimary}
+          >
+            List students
+          </Button>
+          <Button className={cx("mb-5 mt-5 show")} 
+            // onClick={handleShowTableStudents}
+            // primary={isStudentsButtonPrimary}
+            >
+            List student no in project but in course
+          </Button>
+          <div className="d-flex justify-content-between">
+          <button
+            className={cx("btn-showadd")}
+            onClick={() => {
+              handleShowStdInPrj();
+            }}
+          >
+            Click here to add student into project
+          </button>
+        </div>
+        </div>
+
       <section>
-        <h2 className="mt-5 mb-3">List student in project...</h2>
         <table className="table table-striped">
           <thead>
             <tr>
@@ -122,17 +147,7 @@ function ProjectDetails() {
       </section>
       <Divider />
       <section>
-        <div className="d-flex justify-content-between">
-          <h2 className="">List student no in project but in course...</h2>
-          <button
-            className={cx("btn-showadd")}
-            onClick={() => {
-              handleShowStdInPrj();
-            }}
-          >
-            Click here to add student into project
-          </button>
-        </div>
+        
         <table className="table table-striped">
           <thead>
             <tr>

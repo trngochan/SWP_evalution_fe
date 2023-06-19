@@ -4,7 +4,7 @@ import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Button({to, href, children, onClick, primary, active, small}) {
+function Button({to, href, children, onClick, primary, active, small, publish}) {
     let Comp = 'button';
     const props = {
         onClick,
@@ -19,7 +19,7 @@ function Button({to, href, children, onClick, primary, active, small}) {
     }
 
     return ( 
-        <Comp className={cx('wrapper', {primary, active, small})} {...props}>
+        <Comp className={cx('wrapper', {primary, active, small, publish})} {...props}>
             <span className={cx('title')}>{children}</span>
         </Comp>
     );

@@ -30,6 +30,10 @@ function BoardDetail() {
   const [editId, setEditId] = useState(null);
   const [showModalTeachers, setShowModalTeachers] = useState(false);
   const [showModalProjects, setShowModalProjects] = useState(false);
+  const [showTableListTeachers, setShowTableListTeachers] = useState(true);
+  const [showTableListProjects, setShowTableListProjects] = useState(false);
+  const [isTeachersButtonPrimary, setIsTeachersButtonPrimary] = useState(true);
+  const [isProjectsButtonPrimary, setIsProjectsButtonPrimary] = useState(false);
 
   const handleOpenTeachers = () => {
     setShowModalTeachers(true);
@@ -45,6 +49,20 @@ function BoardDetail() {
 
   const handleCloseProjects = () => {
     setShowModalProjects(false);
+  };
+
+  const handleShowTableTeachers = () => {
+    setShowTableListTeachers(!showTableListTeachers);
+    setShowTableListProjects(false);
+    setIsTeachersButtonPrimary(true);
+    setIsProjectsButtonPrimary(false);
+  };
+
+  const handleShowTableProjects = () => {
+    setShowTableListProjects(!showTableListProjects);
+    setShowTableListTeachers(false);
+    setIsTeachersButtonPrimary(false);
+    setIsProjectsButtonPrimary(true);
   };
 
   const { board } = useParams();
@@ -81,7 +99,7 @@ function BoardDetail() {
     [rerender]
   );
 
-  async function handShowleProInBoard() {
+  async function handleShowProInBoard() {
     try {
       setShow("add");
       const respone = await axios.get(`/project/${board}/projectsnoboard`);
@@ -155,7 +173,7 @@ function BoardDetail() {
         if (response.status === 200) {
           setRerender(!rerender);
           handleCloseProjects();
-          handShowleProInBoard();
+          handleShowProInBoard();
           setError("");
         }
       } else {
@@ -170,27 +188,45 @@ function BoardDetail() {
     <>
       <Header />
       <Infor />
-      <button
-        className={cx("btn-showadd")}
-        onClick={() => {
-          handleOpenTeachers();
-          handleShowAddTeacher(board);
-        }}
-      >
-        Click here to show teacher into evaluation
-      </button>
-      <button
-        className={cx("btn-showadd")}
-        onClick={() => {
-          handleOpenProjects();
-          handShowleProInBoard();
-        }}
-      >
-        Click here to show list project no has evaluation
-      </button>
-      <div className="row">
-        <h2 className="mb-5 mt-5">List teacher in evaluation board...</h2>
-        <div className="row">
+    <div className={cx('title-table')}>
+      <Button className={cx("mb-5 mt-5 show")} 
+            onClick={handleShowTableTeachers}
+            primary={isTeachersButtonPrimary}
+          >
+              List teacher
+          </Button>
+          <Button className={cx("mb-5 mt-5 show")} 
+            onClick={handleShowTableProjects}
+            primary={isProjectsButtonPrimary}
+            >
+            List project
+          </Button>
+
+      <div className={cx('show')}>
+        <button
+          className={cx("btn-showadd")}
+          onClick={() => {
+            handleOpenTeachers();
+            handleShowAddTeacher(board);
+          }}
+        >
+          Teacher on assessment
+        </button>
+        <button
+          className={cx("btn-showadd")}
+          onClick={() => {
+            handleOpenProjects();
+            handleShowProInBoard();
+          }}
+        >
+           Project listings no reviews
+        </button>
+      </div>
+    </div>
+
+      <div className={cx("table-list")}>
+        {showTableListTeachers && (
+          <div className="row">
           <table>
             <thead>
               <tr>
@@ -218,13 +254,14 @@ function BoardDetail() {
             </tbody>
           </table>
         </div>
+        )}
 
-        <Divider />
+        {/* <Divider /> */}
 
         <div className="row">
-          <h2 className="">List project of evalution...</h2>
 
-          <table>
+          {showTableListProjects &&(
+            <table>
             <thead>
               <tr>
                 <th>Project ID</th>
@@ -254,13 +291,14 @@ function BoardDetail() {
                         )
                       }
                     >
-                      <button>public</button>
+                      <Button publish>Public</Button>
                     </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+          )}
         </div>
       </div>
 

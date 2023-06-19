@@ -10,5 +10,22 @@
     font-weight: 700;
 }
 
+.title-table {
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.show {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+
+
 
 
