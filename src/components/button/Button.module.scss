@@ -12,12 +12,13 @@
     background-color: transparent;
     color: var(--primary);
     user-select: none; 
+    margin-right: 20px;
 
     + .wrapper {
         border-top:1px solid rgba(109, 107, 107,0.03);
     }
     &:hover {
-        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(255, 111, 59) ;
+        // background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(255, 111, 59) ;
     }
 }    
 
@@ -39,4 +40,9 @@
 .publish {
     color: rgb(255, 255, 255);
     background-color: rgb(43, 180, 43);
+}
+
+.notActive {
+    color: whitesmoke;
+    background-color: gainsboro;
 }

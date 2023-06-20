@@ -189,13 +189,13 @@ function BoardDetail() {
       <Header />
       <Infor />
     <div className={cx('title-table')}>
-      <Button className={cx("mb-5 mt-5 show")} 
+      <Button className={cx("btn-show")} 
             onClick={handleShowTableTeachers}
             primary={isTeachersButtonPrimary}
           >
-              List teacher
+              <span>List teacher</span>
           </Button>
-          <Button className={cx("mb-5 mt-5 show")} 
+          <Button className={cx("mb-5 mt-5")} 
             onClick={handleShowTableProjects}
             primary={isProjectsButtonPrimary}
             >
@@ -291,7 +291,7 @@ function BoardDetail() {
                         )
                       }
                     >
-                      <Button publish>Public</Button>
+                      <Button>Public</Button>
                     </td>
                   </tr>
                 );

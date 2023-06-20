@@ -16,6 +16,10 @@ function ProjectDetails() {
   const [studentNoInPro, setStudentNoInPro] = useState([]);
   const [rerender, setRerender] = useState(false);
   const [inforProject, setInforProject] = useState({});
+  const [showTableListStudents, setShowTableListStudents] = useState(true);
+  const [showTableListStudentNoInCourse, setShowTableListStudentNotInCourse] = useState(false);
+  const [isStudentsButtonPrimary, setIsStudentsButtonPrimary] = useState(true);
+  const [isStudentsNoInCourseButtonPrimary, setIsStudentsNoInCourseButtonPrimary] = useState(false);
 
   const { project } = useParams();
 
@@ -56,6 +60,18 @@ function ProjectDetails() {
     }
   }
 
+  const handleShowTableStudents = () => {
+    setShowTableListStudents(true);
+    setShowTableListStudentNotInCourse(false);
+    setIsStudentsNoInCourseButtonPrimary(false);
+  };
+
+  const handleShowTableStudentsNoInCourse = () => {
+    setShowTableListStudentNotInCourse(true);
+    setShowTableListStudents(false);
+    setIsStudentsButtonPrimary(false);
+  };
+
   return (
     <>
       <Header />
@@ -88,30 +104,33 @@ function ProjectDetails() {
 
       <div className={cx('title-table')}>
         <Button className={cx("mb-5 mt-5 show")} 
-            // onClick={handleShowTableProjects}
-            // primary={isProjectsButtonPrimary}
+            onClick={handleShowTableStudents}
+            primary={isStudentsButtonPrimary}
           >
             List students
           </Button>
           <Button className={cx("mb-5 mt-5 show")} 
-            // onClick={handleShowTableStudents}
-            // primary={isStudentsButtonPrimary}
+            onClick={handleShowTableStudentsNoInCourse}
+            primary={isStudentsNoInCourseButtonPrimary}
             >
             List student no in project but in course
           </Button>
-          <div className="d-flex justify-content-between">
-          <button
-            className={cx("btn-showadd")}
-            onClick={() => {
-              handleShowStdInPrj();
-            }}
-          >
-            Click here to add student into project
-          </button>
-        </div>
+          <div className={cx('show')}>
+            <div className="d-flex justify-content-between">
+            <button
+              className={cx("btn-showadd")}
+              onClick={() => {
+                handleShowStdInPrj();
+              }}
+            >
+              Click here to add student into project
+            </button>
+          </div>
+          </div>
         </div>
 
-      <section>
+      {showTableListStudents && (
+        <section>
         <table className="table table-striped">
           <thead>
             <tr>
@@ -145,8 +164,10 @@ function ProjectDetails() {
           </tbody>
         </table>
       </section>
-      <Divider />
-      <section>
+      )}
+
+      {showTableListStudentNoInCourse && (
+        <section>
         
         <table className="table table-striped">
           <thead>
@@ -173,6 +194,7 @@ function ProjectDetails() {
           </tbody>
         </table>
       </section>
+      )}
     </>
   );
 }
