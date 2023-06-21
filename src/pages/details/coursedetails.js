@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import React from "react";
+import { useCookies } from "react-cookie";
 
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
@@ -19,11 +20,16 @@ function CourseDetails() {
   const [inforCourse, setInforCourse] = useState({});
   const [showTableListProjects, setShowTableListProjects] = useState(true);
   const [showTableListStudents, setShowTableListStudents] = useState(false);
-  const [showTableListStudentsNotInCourse, setShowTableListStudentsNotInCourse] = useState(false);
+  const [
+    showTableListStudentsNotInCourse,
+    setShowTableListStudentsNotInCourse,
+  ] = useState(false);
   const [isProjectsButtonPrimary, setIsProjectsButtonPrimary] = useState(true);
   const [isStudentsButtonPrimary, setIsStudentsButtonPrimary] = useState(false);
-  const [isStudentsNotInCourseButtonPrimary, setIsStudentsNotInCourseButtonPrimary] = useState(false);
-
+  const [
+    isStudentsNotInCourseButtonPrimary,
+    setIsStudentsNotInCourseButtonPrimary,
+  ] = useState(false);
 
   const handleShowTableProjects = () => {
     setShowTableListProjects(true);
@@ -121,142 +127,148 @@ function CourseDetails() {
         </div>
       </div>
 
-      <div className={cx('title-table')}>
-        <Button className={cx("mb-5 mt-5 show")} 
-            onClick={handleShowTableProjects}
-            primary={isProjectsButtonPrimary}
-          >
-            List projects
-          </Button>
-          <Button className={cx("mb-5 mt-5 show")} 
-            onClick={handleShowTableStudents}
-            primary={isStudentsButtonPrimary}
-            >
-            List students
-          </Button>
-          <Button className={cx("mb-5 mt-5 show")} 
-            onClick={handleShowTableStudentsNotInCourse}
-            primary={isStudentsNotInCourseButtonPrimary}
-            >
-            List students no in course
-          </Button>
-        </div>
-      
-      <div className="table-list">
-        {showTableListProjects &&(<section>
-          <table>
-            <thead>
-              <tr>
-                <th>Project ID</th>
-                <th>Name</th>
-                <th>Note</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {project.length > 0 ? (
-                project.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.prjId}</td>
-                      <td>{item.Name}</td>
-                      <td>{item.notion}</td>
-                      <td>
-                        <Button to={`/projectdetails/${item.prjId}`}>
-                          Details
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <p>No item</p>
-              )}
-            </tbody>
-          </table>
-        </section>)}
+      <div className={cx("title-table")}>
+        <Button
+          className={cx("mb-5 mt-5 show")}
+          onClick={handleShowTableProjects}
+          primary={isProjectsButtonPrimary}
+        >
+          List projects
+        </Button>
+        <Button
+          className={cx("mb-5 mt-5 show")}
+          onClick={handleShowTableStudents}
+          primary={isStudentsButtonPrimary}
+        >
+          List students
+        </Button>
+        <Button
+          className={cx("mb-5 mt-5 show")}
+          onClick={handleShowTableStudentsNotInCourse}
+          primary={isStudentsNotInCourseButtonPrimary}
+        >
+          List students no in course
+        </Button>
+      </div>
 
+      <div className="table-list">
+        {showTableListProjects && (
+          <section>
+            <table>
+              <thead>
+                <tr>
+                  <th>Project ID</th>
+                  <th>Name</th>
+                  <th>Note</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {project.length > 0 ? (
+                  project.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{item.prjId}</td>
+                        <td>{item.Name}</td>
+                        <td>{item.notion}</td>
+                        <td>
+                          <Button
+                            to={`/projectdetails/${course}/${item.prjId}`}
+                          >
+                            Details
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <p>No item</p>
+                )}
+              </tbody>
+            </table>
+          </section>
+        )}
 
         {showTableListStudents && (
           <section>
-          <table>
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Birth day</th>
-                <th>Adress</th>
-              </tr>
-            </thead>
-            <tbody>
-              {student.length > 0 ? (
-                student.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.code}</td>
-                      <td>{item.name}</td>
-                      <td>
-                        {item.birthday
-                          ? JSON.stringify(item.birthday).slice(1, 11)
-                          : "No infor"}
-                      </td>
-                      <td>{item.adress ? item.adress : "No infor"}</td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <p>No item</p>
-              )}
-            </tbody>
-          </table>
-        </section>
+            <table>
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Name</th>
+                  <th>Birth day</th>
+                  <th>Adress</th>
+                </tr>
+              </thead>
+              <tbody>
+                {student.length > 0 ? (
+                  student.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{item.code}</td>
+                        <td>{item.name}</td>
+                        <td>
+                          {item.birthday
+                            ? JSON.stringify(item.birthday).slice(1, 11)
+                            : "No infor"}
+                        </td>
+                        <td>{item.adress ? item.adress : "No infor"}</td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <p>No item</p>
+                )}
+              </tbody>
+            </table>
+          </section>
         )}
 
         {showTableListStudentsNotInCourse && (
           <section>
-          <div className="d-flex justify-content-between">
-            <button
-              className={cx("btn-showadd")}
-              onClick={handleShowStudentNotInCourse}
-            >
-              Add student
-            </button>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Birth day</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {studentNotCour.length > 0 ? (
-                studentNotCour.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.Code}</td>
-                      <td>{item.Name}</td>
-                      <td>
-                        {item.BirthDay
-                          ? JSON.stringify(item.BirthDay).slice(1, 11)
-                          : "No infor"}
-                      </td>
-                      <td>
-                        <Button onClick={() => handleAddStdInCour(item.Id)}>
-                          Add
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <p>No item</p>
-              )}
-            </tbody>
-          </table>
-        </section>
+            <div className="d-flex justify-content-between">
+              <button
+                className={cx("btn-showadd")}
+                onClick={handleShowStudentNotInCourse}
+              >
+                Add student
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Name</th>
+                  <th>Birth day</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {studentNotCour.length > 0 ? (
+                  studentNotCour.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{item.Code}</td>
+                        <td>{item.Name}</td>
+                        <td>
+                          {item.BirthDay
+                            ? JSON.stringify(item.BirthDay).slice(1, 11)
+                            : "No infor"}
+                        </td>
+                        <td>
+                          <Button onClick={() => handleAddStdInCour(item.Id)}>
+                            Add
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <p>No item</p>
+                )}
+              </tbody>
+            </table>
+          </section>
         )}
       </div>
     </>

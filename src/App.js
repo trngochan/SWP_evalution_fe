@@ -30,7 +30,10 @@ function App() {
           <Route path="/teacherboardscore" element={<TeacherBoardScore />} />
           <Route path="/boarddetails/:board" element={<BoardDetail />} />
           <Route path="/coursedetails/:course" element={<CourseDetails />} />
-          <Route path="/projectdetails/:project" element={<ProjectDetails />} />
+          <Route
+            path="/projectdetails/:course/:project"
+            element={<ProjectDetails />}
+          />
           <Route path="/subjectdetails/:subject" element={<SubjectDetails />} />
           <Route path="/studentsInCourse" element={<StudentsInCourse />} />
         </Routes>
