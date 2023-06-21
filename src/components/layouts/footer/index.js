@@ -10,13 +10,13 @@ function Footer() {
             <div className={cx('container')}>
                 <div className={cx('row')}>
                      <div className={cx('col-md-4 col-lg-4 col-xl-4')}>
-                        <h5>Giới thiệu</h5> 
+                        <h3>Giới thiệu</h3> 
                          <p className={cx('mb-0')}>
                             Nếu bạn là một Wibu chính hiệu, thì còn chần chờ gì nữa mà không tậu ngay một em mô hình về để trưng bày.
                         </p>
                     </div>
                     <div className={cx('col-md-4 col-lg-4 col-xl-4')}>
-                        <h5>Contact</h5>
+                        <h3>Contact</h3>
                         <ul className={cx('list-unstyled')}>
                             <li><i className={cx('fa fa-envelope mr-2')}></i> nghienmohinh@gmail.com</li>
                             <li><i className={cx('fa fa-phone mr-2')}></i> + 123456789</li>

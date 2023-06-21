@@ -2,11 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "~/components/button";
 import AddStudentList from "~/pages/create/AddStudentList";
+import styles from './admin.module.scss'
 
 import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import moment from "moment";
+import classNames from "classnames/bind";
+import Table from 'react-bootstrap/Table';
+
+const cx = classNames.bind(styles);
 
 function ListStdAdmin() {
   const [students, setStudent] = useState([]);
@@ -14,15 +19,22 @@ function ListStdAdmin() {
 
   const [rerender, setRerender] = useState(false);
   const [editId, setEditId] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [showModalRemove, setShowModalRemove] = useState(false);
 
   const handleEdit = (id) => {
     setEditId(id);
-    setShowModal(true);
+    setShowModalEdit(true);
   };
 
+  const handleRemove = (id) => {
+    // setEditId(id);
+    setShowModalRemove(true);
+  }
+
   const handleClose = () => {
-    setShowModal(false);
+    setShowModalEdit(false);
+    setShowModalRemove(false)
   };
 
   const formik = useFormik({
@@ -85,38 +97,66 @@ function ListStdAdmin() {
       {isShowAdd ? (
         <AddStudentList />
       ) : (
-        <>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Adress</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students?.map((student, i) => {
+        // <>
+        //   <table className="table table-striped">
+        //     <thead>
+        //       <tr>
+        //         <th>Code</th>
+        //         <th>Name</th>
+        //         <th>Adress</th>
+        //         <th>Action</th>
+        //       </tr>
+        //     </thead>
+        //     <tbody>
+        //       {students?.map((student, i) => {
+        //         return (
+        //           <tr key={i}>
+        //             <td>{student.code}</td>
+        //             <td>{student.name}</td>
+        //             <td>{student.address}</td>
+        //             <td>
+        //               <Button onClick={() => handleEdit(student.id)}>
+        //                 Edit
+        //               </Button>
+        //               <Button onClick={() => handleRemove(student.id)}>Remove</Button>
+        //             </td>
+        //           </tr>
+        //         );
+        //       })}
+        //     </tbody>
+        //   </table>
+        // </>
+
+        <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Adress</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      {students?.map((student, i) => {
                 return (
                   <tr key={i}>
                     <td>{student.code}</td>
                     <td>{student.name}</td>
                     <td>{student.address}</td>
                     <td>
-                      <Button onClick={() => handleEdit(student.id)}>
+                      <Button edit small onClick={() => handleEdit(students.id)}>
                         Edit
                       </Button>
-                      <Button>Remove</Button>
+                      <Button remove small onClick={() => handleRemove(students.id)}>Remove</Button>
                     </td>
                   </tr>
                 );
               })}
-            </tbody>
-          </table>
-        </>
+      </tbody>
+    </Table>
       )}
       {/* Modal */}
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModalEdit} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit student</Modal.Title>
         </Modal.Header>
@@ -166,14 +206,41 @@ function ListStdAdmin() {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Btn variant="secondary" onClick={handleClose} className={cx('btn-bt')}>
             Close
-          </Button>
-          <Button type="submit" variant="primary" onClick={formik.handleSubmit}>
+          </Btn>
+          <Btn type="submit" variant="primary" onClick={formik.handleSubmit} className={cx('btn-bt')}>
             Save changes
-          </Button>
+          </Btn>
         </Modal.Footer>
       </Modal>
+
+      <Modal 
+                show={showModalRemove} 
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title><h1 className={cx('modal-title')}>Delete a user</h1></Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className='body-add-new'>
+                        This action can't be undone!!
+                        Do you want to remove this user?  
+                        <br />
+                        <b>code = "???"</b>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Btn variant="secondary" className={cx('btn-bt')} onClick={handleClose}>
+                        Close
+                    </Btn>
+                    <Btn variant="primary" className={cx('btn-bt')} onClick={formik.handleSubmit}>
+                        Confirm
+                    </Btn>
+                </Modal.Footer>
+            </Modal>
     </>
   );
 }
