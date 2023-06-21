@@ -7,7 +7,6 @@ import classNames from "classnames/bind";
 import Button from "~/components/button";
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
-import Divider from "~/components/Divider";
 
 const cx = classNames.bind(styles);
 

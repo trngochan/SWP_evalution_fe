@@ -94,14 +94,14 @@ function ListProjectAdmin() {
   return (
     <>
       <div>
-        <h2
+        {/* <h2
           className="mt-3 mb-3"
           style={{
             textAlign: "center",
           }}
         >
           List projects
-        </h2>
+        </h2> */}
         <Button primary onClick={() => setShowAdd(!isShowAdd)}>
           {isShowAdd ? "View" : "Add"}
         </Button>
@@ -172,7 +172,7 @@ function ListProjectAdmin() {
           <Modal.Title>Edit project</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={formik.handleSubmit}>
+          <form className={cx('form-modal')} onSubmit={formik.handleSubmit}>
             <label htmlFor="name">Name:</label>
             <input
               className={"form-control"}

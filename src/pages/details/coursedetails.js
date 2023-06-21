@@ -144,10 +144,13 @@ function CourseDetails() {
         </Button>
         <Button
           className={cx("mb-5 mt-5 show")}
-          onClick={handleShowTableStudentsNotInCourse}
+          onClick={() => {
+            handleShowTableStudentsNotInCourse();
+            handleShowStudentNotInCourse();
+          }}
           primary={isStudentsNotInCourseButtonPrimary}
         >
-          List students no in course
+          Add student
         </Button>
       </div>
 
@@ -226,14 +229,6 @@ function CourseDetails() {
 
         {showTableListStudentsNotInCourse && (
           <section>
-            <div className="d-flex justify-content-between">
-              <button
-                className={cx("btn-showadd")}
-                onClick={handleShowStudentNotInCourse}
-              >
-                Add student
-              </button>
-            </div>
             <table>
               <thead>
                 <tr>
