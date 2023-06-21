@@ -49,7 +49,11 @@ function ListCourseAdmin() {
   }
 
   return (
+    
     <div>
+      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
+        {isShowAdd ? "View" : "Add"}
+      </Button>
       {isShowAdd ? (
         <AddCourse setShowAdd={setShowAdd} />
       ) : (
@@ -110,9 +114,7 @@ function ListCourseAdmin() {
           </div>
         </>
       )}
-      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-        {isShowAdd ? "View" : "Add"}
-      </Button>
+      
     </div>
   );
 }
