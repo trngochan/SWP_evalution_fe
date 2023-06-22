@@ -113,10 +113,32 @@ function CourseDetails() {
               <tr>
                 <th scope="row">Subject ID</th>
                 <td>{inforCourse.SubjectId}</td>
+                <td>
+                  <button
+                    style={{
+                      background: "transparent",
+                    }}
+                  >
+                    Details
+                  </button>
+                </td>
               </tr>
               <tr>
                 <th>Course ID</th>
                 <td>{inforCourse.id}</td>
+              </tr>
+              <tr>
+                <th>Lecturer</th>
+                <td>{inforCourse.LectureId}</td>
+                <td>
+                  <button
+                    style={{
+                      background: "transparent",
+                    }}
+                  >
+                    Details
+                  </button>
+                </td>
               </tr>
               <tr>
                 <th>Name</th>

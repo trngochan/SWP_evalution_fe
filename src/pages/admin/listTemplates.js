@@ -1,16 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "~/components/button";
 import classNames from "classnames/bind";
 
-import styles from './admin.module.scss'
+import styles from "./admin.module.scss";
 import AddTemplate from "../create/AddTemplate";
+import axios from "axios";
 
 const cx = classNames.bind(styles);
 
 function ListTemplatesAdmin() {
-    const [isShowAdd, setShowAdd] = useState(false);
+  const [isShowAdd, setShowAdd] = useState(false);
 
-    const semesterList = ["1", "2"]
+  const [templates, setTemplates] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const req1 = await axios.get("/template/getall");
+
+      return axios.all([req1]).then(
+        axios.spread((templates) => {
+          // Xử lý response từ request1 và requests
+          setTemplates(templates.data);
+        })
+      );
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <div>
       <Button primary onClick={() => setShowAdd(!isShowAdd)}>
@@ -20,23 +37,6 @@ function ListTemplatesAdmin() {
         <AddTemplate />
       ) : (
         <>
-          <div className="col-2">
-            <select
-              className={cx('form-select')}
-              aria-label="Default select example"
-              defaultValue={""}
-            //   onClick    
-            >
-              <option value="0">All Semester</option>
-              {semesterList.map((semester, i) => {
-                return (
-                  <option key={i} >
-                    {semester}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
           <div className="col-10">
             <table className="table">
               <thead>
@@ -49,13 +49,17 @@ function ListTemplatesAdmin() {
                 </tr>
               </thead>
               <tbody>
-                    <tr >
-                        <td>1</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>2</td>
-                      </tr>
+                {templates.map((template) => {
+                  return (
+                    <tr>
+                      <td>{template.Id}</td>
+                      <td>{template.Name}</td>
+                      <td>{template.SubjectId}</td>
+                      <td>{template.Status.data[0]}</td>
+                      <td>{template.ApplyDate.slice(0, 10)}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
