@@ -12,6 +12,7 @@ import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import moment from "moment";
+import Table from 'react-bootstrap/Table';
 
 const cx = classNames.bind(styles);
 
@@ -111,59 +112,60 @@ function ListProjectAdmin() {
       ) : (
         <>
           <div className="col-2">
-            <select
-              className={cx("form-select")}
-              aria-label="Default select example"
-              defaultValue={""}
-              onClick={(e) => {
-                handleChooseCour(e.target.value);
-              }}
-            >
-              <option value="0">All Course</option>
-              {courses.map((course, i) => {
-                return (
-                  <option value={course.id} key={i}>
-                    {course.id}-{course.name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Project ID</th>
-                <th>Name</th>
-                <th>Notion</th>
-                <th>Edit</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {projects
-                .filter(function (item) {
-                  if (parseInt(courID) === 0) return true;
-                  else return parseInt(item.CourseId) === parseInt(courID);
-                })
-                .map((project, i) => (
-                  <tr key={i}>
-                    <td>{project.Id}</td>
-                    <td>{project.Name}</td>
-                    <td>{project.Notion}</td>
-                    <td>
-                      <Button onClick={() => handleEdit(project.Id)}>
-                        Edit
-                      </Button>
-                    </td>
-                    <td>
-                      <Button to={`/projectdetails/${project.Id}`}>
-                        Details
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+             <select
+                className={cx("form-select")}
+                aria-label="Default select example"
+                defaultValue={""}
+                onClick={(e) => {
+                  handleChooseCour(e.target.value);
+                }}
+              >
+                <option value="0">All Course</option>
+                {courses.map((course, i) => {
+                  return (
+                    <option value={course.id} key={i}>
+                      {course.id}-{course.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+  
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+              <th>Project ID</th>
+              <th>Name</th>
+              <th>Notion</th>
+              <th>Edit</th>
+              <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+                {projects
+                  .filter(function (item) {
+                    if (parseInt(courID) === 0) return true;
+                    else return parseInt(item.CourseId) === parseInt(courID);
+                  })
+                  .map((project, i) => (
+                    <tr key={i}>
+                      <td>{project.Id}</td>
+                      <td>{project.Name}</td>
+                      <td>{project.Notion}</td>
+                      <td>
+                        <Button onClick={() => handleEdit(project.Id)}>
+                          Edit
+                        </Button>
+                      </td>
+                      <td>
+                        <Button to={`/projectdetails/${project.Id}`}>
+                          Details
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+      </Table>
         </>
       )}
       {/* Modal */}

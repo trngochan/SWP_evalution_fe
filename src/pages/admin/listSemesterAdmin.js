@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
 import Button from "~/components/button";
 import AddSemester from "../create/AddSemester";
+
+import { useEffect, useState } from "react";
 import axios from "axios";
+import Table from 'react-bootstrap/Table';
 
 function ListSemesterAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
@@ -36,30 +38,28 @@ function ListSemesterAdmin() {
       {isShowAdd ? (
         <AddSemester />
       ) : (
-        <>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Year</th>
-                <th>Session</th>
-                <th>Start time</th>
-                <th>End time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {semesters?.map((semester, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{semester.Year}</td>
-                    <td>{semester.Session}</td>
-                    <td>{semester.StartTime.slice(0, 10)}</td>
-                    <td>{semester.EndTime.slice(0, 10)}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </>
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Session</th>
+          <th>Start time</th>
+          <th>End time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {semesters?.map((semester, i) => {
+          return (
+            <tr key={i}>
+              <td>{semester.Year}</td>
+              <td>{semester.Session}</td>
+              <td>{semester.StartTime.slice(0, 10)}</td>
+              <td>{semester.EndTime.slice(0, 10)}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </Table>
       )}
     </>
   );

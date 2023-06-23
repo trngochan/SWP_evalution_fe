@@ -97,37 +97,7 @@ function ListStdAdmin() {
       {isShowAdd ? (
         <AddStudentList />
       ) : (
-        // <>
-        //   <table className="table table-striped">
-        //     <thead>
-        //       <tr>
-        //         <th>Code</th>
-        //         <th>Name</th>
-        //         <th>Adress</th>
-        //         <th>Action</th>
-        //       </tr>
-        //     </thead>
-        //     <tbody>
-        //       {students?.map((student, i) => {
-        //         return (
-        //           <tr key={i}>
-        //             <td>{student.code}</td>
-        //             <td>{student.name}</td>
-        //             <td>{student.address}</td>
-        //             <td>
-        //               <Button onClick={() => handleEdit(student.id)}>
-        //                 Edit
-        //               </Button>
-        //               <Button onClick={() => handleRemove(student.id)}>Remove</Button>
-        //             </td>
-        //           </tr>
-        //         );
-        //       })}
-        //     </tbody>
-        //   </table>
-        // </>
-
-        <Table striped bordered hover>
+    <Table striped bordered hover>
       <thead>
         <tr>
           <th>Code</th>

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import Button from "~/components/button";
 import classNames from "classnames/bind";
+import Table from 'react-bootstrap/Table';
+import axios from "axios";
 
+import Button from "~/components/button";
 import styles from "./admin.module.scss";
 import AddSubject from "../create/AddSubject";
-import axios from "axios";
 
 const cx = classNames.bind(styles);
 
@@ -34,34 +35,30 @@ function ListSubjectAdmin() {
       {isShowAdd ? (
         <AddSubject />
       ) : (
-        <>
-          <div className="col-12">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {subjects.map((subject, i) => (
-                  <tr key={i}>
-                    <td>{subject.Id}</td>
-                    <td>{subject.Name}</td>
-                    <td>{subject.Description}</td>
-                    <td>
-                      <Button to={`/subjectdetails/${subject.Id}`}>
-                        Details
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {subjects.map((subject, i) => (
+          <tr key={i}>
+            <td>{subject.Id}</td>
+            <td>{subject.Name}</td>
+            <td>{subject.Description}</td>
+            <td>
+              <Button to={`/subjectdetails/${subject.Id}`}>
+                Details
+              </Button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
       )}
     </div>
   );

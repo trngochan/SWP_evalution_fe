@@ -3,6 +3,7 @@ import Button from "~/components/button";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import classNames from "classnames/bind";
+import Table from 'react-bootstrap/Table';
 
 import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
@@ -59,34 +60,34 @@ function ListCourseAdmin() {
       ) : (
         <>
           <div className="col-2">
-            <select
-              className={cx("form-select")}
-              aria-label="Default select example"
-              defaultValue={""}
-              onClick={(e) => {
-                handleChooseSem(e.target.value);
-              }}
-            >
-              <option value="0">All semester</option>
-              {semesterList.map((semester, i) => {
-                return (
-                  <option value={semester.Id} key={i}>
-                    {semester.Year}-{semester.Session}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="col-10">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col">Course ID</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
+              <select
+                className={cx("form-select")}
+                aria-label="Default select example"
+                defaultValue={""}
+                onClick={(e) => {
+                  handleChooseSem(e.target.value);
+                }}
+              >
+                <option value="0">All semester</option>
+                {semesterList.map((semester, i) => {
+                  return (
+                    <option value={semester.Id} key={i}>
+                      {semester.Year}-{semester.Session}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+  
+          <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Course ID</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
                 {courses
                   .filter(function (item) {
                     if (parseInt(semId) === 0) return true;
@@ -110,8 +111,7 @@ function ListCourseAdmin() {
                     </tr>
                   ))}
               </tbody>
-            </table>
-          </div>
+      </Table>
         </>
       )}
       
