@@ -46,39 +46,48 @@ const TableGenerator = () => {
         {isShowAdd ? (
             <AddTemplate />
         ): (
-            <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Percent</th>
-            </tr>
-          </thead>
-          <tbody>
-          {tableData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  <td>
-                    <input
-                      type="text"
-                      value={row.name}
-                      onChange={(event) => handleNameInputChange(event, rowIndex)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      value={row.percent}
-                      onChange={(event) =>
-                        handlePercentInputChange(event, rowIndex)
-                      }
-                    />
-                  </td>
+            <>
+                <div>
+                    <div>
+                        <label>Number of Rows:</label>
+                        <input type="number" className={cx('input')} onChange={handleRowInputChange} />
+                    </div>
+                    <button className={cx('button')} onClick={handleGenerateTable}>Generate Table</button>
+                    </div>
+                <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Percent</th>
                 </tr>
-              ))}
-          </tbody>
-          <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-            Confirm          
-          </Button>
-        </Table>
+              </thead>
+              <tbody>
+              {tableData.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                      <td>
+                        <input
+                          type="text"
+                          value={row.name}
+                          onChange={(event) => handleNameInputChange(event, rowIndex)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          value={row.percent}
+                          onChange={(event) =>
+                            handlePercentInputChange(event, rowIndex)
+                          }
+                        />
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+              <Button primary onClick={() => setShowAdd(!isShowAdd)}>
+                Confirm          
+              </Button>
+            </Table>
+            </>
         
         )}
         
@@ -87,14 +96,7 @@ const TableGenerator = () => {
   };
 
   return (
-    <div>
-      <div>
-        <label>Number of Rows:</label>
-        <input type="number" className={cx('input')} onChange={handleRowInputChange} />
-      </div>
-      <button className={cx('button')} onClick={handleGenerateTable}>Generate Table</button>
       <div>{renderTable()}</div>
-    </div>
   );
 };
 
