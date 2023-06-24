@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import styles from "./admin.module.scss";
 import AddTemplate from "../create/AddTemplate";
 import axios from "axios";
+import TableGenerator from '~/pages/generateTable/index'
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +35,7 @@ function ListTemplatesAdmin() {
         {isShowAdd ? "View" : "Add"}
       </Button>
       {isShowAdd ? (
-        <AddTemplate />
+        <TableGenerator />
       ) : (
         <>
           <div className="col-10">

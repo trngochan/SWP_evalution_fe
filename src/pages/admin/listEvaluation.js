@@ -114,7 +114,7 @@ function ListBoardAdmin() {
       </Table>
        </>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
