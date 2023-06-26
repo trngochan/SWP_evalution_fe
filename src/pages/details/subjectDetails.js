@@ -31,7 +31,7 @@ function SubjectDetails() {
       <Header />
       <Infor />
       <div className="row">
-        <h2 className={cx("title")}>Information details of course</h2>
+        <h2 className={cx("title")}>Information details of subject</h2>
         <div className="col-6">
           <table className="table table-striped">
             <tbody>

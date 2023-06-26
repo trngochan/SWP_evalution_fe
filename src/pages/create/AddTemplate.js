@@ -3,38 +3,42 @@ import * as yup from "yup";
 import styles from "./add.module.scss";
 import classNames from "classnames/bind";
 
-
 const cx = classNames.bind(styles);
 
+function AddTemplate({
+  errorTemplate,
+  onUpdataDataTemplate,
+  onSetShowScoreDetails,
+  subjects,
+}) {
+  const subjectId = ["subject1", "subject2"];
 
-function AddTemplate() {
-    const subjectId = ["subject1", "subject2",];
+  const formik = useFormik({
+    initialValues: {
+      id: "",
+      name: "",
+      subjectId: "",
+      status: "",
+      applydate: "",
+    },
+    validationSchema: yup.object({
+      name: yup.string().required("Name is required"),
+      id: yup.number().required("ID is required"),
+      subjectId: yup.string().required("Subject ID is required"),
+      status: yup.string().required("Status is required"),
+      applydate: yup.date().required("Apply date is required"),
+    }),
+    onSubmit: (values) => {
+      onUpdataDataTemplate(values);
+      onSetShowScoreDetails(true);
+    },
+  });
 
-    const formik = useFormik({
-        initialValues: {
-          id: "",
-          name: "",
-          subjectId: "",
-          status: "",
-          applydate: "",
-        },
-        validationSchema: yup.object({
-          name: yup.string().required("Name is required"),
-          id: yup.number().required("ID is required"),
-          subjectId: yup.string().required("Subject ID is required"),
-          status: yup.string().required("Status is required"),
-          applydate: yup.date().required("Apply date is required"),
-        }),
-        onSubmit: (values) => {
-            console.log(values)
-        },
-      });
-
-    return ( 
-        <div className={cx("login")}>
+  return (
+    <div className={cx("login")}>
       <form onSubmit={formik.handleSubmit} className={cx("form")}>
-      <h2 className={cx("heading")}>Add Template</h2>
-      <div className={cx("form-group")}>
+        <h2 className={cx("heading")}>Add Template</h2>
+        <div className={cx("form-group")}>
           <label className={cx("form-label")}>ID:</label>
           <input
             className={cx("form-control")}
@@ -67,27 +71,31 @@ function AddTemplate() {
         <div className={cx("form-group")}>
           <label className={cx("form-label", "mb-2")}>Subject Id:</label>
           <select
-            className={cx('form-select')}
+            className={cx("form-select")}
             name="subjectId"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             value={formik.values.subjectId}
           >
-            <option value="">Select Subject Id</option>
-            {subjectId.map((item, i) => (
-              <option key={i} value={item}>
-                {item}
+            <option value="">Select Subject</option>
+            {subjects.map((subject, i) => (
+              <option key={i} value={subject.Id}>
+                {subject.Id} - {subject.Name}
               </option>
             ))}
           </select>
           {formik.errors.subjectId && formik.touched.subjectId && (
-            <span className={cx("form-message")}>{formik.errors.subjectId}</span>
+            <span className={cx("form-message")}>
+              {formik.errors.subjectId}
+            </span>
           )}
         </div>
 
         <div className={cx("form-group")}>
           <label className={cx("form-label")}>Status:</label>
           <input
+            min={0}
+            max={1}
             className={cx("form-control")}
             placeholder="Enter status"
             type="number"
@@ -111,15 +119,26 @@ function AddTemplate() {
             onChange={formik.handleChange}
           />
           {formik.errors.applydate && formik.touched.applydate && (
-            <span className={cx("form-message")}>{formik.errors.applydate}</span>
+            <span className={cx("form-message")}>
+              {formik.errors.applydate}
+            </span>
           )}
         </div>
+        {errorTemplate && (
+          <span
+            style={{
+              color: "red",
+            }}
+          >
+            {errorTemplate}
+          </span>
+        )}
         <button type="submit" className={cx("form-submit")}>
-          Add
+          Next
         </button>
       </form>
     </div>
-    );
+  );
 }
 
 export default AddTemplate;
