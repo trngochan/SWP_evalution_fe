@@ -92,39 +92,7 @@ function ListTeacherAdmin() {
       {isShowAdd ? (
         <AddTeacherList />
       ) : (
-        // <>
-        //   <table className="table table-striped">
-        //     <thead>
-        //       <tr>
-        //         <th>Id</th>
-        //         <th>Name</th>
-        //         <th>Phone Number</th>
-        //         <th>Birthday</th>
-        //         <th>Action</th>
-        //       </tr>
-        //     </thead>
-        //     <tbody>
-              // {teachers?.map((teacher, i) => {
-              //   return (
-              //     <tr key={i}>
-              //       <td>{teacher.id}</td>
-              //       <td>{teacher.name}</td>
-              //       <td>{teacher.phonenumber}</td>
-              //       <td>{JSON.stringify(teacher.birthday).slice(1, 11)}</td>
-              //       <td>
-              //         <Button onClick={() => handleEdit(teacher.id)}>
-              //           Edit
-              //         </Button>
-              //         <Button onClick={() => handleRemove(teacher.id)}>Remove</Button>
-              //       </td>
-              //     </tr>
-              //   );
-              // })}
-        //     </tbody>
-        //   </table>
-        // </>
-
-        <Table striped bordered hover>
+    <Table striped bordered hover>
       <thead>
         <tr>
           <th>ID</th>

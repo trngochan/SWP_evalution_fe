@@ -53,7 +53,7 @@ const TableGenerator = () => {
                         <input type="number" className={cx('input')} onChange={handleRowInputChange} />
                     </div>
                     <button className={cx('button')} onClick={handleGenerateTable}>Generate Table</button>
-                    </div>
+                  </div>
                 <Table striped bordered hover>
               <thead>
                 <tr>

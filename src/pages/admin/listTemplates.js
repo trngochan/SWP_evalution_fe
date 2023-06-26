@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Button from "~/components/button";
-import classNames from "classnames/bind";
-
-import styles from "./admin.module.scss";
-import AddTemplate from "../create/AddTemplate";
 import axios from "axios";
+import classNames from "classnames/bind";
+import Table from "react-bootstrap/Table";
+
+import Button from "~/components/button";
+import styles from "./admin.module.scss";
 import TableGenerator from '~/pages/generateTable/index'
 
 const cx = classNames.bind(styles);
@@ -38,32 +38,30 @@ function ListTemplatesAdmin() {
         <TableGenerator />
       ) : (
         <>
-          <div className="col-10">
-            <table className="table">
-              <thead>
-                <tr>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
                   <th scope="col">ID</th>
                   <th scope="col">Name</th>
                   <th scope="col">Subject Id</th>
                   <th scope="col">Status</th>
                   <th scope="col">Apply Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {templates.map((template) => {
-                  return (
-                    <tr>
-                      <td>{template.Id}</td>
-                      <td>{template.Name}</td>
-                      <td>{template.SubjectId}</td>
-                      <td>{template.Status.data[0]}</td>
-                      <td>{template.ApplyDate.slice(0, 10)}</td>
-                    </tr>
-                  );
+              </tr>
+            </thead>
+            <tbody>
+              {templates.map((template) => {
+                    return (
+                      <tr>
+                        <td>{template.Id}</td>
+                        <td>{template.Name}</td>
+                        <td>{template.SubjectId}</td>
+                        <td>{template.Status.data[0]}</td>
+                        <td>{template.ApplyDate.slice(0, 10)}</td>
+                      </tr>
+                    );
                 })}
-              </tbody>
-            </table>
-          </div>
+            </tbody>
+          </Table>
         </>
       )}
     </div>
