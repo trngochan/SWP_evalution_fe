@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import Header from "~/components/layouts/header";
+import Table from 'react-bootstrap/Table';
+
 import Infor from "~/components/infor";
+import Header from "~/components/layouts/header";
 
 function StudentsInCourse() {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -33,24 +35,24 @@ function StudentsInCourse() {
       <Header />
       <Infor />
       <h2 className="mt-3 mb-3">List student of course {cookies.course.name}</h2>
-      <table className="table table-striped">
-        <thead>
+        <Table striped bordered hover>
+          <thead>
             <tr>
-                <th>Code</th>
+              <th>Code</th>
                 <th>Name</th>
                 <th>Adress</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             {students?.map((student, i) => {
-                return <tr key={i}>
-                    <td>{student.code}</td>
-                    <td>{student.name}</td>
-                    <td>{student.address}</td>
-                </tr>
+              return <tr key={i}>
+                  <td>{student.code}</td>
+                  <td>{student.name}</td>
+                  <td>{student.address}</td>
+              </tr>
             })}
-        </tbody>
-      </table>
+          </tbody>
+        </Table>
     </div>
   );
 }

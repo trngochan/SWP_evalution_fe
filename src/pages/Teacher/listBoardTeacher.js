@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Table from 'react-bootstrap/Table';
 import { useCookies } from "react-cookie";
 
 function ListBoardTecher() {
@@ -70,7 +71,7 @@ function ListBoardTecher() {
         </select>
       </div>
       <div className="col-10">
-        <table className="table">
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -108,7 +109,7 @@ function ListBoardTecher() {
                 );
               })}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );
