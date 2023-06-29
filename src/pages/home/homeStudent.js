@@ -121,7 +121,12 @@ function InforStudent() {
               <tbody>
                 <tr>
                   <th scope="row">STATUS</th>
-                  <td className={cx("pass")}>{status ? "PASS" : "NOT PASS"}</td>
+                  <td
+                    className={cx("pass")}
+                    style={!status ? { color: "red" } : {}}
+                  >
+                    {status ? "PASS" : "NOT PASS"}
+                  </td>
                 </tr>
               </tbody>
             </table>

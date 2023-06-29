@@ -188,116 +188,117 @@ function BoardDetail() {
     <>
       <Header />
       <Infor />
-    <div className={cx('title-table')}>
-      <Button className={cx("btn-show")} 
-            onClick={handleShowTableTeachers}
-            primary={isTeachersButtonPrimary}
-          >
-              <span>List teacher</span>
-          </Button>
-          <Button className={cx("mb-5 mt-5")} 
-            onClick={handleShowTableProjects}
-            primary={isProjectsButtonPrimary}
-            >
-            List project
-          </Button>
+      <div className={cx("title-table")}>
+        <Button
+          className={cx("btn-show")}
+          onClick={handleShowTableTeachers}
+          primary={isTeachersButtonPrimary}
+        >
+          <span>List teacher</span>
+        </Button>
+        <Button
+          className={cx("mb-5 mt-5")}
+          onClick={handleShowTableProjects}
+          primary={isProjectsButtonPrimary}
+        >
+          List project
+        </Button>
 
-      <div className={cx('show')}>
-        <button
-          className={cx("btn-showadd")}
-          onClick={() => {
-            handleOpenTeachers();
-            handleShowAddTeacher(board);
-          }}
-        >
-          Teacher on assessment
-        </button>
-        <button
-          className={cx("btn-showadd")}
-          onClick={() => {
-            handleOpenProjects();
-            handleShowProInBoard();
-          }}
-        >
-           Project listings no reviews
-        </button>
+        <div className={cx("show")}>
+          <button
+            className={cx("btn-showadd")}
+            onClick={() => {
+              handleOpenTeachers();
+              handleShowAddTeacher(board);
+            }}
+          >
+            Teacher on assessment
+          </button>
+          <button
+            className={cx("btn-showadd")}
+            onClick={() => {
+              handleOpenProjects();
+              handleShowProInBoard();
+            }}
+          >
+            Project listings no reviews
+          </button>
+        </div>
       </div>
-    </div>
 
       <div className={cx("table-list")}>
         {showTableListTeachers && (
           <div className="row">
-          <table>
-            <thead>
-              <tr>
-                <th>Teacher ID</th>
-                <th>Name</th>
-                <th>PhoneNumber</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teachers.map((item, index) => {
-                return (
-                  <React.Fragment key={index}>
-                    <tr>
-                      <td>{item.Id}</td>
-                      <td>{item.Name}</td>
-                      <td>{item.PhoneNumber}</td>
-                      <td>
-                        <Button>Details</Button>
-                      </td>
-                    </tr>
-                  </React.Fragment>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Teacher ID</th>
+                  <th>Name</th>
+                  <th>PhoneNumber</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {teachers.map((item, index) => {
+                  return (
+                    <React.Fragment key={index}>
+                      <tr>
+                        <td>{item.Id}</td>
+                        <td>{item.Name}</td>
+                        <td>{item.PhoneNumber}</td>
+                        <td>
+                          <Button>Details</Button>
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         )}
 
         {/* <Divider /> */}
 
         <div className="row">
-
-          {showTableListProjects &&(
+          {showTableListProjects && (
             <table>
-            <thead>
-              <tr>
-                <th>Project ID</th>
-                <th>Name</th>
-                <th>Note</th>
-                <th>Tổng Quan</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {projects.map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.notion}</td>
-                    <td>
-                      {item.teacherMark.teacherQuanMarked}/
-                      {item.teacherMark.teacherQuan}
-                    </td>
-                    <td
-                      onClick={() =>
-                        handlePublic(
-                          item.id,
-                          item.teacherMark.teacherQuanMarked,
-                          item.teacherMark.teacherQuan
-                        )
-                      }
-                    >
-                      <Button>Public</Button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+              <thead>
+                <tr>
+                  <th>Project ID</th>
+                  <th>Name</th>
+                  <th>Note</th>
+                  <th>Tổng Quan</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {projects.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.id}</td>
+                      <td>{item.name}</td>
+                      <td>{item.notion}</td>
+                      <td>
+                        {item.teacherMark.teacherQuanMarked}/
+                        {item.teacherMark.teacherQuan}
+                      </td>
+                      <td
+                        onClick={() =>
+                          handlePublic(
+                            item.id,
+                            item.teacherMark.teacherQuanMarked,
+                            item.teacherMark.teacherQuan
+                          )
+                        }
+                      >
+                        <Button>Public</Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           )}
         </div>
       </div>

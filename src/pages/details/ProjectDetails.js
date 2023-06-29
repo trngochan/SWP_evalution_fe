@@ -39,7 +39,6 @@ function ProjectDetails() {
 
   async function handleShowStdNoHasProject() {
     const response = await axios.get(`/student/${course}/getstdnotinproject`);
-
     setStudentNoInPro(response.data.data);
   }
 
@@ -48,6 +47,7 @@ function ProjectDetails() {
       student: id,
       project,
     });
+    console.log(response);
 
     if (response.status === 200) {
       setRerender(!rerender);
@@ -190,7 +190,9 @@ function ProjectDetails() {
                   <td>{student.Name}</td>
                   <td>{student.Address}</td>
                   <td>
-                    <Button onClick={() => handleAddIntoProject(student.Id)}>
+                    <Button
+                      onClick={() => handleAddIntoProject(student.StudentId)}
+                    >
                       Add
                     </Button>
                   </td>

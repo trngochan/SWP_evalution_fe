@@ -33,11 +33,16 @@ function ListBoardTecher() {
     fetchData();
   }, []);
 
-  function handleShowStd(avaluationId, templateId, lectureinboardID) {
+  function handleShowStd(
+    avaluationId,
+    templateId,
+    lectureinboardID,
+    nameBoard
+  ) {
     setCookie("evaluation_id", avaluationId);
     setCookie("template_id", templateId);
     setCookie("lectureinboard_id", lectureinboardID);
-    navigate(`/evaluation`);
+    navigate(`/evaluation/${nameBoard}`);
   }
 
   function handleChooseSem(semesterId) {
@@ -88,7 +93,8 @@ function ListBoardTecher() {
                         handleShowStd(
                           item.Id,
                           item.TemplateId,
-                          item.lectureinboardID
+                          item.lectureinboardID,
+                          item.Name
                         )
                       }
                     >

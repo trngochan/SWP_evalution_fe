@@ -17,6 +17,7 @@ function TeacherBoardScore() {
   const [studentList, setStudentList] = useState([]);
   const [ScoreList, setScoreList] = useState([]);
   const [ScoreStudents, setScoreStudents] = useState([]);
+  const [error, setError] = useState("");
 
   const listStd = () => {
     return axios.get(`/student/${cookies.project_id}/project`, {
@@ -54,21 +55,44 @@ function TeacherBoardScore() {
 
   console.log(cookies);
 
+  function validateValues(arr) {
+    for (let i = 0; i < arr.length; i++) {
+      const obj = arr[i];
+
+      // Kiểm tra các giá trị của khóa `name` trong đối tượng
+      for (const key in obj) {
+        if (key !== "stdinprjId" && !isNaN(obj[key])) {
+          const value = parseInt(obj[key]);
+
+          // Kiểm tra giá trị số nằm trong khoảng từ 0 đến 10
+          if (value <= 0 || value >= 10) {
+            return false; // Trả về false nếu giá trị không hợp lệ
+          }
+        }
+      }
+    }
+
+    return true; // Trả về true nếu tất cả các giá trị hợp lệ
+  }
+
   const handleSubmit = (e) => {
-    for (let i = 0; i < ScoreStudents.length; i++) {
-      e.preventDefault();
+    if (validateValues(ScoreStudents)) {
+      setError("");
+      for (let i = 0; i < ScoreStudents.length; i++) {
+        e.preventDefault();
 
-      console.log(ScoreStudents);
-
-      // axios
-      //   .post("/score/insert", {
-      //     score: ScoreStudents[i],
-      //     lectureinboardId: cookies.lectureinboard_id,
-      //     courseID: cookies.course_id,
-      //   })
-      //   .then((res) => res.data)
-      //   .then((data) => console.log(data))
-      //   .catch((err) => console.log(err));
+        axios
+          .post("/score/insert", {
+            score: ScoreStudents[i],
+            lectureinboardId: cookies.lectureinboard_id,
+            courseID: cookies.course_id,
+          })
+          .then((res) => res.data)
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err));
+      }
+    } else {
+      setError("Scores must be number, greater than 0 and less than 10");
     }
   };
 
@@ -102,7 +126,9 @@ function TeacherBoardScore() {
                       return (
                         <td key={i}>
                           <input
-                            type="text"
+                            min={0}
+                            max={10}
+                            type="number"
                             onChange={(e) => {
                               setScoreStudents((prev) => {
                                 let index = prev.findIndex(
@@ -121,6 +147,15 @@ function TeacherBoardScore() {
               })}
             </tbody>
           </table>
+          {error && (
+            <span
+              style={{
+                color: "red",
+              }}
+            >
+              {error}
+            </span>
+          )}
           <div className={cx("btn-submit")}>
             <Button primary onClick={handleSubmit}>
               Submit

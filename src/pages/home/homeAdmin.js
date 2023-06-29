@@ -104,7 +104,6 @@ function HomeAdmin() {
             {activeButton === "teach" && <ListTeacherAdmin />}
             {activeButton === "semester" && <ListSemesterAdmin />}
             {activeButton === "subject" && <ListSubjectAdmin />}
-            {activeButton === "public" && <Public />}
             {activeButton === "template" && <ListTemplatesAdmin />}
             {activeButton === "board" && <ListBoardAdmin />}
             {activeButton === "scorecolumn" && <ListScoreColumnAdmin />}
