@@ -19,6 +19,8 @@ function ListTeacherAdmin() {
   const [teachers, setTeachers] = useState([]);
   const [edit, setEdit] = useState(null);
   const [rerender, setRerender] = useState(false);
+  const [selectedCode, setSelectedCode] = useState(null);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -37,10 +39,11 @@ function ListTeacherAdmin() {
     setShowModalEdit(true);
   };
 
-  const handleRemove = (id) => {
-    // setEditId(id);
+  const handleRemove = (name) => {
     setShowModalRemove(true);
-  }
+    setSelectedCode(name);
+  };
+  
 
   const handleClose = () => {
     setShowModalEdit(false);
@@ -114,7 +117,7 @@ function ListTeacherAdmin() {
                       <Button edit small onClick={() => handleEdit(teacher.id)}>
                         Edit
                       </Button>
-                      <Button remove small onClick={() => handleRemove(teacher.id)}>Remove</Button>
+                      <Button remove small onClick={() => handleRemove(teacher.name)}>Remove</Button>
                     </td>
                   </tr>
                 );
@@ -215,7 +218,7 @@ function ListTeacherAdmin() {
                         This action can't be undone!!
                         Do you want to remove this user?  
                         <br />
-                        <b>code = "???"</b>
+                        <b>Name = "{selectedCode}" </b>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>

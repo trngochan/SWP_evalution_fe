@@ -14,23 +14,28 @@ import Table from 'react-bootstrap/Table';
 const cx = classNames.bind(styles);
 
 function ListStdAdmin() {
-  const [students, setStudent] = useState([]);
+  const [students, setStudents] = useState([]);
   const [isShowAdd, setShowAdd] = useState(false);
 
   const [rerender, setRerender] = useState(false);
   const [editId, setEditId] = useState(null);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
+  const [selectedCode, setSelectedCode] = useState(null);
+  
 
   const handleEdit = (id) => {
     setEditId(id);
     setShowModalEdit(true);
   };
 
-  const handleRemove = (id) => {
-    // setEditId(id);
+  const handleRemove = (id, name) => {
     setShowModalRemove(true);
-  }
+    setEditId(id);
+    setSelectedCode(name);
+  };
+  
+  
 
   const handleClose = () => {
     setShowModalEdit(false);
@@ -78,11 +83,11 @@ function ListStdAdmin() {
       return axios.all([req1]).then(
         axios.spread((listStudent) => {
           // Xử lý response từ request1 và requests
-          setStudent(listStudent.data);
+          setStudents(listStudent.data);
         })
       );
     }
-
+    
     fetchData();
   }, [rerender]);
 
@@ -117,7 +122,7 @@ function ListStdAdmin() {
                       <Button edit small onClick={() => handleEdit(students.id)}>
                         Edit
                       </Button>
-                      <Button remove small onClick={() => handleRemove(students.id)}>Remove</Button>
+                      <Button remove small onClick={() => handleRemove(students.id, student.name)}>Remove</Button>
                     </td>
                   </tr>
                 );
@@ -186,31 +191,31 @@ function ListStdAdmin() {
       </Modal>
 
       <Modal 
-                show={showModalRemove} 
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title><h1 className={cx('modal-title')}>Delete a user</h1></Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className='body-add-new'>
-                        This action can't be undone!!
-                        Do you want to remove this user?  
-                        <br />
-                        <b>code = "???"</b>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Btn variant="secondary" className={cx('btn-bt')} onClick={handleClose}>
-                        Close
-                    </Btn>
-                    <Btn variant="primary" className={cx('btn-bt')} onClick={formik.handleSubmit}>
-                        Confirm
-                    </Btn>
-                </Modal.Footer>
-            </Modal>
+          show={showModalRemove} 
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+          >
+          <Modal.Header closeButton>
+              <Modal.Title><h1 className={cx('modal-title')}>Delete a user</h1></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+              <div className='body-add-new'>
+                  This action can't be undone!!
+                  Do you want to remove this user?  
+                  <br />
+                  <b>Name = "{selectedCode}" </b>
+              </div>
+          </Modal.Body>
+          <Modal.Footer>
+              <Btn variant="secondary" className={cx('btn-bt')} onClick={handleClose}>
+                  Close
+              </Btn>
+              <Btn variant="primary" className={cx('btn-bt')} onClick={formik.handleSubmit}>
+                  Confirm
+              </Btn>
+          </Modal.Footer>
+        </Modal>
     </>
   );
 }
