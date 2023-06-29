@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./details.module.scss";
+import Table from 'react-bootstrap/Table';
 import classNames from "classnames/bind";
 
 import Button from "~/components/button";
@@ -68,12 +69,14 @@ function ProjectDetails() {
     setShowTableListStudents(true);
     setShowTableListStudentNotInCourse(false);
     setIsStudentsNoInCourseButtonPrimary(false);
+    setIsStudentsButtonPrimary(true);
   };
 
   const handleShowTableStudentsNoInCourse = () => {
     setShowTableListStudentNotInCourse(true);
     setShowTableListStudents(false);
     setIsStudentsButtonPrimary(false);
+    setIsStudentsNoInCourseButtonPrimary(true);
   };
 
   return (
@@ -137,69 +140,69 @@ function ProjectDetails() {
 
       {showTableListStudents && (
         <section>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Student CODE</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Remove</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((student, i) => (
-                <tr key={i}>
-                  <td>{student.CODE}</td>
-                  <td>{student.Name}</td>
-                  <td>{student.Address}</td>
-                  <td>
-                    <Button onClick={() => handRemoveStd(student.stdinprjId)}>
-                      Remove
-                    </Button>
-                  </td>
-                  <td
-                    style={{
-                      display: "flex",
-                    }}
-                  >
-                    <Button>Details</Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Student CODE</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Remove</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {students.map((student, i) => (
+             <tr key={i}>
+               <td>{student.CODE}</td>
+               <td>{student.Name}</td>
+               <td>{student.Address}</td>
+               <td>
+                 <Button onClick={() => handRemoveStd(student.stdinprjId)}>
+                   Remove
+                 </Button>
+               </td>
+               <td
+                style={{
+                   display: "flex",
+                 }}
+               >
+                 <Button>Details</Button>
+               </td>
+            </tr>
+           ))}
+          </tbody>
+        </Table>
         </section>
       )}
 
       {showTableListStudentNoInCourse && (
         <section>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Student CODE</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Action</th>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Student CODE</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {studentNoInPro.map((student, i) => (
+              <tr key={i}>
+                <td>{student.Code}</td>
+                <td>{student.Name}</td>
+                <td>{student.Address}</td>
+                <td>
+                   <Button
+                    onClick={() => handleAddIntoProject(student.StudentId)}
+                  >
+                     Add
+                   </Button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {studentNoInPro.map((student, i) => (
-                <tr key={i}>
-                  <td>{student.Code}</td>
-                  <td>{student.Name}</td>
-                  <td>{student.Address}</td>
-                  <td>
-                    <Button
-                      onClick={() => handleAddIntoProject(student.StudentId)}
-                    >
-                      Add
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            ))}
+          </tbody>
+        </Table>          
         </section>
       )}
     </>

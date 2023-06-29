@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import classNames from "classnames/bind";
+import Table from 'react-bootstrap/Table';
+
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
 import styles from "./details.module.scss";
-import classNames from "classnames/bind";
 import Divider from "~/components/Divider";
 import Button from "~/components/button";
 
@@ -53,7 +55,7 @@ function SubjectDetails() {
       </div>
       <Divider />
       <div className="row">
-        <table className="table table-striped">
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>Semester ID</th>
@@ -63,7 +65,7 @@ function SubjectDetails() {
             </tr>
           </thead>
           <tbody>
-            {courses.map((course, i) => (
+          {courses.map((course, i) => (
               <tr key={i}>
                 <td>{course.SemesterId}</td>
                 <td>{course.id}</td>
@@ -74,7 +76,7 @@ function SubjectDetails() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     </>
   );

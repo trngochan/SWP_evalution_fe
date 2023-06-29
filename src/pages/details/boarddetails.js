@@ -1,13 +1,14 @@
 import Button from "~/components/button";
+import styles from "./details.module.scss";
+
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import styles from "./details.module.scss";
 import classNames from "classnames/bind";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Table from 'react-bootstrap/Table';
 import moment from "moment";
-
 import axios from "axios";
 
 import Infor from "~/components/infor";
@@ -228,18 +229,17 @@ function BoardDetail() {
 
       <div className={cx("table-list")}>
         {showTableListTeachers && (
-          <div className="row">
-            <table>
-              <thead>
-                <tr>
-                  <th>Teacher ID</th>
-                  <th>Name</th>
-                  <th>PhoneNumber</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {teachers.map((item, index) => {
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Teacher ID</th>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              {teachers.map((item, index) => {
                   return (
                     <React.Fragment key={index}>
                       <tr>
@@ -253,52 +253,49 @@ function BoardDetail() {
                     </React.Fragment>
                   );
                 })}
-              </tbody>
-            </table>
-          </div>
+          </tbody>
+        </Table>
         )}
-
-        {/* <Divider /> */}
 
         <div className="row">
           {showTableListProjects && (
-            <table>
-              <thead>
-                <tr>
-                  <th>Project ID</th>
-                  <th>Name</th>
-                  <th>Note</th>
-                  <th>Tổng Quan</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {projects.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.notion}</td>
-                      <td>
-                        {item.teacherMark.teacherQuanMarked}/
-                        {item.teacherMark.teacherQuan}
-                      </td>
-                      <td
-                        onClick={() =>
-                          handlePublic(
-                            item.id,
-                            item.teacherMark.teacherQuanMarked,
-                            item.teacherMark.teacherQuan
-                          )
-                        }
-                      >
-                        <Button>Public</Button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Project ID</th>
+              <th>Name</th>
+              <th>Note</th>
+              <th>Tổng Quan</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          {projects.map((item, index) => {
+            return (
+              <tr key={index}>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>{item.notion}</td>
+                <td>
+                  {item.teacherMark.teacherQuanMarked}/
+                  {item.teacherMark.teacherQuan}
+                </td>
+                <td
+                  onClick={() =>
+                    handlePublic(
+                      item.id,
+                      item.teacherMark.teacherQuanMarked,
+                      item.teacherMark.teacherQuan
+                    )
+                  }
+                 >
+                  <Button>Public</Button>
+                 </td>
+              </tr>
+             );
+          })}
+          </tbody>
+        </Table>
           )}
         </div>
       </div>

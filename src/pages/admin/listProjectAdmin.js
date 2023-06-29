@@ -131,10 +131,10 @@ function ListProjectAdmin() {
               </select>
             </div>
   
-      <Table striped bordered hover>
+      <Table striped bordered hover >
         <thead>
           <tr>
-              <th>Project ID</th>
+              <th className={cx('list-item')}>Project ID</th>
               <th>Name</th>
               <th>Notion</th>
               <th>Edit</th>
