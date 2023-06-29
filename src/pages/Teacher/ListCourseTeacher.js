@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import Table from 'react-bootstrap/Table';
 import { useNavigate } from "react-router-dom";
 
 function ListCourseTeacher() {
@@ -65,29 +66,29 @@ function ListCourseTeacher() {
         </div>
 
         <div className="col-10">
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Course ID</th>
-                <th scope="col">Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {courses
-                .filter(function (item) {
-                  if (parseInt(semId) === 0) return true;
-                  else return parseInt(item.SemesterId) === parseInt(semId);
-                })
-                .map((course, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{course.Id}</td>
-                      <td onClick={()=>{handleChooseCourse(course)}}>{course.name}</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th scope="col">Course ID</th>
+              <th scope="col">Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {courses
+             .filter(function (item) {
+               if (parseInt(semId) === 0) return true;
+               else return parseInt(item.SemesterId) === parseInt(semId);
+             })
+             .map((course, i) => {
+               return (
+                 <tr key={i}>
+                   <td>{course.Id}</td>
+                   <td onClick={()=>{handleChooseCourse(course)}}>{course.name}</td>
+                </tr>
+               );
+             })}
+          </tbody>
+        </Table>
         </div>
       </div>
     </div>

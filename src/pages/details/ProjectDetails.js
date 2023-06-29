@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./details.module.scss";
+import Table from "react-bootstrap/Table";
 import classNames from "classnames/bind";
 import { Snackbar, Alert } from "@mui/material";
 
@@ -61,7 +62,6 @@ function ProjectDetails() {
     }
     fetchData();
   }, [rerender]);
-  console.log(boardDetails);
 
   async function handleShowStdNoHasProject() {
     const response = await axios.get(`/student/${course}/getstdnotinproject`);
@@ -95,6 +95,7 @@ function ProjectDetails() {
     setShowTableListStudents(true);
     setShowTableListStudentNotInCourse(false);
     setIsStudentsNoInCourseButtonPrimary(false);
+    setIsStudentsButtonPrimary(true);
   };
 
   const handleShowTableStudentsNoInCourse = () => {
@@ -122,7 +123,9 @@ function ProjectDetails() {
               <tr>
                 <th scope="row">EvaluationBoard ID</th>
                 <td>
-                  {boardDetails.Id}-{boardDetails.Name}
+                  {boardDetails
+                    ? boardDetails?.Id - boardDetails?.Name
+                    : "No infor"}
                 </td>
               </tr>
               <tr>
@@ -228,7 +231,7 @@ function ProjectDetails() {
 
       {showTableListStudentNoInCourse && (
         <section>
-          <table className="table table-striped">
+          <Table striped bordered hover>
             <thead>
               <tr>
                 <th>Student CODE</th>
@@ -245,14 +248,7 @@ function ProjectDetails() {
                   <td>{student.Address}</td>
                   <td>
                     <Button
-                      onClick={() => {
-                        if (numTeacherMarked > 0) {
-                          setError("Can not add becasue project is graded");
-                          setOpenSnackBar(true);
-                        } else {
-                          handleAddIntoProject(student.StudentId);
-                        }
-                      }}
+                      onClick={() => handleAddIntoProject(student.StudentId)}
                     >
                       Add
                     </Button>
@@ -260,7 +256,7 @@ function ProjectDetails() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </section>
       )}
       <Snackbar
