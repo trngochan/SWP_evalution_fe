@@ -22,6 +22,7 @@ function InforStudent() {
   const [semId, setSemId] = useState(0);
   const [status, setStatus] = useState(0);
   const [message, setMessage] = useState("");
+  const [course, setCourse] = useState("No infor");
 
   useEffect(() => {
     async function fetchData() {
@@ -61,6 +62,7 @@ function InforStudent() {
     );
 
     if (response.data.status === 201) {
+      setMessage("");
       setScores(response.data.data.score);
       setStatus(response.data.data.status);
     } else {
@@ -75,8 +77,9 @@ function InforStudent() {
     <div>
       <Header />
       <Infor name={cookies.user?.username} />
+
       <div className={cx("container")}>
-        <div className="row">
+        <div className="row mt-4">
           <div className="col-3">
             <select
               className={cx("form-select")}
@@ -102,7 +105,13 @@ function InforStudent() {
               })
               .map((course, i) => {
                 return (
-                  <li key={i} onClick={() => showScore(course.CourseId)}>
+                  <li
+                    key={i}
+                    onClick={() => {
+                      setCourse(course.name);
+                      showScore(course.CourseId);
+                    }}
+                  >
                     {course.name}
                   </li>
                 );
@@ -111,6 +120,10 @@ function InforStudent() {
           <div className="col-9">
             <table className="table mt-5">
               <thead>
+                <tr>
+                  <th scope="row">Course</th>
+                  <th scope="col">{course}</th>
+                </tr>
                 <tr>
                   <th scope="col" className={cx("col")}>
                     COURSE TOTAL AVERAGE
@@ -130,7 +143,15 @@ function InforStudent() {
                 </tr>
               </tbody>
             </table>
-            {message && <p>{message}</p>}
+            {message && (
+              <p
+                style={{
+                  color: "orange",
+                }}
+              >
+                {message}
+              </p>
+            )}
           </div>
         </div>
       </div>

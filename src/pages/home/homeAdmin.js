@@ -18,7 +18,7 @@ import Infor from "~/components/infor";
 const cx = classNames.bind(styles);
 
 function HomeAdmin() {
-  const [activeButton, setActiveButton] = useState("");
+  const [activeButton, setActiveButton] = useState("board");
 
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
@@ -82,18 +82,6 @@ function HomeAdmin() {
                 primary={activeButton === "semester"}
               >
                 Semester
-              </Button>
-              <Button
-                onClick={() => handleButtonClick("public")}
-                primary={activeButton === "public"}
-              >
-                Public
-              </Button>
-              <Button
-                onClick={() => handleButtonClick("scorecolumn")}
-                primary={activeButton === "scorecolumn"}
-              >
-                Score Column
               </Button>
             </div>
           </div>

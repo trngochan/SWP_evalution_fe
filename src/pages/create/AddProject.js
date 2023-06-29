@@ -7,7 +7,7 @@ import axios from "axios";
 
 const cx = classNames.bind(styles);
 
-function AddProject({ setShowAdd }) {
+function AddProject({ setShowAdd, setRerender }) {
   const [courses, setCourses] = useState([]);
   const [message, setMessage] = useState("");
 
@@ -28,6 +28,7 @@ function AddProject({ setShowAdd }) {
         .then((res) => res.data)
         .then((data) => {
           if (data.status === 200) {
+            setRerender((prev) => !prev);
             setShowAdd(false);
             formik.resetForm();
           } else {

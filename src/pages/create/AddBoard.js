@@ -4,6 +4,7 @@ import styles from "./add.module.scss";
 import classNames from "classnames/bind";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 
 const cx = classNames.bind(styles);
 
@@ -19,17 +20,20 @@ function AddBoard() {
       startTime: "",
       endTime: "",
       room: "",
+      date: "",
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       semesterId: yup.string().required("Subject ID is required"),
       subjectId: yup.string().required("Subject ID is required"),
       templateId: yup.string().required("Template ID is required"),
-      startTime: yup.date().required("Start Time required"),
-      endTime: yup.date().required("End Time required"),
+      startTime: yup.string().required("Start Time required"),
+      endTime: yup.string().required("End Time required"),
       room: yup.number().required("Room is required"),
+      date: yup.date().required("Date is required"),
     }),
     onSubmit: async (values, { resetForm }) => {
+      values.date = moment(values.date).format("YYYY-MM-DD");
       const respone = await axios.post("/evalution/add", values);
       const data = respone.data;
       if (data.status === 201) {
@@ -176,8 +180,7 @@ function AddBoard() {
           <label className={cx("form-label")}>Start Time:</label>
           <input
             className={cx("form-control")}
-            placeholder="Enter year"
-            type="date"
+            type="time"
             name="startTime"
             value={formik.values.startTime}
             onChange={formik.handleChange}
@@ -192,8 +195,7 @@ function AddBoard() {
           <label className={cx("form-label")}>End Time:</label>
           <input
             className={cx("form-control")}
-            placeholder="Enter year"
-            type="date"
+            type="time"
             name="endTime"
             value={formik.values.endTime}
             onChange={formik.handleChange}
@@ -202,10 +204,32 @@ function AddBoard() {
             <span className={cx("form-message")}>{formik.errors.endTime}</span>
           )}
         </div>
+        <div className={cx("form-group")}>
+          <label className={cx("form-label")}>Date:</label>
+          <input
+            className={cx("form-control")}
+            placeholder="Enter date"
+            type="date"
+            name="date"
+            value={formik.values.date}
+            onChange={formik.handleChange}
+          />
+          {formik.errors.date && formik.touched.date && (
+            <span className={cx("form-message")}>{formik.errors.date}</span>
+          )}
+        </div>
         <button type="submit" className={cx("form-submit")}>
           Add
         </button>
-        {message.length > 0 && <p>{message}</p>}
+        {message.length > 0 && (
+          <p
+            style={{
+              color: "red",
+            }}
+          >
+            {message}
+          </p>
+        )}
       </form>
     </div>
   );

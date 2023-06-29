@@ -3,7 +3,7 @@ import Button from "~/components/button";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import classNames from "classnames/bind";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 
 import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
@@ -50,7 +50,6 @@ function ListCourseAdmin() {
   }
 
   return (
-    
     <div>
       <Button primary onClick={() => setShowAdd(!isShowAdd)}>
         {isShowAdd ? "View" : "Add"}
@@ -60,61 +59,60 @@ function ListCourseAdmin() {
       ) : (
         <>
           <div className="col-2">
-              <select
-                className={cx("form-select")}
-                aria-label="Default select example"
-                defaultValue={""}
-                onClick={(e) => {
-                  handleChooseSem(e.target.value);
-                }}
-              >
-                <option value="0">All semester</option>
-                {semesterList.map((semester, i) => {
-                  return (
-                    <option value={semester.Id} key={i}>
-                      {semester.Year}-{semester.Session}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-  
+            <select
+              className={cx("form-select")}
+              aria-label="Default select example"
+              defaultValue={""}
+              onClick={(e) => {
+                handleChooseSem(e.target.value);
+              }}
+            >
+              <option value="0">All semester</option>
+              {semesterList.map((semester, i) => {
+                return (
+                  <option value={semester.Id} key={i}>
+                    {semester.Year}-{semester.Session}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
           <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Course ID</th>
-            <th>Name</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-                {courses
-                  .filter(function (item) {
-                    if (parseInt(semId) === 0) return true;
-                    else return parseInt(item.SemesterId) === parseInt(semId);
-                  })
-                  .map((course, i) => (
-                    <tr key={i}>
-                      <td>{course.id}</td>
-                      <td
-                        onClick={() => {
-                          handleShowProjects(course.id);
-                        }}
-                      >
-                        {course.name}
-                      </td>
-                      <td>
-                        <Button to={`/coursedetails/${course.id}`}>
-                          Details
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-      </Table>
+            <thead>
+              <tr>
+                <th>Course ID</th>
+                <th>Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {courses
+                ?.filter(function (item) {
+                  if (parseInt(semId) === 0) return true;
+                  else return parseInt(item.SemesterId) === parseInt(semId);
+                })
+                .map((course, i) => (
+                  <tr key={i}>
+                    <td>{course.id}</td>
+                    <td
+                      onClick={() => {
+                        handleShowProjects(course.id);
+                      }}
+                    >
+                      {course.name}
+                    </td>
+                    <td>
+                      <Button to={`/coursedetails/${course.id}`}>
+                        Details
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
         </>
       )}
-      
     </div>
   );
 }

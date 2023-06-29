@@ -7,6 +7,7 @@ import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import moment from "moment";
+import { Snackbar, Alert } from "@mui/material";
 
 import axios from "axios";
 
@@ -25,6 +26,7 @@ function BoardDetail() {
   const [listProOutBoard, setListProOutBoard] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [teachersnotinboard, setTeachersnotinboard] = useState([]);
+  const [projectsPucliced, setProjectsPucliced] = useState([]);
 
   const [rerender, setRerender] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -34,6 +36,7 @@ function BoardDetail() {
   const [showTableListProjects, setShowTableListProjects] = useState(false);
   const [isTeachersButtonPrimary, setIsTeachersButtonPrimary] = useState(true);
   const [isProjectsButtonPrimary, setIsProjectsButtonPrimary] = useState(false);
+  const [boardDetails, setBoardDetails] = useState({});
 
   const handleOpenTeachers = () => {
     setShowModalTeachers(true);
@@ -52,6 +55,7 @@ function BoardDetail() {
   };
 
   const handleShowTableTeachers = () => {
+    setError("");
     setShowTableListTeachers(!showTableListTeachers);
     setShowTableListProjects(false);
     setIsTeachersButtonPrimary(true);
@@ -59,6 +63,7 @@ function BoardDetail() {
   };
 
   const handleShowTableProjects = () => {
+    setError("");
     setShowTableListProjects(!showTableListProjects);
     setShowTableListTeachers(false);
     setIsTeachersButtonPrimary(false);
@@ -73,6 +78,9 @@ function BoardDetail() {
         async function fetchData() {
           setShow("project");
           const respone = await axios.get(`/project/${board}/evalution`);
+          const req5 = await axios.get(`/project/getallpubliced`);
+          const req6 = await axios.get(`/evalution/${board}`);
+          setBoardDetails(req6.data.data[0]);
 
           const data = respone.data;
 
@@ -87,17 +95,21 @@ function BoardDetail() {
               teacherQuan: response1.data[0].totalTeacher,
               teacherQuanMarked: response2.data[0].totalTeachersMark,
             };
-
-            const respone1 = await axios.get(`/teacher/${board}/linb`);
-            setTeachers(respone1.data);
           }
+          const respone1 = await axios.get(`/teacher/${board}/linb`);
+          setTeachers(respone1.data);
           setListProject(data);
+          setProjectsPucliced(req5.data.data);
         }
         fetchData();
-      } catch (error) {}
+      } catch (error) {
+        console.log(1);
+      }
     },
     [rerender]
   );
+
+  console.log(boardDetails);
 
   async function handleShowProInBoard() {
     try {
@@ -184,10 +196,44 @@ function BoardDetail() {
     }
   }
 
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  function closeSnackbar() {
+    setOpenSnackBar(false);
+  }
+
   return (
     <>
       <Header />
       <Infor />
+      <div className="row">
+        <h2 className={cx("title")}>Information details of board</h2>
+        <div className="col-6">
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <th scope="row">Board ID</th>
+                <td>{boardDetails.Id}</td>
+              </tr>
+              <tr>
+                <th scope="row">Board name</th>
+                <td>{boardDetails.Name}</td>
+              </tr>
+              <tr>
+                <th scope="row">Start time</th>
+                <td>{boardDetails.StartTime}</td>
+              </tr>
+              <tr>
+                <th scope="row">End time</th>
+                <td>{boardDetails.EndTime}</td>
+              </tr>
+              <tr>
+                <th scope="row">Date</th>
+                <td>{boardDetails.Date?.slice(0, 10)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div className={cx("title-table")}>
         <Button
           className={cx("btn-show")}
@@ -208,20 +254,42 @@ function BoardDetail() {
           <button
             className={cx("btn-showadd")}
             onClick={() => {
-              handleOpenTeachers();
-              handleShowAddTeacher(board);
+              if (
+                projects.some(
+                  (project) => project.teacherMark.teacherQuanMarked > 0
+                )
+              ) {
+                setError(
+                  "This operation cannot be performed because the evaluation board has been terminated"
+                );
+                setOpenSnackBar(true);
+              } else {
+                handleOpenTeachers();
+                handleShowAddTeacher(board);
+              }
             }}
           >
-            Teacher on assessment
+            Add teacher into evaluation board
           </button>
           <button
             className={cx("btn-showadd")}
             onClick={() => {
-              handleOpenProjects();
-              handleShowProInBoard();
+              if (
+                projects.some(
+                  (project) => project.teacherMark.teacherQuanMarked > 0
+                )
+              ) {
+                setError(
+                  "This operation cannot be performed because the evaluation board has been terminated"
+                );
+                setOpenSnackBar(true);
+              } else {
+                handleOpenProjects();
+                handleShowProInBoard();
+              }
             }}
           >
-            Project listings no reviews
+            Add project into evaluation board
           </button>
         </div>
       </div>
@@ -268,7 +336,7 @@ function BoardDetail() {
                   <th>Project ID</th>
                   <th>Name</th>
                   <th>Note</th>
-                  <th>Tổng Quan</th>
+                  <th>Overview</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -283,16 +351,34 @@ function BoardDetail() {
                         {item.teacherMark.teacherQuanMarked}/
                         {item.teacherMark.teacherQuan}
                       </td>
-                      <td
-                        onClick={() =>
-                          handlePublic(
-                            item.id,
-                            item.teacherMark.teacherQuanMarked,
-                            item.teacherMark.teacherQuan
-                          )
-                        }
-                      >
-                        <Button>Public</Button>
+                      <td>
+                        {projectsPucliced.some(
+                          (projectPucliced) =>
+                            projectPucliced.ProjectId == item.id
+                        ) ? (
+                          <Button>Publiced</Button>
+                        ) : (
+                          <Button
+                            onClick={() => {
+                              if (
+                                item.teacherMark.teacherQuanMarked ==
+                                  item.teacherMark.teacherQuan &&
+                                item.teacherMark.teacherQuan > 0
+                              ) {
+                                handlePublic(
+                                  item.id,
+                                  item.teacherMark.teacherQuanMarked,
+                                  item.teacherMark.teacherQuan
+                                );
+                              } else {
+                                setError("Ineligible for publicity");
+                                setOpenSnackBar(true);
+                              }
+                            }}
+                          >
+                            Public
+                          </Button>
+                        )}
                       </td>
                     </tr>
                   );
@@ -304,6 +390,14 @@ function BoardDetail() {
       </div>
 
       <Divider />
+
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={3000}
+        onClose={closeSnackbar}
+      >
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>
 
       {/* Modal */}
       <Modal
@@ -338,14 +432,12 @@ function BoardDetail() {
                           <td>{item.Id}</td>
                           <td>{item.Name}</td>
                           <td>{item.PhoneNumber}</td>
-                          <td>
-                            <Button
-                              onClick={() => {
-                                handleAddTeacherInBoard(item.Id);
-                              }}
-                            >
-                              Add
-                            </Button>
+                          <td
+                            onClick={() => {
+                              handleAddTeacherInBoard(item.Id);
+                            }}
+                          >
+                            <Button>Add</Button>
                           </td>
                         </tr>
                       </React.Fragment>

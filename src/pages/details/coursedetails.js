@@ -86,6 +86,8 @@ function CourseDetails() {
     fetchData();
   }, [rerender]);
 
+  console.log(project);
+
   async function handleShowStudentNotInCourse() {
     const response = await axios.get(`/student/${course}/getstdnotincour`);
 

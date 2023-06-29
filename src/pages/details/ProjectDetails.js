@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./details.module.scss";
 import classNames from "classnames/bind";
+import { Snackbar, Alert } from "@mui/material";
 
 import Button from "~/components/button";
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
+import BoardDetail from "./boarddetails";
 
 const cx = classNames.bind(styles);
 
@@ -24,18 +26,42 @@ function ProjectDetails() {
     setIsStudentsNoInCourseButtonPrimary,
   ] = useState(false);
 
+  const [error, setError] = useState("");
+
   const { project } = useParams();
   const { course } = useParams();
 
+  const [numTeacher, setNumTeacher] = useState(0);
+  const [numTeacherMarked, setNumTeacherMarked] = useState(0);
+  const [projectSPublics, setProjectSPublics] = useState([]);
+  const [boardDetails, setBoardDetails] = useState({});
+
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(`/student/${project}/project`);
-      const response1 = await axios.get(`/project/${project}/getbyid`);
-      setStudents(response.data);
-      setInforProject(response1.data?.[0]);
+      const req1 = await axios.get(`/student/${project}/project`);
+      const req2 = await axios.get(`/project/${project}/getbyid`);
+      const req3 = await axios.get(`/teacher/${project}/quaninboard`);
+      const req4 = await axios.get(`/teacher/${project}/quanmarked`);
+      const req5 = await axios.get(`/project/getallpubliced`);
+      const req6 = await axios.get(`/evalution/${project}/getbyproject`);
+
+      return axios.all([req1, req2, req3, req4, req5, req6]).then(
+        axios.spread(
+          (response, response1, response2, respone3, respone4, respone5) => {
+            // Xử lý response từ request1 và requests
+            setStudents(response.data);
+            setInforProject(response1.data?.[0]);
+            setNumTeacher(response2.data[0].totalTeacher);
+            setNumTeacherMarked(respone3.data[0].totalTeachersMark);
+            setProjectSPublics(respone4.data.data);
+            setBoardDetails(respone5.data.data[0]);
+          }
+        )
+      );
     }
     fetchData();
   }, [rerender]);
+  console.log(boardDetails);
 
   async function handleShowStdNoHasProject() {
     const response = await axios.get(`/student/${course}/getstdnotinproject`);
@@ -65,16 +91,24 @@ function ProjectDetails() {
   }
 
   const handleShowTableStudents = () => {
+    setError("");
     setShowTableListStudents(true);
     setShowTableListStudentNotInCourse(false);
     setIsStudentsNoInCourseButtonPrimary(false);
   };
 
   const handleShowTableStudentsNoInCourse = () => {
+    setError("");
     setShowTableListStudentNotInCourse(true);
     setShowTableListStudents(false);
     setIsStudentsButtonPrimary(false);
+    handleShowStdNoHasProject();
   };
+
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  function closeSnackbar() {
+    setOpenSnackBar(false);
+  }
 
   return (
     <>
@@ -85,6 +119,12 @@ function ProjectDetails() {
         <div className="col-6">
           <table class="table table-striped">
             <tbody>
+              <tr>
+                <th scope="row">EvaluationBoard ID</th>
+                <td>
+                  {boardDetails.Id}-{boardDetails.Name}
+                </td>
+              </tr>
               <tr>
                 <th scope="row">CourseID</th>
                 <td>{inforProject.CourseId}</td>
@@ -100,6 +140,23 @@ function ProjectDetails() {
               <tr>
                 <th>Notion</th>
                 <td>{inforProject.Notion}</td>
+              </tr>
+              <tr>
+                <th>Overview</th>
+                <td>
+                  {numTeacherMarked}/{numTeacher}
+                </td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>
+                  {projectSPublics.some(
+                    (projectSPublic) =>
+                      projectSPublic.ProjectId == inforProject.Id
+                  )
+                    ? "Publiced"
+                    : "No puclic"}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -119,20 +176,8 @@ function ProjectDetails() {
           onClick={handleShowTableStudentsNoInCourse}
           primary={isStudentsNoInCourseButtonPrimary}
         >
-          List student no in project but in course
+          Add student
         </Button>
-        <div className={cx("show")}>
-          <div className="d-flex justify-content-between">
-            <button
-              className={cx("btn-showadd")}
-              onClick={() => {
-                handleShowStdNoHasProject();
-              }}
-            >
-              Click here to add student into project
-            </button>
-          </div>
-        </div>
       </div>
 
       {showTableListStudents && (
@@ -154,7 +199,16 @@ function ProjectDetails() {
                   <td>{student.Name}</td>
                   <td>{student.Address}</td>
                   <td>
-                    <Button onClick={() => handRemoveStd(student.stdinprjId)}>
+                    <Button
+                      onClick={() => {
+                        if (numTeacherMarked > 0) {
+                          setError("Can not remove becasue project is graded");
+                          setOpenSnackBar(true);
+                        } else {
+                          handRemoveStd(student.stdinprjId);
+                        }
+                      }}
+                    >
                       Remove
                     </Button>
                   </td>
@@ -191,7 +245,14 @@ function ProjectDetails() {
                   <td>{student.Address}</td>
                   <td>
                     <Button
-                      onClick={() => handleAddIntoProject(student.StudentId)}
+                      onClick={() => {
+                        if (numTeacherMarked > 0) {
+                          setError("Can not add becasue project is graded");
+                          setOpenSnackBar(true);
+                        } else {
+                          handleAddIntoProject(student.StudentId);
+                        }
+                      }}
                     >
                       Add
                     </Button>
@@ -202,6 +263,13 @@ function ProjectDetails() {
           </table>
         </section>
       )}
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={3000}
+        onClose={closeSnackbar}
+      >
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>
     </>
   );
 }
