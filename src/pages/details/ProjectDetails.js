@@ -248,7 +248,14 @@ function ProjectDetails() {
                   <td>{student.Address}</td>
                   <td>
                     <Button
-                      onClick={() => handleAddIntoProject(student.StudentId)}
+                      onClick={() => {
+                        if (numTeacherMarked > 0) {
+                          setError("Can not add becasue project is graded");
+                          setOpenSnackBar(true);
+                        } else {
+                          handleAddIntoProject(student.StudentId);
+                        }
+                      }}
                     >
                       Add
                     </Button>
