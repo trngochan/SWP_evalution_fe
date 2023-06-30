@@ -111,6 +111,8 @@ function ProjectDetails() {
     setOpenSnackBar(false);
   }
 
+  console.log(boardDetails);
+
   return (
     <>
       <Header />
@@ -124,7 +126,7 @@ function ProjectDetails() {
                 <th scope="row">EvaluationBoard ID</th>
                 <td>
                   {boardDetails
-                    ? boardDetails?.Id - boardDetails?.Name
+                    ? `${boardDetails?.Id} - ${boardDetails?.Name}`
                     : "No infor"}
                 </td>
               </tr>
