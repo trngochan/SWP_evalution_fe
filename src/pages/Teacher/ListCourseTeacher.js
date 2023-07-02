@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 
 function ListCourseTeacher() {
@@ -35,18 +35,18 @@ function ListCourseTeacher() {
 
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
-    console.log(courses)
+    console.log(courses);
   }
 
   function handleChooseCourse(course) {
-      setCookie("course", course);
-      navigate("/studentsInCourse");
+    setCookie("course", course);
+    navigate("/studentsInCourse");
   }
 
   return (
     <div className="container">
       <div className="row">
-        <h4 className="mb-3 mt-4">List course</h4>
+        <h1 className="mb-3 mt-4">List course</h1>
         <div className="col-2">
           <select
             className="form-select"
@@ -66,29 +66,35 @@ function ListCourseTeacher() {
         </div>
 
         <div className="col-10">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th scope="col">Course ID</th>
-              <th scope="col">Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {courses
-             .filter(function (item) {
-               if (parseInt(semId) === 0) return true;
-               else return parseInt(item.SemesterId) === parseInt(semId);
-             })
-             .map((course, i) => {
-               return (
-                 <tr key={i}>
-                   <td>{course.Id}</td>
-                   <td onClick={()=>{handleChooseCourse(course)}}>{course.name}</td>
-                </tr>
-               );
-             })}
-          </tbody>
-        </Table>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th scope="col">Course ID</th>
+                <th scope="col">Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {courses
+                .filter(function (item) {
+                  if (parseInt(semId) === 0) return true;
+                  else return parseInt(item.SemesterId) === parseInt(semId);
+                })
+                .map((course, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{course.Id}</td>
+                      <td
+                        onClick={() => {
+                          handleChooseCourse(course);
+                        }}
+                      >
+                        {course.name}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
         </div>
       </div>
     </div>

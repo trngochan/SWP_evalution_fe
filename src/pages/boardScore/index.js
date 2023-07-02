@@ -1,23 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 import styles from "./boardscore.module.scss";
 import axios from "axios";
 import classNames from "classnames/bind";
+import { Snackbar, Alert } from "@mui/material";
 
 import Infor from "~/components/infor";
 import Header from "~/components/layouts/header";
 import Button from "~/components/button";
 import Footer from "~/components/layouts/footer";
+import { useParams } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function TeacherBoardScore() {
-  const [scores, setScores] = useState([]);
+  const [studentScores, setStudentScores] = useState({});
   const [cookies, setCookie, removeCookie] = useCookies();
   const [studentList, setStudentList] = useState([]);
   const [ScoreList, setScoreList] = useState([]);
   const [ScoreStudents, setScoreStudents] = useState([]);
   const [error, setError] = useState("");
+  const { marked } = useParams();
+
+  const [stdMarked, setStdMarked] = useState(0);
 
   const listStd = () => {
     return axios.get(`/student/${cookies.project_id}/project`, {
@@ -29,6 +34,7 @@ function TeacherBoardScore() {
       withCredentials: true,
     });
   };
+
   useEffect(() => {
     const fetchData = () => {
       Promise.all([listStd(), listScore()])
@@ -51,9 +57,25 @@ function TeacherBoardScore() {
     fetchData();
   }, []);
 
-  console.log(ScoreStudents);
+  useEffect(() => {
+    async function fetchData() {
+      for (let i = 0; i < studentList.length; i++) {
+        const student = studentList[i];
+        const response = await axios.get(
+          `/score/${cookies.lectureinboard_id}/${student.StudentId}/${cookies.project_id}`
+        );
+        if (response.data.status === 200) {
+          const score = response.data.data;
+          setStudentScores((prevStudentScores) => ({
+            ...prevStudentScores,
+            [student.StudentId]: score,
+          }));
+        }
+      }
+    }
 
-  console.log(cookies);
+    fetchData();
+  }, [studentList]);
 
   function validateValues(arr) {
     for (let i = 0; i < arr.length; i++) {
@@ -96,6 +118,41 @@ function TeacherBoardScore() {
     }
   };
 
+  async function handleUpdate() {
+    try {
+      const valuesStudentScores = Object.values(studentScores);
+
+      await Promise.all(
+        valuesStudentScores.map(async (valueStudentScores) => {
+          await Promise.all(
+            valueStudentScores.map(async (studentScore) => {
+              const data = {
+                stdInPro: studentScore.Id,
+                scoreColumnId: studentScore.ScoreColumnId,
+                score: studentScore.Score,
+                lecInBoard: parseInt(cookies.lectureinboard_id),
+                course: parseInt(cookies.course_id),
+              };
+
+              const response = await axios.put("/score/update", data);
+              if (response.data.status != 200) {
+                console.log("Error updating");
+              }
+            })
+          );
+        })
+      );
+      setOpenSnackBar(true);
+    } catch (error) {
+      console.log("Error at handleUpdate");
+    }
+  }
+
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  function closeSnackbar() {
+    setOpenSnackBar(false);
+  }
+
   return (
     <div>
       <Header />
@@ -117,12 +174,17 @@ function TeacherBoardScore() {
             </thead>
             <tbody>
               {studentList?.map((student, i) => {
+                const studentScore = studentScores[student.StudentId] || [];
                 return (
                   <tr key={i}>
                     <th>
                       {student.CODE} - {student.Name}
                     </th>
                     {ScoreList.map((column, i) => {
+                      const scores = studentScore?.find((score) => {
+                        return score.ScoreColumnId == column.id;
+                      });
+
                       return (
                         <td key={i}>
                           <input
@@ -130,14 +192,34 @@ function TeacherBoardScore() {
                             max={10}
                             type="number"
                             onChange={(e) => {
-                              setScoreStudents((prev) => {
-                                let index = prev.findIndex(
-                                  (obj) => obj.stdinprjId === student.stdinprjId
+                              if (marked === "marked") {
+                                const updateScore = studentScore.map(
+                                  (score) => {
+                                    if (score.ScoreColumnId == column.id) {
+                                      score.Score =
+                                        parseInt(e.target.value) || "";
+                                    }
+                                    return score;
+                                  }
                                 );
-                                prev[index][column.id] = e.target.value;
-                                return [...prev];
-                              });
+                                setStudentScores((prev) => {
+                                  return {
+                                    ...prev,
+                                    [student.StudentId]: updateScore,
+                                  };
+                                });
+                              } else {
+                                setScoreStudents((prev) => {
+                                  let index = prev.findIndex(
+                                    (obj) =>
+                                      obj.stdinprjId === student.stdinprjId
+                                  );
+                                  prev[index][column.id] = e.target.value;
+                                  return [...prev];
+                                });
+                              }
                             }}
+                            value={scores?.Score}
                           />
                         </td>
                       );
@@ -157,13 +239,27 @@ function TeacherBoardScore() {
             </span>
           )}
           <div className={cx("btn-submit")}>
-            <Button primary onClick={handleSubmit}>
-              Submit
-            </Button>
+            {marked === "marked" ? (
+              <Button primary onClick={handleUpdate}>
+                Update
+              </Button>
+            ) : (
+              <Button primary onClick={handleSubmit}>
+                Submit
+              </Button>
+            )}
           </div>
         </div>
       </div>
       <Footer />
+      {/* Snackbar */}
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={3000}
+        onClose={closeSnackbar}
+      >
+        <Alert severity="success">Update grade successfully</Alert>
+      </Snackbar>
     </div>
   );
 }
