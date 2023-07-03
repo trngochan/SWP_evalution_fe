@@ -136,22 +136,19 @@ function InforStudent() {
                   <th scope="row">STATUS</th>
                   <td
                     className={cx("pass")}
-                    style={!status ? { color: "red" } : {}}
+                    style={
+                      message
+                        ? { color: "black" }
+                        : !status
+                        ? { color: "red" }
+                        : {}
+                    }
                   >
-                    {status ? "PASS" : "NOT PASS"}
+                    {message ? message : status ? "PASS" : "NOT PASS"}
                   </td>
                 </tr>
               </tbody>
             </table>
-            {message && (
-              <p
-                style={{
-                  color: "orange",
-                }}
-              >
-                {message}
-              </p>
-            )}
           </div>
         </div>
       </div>

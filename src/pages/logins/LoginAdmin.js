@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -13,6 +13,16 @@ function LoginAdmin() {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (document.cookie.includes("user")) {
+      navigate("/admin");
+    } else {
+      setIsLoading(false); // Kiểm tra user đã hoàn thành, set isLoading thành false
+    }
+  }, []);
 
   const [error, setError] = useState("");
 
@@ -40,6 +50,11 @@ function LoginAdmin() {
         navigate("/");
       });
   }
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Hiển thị trạng thái chờ
+  }
+
   return (
     <>
       <Header />

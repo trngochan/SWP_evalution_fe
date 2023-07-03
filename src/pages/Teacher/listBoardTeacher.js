@@ -74,6 +74,7 @@ function ListBoardTecher() {
         <Table striped bordered hover>
           <thead>
             <tr>
+              <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Room</th>
               <th scope="col">Date</th>
@@ -90,6 +91,7 @@ function ListBoardTecher() {
               .map((item, index) => {
                 return (
                   <tr key={index}>
+                    <td>{item.Id} </td>
                     <td
                       onClick={() =>
                         handleShowStd(
