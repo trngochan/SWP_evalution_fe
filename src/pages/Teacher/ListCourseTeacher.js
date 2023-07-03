@@ -82,7 +82,7 @@ function ListCourseTeacher() {
                 .map((course, i) => {
                   return (
                     <tr key={i}>
-                      <td>{course.Id}</td>
+                      <td>{course.id}</td>
                       <td
                         onClick={() => {
                           handleChooseCourse(course);
