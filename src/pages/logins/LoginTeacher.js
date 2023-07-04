@@ -39,7 +39,7 @@ function LoginTeacher() {
       })
       .then((data) => {
         if (data.data.status === 200) {
-          setCookie("token", data.data.token, { path: "/" });
+          setCookie("token", data.token, { path: "/" });
           setCookie("user", data.data.data[0], { path: "/" });
           navigate("/teacher");
         } else {

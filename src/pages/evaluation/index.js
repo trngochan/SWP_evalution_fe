@@ -48,7 +48,9 @@ function Evaluation() {
 
   function handleShowStd(id, isMarked) {
     setCookie("project_id", id);
-    navigate(`/teacherboardscore/${isMarked ? "marked" : "nomarked"}`);
+    navigate(`/teacherboardscore/${isMarked ? "marked" : "nomarked"}`, {
+      replace: true,
+    });
   }
 
   console.log(projectsMarked);

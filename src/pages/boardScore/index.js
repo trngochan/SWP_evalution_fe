@@ -131,12 +131,11 @@ function TeacherBoardScore() {
             })
             .then((res) => res.data)
             .then((data) => {
-              if (data == "thanh cong") {
-                window.history.back();
-              }
+              console.log(data);
             })
             .catch((err) => console.log(err));
         }
+        window.history.back();
       } else {
         setError("Scores must be number, greater than 0 and less than 10");
       }

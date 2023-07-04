@@ -126,8 +126,9 @@ function BoardDetail() {
     if (marked === quan && quan > 0) {
       const response = await axios.post(`/project/${id}/public`);
       if (response.data.status === 200) {
-        setError("");
-        setSuccess(response.data.message);
+        window.location.reload();
+        // setError("");
+        // setSuccess(response.data.message);
       } else {
         setSuccess("");
         setError(response.data.message);

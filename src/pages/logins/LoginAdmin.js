@@ -38,8 +38,9 @@ function LoginAdmin() {
       .then((res) => res.data)
       .then((data) => {
         if (data.data.status === 200) {
-          setCookie("token", data.data.token, { path: "/" });
+          setCookie("token", data.token, { path: "/" });
           setCookie("user", data.data.data[0], { path: "/" });
+          console.log(data.data);
           navigate("/admin");
         } else {
           setError(data.data.message);
