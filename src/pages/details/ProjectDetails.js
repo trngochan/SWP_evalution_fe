@@ -104,6 +104,7 @@ function ProjectDetails() {
     setShowTableListStudents(false);
     setIsStudentsButtonPrimary(false);
     handleShowStdNoHasProject();
+    setIsStudentsNoInCourseButtonPrimary(true);
   };
 
   const [openSnackBar, setOpenSnackBar] = useState(false);
@@ -185,7 +186,7 @@ function ProjectDetails() {
 
       {showTableListStudents && (
         <section>
-          <table className="table table-striped">
+          <Table striped bordered hover>
             <thead>
               <tr>
                 <th>Student CODE</th>
@@ -205,7 +206,7 @@ function ProjectDetails() {
                     <Button
                       onClick={() => {
                         if (numTeacherMarked > 0) {
-                          setError("Can not remove becasue project is graded");
+                          setError("Can not remove because project is graded");
                           setOpenSnackBar(true);
                         } else {
                           handRemoveStd(student.stdinprjId);
@@ -225,7 +226,7 @@ function ProjectDetails() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </section>
       )}
 

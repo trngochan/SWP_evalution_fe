@@ -10,6 +10,9 @@ import * as yup from "yup";
 import moment from "moment";
 import classNames from "classnames/bind";
 import Table from 'react-bootstrap/Table';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowDownLong, faArrowUpLong } from '@fortawesome/free-solid-svg-icons';
+import _ from 'lodash';
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +25,8 @@ function ListStdAdmin() {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
   const [selectedCode, setSelectedCode] = useState(null);
+  const [sortBy, setSortBy] = useState('asc');
+  const [sortField, setSortField] = useState('code');
   
 
   const handleEdit = (id) => {
@@ -35,12 +40,19 @@ function ListStdAdmin() {
     setSelectedCode(name);
   };
   
-  
-
   const handleClose = () => {
     setShowModalEdit(false);
     setShowModalRemove(false)
   };
+
+  const handleSort = (sortBy, sortField) => {
+    setSortBy(sortBy);
+    setSortField(sortField);
+
+    let cloneListUsers = _.cloneDeep(students);
+    cloneListUsers = _.orderBy(students, [sortField], [sortBy]);
+    setStudents(cloneListUsers);
+}
 
   const formik = useFormik({
     initialValues: {
@@ -105,8 +117,32 @@ function ListStdAdmin() {
     <Table striped bordered hover>
       <thead>
         <tr>
-          <th>Code</th>
-          <th>Name</th>
+          <th>
+            <div className={cx('sort-header')}>
+                <span>Code</span>
+                <span>
+                <i><FontAwesomeIcon icon={faArrowDownLong} 
+                   onClick={() => handleSort('desc', 'code')}
+                /></i>
+                <i><FontAwesomeIcon icon={faArrowUpLong} 
+                    onClick={() => handleSort('asc', 'code')}
+                /></i>
+                </span>
+            </div>
+          </th>
+          <th>
+            <div className={cx('sort-header')}>
+                <span>Name</span>
+                <span>
+                <i><FontAwesomeIcon icon={faArrowDownLong} 
+                   onClick={() => handleSort('desc', 'name')}
+                /></i>
+                <i><FontAwesomeIcon icon={faArrowUpLong} 
+                    onClick={() => handleSort('asc', 'name')}
+                /></i>
+                </span>
+            </div>
+          </th>
           <th>Adress</th>
           <th>Action</th>
         </tr>

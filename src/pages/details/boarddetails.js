@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import moment from "moment";
 import { Snackbar, Alert } from "@mui/material";
+import Table from "react-bootstrap/Table";
 
 import axios from "axios";
 
@@ -297,7 +298,7 @@ function BoardDetail() {
       <div className={cx("table-list")}>
         {showTableListTeachers && (
           <div className="row">
-            <table>
+            <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Teacher ID</th>
@@ -322,7 +323,7 @@ function BoardDetail() {
                   );
                 })}
               </tbody>
-            </table>
+            </Table>
           </div>
         )}
 
@@ -330,7 +331,7 @@ function BoardDetail() {
 
         <div className="row">
           {showTableListProjects && (
-            <table>
+            <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Project ID</th>
@@ -384,7 +385,7 @@ function BoardDetail() {
                   );
                 })}
               </tbody>
-            </table>
+            </Table>
           )}
         </div>
       </div>
