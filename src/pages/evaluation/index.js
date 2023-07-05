@@ -46,10 +46,11 @@ function Evaluation() {
     fetchData();
   }, []);
 
-  function handleShowStd(id) {
-    console.log(id);
+  function handleShowStd(id, isMarked) {
     setCookie("project_id", id);
-    navigate("/teacherboardscore");
+    navigate(`/teacherboardscore/${isMarked ? "marked" : "nomarked"}`, {
+      replace: true,
+    });
   }
 
   console.log(projectsMarked);
@@ -72,7 +73,10 @@ function Evaluation() {
               );
 
               return (
-                <li key={index} onClick={() => handleShowStd(project.id)}>
+                <li
+                  key={index}
+                  onClick={() => handleShowStd(project.id, isMarked)}
+                >
                   <Button
                     onClick={() => {
                       setCookie("course_id", project.CourseId);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -14,6 +14,16 @@ function LoginAdmin() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (document.cookie.includes("user")) {
+      navigate("/admin");
+    } else {
+      setIsLoading(false); // Kiểm tra user đã hoàn thành, set isLoading thành false
+    }
+  }, []);
+
   const [error, setError] = useState("");
 
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -28,8 +38,9 @@ function LoginAdmin() {
       .then((res) => res.data)
       .then((data) => {
         if (data.data.status === 200) {
-          setCookie("token", data.data.token, { path: "/" });
+          setCookie("token", data.token, { path: "/" });
           setCookie("user", data.data.data[0], { path: "/" });
+          console.log(data.data);
           navigate("/admin");
         } else {
           setError(data.data.message);
@@ -40,6 +51,11 @@ function LoginAdmin() {
         navigate("/");
       });
   }
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Hiển thị trạng thái chờ
+  }
+
   return (
     <>
       <Header />

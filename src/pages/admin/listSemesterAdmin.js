@@ -3,12 +3,13 @@ import AddSemester from "../create/AddSemester";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 
 function ListSemesterAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
 
   const [semesters, setsemesters] = useState([]);
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,9 +24,9 @@ function ListSemesterAdmin() {
     }
 
     fetchData();
-  }, []);
+  }, [rerender]);
 
-  console.log(semesters);
+  console.log(rerender);
 
   return (
     <>
@@ -36,30 +37,30 @@ function ListSemesterAdmin() {
         </Button>
       </div>
       {isShowAdd ? (
-        <AddSemester />
+        <AddSemester rerender={setRerender} />
       ) : (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th>Session</th>
-          <th>Start time</th>
-          <th>End time</th>
-        </tr>
-      </thead>
-      <tbody>
-        {semesters?.map((semester, i) => {
-          return (
-            <tr key={i}>
-              <td>{semester.Year}</td>
-              <td>{semester.Session}</td>
-              <td>{semester.StartTime.slice(0, 10)}</td>
-              <td>{semester.EndTime.slice(0, 10)}</td>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Session</th>
+              <th>Start time</th>
+              <th>End time</th>
             </tr>
-          );
-        })}
-      </tbody>
-    </Table>
+          </thead>
+          <tbody>
+            {semesters?.map((semester, i) => {
+              return (
+                <tr key={i}>
+                  <td>{semester.Year}</td>
+                  <td>{semester.Session}</td>
+                  <td>{semester.StartTime.slice(0, 10)}</td>
+                  <td>{semester.EndTime.slice(0, 10)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       )}
     </>
   );

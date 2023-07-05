@@ -21,19 +21,20 @@ function HomeTeacher() {
 
   const [isShowBoard, setIsShowBoard] = useState(false);
   const [isCoursesButtonPrimary, setIsCoursesButtonPrimary] = useState(true);
-  const [isEvaluationsButtonPrimary, setIsEvaluationsButtonPrimary] = useState(false);
+  const [isEvaluationsButtonPrimary, setIsEvaluationsButtonPrimary] =
+    useState(false);
 
   const handleCourses = () => {
     setIsShowBoard(false);
     setIsCoursesButtonPrimary(true);
     setIsEvaluationsButtonPrimary(false);
-  }
+  };
 
   const handleEvaluation = () => {
     setIsShowBoard(true);
     setIsCoursesButtonPrimary(false);
     setIsEvaluationsButtonPrimary(true);
-  }
+  };
 
   if (!cookies.user) navigate("/");
 
@@ -45,22 +46,19 @@ function HomeTeacher() {
         <div className={cx("row")}>
           <div className={cx("col-3")}>
             <div className={cx("nav-teacher")}>
-            <Button 
-              onClick={handleCourses}
-              primary={isCoursesButtonPrimary}
-              >
+              <Button onClick={handleCourses} primary={isCoursesButtonPrimary}>
                 Courses
-            </Button>
-            <Button 
-              onClick={handleEvaluation}
-              primary={isEvaluationsButtonPrimary}
+              </Button>
+              <Button
+                onClick={handleEvaluation}
+                primary={isEvaluationsButtonPrimary}
               >
                 Evaluations
-            </Button>
+              </Button>
             </div>
           </div>
           <div className={cx("col-9")}>
-            {isShowBoard ? <ListBoardTecher /> : <ListCourseTeacher/>}
+            {isShowBoard ? <ListBoardTecher /> : <ListCourseTeacher />}
           </div>
         </div>
       </div>

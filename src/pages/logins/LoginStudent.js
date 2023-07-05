@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -10,12 +10,20 @@ import Header from "~/components/layouts/header";
 const cx = classNames.bind(styles);
 
 const LoginStudent = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (document.cookie.includes("user")) {
+      navigate("/student");
+    } else {
+      setIsLoading(false); // Kiểm tra user đã hoàn thành, set isLoading thành false
+    }
+  }, []);
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
-
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const handleSubmit = (e) => {
@@ -30,7 +38,7 @@ const LoginStudent = () => {
       .then((res) => res.data)
       .then((data) => {
         if (data.data.status === 200) {
-          setCookie("token", data.data.token, { path: "/" });
+          setCookie("token", data.token, { path: "/" });
           setCookie("user", data.data.data[0], { path: "/" });
           navigate("/student");
         } else {
@@ -41,6 +49,10 @@ const LoginStudent = () => {
         navigate("/");
       });
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Hiển thị trạng thái chờ
+  }
 
   return (
     <>
@@ -71,7 +83,15 @@ const LoginStudent = () => {
             />
             <span className={cx("form-message")}></span>
           </div>
-          {error.length > 0 && <p>{error}</p>}
+          {error.length > 0 && (
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {error}
+            </p>
+          )}
           <button type="submit" className={cx("form-submit")}>
             Login
           </button>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 import { useCookies } from "react-cookie";
 
 function ListBoardTecher() {
@@ -52,7 +52,7 @@ function ListBoardTecher() {
 
   return (
     <div className="row mt-3">
-      <h3 className="mb-5">List evaluations of teacher {cookies.user.name}</h3>
+      <h1 className="mb-5">List evaluations of teacher {cookies.user.name}</h1>
       <div className="col-2">
         <select
           className="form-select"
@@ -74,8 +74,10 @@ function ListBoardTecher() {
         <Table striped bordered hover>
           <thead>
             <tr>
+              <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Room</th>
+              <th scope="col">Date</th>
               <th scope="col">Time start</th>
               <th scope="col">Time end</th>
             </tr>
@@ -89,6 +91,7 @@ function ListBoardTecher() {
               .map((item, index) => {
                 return (
                   <tr key={index}>
+                    <td>{item.Id} </td>
                     <td
                       onClick={() =>
                         handleShowStd(
@@ -103,6 +106,7 @@ function ListBoardTecher() {
                       {item.Name}
                     </td>
                     <td>{item.Room} </td>
+                    <td>{item?.Date.slice(0, 10)} </td>
                     <td>{item.StartTime} </td>
                     <td>{item.EndTime} </td>
                   </tr>

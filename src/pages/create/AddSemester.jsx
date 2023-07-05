@@ -3,10 +3,12 @@ import * as yup from "yup";
 import classNames from "classnames/bind";
 import axios from "axios";
 import styles from "./add.module.scss";
+import { Alert, Snackbar } from "@mui/material";
+import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
-function AddSemester() {
+function AddSemester({ rerender }) {
   const formik = useFormik({
     initialValues: {
       year: "",
@@ -25,18 +27,27 @@ function AddSemester() {
         .post("/semester/add", values)
         .then((res) => res.data)
         .then((data) => {
+          formik.resetForm();
           console.log(data);
         })
         .catch((err) => {
           console.log(err);
         });
+
+      setOpenSnackBarSuccess(true);
+      rerender((prev) => !prev);
     },
   });
+
+  const [openSnackBarSuccess, setOpenSnackBarSuccess] = useState(false);
+  function closeSnackbarSuccess() {
+    setOpenSnackBarSuccess(false);
+  }
 
   return (
     <div className={cx("login")}>
       <form onSubmit={formik.handleSubmit} className={cx("form")}>
-      <h2 className={cx("heading")}>Add Semester</h2>
+        <h2 className={cx("heading")}>Add Semester</h2>
         <div className={cx("form-group")}>
           <label className={cx("form-label")}>Year:</label>
           <input
@@ -76,7 +87,9 @@ function AddSemester() {
             onChange={formik.handleChange}
           />
           {formik.errors.startTime && formik.touched.startTime && (
-            <span className={cx("form-message")}>{formik.errors.startTime}</span>
+            <span className={cx("form-message")}>
+              {formik.errors.startTime}
+            </span>
           )}
         </div>
         <div className={cx("form-group")}>
@@ -97,6 +110,13 @@ function AddSemester() {
           Add
         </button>
       </form>
+      <Snackbar
+        open={openSnackBarSuccess}
+        autoHideDuration={3000}
+        onClose={closeSnackbarSuccess}
+      >
+        <Alert severity="success">Add template successfully</Alert>
+      </Snackbar>
     </div>
   );
 }
