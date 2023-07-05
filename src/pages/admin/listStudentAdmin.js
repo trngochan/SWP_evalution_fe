@@ -128,16 +128,11 @@ const getStudentsExport = (event, done) => {
     <>
       <div>
         <h2 className="mt-3 mb-3">List students</h2>
-        <div className={cx('group-btn')}>
+      <div className={cx('group-btn')}>
         <Button primary onClick={() => setShowAdd(!isShowAdd)}>
           {isShowAdd ? "View" : "Add"}
         </Button>
                 <div>
-                  <label htmlFor='test' className='btn btn-warning mx-3 btn-lg'>
-                  <i><FontAwesomeIcon icon={faFileImport}/></i>
-                    Import
-                  </label>
-                  <input id='test' type='file' hidden/>
                   <CSVLink 
                       filename={"students.csv"}
                       className="btn btn-primary btn-lg"
