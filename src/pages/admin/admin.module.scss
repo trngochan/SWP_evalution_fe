@@ -43,3 +43,15 @@ form {
         padding: 0 4px;
     }
 }
+
+.group-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    i{
+        margin-right: 5px;
+    }
+}
+
+

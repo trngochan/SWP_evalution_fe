@@ -11,7 +11,8 @@ import moment from "moment";
 import classNames from "classnames/bind";
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDownLong, faArrowUpLong } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownLong, faArrowUpLong, faFileImport, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { CSVLink } from "react-csv";
 import _ from 'lodash';
 
 const cx = classNames.bind(styles);
@@ -27,6 +28,7 @@ function ListStdAdmin() {
   const [selectedCode, setSelectedCode] = useState(null);
   const [sortBy, setSortBy] = useState('asc');
   const [sortField, setSortField] = useState('code');
+  const [dataExport, setDataExport] = useState([]);
   
 
   const handleEdit = (id) => {
@@ -52,6 +54,25 @@ function ListStdAdmin() {
     let cloneListUsers = _.cloneDeep(students);
     cloneListUsers = _.orderBy(students, [sortField], [sortBy]);
     setStudents(cloneListUsers);
+}
+
+const getStudentsExport = (event, done) => {
+  let result = [];
+  if (students && students.length > 0) {
+      result.push(["ID", "Code", "Name", "Birthday", "Address"]);
+      students.map((student, index) => {
+          let arr = [];
+          arr[0] = student.id;
+          arr[1] = student.code;
+          arr[2] = student.name;
+          arr[3] = student.birthday;
+          arr[4] = student.address;
+          result.push(arr);
+      })
+
+      setDataExport(result);
+      done();
+  }
 }
 
   const formik = useFormik({
@@ -107,9 +128,27 @@ function ListStdAdmin() {
     <>
       <div>
         <h2 className="mt-3 mb-3">List students</h2>
+        <div className={cx('group-btn')}>
         <Button primary onClick={() => setShowAdd(!isShowAdd)}>
           {isShowAdd ? "View" : "Add"}
         </Button>
+                <div>
+                  <label htmlFor='test' className='btn btn-warning mx-3 btn-lg'>
+                  <i><FontAwesomeIcon icon={faFileImport}/></i>
+                    Import
+                  </label>
+                  <input id='test' type='file' hidden/>
+                  <CSVLink 
+                      filename={"students.csv"}
+                      className="btn btn-primary btn-lg"
+                      data={dataExport}
+                      asyncOnClick={true}
+                      onClick={getStudentsExport}
+                  > 
+                   <i><FontAwesomeIcon icon={faFileArrowDown}/></i>
+                   Export</CSVLink>
+                </div>
+              </div>
       </div>
       {isShowAdd ? (
         <AddStudentList />
