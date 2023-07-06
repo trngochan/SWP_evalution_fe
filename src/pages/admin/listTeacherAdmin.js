@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import moment from "moment";
 import classNames from "classnames/bind";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 
 import { Modal, Button as Btn } from "react-bootstrap";
 
@@ -20,7 +20,6 @@ function ListTeacherAdmin() {
   const [edit, setEdit] = useState(null);
   const [rerender, setRerender] = useState(false);
   const [selectedCode, setSelectedCode] = useState(null);
-
 
   useEffect(() => {
     async function fetchData() {
@@ -43,7 +42,6 @@ function ListTeacherAdmin() {
     setShowModalRemove(true);
     setSelectedCode(name);
   };
-  
 
   const handleClose = () => {
     setShowModalEdit(false);
@@ -95,38 +93,42 @@ function ListTeacherAdmin() {
       {isShowAdd ? (
         <AddTeacherList />
       ) : (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Phone Number</th>
-          <th>Birthday</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-      {teachers?.map((teacher, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{teacher.id}</td>
-                    <td>{teacher.name}</td>
-                    <td>{teacher.phonenumber}</td>
-                    <td>{JSON.stringify(teacher.birthday).slice(1, 11)}</td>
-                    <td>
-                      <Button edit small onClick={() => handleEdit(teacher.id)}>
-                        Edit
-                      </Button>
-                      <Button remove small onClick={() => handleRemove(teacher.name)}>Remove</Button>
-                    </td>
-                  </tr>
-                );
-              })}
-      </tbody>
-    </Table>
-    
-
-    )}
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Birthday</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {teachers?.map((teacher, i) => {
+              return (
+                <tr key={i}>
+                  <td>{teacher.id}</td>
+                  <td>{teacher.name}</td>
+                  <td>{teacher.phonenumber}</td>
+                  <td>{JSON.stringify(teacher.birthday).slice(1, 11)}</td>
+                  <td>
+                    <Button edit small onClick={() => handleEdit(teacher.id)}>
+                      Edit
+                    </Button>
+                    <Button
+                      remove
+                      small
+                      onClick={() => handleRemove(teacher.name)}
+                    >
+                      Remove
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      )}
       <div>
         {/* Modal */}
         <Modal show={showModalEdit} onHide={handleClose}>
@@ -204,32 +206,41 @@ function ListTeacherAdmin() {
           </Modal.Footer>
         </Modal>
 
-        <Modal 
-                show={showModalRemove} 
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
+        <Modal
+          show={showModalRemove}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <h1 className={cx("modal-title")}>Delete a user</h1>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="body-add-new">
+              This action can't be undone!! Do you want to remove this user?
+              <br />
+              <b>Name = "{selectedCode}" </b>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Btn
+              variant="secondary"
+              className={cx("btn-bt")}
+              onClick={handleClose}
             >
-                <Modal.Header closeButton>
-                    <Modal.Title><h1 className={cx('modal-title')}>Delete a user</h1></Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className='body-add-new'>
-                        This action can't be undone!!
-                        Do you want to remove this user?  
-                        <br />
-                        <b>Name = "{selectedCode}" </b>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Btn variant="secondary" className={cx('btn-bt')} onClick={handleClose}>
-                        Close
-                    </Btn>
-                    <Btn variant="primary" className={cx('btn-bt')} onClick={formik.handleSubmit}>
-                        Confirm
-                    </Btn>
-                </Modal.Footer>
-            </Modal>
+              Close
+            </Btn>
+            <Btn
+              variant="primary"
+              className={cx("btn-bt")}
+              onClick={formik.handleSubmit}
+            >
+              Confirm
+            </Btn>
+          </Modal.Footer>
+        </Modal>
       </div>
     </>
   );
