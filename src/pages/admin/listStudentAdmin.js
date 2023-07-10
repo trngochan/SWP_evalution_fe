@@ -11,7 +11,7 @@ import moment from "moment";
 import classNames from "classnames/bind";
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDownLong, faArrowUpLong, faFileImport, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownLong, faArrowUpLong, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { CSVLink } from "react-csv";
 import _ from 'lodash';
 
@@ -132,18 +132,18 @@ const getStudentsExport = (event, done) => {
         <Button primary onClick={() => setShowAdd(!isShowAdd)}>
           {isShowAdd ? "View" : "Add"}
         </Button>
-                <div>
-                  <CSVLink 
-                      filename={"students.csv"}
-                      className="btn btn-primary btn-lg"
-                      data={dataExport}
-                      asyncOnClick={true}
-                      onClick={getStudentsExport}
-                  > 
-                   <i><FontAwesomeIcon icon={faFileArrowDown}/></i>
-                   Export</CSVLink>
-                </div>
-              </div>
+            <div>
+              <CSVLink 
+                  filename={"students.csv"}
+                  className="btn btn-primary btn-lg"
+                  data={dataExport}
+                  asyncOnClick={true}
+                  onClick={getStudentsExport}
+              > 
+                <i><FontAwesomeIcon icon={faFileArrowDown}/></i>
+                Export</CSVLink>
+            </div>
+          </div>
       </div>
       {isShowAdd ? (
         <AddStudentList />
@@ -182,21 +182,21 @@ const getStudentsExport = (event, done) => {
         </tr>
       </thead>
       <tbody>
-      {students?.map((student, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{student.code}</td>
-                    <td>{student.name}</td>
-                    <td>{student.address}</td>
-                    <td>
-                      <Button edit small onClick={() => handleEdit(students.id)}>
-                        Edit
-                      </Button>
-                      <Button remove small onClick={() => handleRemove(students.id, student.name)}>Remove</Button>
-                    </td>
-                  </tr>
-                );
-              })}
+        {students?.map((student, i) => {
+            return (
+              <tr key={i}>
+                <td>{student.code}</td>
+                <td>{student.name}</td>
+                <td>{student.address}</td>
+                <td>
+                  <Button edit small onClick={() => handleEdit(students.id)}>
+                    Edit
+                  </Button>
+                  <Button remove small onClick={() => handleRemove(students.id, student.name)}>Remove</Button>
+                </td>
+              </tr>
+            );
+          })}
       </tbody>
     </Table>
       )}

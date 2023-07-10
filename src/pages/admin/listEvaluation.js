@@ -8,7 +8,6 @@ import Table from "react-bootstrap/Table";
 import AddBoard from "../create/AddBoard";
 import styles from "./admin.module.scss";
 import Footer from "~/components/layouts/footer";
-import Divider from "~/components/Divider";
 
 const cx = classNames.bind(styles);
 
