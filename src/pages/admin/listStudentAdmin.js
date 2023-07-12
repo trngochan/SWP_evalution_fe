@@ -149,7 +149,7 @@ function ListStdAdmin() {
         <AddStudentList />
       ) : (
         <Table striped bordered hover>
-          <thead className="text-center">
+          <thead>
             <tr>
               <th>
                 <div className={cx('sort-header')}>
@@ -185,10 +185,10 @@ function ListStdAdmin() {
             {students?.map((student, i) => {
               return (
                 <tr key={i}>
-                  <td className="text-center">{student.code}</td>
-                  <td className="text-center">{student.name}</td>
-                  <td className="text-center">{student.address}</td>
-                  <td className="text-center">
+                  <td>{student.code}</td>
+                  <td>{student.name}</td>
+                  <td>{student.address}</td>
+                  <td>
                     <Button edit small onClick={() => handleEdit(students.id)}>
                       Edit
                     </Button>
