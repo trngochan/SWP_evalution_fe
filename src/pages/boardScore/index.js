@@ -5,8 +5,7 @@ import axios from "axios";
 import classNames from "classnames/bind";
 import { Snackbar, Alert, TextField, Typography } from "@mui/material";
 
-import Infor from "~/components/infor";
-import Header from "~/components/layouts/header";
+import { Header2 } from "~/components/layouts/header";
 import Button from "~/components/button";
 import Footer from "~/components/layouts/footer";
 import { useParams } from "react-router-dom";
@@ -192,10 +191,9 @@ function TeacherBoardScore() {
 
   return (
     <div>
-      <Header />
-      <Infor />
-      <div>
-        <div className="row">
+      <Header2 />
+      <div className={cx("container")}>
+        <div className={cx("table-1")}>
           <h2 className={cx("title")}>Information details of project</h2>
           <div className="col-6">
             <table class="table table-striped">
@@ -232,9 +230,10 @@ function TeacherBoardScore() {
             </table>
           </div>
         </div>
-        <div className={cx("wrapper")}>
+
+        <div className={cx("table-2")}>
           <table className="table">
-            <thead>
+            <thead className="text-center">
               <tr>
                 <th></th>
                 {ScoreList.map((column, i) => {
@@ -261,7 +260,7 @@ function TeacherBoardScore() {
                         });
 
                         return (
-                          <td key={i}>
+                          <td key={i} className="text-center">
                             <input
                               min={0}
                               max={10}

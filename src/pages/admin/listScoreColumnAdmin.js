@@ -9,9 +9,9 @@ import AddScoreColumn from "../create/AddScoreColumn";
 const cx = classNames.bind(styles);
 
 function ListScoreColumnAdmin() {
-    const [isShowAdd, setShowAdd] = useState(false);
+  const [isShowAdd, setShowAdd] = useState(false);
 
-    const semesterList = ["1", "2"]
+  const semesterList = ["1", "2"]
   return (
     <div>
       <Button primary onClick={() => setShowAdd(!isShowAdd)}>
@@ -23,40 +23,40 @@ function ListScoreColumnAdmin() {
         <>
           <div className="col-2">
             <select
-                className={cx('form-select')}
-                aria-label="Default select example"
-                defaultValue={""}
-              //   onClick    
-              >
-                <option value="0">All Semester</option>
-                {semesterList.map((semester, i) => {
-                  return (
-                    <option key={i} >
-                      {semester}
-                    </option>
-                  );
-                })}
+              className={cx('form-select')}
+              aria-label="Default select example"
+              defaultValue={""}
+            //   onClick    
+            >
+              <option value="0">All Semester</option>
+              {semesterList.map((semester, i) => {
+                return (
+                  <option key={i} >
+                    {semester}
+                  </option>
+                );
+              })}
             </select>
           </div>
-  
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Adress</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr >
-            <td>1</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-          </tr>
-        </tbody>
-      </Table>
+
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Adress</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr >
+                <td>1</td>
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
+              </tr>
+            </tbody>
+          </Table>
         </>
       )}
     </div>

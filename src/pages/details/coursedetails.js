@@ -5,8 +5,7 @@ import React from "react";
 import Table from "react-bootstrap/Table";
 import { useCookies } from "react-cookie";
 
-import Infor from "~/components/infor";
-import Header from "~/components/layouts/header";
+import { Header2 } from "~/components/layouts/header";
 import Button from "~/components/button";
 import styles from "./details.module.scss";
 import classNames from "classnames/bind";
@@ -126,9 +125,8 @@ function CourseDetails() {
 
   return (
     <>
-      <Header />
-      <Infor />
-      <div className="row">
+      <Header2 />
+      <div className={cx("table-1")}>
         <h2 className={cx("title")}>Information details of course</h2>
         <div className="col-6">
           <table className="table table-striped">
@@ -195,74 +193,75 @@ function CourseDetails() {
         </div>
       </div>
 
-      <div className={cx("title-table")}>
-        <Button
-          className={cx("mb-5 mt-5 show")}
-          onClick={handleShowTableProjects}
-          primary={isProjectsButtonPrimary}
-        >
-          List projects
-        </Button>
-        <Button
-          className={cx("mb-5 mt-5 show")}
-          onClick={handleShowTableStudents}
-          primary={isStudentsButtonPrimary}
-        >
-          List students
-        </Button>
-        <Button
-          className={cx("mb-5 mt-5 show")}
-          onClick={() => {
-            handleShowTableStudentsNotInCourse();
-            handleShowStudentNotInCourse();
-          }}
-          primary={isStudentsNotInCourseButtonPrimary}
-        >
-          Add student
-        </Button>
-      </div>
+      <div className={cx("table-2")}>
+        <div className={cx("title-table")}>
+          <Button
+            className={cx("mb-5 mt-5 show")}
+            onClick={handleShowTableProjects}
+            primary={isProjectsButtonPrimary}
+          >
+            List projects
+          </Button>
+          <Button
+            className={cx("mb-5 mt-5 show")}
+            onClick={handleShowTableStudents}
+            primary={isStudentsButtonPrimary}
+          >
+            List students
+          </Button>
+          <Button
+            className={cx("mb-5 mt-5 show")}
+            onClick={() => {
+              handleShowTableStudentsNotInCourse();
+              handleShowStudentNotInCourse();
+            }}
+            primary={isStudentsNotInCourseButtonPrimary}
+          >
+            Add student
+          </Button>
+        </div>
 
-      <div className="table-list">
-        {showTableListProjects && (
-          <section>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Project ID</th>
-                  <th>Name</th>
-                  <th>Note</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {project.length > 0 ? (
-                  project.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{item.prjId}</td>
-                        <td>{item.Name}</td>
-                        <td>{item.notion}</td>
-                        <td>
-                          <Button
-                            to={`/projectdetails/${course}/${item.prjId}`}
-                          >
-                            Details
-                          </Button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <p>No item</p>
-                )}
-              </tbody>
-            </Table>
-          </section>
-        )}
+        <div className="table-list">
+          {showTableListProjects && (
+            <section>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Project ID</th>
+                    <th>Name</th>
+                    <th>Note</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {project.length > 0 ? (
+                    project.map((item, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{item.prjId}</td>
+                          <td>{item.Name}</td>
+                          <td>{item.notion}</td>
+                          <td>
+                            <Button
+                              to={`/projectdetails/${course}/${item.prjId}`}
+                            >
+                              Details
+                            </Button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <p>No item</p>
+                  )}
+                </tbody>
+              </Table>
+            </section>
+          )}
 
-        {showTableListStudents && (
-          <section>
-            {/* <table>
+          {showTableListStudents && (
+            <section>
+              {/* <table>
               <thead>
                 <tr>
                   <th>Code</th>
@@ -292,42 +291,42 @@ function CourseDetails() {
                 )}
               </tbody>
             </table> */}
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Name</th>
-                  <th>Birth day</th>
-                  <th>Adress</th>
-                </tr>
-              </thead>
-              <tbody>
-                {student.length > 0 ? (
-                  student.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{item.code}</td>
-                        <td>{item.name}</td>
-                        <td>
-                          {item.birthday
-                            ? JSON.stringify(item.birthday).slice(1, 11)
-                            : "No infor"}
-                        </td>
-                        <td>{item.adress ? item.adress : "No infor"}</td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <p>No item</p>
-                )}
-              </tbody>
-            </Table>
-          </section>
-        )}
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Birth day</th>
+                    <th>Adress</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {student.length > 0 ? (
+                    student.map((item, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{item.code}</td>
+                          <td>{item.name}</td>
+                          <td>
+                            {item.birthday
+                              ? JSON.stringify(item.birthday).slice(1, 11)
+                              : "No infor"}
+                          </td>
+                          <td>{item.adress ? item.adress : "No infor"}</td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <p>No item</p>
+                  )}
+                </tbody>
+              </Table>
+            </section>
+          )}
 
-        {showTableListStudentsNotInCourse && (
-          <section>
-            {/* <table>
+          {showTableListStudentsNotInCourse && (
+            <section>
+              {/* <table>
               <thead>
                 <tr>
                   <th>Code</th>
@@ -361,42 +360,43 @@ function CourseDetails() {
                 )}
               </tbody>
             </table> */}
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Name</th>
-                  <th>Birth day</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {studentNotCour.length > 0 ? (
-                  studentNotCour.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{item.Code}</td>
-                        <td>{item.Name}</td>
-                        <td>
-                          {item.BirthDay
-                            ? JSON.stringify(item.BirthDay).slice(1, 11)
-                            : "No infor"}
-                        </td>
-                        <td>
-                          <Button onClick={() => handleAddStdInCour(item.Id)}>
-                            Add
-                          </Button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <p>No item</p>
-                )}
-              </tbody>
-            </Table>
-          </section>
-        )}
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Birth day</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {studentNotCour.length > 0 ? (
+                    studentNotCour.map((item, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{item.Code}</td>
+                          <td>{item.Name}</td>
+                          <td>
+                            {item.BirthDay
+                              ? JSON.stringify(item.BirthDay).slice(1, 11)
+                              : "No infor"}
+                          </td>
+                          <td>
+                            <Button onClick={() => handleAddStdInCour(item.Id)}>
+                              Add
+                            </Button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <p>No item</p>
+                  )}
+                </tbody>
+              </Table>
+            </section>
+          )}
+        </div>
       </div>
     </>
   );

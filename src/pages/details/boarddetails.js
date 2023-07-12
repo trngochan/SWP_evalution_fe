@@ -12,8 +12,7 @@ import Table from "react-bootstrap/Table";
 
 import axios from "axios";
 
-import Infor from "~/components/infor";
-import Header from "~/components/layouts/header";
+import { Header2 } from "~/components/layouts/header";
 import Divider from "~/components/Divider";
 
 const cx = classNames.bind(styles);
@@ -120,7 +119,7 @@ function BoardDetail() {
       if (data.status === 201) {
         setListProOutBoard(data.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function handlePublic(id, marked, quan) {
@@ -146,7 +145,7 @@ function BoardDetail() {
       } else {
         setError("Error: at handleShowAddTeacher");
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function handleAddTeacherInBoard(teacherId) {
@@ -205,9 +204,8 @@ function BoardDetail() {
 
   return (
     <>
-      <Header />
-      <Infor />
-      <div className="row">
+      <Header2 />
+      <div className={cx("table-1")}>
         <h2 className={cx("title")}>Information details of board</h2>
         <div className="col-6">
           <table class="table table-striped">
@@ -236,188 +234,72 @@ function BoardDetail() {
           </table>
         </div>
       </div>
-      <div className={cx("title-table")}>
-        <Button
-          className={cx("btn-show")}
-          onClick={handleShowTableTeachers}
-          primary={isTeachersButtonPrimary}
-        >
-          <span>List teacher</span>
-        </Button>
-        <Button
-          className={cx("mb-5 mt-5")}
-          onClick={handleShowTableProjects}
-          primary={isProjectsButtonPrimary}
-        >
-          List project
-        </Button>
 
-        <div className={cx("show")}>
-          <button
-            className={cx("btn-showadd")}
-            onClick={() => {
-              if (
-                projects.some(
-                  (project) => project.teacherMark.teacherQuanMarked > 0
-                )
-              ) {
-                setError(
-                  "This operation cannot be performed because the evaluation board has been terminated"
-                );
-                setOpenSnackBar(true);
-              } else {
-                handleOpenTeachers();
-                handleShowAddTeacher(board);
-              }
-            }}
+      <div className={cx("table-2")}>
+        <div className={cx("title-table")}>
+          <Button
+            className={cx("btn-show")}
+            onClick={handleShowTableTeachers}
+            primary={isTeachersButtonPrimary}
           >
-            Add teacher into evaluation board
-          </button>
-          <button
-            className={cx("btn-showadd")}
-            onClick={() => {
-              if (
-                projects.some(
-                  (project) => project.teacherMark.teacherQuanMarked > 0
-                )
-              ) {
-                setError(
-                  "This operation cannot be performed because the evaluation board has been terminated"
-                );
-                setOpenSnackBar(true);
-              } else {
-                handleOpenProjects();
-                handleShowProInBoard();
-              }
-            }}
+            <span>List teacher</span>
+          </Button>
+          <Button
+            className={cx("mb-5 mt-5")}
+            onClick={handleShowTableProjects}
+            primary={isProjectsButtonPrimary}
           >
-            Add project into evaluation board
-          </button>
-        </div>
-      </div>
+            List project
+          </Button>
 
-      <div className={cx("table-list")}>
-        {showTableListTeachers && (
-          <div className="row">
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Teacher ID</th>
-                  <th>Name</th>
-                  <th>PhoneNumber</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {teachers.map((item, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <tr>
-                        <td>{item.Id}</td>
-                        <td>{item.Name}</td>
-                        <td>{item.PhoneNumber}</td>
-                        <td>
-                          <Button>Details</Button>
-                        </td>
-                      </tr>
-                    </React.Fragment>
+          <div className={cx("show")}>
+            <button
+              className={cx("btn-showadd")}
+              onClick={() => {
+                if (
+                  projects.some(
+                    (project) => project.teacherMark.teacherQuanMarked > 0
+                  )
+                ) {
+                  setError(
+                    "This operation cannot be performed because the evaluation board has been terminated"
                   );
-                })}
-              </tbody>
-            </Table>
+                  setOpenSnackBar(true);
+                } else {
+                  handleOpenTeachers();
+                  handleShowAddTeacher(board);
+                }
+              }}
+            >
+              Add teacher into evaluation board
+            </button>
+            <button
+              className={cx("btn-showadd")}
+              onClick={() => {
+                if (
+                  projects.some(
+                    (project) => project.teacherMark.teacherQuanMarked > 0
+                  )
+                ) {
+                  setError(
+                    "This operation cannot be performed because the evaluation board has been terminated"
+                  );
+                  setOpenSnackBar(true);
+                } else {
+                  handleOpenProjects();
+                  handleShowProInBoard();
+                }
+              }}
+            >
+              Add project into evaluation board
+            </button>
           </div>
-        )}
-
-        {/* <Divider /> */}
-
-        <div className="row">
-          {showTableListProjects && (
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Project ID</th>
-                  <th>Name</th>
-                  <th>Note</th>
-                  <th>Overview</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {projects.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.notion}</td>
-                      <td>
-                        {item.teacherMark.teacherQuanMarked}/
-                        {item.teacherMark.teacherQuan}
-                      </td>
-                      <td>
-                        {projectsPucliced.some(
-                          (projectPucliced) =>
-                            projectPucliced.ProjectId == item.id
-                        ) ? (
-                          <Button>Publiced</Button>
-                        ) : (
-                          <Button
-                            onClick={() => {
-                              if (
-                                item.teacherMark.teacherQuanMarked ==
-                                  item.teacherMark.teacherQuan &&
-                                item.teacherMark.teacherQuan > 0
-                              ) {
-                                handlePublic(
-                                  item.id,
-                                  item.teacherMark.teacherQuanMarked,
-                                  item.teacherMark.teacherQuan
-                                );
-                              } else {
-                                setError("Ineligible for publicity");
-                                setOpenSnackBar(true);
-                              }
-                            }}
-                          >
-                            Public
-                          </Button>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          )}
         </div>
-      </div>
 
-      <Divider />
-
-      <Snackbar
-        open={openSnackBar}
-        autoHideDuration={3000}
-        onClose={closeSnackbar}
-      >
-        <Alert severity="error">{error}</Alert>
-      </Snackbar>
-
-      {/* Modal */}
-      <Modal
-        show={showModalTeachers}
-        onHide={handleCloseTeachers}
-        dialogClassName="custom-modal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <h2 className="">List teacher other...</h2>
-          </Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <div className="row">
-            <div className="col-12">
-              <div className="d-flex justify-content-between"></div>
-              <table>
+        <div className={cx("table-list")}>
+          {showTableListTeachers && (
+            <div className="row">
+              <Table striped bordered hover>
                 <thead>
                   <tr>
                     <th>Teacher ID</th>
@@ -427,121 +309,240 @@ function BoardDetail() {
                   </tr>
                 </thead>
                 <tbody>
-                  {teachersnotinboard.map((item, index) => {
+                  {teachers.map((item, index) => {
                     return (
                       <React.Fragment key={index}>
                         <tr>
                           <td>{item.Id}</td>
                           <td>{item.Name}</td>
                           <td>{item.PhoneNumber}</td>
-                          <td
-                            onClick={() => {
-                              handleAddTeacherInBoard(item.Id);
-                            }}
-                          >
-                            <Button>Add</Button>
+                          <td>
+                            <Button>Details</Button>
                           </td>
                         </tr>
                       </React.Fragment>
                     );
                   })}
                 </tbody>
-                {success && <p>{success}</p>}
-                {error && <p>{error}</p>}
-              </table>
+              </Table>
             </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+          )}
 
-      {/* modal add project */}
-      <Modal
-        show={showModalProjects}
-        onHide={handleCloseProjects}
-        dialogClassName="custom-modal"
-        className={cx("custom-modal")}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <h2>List project out evaluation...</h2>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {listProOutBoard.length > 0 ? (
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%" }}>
+          {/* <Divider /> */}
+
+          <div className="row">
+            {showTableListProjects && (
+              <Table striped bordered hover>
                 <thead>
                   <tr>
                     <th>Project ID</th>
                     <th>Name</th>
                     <th>Note</th>
+                    <th>Overview</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {listProOutBoard.map((item, index) => (
-                    <React.Fragment key={index}>
+                  {projects.map((item, index) => {
+                    return (
                       <tr key={index}>
-                        <td>{item.Id}</td>
-                        <td>{item.Name}</td>
-                        <td>{item.Notion}</td>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
+                        <td>{item.notion}</td>
                         <td>
-                          <Button
-                            onClick={() => {
-                              handleAddProjectInBoard(item.Id, index);
-                            }}
-                          >
-                            Add
-                          </Button>
+                          {item.teacherMark.teacherQuanMarked}/
+                          {item.teacherMark.teacherQuan}
+                        </td>
+                        <td>
+                          {projectsPucliced.some(
+                            (projectPucliced) =>
+                              projectPucliced.ProjectId == item.id
+                          ) ? (
+                            <button className={cx("btn-publiced")}>Publiced</button>
+                          ) : (
+                            <Button
+                              onClick={() => {
+                                if (
+                                  item.teacherMark.teacherQuanMarked ==
+                                  item.teacherMark.teacherQuan &&
+                                  item.teacherMark.teacherQuan > 0
+                                ) {
+                                  handlePublic(
+                                    item.id,
+                                    item.teacherMark.teacherQuanMarked,
+                                    item.teacherMark.teacherQuan
+                                  );
+                                } else {
+                                  setError("Ineligible for publicity");
+                                  setOpenSnackBar(true);
+                                }
+                              }}
+                            >
+                              Public
+                            </Button>
+                          )}
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          <input
-                            min={1}
-                            name={`intendTime_${index}`}
-                            placeholder="Enter intend time..."
-                            type="time"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            min={1}
-                            name={`order_${index}`}
-                            placeholder="Enter order..."
-                            type="number"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            name={`protectTime_${index}`}
-                            placeholder="Enter protect time..."
-                            type="number"
-                          />
-                        </td>
-                      </tr>
-                    </React.Fragment>
-                  ))}
+                    );
+                  })}
                 </tbody>
-              </table>
-              {error && (
-                <p
-                  style={{
-                    color: "red",
-                    fontSize: "14px",
-                  }}
-                >
-                  {error}
-                </p>
-              )}
+              </Table>
+            )}
+          </div>
+        </div>
+
+        <Divider />
+
+        <Snackbar
+          open={openSnackBar}
+          autoHideDuration={3000}
+          onClose={closeSnackbar}
+        >
+          <Alert severity="error">{error}</Alert>
+        </Snackbar>
+
+        {/* Modal */}
+        <Modal
+          show={showModalTeachers}
+          onHide={handleCloseTeachers}
+          dialogClassName="custom-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <h2 className="">List teacher other...</h2>
+            </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <div className="row">
+              <div className="col-12">
+                <div className="d-flex justify-content-between"></div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Teacher ID</th>
+                      <th>Name</th>
+                      <th>PhoneNumber</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {teachersnotinboard.map((item, index) => {
+                      return (
+                        <React.Fragment key={index}>
+                          <tr>
+                            <td>{item.Id}</td>
+                            <td>{item.Name}</td>
+                            <td>{item.PhoneNumber}</td>
+                            <td
+                              onClick={() => {
+                                handleAddTeacherInBoard(item.Id);
+                              }}
+                            >
+                              <Button>Add</Button>
+                            </td>
+                          </tr>
+                        </React.Fragment>
+                      );
+                    })}
+                  </tbody>
+                  {success && <p>{success}</p>}
+                  {error && <p>{error}</p>}
+                </table>
+              </div>
             </div>
-          ) : (
-            <h4 className="ml-5" style={{ marginLeft: "10px" }}>
-              All projects have been evaluated...
-            </h4>
-          )}
-        </Modal.Body>
-      </Modal>
+          </Modal.Body>
+        </Modal>
+
+        {/* modal add project */}
+        <Modal
+          show={showModalProjects}
+          onHide={handleCloseProjects}
+          dialogClassName="custom-modal"
+          className={cx("custom-modal")}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <h2>List project out evaluation...</h2>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {listProOutBoard.length > 0 ? (
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%" }}>
+                  <thead>
+                    <tr>
+                      <th>Project ID</th>
+                      <th>Name</th>
+                      <th>Note</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {listProOutBoard.map((item, index) => (
+                      <React.Fragment key={index}>
+                        <tr key={index}>
+                          <td>{item.Id}</td>
+                          <td>{item.Name}</td>
+                          <td>{item.Notion}</td>
+                          <td>
+                            <Button
+                              onClick={() => {
+                                handleAddProjectInBoard(item.Id, index);
+                              }}
+                            >
+                              Add
+                            </Button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input
+                              min={1}
+                              name={`intendTime_${index}`}
+                              placeholder="Enter intend time..."
+                              type="time"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              min={1}
+                              name={`order_${index}`}
+                              placeholder="Enter order..."
+                              type="number"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              name={`protectTime_${index}`}
+                              placeholder="Enter protect time..."
+                              type="number"
+                            />
+                          </td>
+                        </tr>
+                      </React.Fragment>
+                    ))}
+                  </tbody>
+                </table>
+                {error && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {error}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <h4 className="ml-5" style={{ marginLeft: "10px" }}>
+                All projects have been evaluated...
+              </h4>
+            )}
+          </Modal.Body>
+        </Modal>
+      </div>
     </>
   );
 }

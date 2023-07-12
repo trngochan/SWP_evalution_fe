@@ -3,8 +3,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { useCookies } from "react-cookie";
+import classNames from "classnames/bind";
+import styles from "./teacher.module.scss"
 
-function ListBoardTecher() {
+const cx = classNames.bind(styles);
+
+function ListBoardTeacher() {
   const navigate = useNavigate();
 
   const [evaluationList, setevaluationList] = useState([]);
@@ -51,72 +55,74 @@ function ListBoardTecher() {
   }
 
   return (
-    <div className="row mt-3">
-      <h1 className="mb-5">List evaluations of teacher {cookies.user.name}</h1>
-      <div className="col-2">
-        <select
-          className="form-select"
-          aria-label="Default select example"
-          defaultValue={""}
-          onClick={(e) => handleChooseSem(e.target.value)}
-        >
-          <option value="0">All semmester</option>
-          {semesterList.map((semester, i) => {
-            return (
-              <option key={i} value={semester.Id}>
-                {semester.Year} - {semester.Session}{" "}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <div className="col-10">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Room</th>
-              <th scope="col">Date</th>
-              <th scope="col">Time start</th>
-              <th scope="col">Time end</th>
-            </tr>
-          </thead>
-          <tbody>
-            {evaluationList
-              .filter(function (item) {
-                if (parseInt(semId) === 0) return true;
-                else return parseInt(item.SemesterId) === parseInt(semId);
-              })
-              .map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{item.Id} </td>
-                    <td
-                      onClick={() =>
-                        handleShowStd(
-                          item.Id,
-                          item.TemplateId,
-                          item.lectureinboardID,
-                          item.Name
-                        )
-                      }
-                    >
-                      {" "}
-                      {item.Name}
-                    </td>
-                    <td>{item.Room} </td>
-                    <td>{item?.Date.slice(0, 10)} </td>
-                    <td>{item.StartTime} </td>
-                    <td>{item.EndTime} </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </Table>
+    <div className={cx("container")}>
+      <div className="row mt-3">
+        <h1 className="mb-5">List evaluations of teacher {cookies.user.name}</h1>
+        <div className="col-2">
+          <select
+            className={cx("form-select")}
+            aria-label="Default select example"
+            defaultValue={""}
+            onClick={(e) => handleChooseSem(e.target.value)}
+          >
+            <option value="0">All semmester</option>
+            {semesterList.map((semester, i) => {
+              return (
+                <option key={i} value={semester.Id}>
+                  {semester.Year} - {semester.Session}{" "}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="col-10">
+          <Table striped bordered hover className="text-center">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Room</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time start</th>
+                <th scope="col">Time end</th>
+              </tr>
+            </thead>
+            <tbody>
+              {evaluationList
+                .filter(function (item) {
+                  if (parseInt(semId) === 0) return true;
+                  else return parseInt(item.SemesterId) === parseInt(semId);
+                })
+                .map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="text-center">{item.Id} </td>
+                      <td className="text-center"
+                        onClick={() =>
+                          handleShowStd(
+                            item.Id,
+                            item.TemplateId,
+                            item.lectureinboardID,
+                            item.Name
+                          )
+                        }
+                      >
+                        {" "}
+                        {item.Name}
+                      </td>
+                      <td className="text-center">{item.Room} </td>
+                      <td className="text-center">{item?.Date.slice(0, 10)} </td>
+                      <td className="text-center">{item.StartTime} </td>
+                      <td className="text-center">{item.EndTime} </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+        </div>
       </div>
     </div>
   );
 }
 
-export default ListBoardTecher;
+export default ListBoardTeacher;

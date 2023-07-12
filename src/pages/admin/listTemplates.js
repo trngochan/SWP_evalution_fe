@@ -95,7 +95,7 @@ function ListTemplatesAdmin() {
       ) : (
         <>
           <Table striped bordered hover>
-            <thead>
+            <thead className="text-center">
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
@@ -108,11 +108,11 @@ function ListTemplatesAdmin() {
               {templates.map((template) => {
                 return (
                   <tr>
-                    <td>{template.Id}</td>
-                    <td>{template.Name}</td>
-                    <td>{template.SubjectId}</td>
-                    <td>{template.Status.data[0]}</td>
-                    <td>{template?.ApplyDate?.slice(0, 10)}</td>
+                    <td className="text-center">{template.Id}</td>
+                    <td className="text-center">{template.Name}</td>
+                    <td className="text-center">{template.SubjectId}</td>
+                    <td className="text-center">{template.Status.data[0]}</td>
+                    <td className="text-center">{template?.ApplyDate?.slice(0, 10)}</td>
                   </tr>
                 );
               })}

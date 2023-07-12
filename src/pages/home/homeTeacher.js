@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
-import Infor from "~/components/infor";
-import Header from "~/components/layouts/header";
+
+import { Header2 } from "~/components/layouts/header";
 import Footer from "~/components/layouts/footer";
-import ListBoardTecher from "../Teacher/listBoardTeacher";
+import ListBoardTeacher from "../Teacher/listBoardTeacher";
+
 
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
@@ -40,25 +41,21 @@ function HomeTeacher() {
 
   return (
     <>
-      <Header />
-      <Infor name={cookies.user.username} />
-      <div className={cx("conainer")}>
+      <Header2 />
+      <div className={cx("container-teacher")}>
         <div className={cx("row")}>
           <div className={cx("col-3")}>
             <div className={cx("nav-teacher")}>
               <Button onClick={handleCourses} primary={isCoursesButtonPrimary}>
                 Courses
               </Button>
-              <Button
-                onClick={handleEvaluation}
-                primary={isEvaluationsButtonPrimary}
-              >
+              <Button onClick={handleEvaluation} primary={isEvaluationsButtonPrimary}>
                 Evaluations
               </Button>
             </div>
           </div>
           <div className={cx("col-9")}>
-            {isShowBoard ? <ListBoardTecher /> : <ListCourseTeacher />}
+            {isShowBoard ? <ListBoardTeacher /> : <ListCourseTeacher />}
           </div>
         </div>
       </div>
