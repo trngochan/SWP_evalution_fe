@@ -48,7 +48,7 @@ function ListCourseTeacher() {
   }
 
   return (
-    <div className="container">
+    <div className={cx("container")}>
       <div className="row">
         <b className="mb-3 mt-4">List course</b>
         <div className="col-2">
@@ -58,7 +58,7 @@ function ListCourseTeacher() {
             defaultValue={""}
             onClick={(e) => handleChooseSem(e.target.value)}
           >
-            <option value="0">All semmester</option>
+            <option className="text-center" value="0">All semmester</option>
             {semesters.map((semester, i) => {
               return (
                 <option key={i} value={semester.Id}>
@@ -70,7 +70,7 @@ function ListCourseTeacher() {
         </div>
 
         <div className="col-10">
-          <Table striped bordered hover>
+          <Table striped bordered hover className="text-center">
             <thead>
               <tr>
                 <th scope="col">Course ID</th>
@@ -86,8 +86,8 @@ function ListCourseTeacher() {
                 .map((course, i) => {
                   return (
                     <tr key={i}>
-                      <td>{course.id}</td>
-                      <td
+                      <td className="text-center">{course.id}</td>
+                      <td className="text-center"
                         onClick={() => {
                           handleChooseCourse(course);
                         }}

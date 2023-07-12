@@ -1,9 +1,10 @@
 footer {
-    padding: 40px;
-    margin-top: 20px;
+    padding: 30px;
     background-color: rgb(255, 255, 255);
     display: flex;
+    background-color: #F6FAFF;
 }
+
 footer a {
     color: #8B4513;
     text-decoration: none;
@@ -12,4 +13,10 @@ footer a {
 .container {
     color: #8B4513;
     justify-content: space-around;
+}
+
+.text-light {
+    margin-top: 9rem !important;
+    border-top: 1px solid #a7a5a5;
+    font-size: 1.2rem;
 }

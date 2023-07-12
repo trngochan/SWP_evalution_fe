@@ -67,7 +67,7 @@ function ListCourseAdmin() {
                 handleChooseSem(e.target.value);
               }}
             >
-              <option value="0">All semester</option>
+              <option className="text-center" value="0">All semester</option>
               {semesterList.map((semester, i) => {
                 return (
                   <option value={semester.Id} key={i}>
@@ -78,7 +78,7 @@ function ListCourseAdmin() {
             </select>
           </div>
 
-          <Table striped bordered hover>
+          <Table striped bordered hover className="text-center">
             <thead>
               <tr>
                 <th>Course ID</th>
@@ -86,7 +86,7 @@ function ListCourseAdmin() {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {courses
                 ?.filter(function (item) {
                   if (parseInt(semId) === 0) return true;
@@ -94,15 +94,15 @@ function ListCourseAdmin() {
                 })
                 .map((course, i) => (
                   <tr key={i}>
-                    <td>{course.id}</td>
-                    <td
+                    <td className="text-center">{course.id}</td>
+                    <td className="text-center"
                       onClick={() => {
                         handleShowProjects(course.id);
                       }}
                     >
                       {course.name}
                     </td>
-                    <td>
+                    <td className="text-center">
                       <Button to={`/coursedetails/${course.id}`}>
                         Details
                       </Button>

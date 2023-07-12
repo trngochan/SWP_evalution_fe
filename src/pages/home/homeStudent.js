@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Infor from "~/components/infor";
-import Header from "~/components/layouts/header";
 import { useCookies } from "react-cookie";
+import { Header2 } from "~/components/layouts/header";
 
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
@@ -75,10 +74,9 @@ function InforStudent() {
 
   return (
     <div>
-      <Header />
-      <Infor name={cookies.user?.username} />
-
-      <div className={cx("container")}>
+      <Header2 />
+      <div className={cx("container-student")}>
+        <h2 className={cx("container-title")}>Grade report for {cookies.user?.username}</h2>
         <div className="row mt-4">
           <div className="col-3">
             <select
@@ -106,13 +104,14 @@ function InforStudent() {
               .map((course, i) => {
                 return (
                   <li
+                    className={cx("course-list")}
                     key={i}
                     onClick={() => {
                       setCourse(course.name);
                       showScore(course.CourseId);
                     }}
                   >
-                    {course.name}
+                    <button className={cx("course-btn")}>{course.name}</button>
                   </li>
                 );
               })}
@@ -140,8 +139,8 @@ function InforStudent() {
                       message
                         ? { color: "black" }
                         : !status
-                        ? { color: "red" }
-                        : {}
+                          ? { color: "red" }
+                          : {}
                     }
                   >
                     {message ? message : status ? "PASS" : "NOT PASS"}

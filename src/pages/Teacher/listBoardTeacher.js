@@ -8,7 +8,7 @@ import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
-function ListBoardTecher() {
+function ListBoardTeacher() {
   const navigate = useNavigate();
 
   const [evaluationList, setevaluationList] = useState([]);
@@ -124,4 +124,4 @@ function ListBoardTecher() {
   );
 }
 
-export default ListBoardTecher;
+export default ListBoardTeacher;

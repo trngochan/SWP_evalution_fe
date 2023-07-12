@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserTie, faKey } from '@fortawesome/free-solid-svg-icons'
+
 
 import classNames from "classnames/bind";
 import styles from "./login.module.scss";
-import Header from "~/components/layouts/header";
+import { Header } from "~/components/layouts/header";
 
 const cx = classNames.bind(styles);
 
@@ -63,7 +66,7 @@ function LoginAdmin() {
         <form onSubmit={handleSubmit} className={cx("form")}>
           <h2 className={cx("heading")}>Login</h2>
           <div className={cx("form-group")}>
-            <label className={cx("form-label")}>Username:</label>
+            <label className={cx("form-label")}> <FontAwesomeIcon icon={faUserTie} className={cx("icon-user")} /> Username:</label>
             <input
               className={cx("form-control")}
               placeholder="EX: email@gmail.com"
@@ -72,9 +75,10 @@ function LoginAdmin() {
               onChange={(e) => setusername(e.target.value)}
               name="username"
             />
+
           </div>
           <div className={cx("form-group")}>
-            <label className={cx("form-label")}>Password:</label>
+            <label className={cx("form-label")}><FontAwesomeIcon icon={faKey} className={cx("icon-password")} /> Password:</label>
             <input
               className={cx("form-control")}
               placeholder="Enter password"
