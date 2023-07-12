@@ -26,8 +26,8 @@ function Home() {
             <Col>
               <Button primary to={"/loginadmin"}>Login for Admin</Button>
             </Col>
-            <p className={cx("separate")}></p>
           </Row>
+            <p className={cx("separate")}></p>
         </Container>
       </div>
       <Footer/>

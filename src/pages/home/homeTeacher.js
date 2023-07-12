@@ -37,7 +37,7 @@ function HomeTeacher() {
   };
 
   if (!cookies.user) navigate("/");
-
+  
   return (
     <>
       <Header />

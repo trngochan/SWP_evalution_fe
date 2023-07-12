@@ -82,7 +82,7 @@ function InforStudent() {
         <div className="row mt-4">
           <div className="col-3">
             <select
-              className={cx("form-select")}
+              className={cx('form-select')}
               aria-label="Default select example"
               defaultValue={""}
               onClick={(e) => {

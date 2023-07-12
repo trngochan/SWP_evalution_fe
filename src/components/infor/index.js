@@ -16,10 +16,13 @@ function Infor({ name }) {
     navigate('/');
   }
 
+  const handleUser = () => {
+    navigate('/user')
+  }
+
   return (
     <div className={cx("wrapper")}>
-        {/* <button className={cx('btn')}><p className={cx("name")}>{name}</p></button> */}
-        <button className={cx('btn')}><p className={cx("name")}>{cookies.user.username}</p></button>
+      <button onClick={handleUser} className={cx('btn')}><p className={cx("name")}>{cookies.user.username}</p></button>
       <button onClick={handleLogout} className={cx('btn',"btn-primary", "btn-logout")}>Logout</button>
     </div>
   );

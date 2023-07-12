@@ -12,7 +12,7 @@
 }
 
 .links {
-    margin-top: 100px;
+  margin-left: 149px !important;
 }
 
 .btn {
@@ -44,4 +44,14 @@
   flex-direction: column;
 }
 
+li {
+  cursor: pointer;
+}
 
+.form-select {
+  width: 80%;
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 34px;
+  font-size: 14px;
+}

@@ -3,6 +3,10 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
+import styles from "./teacher.module.scss";
+import classNames from "classnames/bind";
+
+const cx = classNames.bind(styles);
 
 function ListCourseTeacher() {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -46,10 +50,10 @@ function ListCourseTeacher() {
   return (
     <div className="container">
       <div className="row">
-        <h1 className="mb-3 mt-4">List course</h1>
+        <b className="mb-3 mt-4">List course</b>
         <div className="col-2">
           <select
-            className="form-select"
+            className={cx('form-select')}
             aria-label="Default select example"
             defaultValue={""}
             onClick={(e) => handleChooseSem(e.target.value)}
