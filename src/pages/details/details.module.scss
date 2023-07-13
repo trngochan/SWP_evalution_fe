@@ -1,3 +1,18 @@
+.table-1 {
+    margin: 50px 0 30px 0;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid #000;
+}
+
+.table-2 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid #000;
+}
+
 .btn-showadd {
     background: transparent;
 
@@ -30,6 +45,14 @@
     margin-right: 20px;
 }
 
+.btn-publiced {
+    padding: 4px 10px;
+    background-color: #8df45e;
+    border-radius: 20px;
+    border: 1px solid #000;
+    margin-left: 10px;
+}
+
 button {
     position: relative;
 }
@@ -41,10 +64,10 @@ span::after {
     height: 2px;
     position: absolute;
     transition: all 0.2s linear;
-    background-color:rgb(255, 111, 59);
+    background-color: rgb(255, 111, 59);
 }
 
-button:hover span::before, 
+button:hover span::before,
 button:hover span::after {
     width: 100%;
 }
@@ -60,8 +83,3 @@ button span::before {
     bottom: 0;
     transition-duration: 0.4s;
 }
-
-
-
-
-

@@ -4,12 +4,79 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #F6FAFF;
+
+    .title {
+        font-size: 4rem;
+        color: #E88F7C;
+        font-weight: bold;
+
+        @keyframes jump {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        &:hover {
+            color: #FEAE65;
+            animation-name: jump;
+            animation-duration: 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+    }
+
+    .logo {
+        height: 85.5px;
+        width: 220px;
+    }
+
 }
 
-.title {
-    font-size: 4.4rem;
-}
+.header {
+    display: flex;
+    justify-content: space-between;
 
-.logo {
-    height: 100%;
+    .logo {
+        width: 220px;
+        height: 85.5px;
+    }
+
+    .title {
+        margin-top: 30px;
+        font-weight: bold;
+        color: #E88F7C;
+
+        @keyframes jump {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        &:hover {
+            color: #FEAE65;
+            animation-name: jump;
+            animation-duration: 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+    }
+
+
 }

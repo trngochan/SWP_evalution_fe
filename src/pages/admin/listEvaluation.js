@@ -8,7 +8,6 @@ import Table from "react-bootstrap/Table";
 import AddBoard from "../create/AddBoard";
 import styles from "./admin.module.scss";
 import Footer from "~/components/layouts/footer";
-import Divider from "~/components/Divider";
 
 const cx = classNames.bind(styles);
 
@@ -65,7 +64,7 @@ function ListBoardAdmin() {
                 handleChooseSem(e.target.value);
               }}
             >
-              <option value="0">All semester</option>
+              <option className="text-center" value="0">All semester</option>
               {semesterList.map((semester, i) => {
                 return (
                   <option key={i} value={semester.Id}>
@@ -76,7 +75,7 @@ function ListBoardAdmin() {
             </select>
           </div>
 
-          <Table striped bordered hover>
+          <Table striped bordered hover className="text-center">
             <thead>
               <tr>
                 <th scope="col">ID</th>
@@ -97,13 +96,13 @@ function ListBoardAdmin() {
                 .map((item, index) => {
                   return (
                     <tr key={index}>
-                      <td>{item.Id}</td>
-                      <td>{item.Name}</td>
-                      <td>{item.Room} </td>
-                      <td>{item.StartTime} </td>
-                      <td>{item.EndTime} </td>
-                      <td>{item.Date.slice(0, 10)} </td>
-                      <td>
+                      <td className="text-center">{item.Id}</td>
+                      <td className="text-center">{item.Name}</td>
+                      <td className="text-center">{item.Room} </td>
+                      <td className="text-center">{item.StartTime} </td>
+                      <td className="text-center">{item.EndTime} </td>
+                      <td className="text-center">{item.Date.slice(0, 10)} </td>
+                      <td className="text-center">
                         <Button to={`/boarddetails/${item.Id}`}>Details</Button>
                       </td>
                     </tr>

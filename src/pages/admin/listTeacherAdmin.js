@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import styles from "./admin.module.scss";
-
-import Button from "~/components/button";
-import AddTeacherList from "../create/AddTeacherList";
+import classNames from "classnames/bind";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import moment from "moment";
-import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
-
 import { Modal, Button as Btn } from "react-bootstrap";
+import { CSVLink } from "react-csv";
+import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import styles from "./admin.module.scss";
+import Button from "~/components/button";
+import AddTeacherList from "../create/AddTeacherList";
+
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +23,7 @@ function ListTeacherAdmin() {
   const [edit, setEdit] = useState(null);
   const [rerender, setRerender] = useState(false);
   const [selectedCode, setSelectedCode] = useState(null);
+  const [dataExport, setDataExport] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -47,6 +51,25 @@ function ListTeacherAdmin() {
     setShowModalEdit(false);
     setShowModalRemove(false);
   };
+
+  const getTeachersExport = (event, done) => {
+    let result = [];
+    if (teachers && teachers.length > 0) {
+        result.push(["ID", "Name", "Birthday", "Phone Number", "Address"]);
+        teachers.map((teacher, index) => {
+            let arr = [];
+            arr[0] = teacher.id;
+            arr[1] = teacher.name;
+            arr[2] = teacher.birthday;
+            arr[3] = teacher.phonenumber;
+            arr[4] = teacher.address;
+            result.push(arr);
+        })
+  
+        setDataExport(result);
+        done();
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -86,9 +109,22 @@ function ListTeacherAdmin() {
     <>
       <div>
         <h2 className="mt-3 mb-3">List teachers</h2>
-        <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-          {isShowAdd ? "View" : "Add"}
-        </Button>
+        <div className={cx('group-btn')}>
+          <Button primary onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add"}
+          </Button>
+            <div>
+              <CSVLink 
+                   filename={"teachers.csv"}
+                  className="btn btn-primary btn-lg"
+                  data={dataExport}
+                  asyncOnClick={true}
+                  onClick={getTeachersExport}
+              > 
+                <i><FontAwesomeIcon icon={faFileArrowDown}/></i>
+                Export</CSVLink>
+            </div>
+          </div>
       </div>
       {isShowAdd ? (
         <AddTeacherList />
@@ -197,12 +233,12 @@ function ListTeacherAdmin() {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Btn variant="secondary" onClick={handleClose} className={cx("btn-bt")}>
               Close
-            </Button>
-            <Button variant="primary" onClick={formik.handleSubmit}>
+            </Btn>
+            <Btn variant="primary" onClick={formik.handleSubmit} className={cx("btn-bt")}>
               Save changes
-            </Button>
+            </Btn>
           </Modal.Footer>
         </Modal>
 

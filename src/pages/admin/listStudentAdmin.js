@@ -11,7 +11,7 @@ import moment from "moment";
 import classNames from "classnames/bind";
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDownLong, faArrowUpLong, faFileImport, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownLong, faArrowUpLong, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { CSVLink } from "react-csv";
 import _ from 'lodash';
 
@@ -29,7 +29,7 @@ function ListStdAdmin() {
   const [sortBy, setSortBy] = useState('asc');
   const [sortField, setSortField] = useState('code');
   const [dataExport, setDataExport] = useState([]);
-  
+
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -41,7 +41,7 @@ function ListStdAdmin() {
     setEditId(id);
     setSelectedCode(name);
   };
-  
+
   const handleClose = () => {
     setShowModalEdit(false);
     setShowModalRemove(false)
@@ -54,26 +54,26 @@ function ListStdAdmin() {
     let cloneListUsers = _.cloneDeep(students);
     cloneListUsers = _.orderBy(students, [sortField], [sortBy]);
     setStudents(cloneListUsers);
-}
+  }
 
-const getStudentsExport = (event, done) => {
-  let result = [];
-  if (students && students.length > 0) {
+  const getStudentsExport = (event, done) => {
+    let result = [];
+    if (students && students.length > 0) {
       result.push(["ID", "Code", "Name", "Birthday", "Address"]);
       students.map((student, index) => {
-          let arr = [];
-          arr[0] = student.id;
-          arr[1] = student.code;
-          arr[2] = student.name;
-          arr[3] = student.birthday;
-          arr[4] = student.address;
-          result.push(arr);
+        let arr = [];
+        arr[0] = student.id;
+        arr[1] = student.code;
+        arr[2] = student.name;
+        arr[3] = student.birthday;
+        arr[4] = student.address;
+        result.push(arr);
       })
 
       setDataExport(result);
       done();
+    }
   }
-}
 
   const formik = useFormik({
     initialValues: {
@@ -120,7 +120,7 @@ const getStudentsExport = (event, done) => {
         })
       );
     }
-    
+
     fetchData();
   }, [rerender]);
 
@@ -128,77 +128,77 @@ const getStudentsExport = (event, done) => {
     <>
       <div>
         <h2 className="mt-3 mb-3">List students</h2>
-      <div className={cx('group-btn')}>
-        <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-          {isShowAdd ? "View" : "Add"}
-        </Button>
-                <div>
-                  <CSVLink 
-                      filename={"students.csv"}
-                      className="btn btn-primary btn-lg"
-                      data={dataExport}
-                      asyncOnClick={true}
-                      onClick={getStudentsExport}
-                  > 
-                   <i><FontAwesomeIcon icon={faFileArrowDown}/></i>
-                   Export</CSVLink>
-                </div>
-              </div>
+        <div className={cx('group-btn')}>
+          <Button primary onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add"}
+          </Button>
+          <div>
+            <CSVLink
+              filename={"students.csv"}
+              className="btn btn-primary btn-lg"
+              data={dataExport}
+              asyncOnClick={true}
+              onClick={getStudentsExport}
+            >
+              <i><FontAwesomeIcon icon={faFileArrowDown} /></i>
+              Export</CSVLink>
+          </div>
+        </div>
       </div>
       {isShowAdd ? (
         <AddStudentList />
       ) : (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>
-            <div className={cx('sort-header')}>
-                <span>Code</span>
-                <span>
-                <i><FontAwesomeIcon icon={faArrowDownLong} 
-                   onClick={() => handleSort('desc', 'code')}
-                /></i>
-                <i><FontAwesomeIcon icon={faArrowUpLong} 
-                    onClick={() => handleSort('asc', 'code')}
-                /></i>
-                </span>
-            </div>
-          </th>
-          <th>
-            <div className={cx('sort-header')}>
-                <span>Name</span>
-                <span>
-                <i><FontAwesomeIcon icon={faArrowDownLong} 
-                   onClick={() => handleSort('desc', 'name')}
-                /></i>
-                <i><FontAwesomeIcon icon={faArrowUpLong} 
-                    onClick={() => handleSort('asc', 'name')}
-                /></i>
-                </span>
-            </div>
-          </th>
-          <th>Adress</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-      {students?.map((student, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{student.code}</td>
-                    <td>{student.name}</td>
-                    <td>{student.address}</td>
-                    <td>
-                      <Button edit small onClick={() => handleEdit(students.id)}>
-                        Edit
-                      </Button>
-                      <Button remove small onClick={() => handleRemove(students.id, student.name)}>Remove</Button>
-                    </td>
-                  </tr>
-                );
-              })}
-      </tbody>
-    </Table>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>
+                <div className={cx('sort-header')}>
+                  <span>Code</span>
+                  <span>
+                    <i><FontAwesomeIcon icon={faArrowDownLong}
+                      onClick={() => handleSort('desc', 'code')}
+                    /></i>
+                    <i><FontAwesomeIcon icon={faArrowUpLong}
+                      onClick={() => handleSort('asc', 'code')}
+                    /></i>
+                  </span>
+                </div>
+              </th>
+              <th>
+                <div className={cx('sort-header')}>
+                  <span>Name</span>
+                  <span>
+                    <i><FontAwesomeIcon icon={faArrowDownLong}
+                      onClick={() => handleSort('desc', 'name')}
+                    /></i>
+                    <i><FontAwesomeIcon icon={faArrowUpLong}
+                      onClick={() => handleSort('asc', 'name')}
+                    /></i>
+                  </span>
+                </div>
+              </th>
+              <th>Adress</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {students?.map((student, i) => {
+              return (
+                <tr key={i}>
+                  <td>{student.code}</td>
+                  <td>{student.name}</td>
+                  <td>{student.address}</td>
+                  <td>
+                    <Button edit small onClick={() => handleEdit(students.id)}>
+                      Edit
+                    </Button>
+                    <Button remove small onClick={() => handleRemove(students.id, student.name)}>Remove</Button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       )}
       {/* Modal */}
       <Modal show={showModalEdit} onHide={handleClose}>
@@ -260,32 +260,32 @@ const getStudentsExport = (event, done) => {
         </Modal.Footer>
       </Modal>
 
-      <Modal 
-          show={showModalRemove} 
-          onHide={handleClose}
-          backdrop="static"
-          keyboard={false}
-          >
-          <Modal.Header closeButton>
-              <Modal.Title><h1 className={cx('modal-title')}>Delete a user</h1></Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-              <div className='body-add-new'>
-                  This action can't be undone!!
-                  Do you want to remove this user?  
-                  <br />
-                  <b>Name = "{selectedCode}" </b>
-              </div>
-          </Modal.Body>
-          <Modal.Footer>
-              <Btn variant="secondary" className={cx('btn-bt')} onClick={handleClose}>
-                  Close
-              </Btn>
-              <Btn variant="primary" className={cx('btn-bt')} onClick={formik.handleSubmit}>
-                  Confirm
-              </Btn>
-          </Modal.Footer>
-        </Modal>
+      <Modal
+        show={showModalRemove}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title><h1 className={cx('modal-title')}>Delete a user</h1></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='body-add-new'>
+            This action can't be undone!!
+            Do you want to remove this user?
+            <br />
+            <b>Name = "{selectedCode}" </b>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn variant="secondary" className={cx('btn-bt')} onClick={handleClose}>
+            Close
+          </Btn>
+          <Btn variant="primary" className={cx('btn-bt')} onClick={formik.handleSubmit}>
+            Confirm
+          </Btn>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

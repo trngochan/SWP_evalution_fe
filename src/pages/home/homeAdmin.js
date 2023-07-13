@@ -12,8 +12,10 @@ import ListProjectAdmin from "../admin/listProjectAdmin";
 import ListTemplatesAdmin from "../admin/listTemplates";
 import ListBoardAdmin from "../admin/listEvaluation";
 import ListScoreColumnAdmin from "../admin/listScoreColumnAdmin";
-import Header from "~/components/layouts/header";
-import Infor from "~/components/infor";
+import { Header2 } from "~/components/layouts/header";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMarker, faS, faGraduationCap, faPersonChalkboard, faCalendarDays, faScroll, faLaptopFile, faFilm }
+  from '@fortawesome/free-solid-svg-icons'
 
 const cx = classNames.bind(styles);
 
@@ -26,9 +28,8 @@ function HomeAdmin() {
 
   return (
     <>
-      <Header />
-      <Infor />
-      <div className={cx("container")}>
+      <Header2 />
+      <div className={cx("container-admin")}>
         <div className={cx("row")}>
           <div className={cx("col-3")}>
             <div className={cx("feature-list")}>
@@ -36,52 +37,52 @@ function HomeAdmin() {
                 onClick={() => handleButtonClick("board")}
                 primary={activeButton === "board"}
               >
-                Evaluation Board
+                <FontAwesomeIcon icon={faMarker} /> Evaluation Board
               </Button>
               <Button
                 onClick={() => handleButtonClick("subject")}
                 primary={activeButton === "subject"}
               >
-                Subject
+                <FontAwesomeIcon icon={faS} /> Subject
               </Button>
               <Button
                 onClick={() => handleButtonClick("course")}
                 primary={activeButton === "course"}
               >
-                Course
+                <FontAwesomeIcon icon={faScroll} /> Course
               </Button>
               <Button
                 onClick={() => handleButtonClick("project")}
                 primary={activeButton === "project"}
               >
-                Project
+                <FontAwesomeIcon icon={faLaptopFile} />  Project
               </Button>
               <Button
                 onClick={() => handleButtonClick("std")}
                 primary={activeButton === "std"}
               >
-                Student
+                <FontAwesomeIcon icon={faGraduationCap} /> Student
               </Button>
 
               <Button
                 onClick={() => handleButtonClick("teach")}
                 primary={activeButton === "teach"}
               >
-                Teacher
+                <FontAwesomeIcon icon={faPersonChalkboard} /> Lecturer
               </Button>
 
               <Button
                 onClick={() => handleButtonClick("template")}
                 primary={activeButton === "template"}
               >
-                Template
+                <FontAwesomeIcon icon={faFilm} />  Template
               </Button>
 
               <Button
                 onClick={() => handleButtonClick("semester")}
                 primary={activeButton === "semester"}
               >
-                Semester
+                <FontAwesomeIcon icon={faCalendarDays} /> Semester
               </Button>
             </div>
           </div>
@@ -97,7 +98,7 @@ function HomeAdmin() {
             {activeButton === "scorecolumn" && <ListScoreColumnAdmin />}
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }

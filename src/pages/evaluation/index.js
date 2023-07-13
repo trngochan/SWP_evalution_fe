@@ -5,10 +5,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./evaluation.module.scss";
 import Footer from "~/components/layouts/footer";
-import Header from "~/components/layouts/header";
+import { Header2 } from "~/components/layouts/header";
 import Button from "~/components/button";
 import { useNavigate } from "react-router-dom";
-import Infor from "~/components/infor";
 import { useParams } from "react-router-dom";
 
 const cx = classNames.bind(styles);
@@ -58,9 +57,8 @@ function Evaluation() {
 
   return (
     <>
-      <Header />
-      <Infor />
-      <div className={cx("row mt-5")}>
+      <Header2 />
+      <div className={cx("container")}>
         <div className={cx("col-md-5 col-lg-5 col-xl-5")}>
           <h1>List projects in board {nameboard}</h1>
         </div>
@@ -93,8 +91,9 @@ function Evaluation() {
           </ul>
         </div>
         <div></div>
-        <Footer />
       </div>
+
+      <Footer />
     </>
   );
 }

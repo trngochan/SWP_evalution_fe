@@ -132,7 +132,7 @@ function ListProjectAdmin() {
           </div>
 
           <Table striped bordered hover>
-            <thead>
+            <thead className="text-center">
               <tr>
                 <th>Project ID</th>
                 <th>Name</th>
@@ -149,11 +149,11 @@ function ListProjectAdmin() {
                 })
                 .map((project, i) => (
                   <tr key={i}>
-                    <td>{project.Id}</td>
+                    <td className="text-center">{project.Id}</td>
                     <td>{project.Name}</td>
                     <td>{project.Notion}</td>
                     <td>
-                      <Button onClick={() => handleEdit(project.Id)}>
+                      <Button edit onClick={() => handleEdit(project.Id)}>
                         Edit
                       </Button>
                     </td>

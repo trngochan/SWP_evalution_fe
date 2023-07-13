@@ -3,8 +3,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { useCookies } from "react-cookie";
+import styles from "./teacher.module.scss";
+import classNames from "classnames/bind";
 
-function ListBoardTecher() {
+const cx = classNames.bind(styles);
+
+function ListBoardTeacher() {
   const navigate = useNavigate();
 
   const [evaluationList, setevaluationList] = useState([]);
@@ -34,6 +38,7 @@ function ListBoardTecher() {
     fetchData();
   }, []);
 
+
   function handleShowStd(
     avaluationId,
     templateId,
@@ -52,10 +57,10 @@ function ListBoardTecher() {
 
   return (
     <div className="row mt-3">
-      <h1 className="mb-5">List evaluations of teacher {cookies.user.name}</h1>
+      <b className="mb-5">List evaluations of teacher {cookies.user.name}</b>
       <div className="col-2">
         <select
-          className="form-select"
+          className={cx('form-select')}
           aria-label="Default select example"
           defaultValue={""}
           onClick={(e) => handleChooseSem(e.target.value)}
@@ -119,4 +124,4 @@ function ListBoardTecher() {
   );
 }
 
-export default ListBoardTecher;
+export default ListBoardTeacher;

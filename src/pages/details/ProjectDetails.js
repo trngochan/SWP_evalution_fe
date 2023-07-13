@@ -7,8 +7,7 @@ import classNames from "classnames/bind";
 import { Snackbar, Alert } from "@mui/material";
 
 import Button from "~/components/button";
-import Infor from "~/components/infor";
-import Header from "~/components/layouts/header";
+import { Header2 } from "~/components/layouts/header";
 import BoardDetail from "./boarddetails";
 
 const cx = classNames.bind(styles);
@@ -116,9 +115,8 @@ function ProjectDetails() {
 
   return (
     <>
-      <Header />
-      <Infor />
-      <div className="row">
+      <Header2 />
+      <div className={cx("table-1")}>
         <h2 className={cx("title")}>Information details of project</h2>
         <div className="col-6">
           <table class="table table-striped">
@@ -169,113 +167,115 @@ function ProjectDetails() {
         </div>
       </div>
 
-      <div className={cx("title-table")}>
-        <Button
-          className={cx("mb-5 mt-5 show")}
-          onClick={handleShowTableStudents}
-          primary={isStudentsButtonPrimary}
+      <div className={cx("table-2")}>
+        <div className={cx("title-table")}>
+          <Button
+            className={cx("mb-5 mt-5 show")}
+            onClick={handleShowTableStudents}
+            primary={isStudentsButtonPrimary}
+          >
+            List students
+          </Button>
+          <Button
+            className={cx("mb-5 mt-5 show")}
+            onClick={handleShowTableStudentsNoInCourse}
+            primary={isStudentsNoInCourseButtonPrimary}
+          >
+            Add student
+          </Button>
+        </div>
+
+        {showTableListStudents && (
+          <section>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Student CODE</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Remove</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((student, i) => (
+                  <tr key={i}>
+                    <td>{student.CODE}</td>
+                    <td>{student.Name}</td>
+                    <td>{student.Address}</td>
+                    <td>
+                      <Button
+                        onClick={() => {
+                          if (numTeacherMarked > 0) {
+                            setError("Can not remove because project is graded");
+                            setOpenSnackBar(true);
+                          } else {
+                            handRemoveStd(student.stdinprjId);
+                          }
+                        }}
+                      >
+                        Remove
+                      </Button>
+                    </td>
+                    <td
+                      style={{
+                        display: "flex",
+                      }}
+                    >
+                      <Button>Details</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </section>
+        )}
+
+        {showTableListStudentNoInCourse && (
+          <section>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Student CODE</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {studentNoInPro.map((student, i) => (
+                  <tr key={i}>
+                    <td>{student.Code}</td>
+                    <td>{student.Name}</td>
+                    <td>{student.Address}</td>
+                    <td>
+                      <Button
+                        onClick={() => {
+                          if (numTeacherMarked > 0) {
+                            setError("Can not add becasue project is graded");
+                            setOpenSnackBar(true);
+                          } else {
+                            handleAddIntoProject(student.StudentId);
+                          }
+                        }}
+                      >
+                        Add
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </section>
+        )}
+        <Snackbar
+          open={openSnackBar}
+          autoHideDuration={3000}
+          onClose={closeSnackbar}
         >
-          List students
-        </Button>
-        <Button
-          className={cx("mb-5 mt-5 show")}
-          onClick={handleShowTableStudentsNoInCourse}
-          primary={isStudentsNoInCourseButtonPrimary}
-        >
-          Add student
-        </Button>
+          <Alert severity="error">{error}</Alert>
+        </Snackbar>
       </div>
-
-      {showTableListStudents && (
-        <section>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Student CODE</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Remove</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((student, i) => (
-                <tr key={i}>
-                  <td>{student.CODE}</td>
-                  <td>{student.Name}</td>
-                  <td>{student.Address}</td>
-                  <td>
-                    <Button
-                      onClick={() => {
-                        if (numTeacherMarked > 0) {
-                          setError("Can not remove because project is graded");
-                          setOpenSnackBar(true);
-                        } else {
-                          handRemoveStd(student.stdinprjId);
-                        }
-                      }}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                  <td
-                    style={{
-                      display: "flex",
-                    }}
-                  >
-                    <Button>Details</Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </section>
-      )}
-
-      {showTableListStudentNoInCourse && (
-        <section>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Student CODE</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {studentNoInPro.map((student, i) => (
-                <tr key={i}>
-                  <td>{student.Code}</td>
-                  <td>{student.Name}</td>
-                  <td>{student.Address}</td>
-                  <td>
-                    <Button
-                      onClick={() => {
-                        if (numTeacherMarked > 0) {
-                          setError("Can not add becasue project is graded");
-                          setOpenSnackBar(true);
-                        } else {
-                          handleAddIntoProject(student.StudentId);
-                        }
-                      }}
-                    >
-                      Add
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </section>
-      )}
-      <Snackbar
-        open={openSnackBar}
-        autoHideDuration={3000}
-        onClose={closeSnackbar}
-      >
-        <Alert severity="error">{error}</Alert>
-      </Snackbar>
     </>
   );
 }

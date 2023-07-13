@@ -40,7 +40,7 @@ function ListSemesterAdmin() {
         <AddSemester rerender={setRerender} />
       ) : (
         <Table striped bordered hover>
-          <thead>
+          <thead className="text-center">
             <tr>
               <th>Year</th>
               <th>Session</th>
@@ -52,10 +52,10 @@ function ListSemesterAdmin() {
             {semesters?.map((semester, i) => {
               return (
                 <tr key={i}>
-                  <td>{semester.Year}</td>
-                  <td>{semester.Session}</td>
-                  <td>{semester.StartTime.slice(0, 10)}</td>
-                  <td>{semester.EndTime.slice(0, 10)}</td>
+                  <td className="text-center">{semester.Year}</td>
+                  <td className="text-center">{semester.Session}</td>
+                  <td className="text-center">{semester.StartTime.slice(0, 10)}</td>
+                  <td className="text-center">{semester.EndTime.slice(0, 10)}</td>
                 </tr>
               );
             })}

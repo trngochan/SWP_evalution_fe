@@ -4,13 +4,13 @@ import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Button({to, href, children, onClick, primary, active, small, publish, notActive, edit, remove}) {
+function Button({ to, href, children, onClick, primary, active, small, publish, notActive, edit, remove }) {
     let Comp = 'button';
     const props = {
         onClick,
     };
 
-    if(to) {
+    if (to) {
         props.to = to;
         Comp = Link;
     } else if (href) {
@@ -18,8 +18,8 @@ function Button({to, href, children, onClick, primary, active, small, publish, n
         Comp = 'a'
     }
 
-    return ( 
-        <Comp className={cx('wrapper', {primary, active, small, publish, notActive, edit, remove})} {...props}>
+    return (
+        <Comp className={cx('wrapper', { primary, active, small, publish, notActive, edit, remove })} {...props}>
             <span className={cx('title')}>{children}</span>
         </Comp>
     );

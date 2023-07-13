@@ -35,30 +35,30 @@ function ListSubjectAdmin() {
       {isShowAdd ? (
         <AddSubject />
       ) : (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {subjects.map((subject, i) => (
-          <tr key={i}>
-            <td>{subject.Id}</td>
-            <td>{subject.Name}</td>
-            <td>{subject.Description}</td>
-            <td>
-              <Button to={`/subjectdetails/${subject.Id}`}>
-                Details
-              </Button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+        <Table striped bordered hover>
+          <thead className="text-center">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody >
+            {subjects.map((subject, i) => (
+              <tr key={i}>
+                <td className="text-center">{subject.Id}</td>
+                <td className="text-center">{subject.Name}</td>
+                <td>{subject.Description}</td>
+                <td className="text-center">
+                  <Button to={`/subjectdetails/${subject.Id}`}>
+                    Details
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       )}
     </div>
   );
