@@ -206,15 +206,15 @@ function TeacherBoardScore() {
                 </tr>
                 <tr>
                   <th>Project ID</th>
-                  <td>{inforProject.Id}</td>
+                  <td>{inforProject?.Id}</td>
                 </tr>
                 <tr>
                   <th>Topic</th>
-                  <td>{inforProject.Name}</td>
+                  <td>{inforProject?.Name}</td>
                 </tr>
                 <tr>
                   <th>Notion</th>
-                  <td>{inforProject.Notion}</td>
+                  <td>{inforProject?.Notion}</td>
                 </tr>
 
                 <tr>

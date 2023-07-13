@@ -21,7 +21,7 @@ function InforStudent() {
   const [scores, setScores] = useState();
   const [semId, setSemId] = useState(0);
   const [status, setStatus] = useState(0);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("No infor");
   const [course, setCourse] = useState("No infor");
 
   useEffect(() => {
