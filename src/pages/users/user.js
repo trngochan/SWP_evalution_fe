@@ -2,7 +2,8 @@ import classNames from "classnames/bind";
 import styles from "./user.module.scss";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import Header from "~/components/layouts/header";
+// import Header from "~/components/layouts/header";
+import { Header } from "~/components/layouts/header";
 import Divider from "~/components/Divider";
 import Infor from "~/components/infor";
 import Footer from "~/components/layouts/footer";
@@ -10,12 +11,11 @@ import Footer from "~/components/layouts/footer";
 const cx = classNames.bind(styles);
 
 function User() {
-
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies();
 
   console.log(cookies);
-  
+
   return (
     <>
       <Header />
