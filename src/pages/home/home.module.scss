@@ -9,26 +9,32 @@
   align-items: center;
   border-radius: 40px;
   border: 2px solid #000000;
-}
+
   .links {
     margin-top: 30px;
   }
 
-.links {
-  margin-left: 149px !important;
+  .login {
+    text-align: center;
+    margin-top: 30px;
+    font-weight: bolder;
+    color: #fff;
+    font-size: 3.125rem;
+  }
 }
 
 .btn {
   background-color: transparent;
   border-color: transparent;
-  color:  rgb(255, 111, 59);
+  color: rgb(255, 111, 59);
 
   &:hover {
-    color:  rgb(243, 75, 14);
+    color: rgb(243, 75, 14);
   }
 }
 
 //home-student
+
 .container-student {
   width: auto;
   height: 100vh;
@@ -46,14 +52,14 @@
   }
 
   .form-select {
-    padding-left: 2rem;
-    border-radius: 10px;
+    padding: 0 2rem;
+    border-radius: 20px;
     margin-bottom: 20px;
   }
 
   .course-list {
     list-style: none;
-    padding-left: 15px;
+    padding-left: 35px;
 
     .course-btn {
       width: 120px;
@@ -96,7 +102,8 @@
   .row {
     display: flex;
     flex-direction: row;
-    margin: 30px 20px;
+    margin: 20px 0 30px 40px;
+    overflow: hidden;
   }
 }
 

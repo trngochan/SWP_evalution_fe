@@ -12,8 +12,9 @@
     text-decoration: underline;
     color: #000000;
     font-weight: bold;
-    padding-left: 10px;
-    border-left: 1px solid #000;
+    padding: 0 20px;
+    border: 1px solid #000;
+    border-radius: 10px;
 
     &:hover {
         color: #FEAE65;
