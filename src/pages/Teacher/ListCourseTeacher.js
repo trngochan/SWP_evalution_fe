@@ -53,12 +53,14 @@ function ListCourseTeacher() {
         <b className="mb-3 mt-4">List course</b>
         <div className="col-2">
           <select
-            className={cx('form-select')}
+            className={cx("form-select")}
             aria-label="Default select example"
             defaultValue={""}
             onClick={(e) => handleChooseSem(e.target.value)}
           >
-            <option className="text-center" value="0">All semmester</option>
+            <option className="text-center" value="0">
+              All semmester
+            </option>
             {semesters.map((semester, i) => {
               return (
                 <option key={i} value={semester.Id}>
@@ -79,7 +81,7 @@ function ListCourseTeacher() {
             </thead>
             <tbody>
               {courses
-                .filter(function (item) {
+                ?.filter(function (item) {
                   if (parseInt(semId) === 0) return true;
                   else return parseInt(item.SemesterId) === parseInt(semId);
                 })
@@ -87,7 +89,8 @@ function ListCourseTeacher() {
                   return (
                     <tr key={i}>
                       <td className="text-center">{course.id}</td>
-                      <td className="text-center"
+                      <td
+                        className="text-center"
                         onClick={() => {
                           handleChooseCourse(course);
                         }}

@@ -71,6 +71,7 @@ function BoardDetail() {
   };
 
   const { board } = useParams();
+  const [sem, setSem] = useState({});
 
   useEffect(
     function () {
@@ -109,6 +110,14 @@ function BoardDetail() {
     [rerender]
   );
 
+  useEffect(() => {
+    async function fetchData() {
+      const req7 = await axios.get(`/semester/${boardDetails.SemesterId}`);
+      setSem(req7.data.data?.[0]);
+    }
+
+    fetchData();
+  }, [boardDetails]);
   console.log(boardDetails);
 
   async function handleShowProInBoard() {
@@ -119,7 +128,7 @@ function BoardDetail() {
       if (data.status === 201) {
         setListProOutBoard(data.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async function handlePublic(id, marked, quan) {
@@ -145,7 +154,7 @@ function BoardDetail() {
       } else {
         setError("Error: at handleShowAddTeacher");
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async function handleAddTeacherInBoard(teacherId) {
@@ -202,36 +211,64 @@ function BoardDetail() {
     setOpenSnackBar(false);
   }
 
+  console.log(boardDetails);
+
   return (
     <>
       <Header2 />
       <div className={cx("table-1")}>
         <h2 className={cx("title")}>Information details of board</h2>
-        <div className="col-6">
-          <table class="table table-striped">
-            <tbody>
-              <tr>
-                <th scope="row">Board ID</th>
-                <td>{boardDetails.Id}</td>
-              </tr>
-              <tr>
-                <th scope="row">Board name</th>
-                <td>{boardDetails.Name}</td>
-              </tr>
-              <tr>
-                <th scope="row">Start time</th>
-                <td>{boardDetails.StartTime}</td>
-              </tr>
-              <tr>
-                <th scope="row">End time</th>
-                <td>{boardDetails.EndTime}</td>
-              </tr>
-              <tr>
-                <th scope="row">Date</th>
-                <td>{boardDetails.Date?.slice(0, 10)}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="row">
+          <div className="col-6">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <th scope="row">Board ID</th>
+                  <td>{boardDetails.Id}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Board name</th>
+                  <td>{boardDetails.Name}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Start time</th>
+                  <td>{boardDetails.StartTime}</td>
+                </tr>
+                <tr>
+                  <th scope="row">End time</th>
+                  <td>{boardDetails.EndTime}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Date</th>
+                  <td>{boardDetails.Date?.slice(0, 10)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="col-6">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <th scope="row">Room</th>
+                  <td>{boardDetails.Room}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Semester</th>
+                  <td>
+                    {sem?.Year} - {sem?.Session}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Subject Id</th>
+                  <td>{boardDetails.SubjectId}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Template Id</th>
+                  <td>{boardDetails.TemplateId}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -358,13 +395,15 @@ function BoardDetail() {
                             (projectPucliced) =>
                               projectPucliced.ProjectId == item.id
                           ) ? (
-                            <button className={cx("btn-publiced")}>Publiced</button>
+                            <button className={cx("btn-publiced")}>
+                              Publiced
+                            </button>
                           ) : (
                             <Button
                               onClick={() => {
                                 if (
                                   item.teacherMark.teacherQuanMarked ==
-                                  item.teacherMark.teacherQuan &&
+                                    item.teacherMark.teacherQuan &&
                                   item.teacherMark.teacherQuan > 0
                                 ) {
                                   handlePublic(

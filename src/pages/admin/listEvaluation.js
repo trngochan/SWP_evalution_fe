@@ -16,6 +16,7 @@ function ListBoardAdmin() {
   const [boards, setBoards] = useState([]);
   const [semesterList, setsemesterList] = useState([]);
   const [isShowAdd, setShowAdd] = useState(false);
+  const [rerender, setRerender] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -36,7 +37,7 @@ function ListBoardAdmin() {
     }
 
     fetchData();
-  }, []);
+  }, [rerender]);
 
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
@@ -51,7 +52,7 @@ function ListBoardAdmin() {
       </div>
       {isShowAdd ? (
         <div className="col-11">
-          <AddBoard />
+          <AddBoard rerender={setRerender} />
         </div>
       ) : (
         <>
@@ -64,7 +65,9 @@ function ListBoardAdmin() {
                 handleChooseSem(e.target.value);
               }}
             >
-              <option className="text-center" value="0">All semester</option>
+              <option className="text-center" value="0">
+                All semester
+              </option>
               {semesterList.map((semester, i) => {
                 return (
                   <option key={i} value={semester.Id}>

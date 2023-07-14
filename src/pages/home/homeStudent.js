@@ -76,11 +76,13 @@ function InforStudent() {
     <div>
       <Header2 />
       <div className={cx("container-student")}>
-        <h2 className={cx("container-title")}>Grade report for {cookies.user?.username}</h2>
+        <h2 className={cx("container-title")}>
+          Grade report for {cookies.user?.username}
+        </h2>
         <div className="row mt-4">
           <div className="col-3">
             <select
-              className={cx('form-select')}
+              className={cx("form-select")}
               aria-label="Default select example"
               defaultValue={""}
               onClick={(e) => {
@@ -111,7 +113,9 @@ function InforStudent() {
                       showScore(course.CourseId);
                     }}
                   >
-                    <button className={cx("course-btn")}>{course.name}</button>
+                    <button className={cx("course-btn")}>
+                      {course.id} - {course.name}
+                    </button>
                   </li>
                 );
               })}
@@ -139,8 +143,8 @@ function InforStudent() {
                       message
                         ? { color: "black" }
                         : !status
-                          ? { color: "red" }
-                          : {}
+                        ? { color: "red" }
+                        : {}
                     }
                   >
                     {message ? message : status ? "PASS" : "NOT PASS"}

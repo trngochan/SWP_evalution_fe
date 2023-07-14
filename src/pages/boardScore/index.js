@@ -223,7 +223,7 @@ function TeacherBoardScore() {
                         projectSPublic.ProjectId == inforProject.Id
                     )
                       ? "Publiced"
-                      : "No puclic"}
+                      : "No public"}
                   </td>
                 </tr>
               </tbody>
