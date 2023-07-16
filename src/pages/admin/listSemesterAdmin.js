@@ -1,9 +1,18 @@
 import Button from "~/components/button";
 import AddSemester from "../create/AddSemester";
+import styles from "./admin.module.scss";
+import classNames from "classnames/bind";
+
+
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+
+const cx = classNames.bind(styles);
+
 
 function ListSemesterAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
@@ -46,6 +55,7 @@ function ListSemesterAdmin() {
               <th>Session</th>
               <th>Start time</th>
               <th>End time</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -56,6 +66,9 @@ function ListSemesterAdmin() {
                   <td className="text-center">{semester.Session}</td>
                   <td className="text-center">{semester.StartTime.slice(0, 10)}</td>
                   <td className="text-center">{semester.EndTime.slice(0, 10)}</td>
+                  <td className="text-center">
+                    <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                  </td>
                 </tr>
               );
             })}

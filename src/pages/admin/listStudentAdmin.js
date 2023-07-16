@@ -11,7 +11,7 @@ import moment from "moment";
 import classNames from "classnames/bind";
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDownLong, faArrowUpLong, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownLong, faArrowUpLong, faFileArrowDown, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { CSVLink } from "react-csv";
 import _ from 'lodash';
 
@@ -188,11 +188,11 @@ function ListStdAdmin() {
                   <td>{student.code}</td>
                   <td>{student.name}</td>
                   <td>{student.address}</td>
-                  <td>
+                  <td className="text-center">
                     <Button edit small onClick={() => handleEdit(students.id)}>
-                      Edit
+                      <FontAwesomeIcon icon={faPenToSquare} /> Edit
                     </Button>
-                    <Button remove small onClick={() => handleRemove(students.id, student.name)}>Remove</Button>
+                    <button className={cx("btn-dl")} onClick={() => handleRemove(students.id, student.name)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                   </td>
                 </tr>
               );

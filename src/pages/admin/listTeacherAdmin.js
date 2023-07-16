@@ -7,7 +7,7 @@ import moment from "moment";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { CSVLink } from "react-csv";
-import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faFileArrowDown, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import styles from "./admin.module.scss";
@@ -55,19 +55,19 @@ function ListTeacherAdmin() {
   const getTeachersExport = (event, done) => {
     let result = [];
     if (teachers && teachers.length > 0) {
-        result.push(["ID", "Name", "Birthday", "Phone Number", "Address"]);
-        teachers.map((teacher, index) => {
-            let arr = [];
-            arr[0] = teacher.id;
-            arr[1] = teacher.name;
-            arr[2] = teacher.birthday;
-            arr[3] = teacher.phonenumber;
-            arr[4] = teacher.address;
-            result.push(arr);
-        })
-  
-        setDataExport(result);
-        done();
+      result.push(["ID", "Name", "Birthday", "Phone Number", "Address"]);
+      teachers.map((teacher, index) => {
+        let arr = [];
+        arr[0] = teacher.id;
+        arr[1] = teacher.name;
+        arr[2] = teacher.birthday;
+        arr[3] = teacher.phonenumber;
+        arr[4] = teacher.address;
+        result.push(arr);
+      })
+
+      setDataExport(result);
+      done();
     }
   }
 
@@ -113,24 +113,24 @@ function ListTeacherAdmin() {
           <Button primary onClick={() => setShowAdd(!isShowAdd)}>
             {isShowAdd ? "View" : "Add"}
           </Button>
-            <div>
-              <CSVLink 
-                   filename={"teachers.csv"}
-                  className="btn btn-primary btn-lg"
-                  data={dataExport}
-                  asyncOnClick={true}
-                  onClick={getTeachersExport}
-              > 
-                <i><FontAwesomeIcon icon={faFileArrowDown}/></i>
-                Export</CSVLink>
-            </div>
+          <div>
+            <CSVLink
+              filename={"teachers.csv"}
+              className="btn btn-primary btn-lg"
+              data={dataExport}
+              asyncOnClick={true}
+              onClick={getTeachersExport}
+            >
+              <i><FontAwesomeIcon icon={faFileArrowDown} /></i>
+              Export</CSVLink>
           </div>
+        </div>
       </div>
       {isShowAdd ? (
         <AddTeacherList />
       ) : (
         <Table striped bordered hover>
-          <thead>
+          <thead className="text-center">
             <tr>
               <th>ID</th>
               <th>Name</th>
@@ -143,21 +143,15 @@ function ListTeacherAdmin() {
             {teachers?.map((teacher, i) => {
               return (
                 <tr key={i}>
-                  <td>{teacher.id}</td>
-                  <td>{teacher.name}</td>
-                  <td>{teacher.phonenumber}</td>
-                  <td>{JSON.stringify(teacher.birthday).slice(1, 11)}</td>
-                  <td>
+                  <td className="text-center">{teacher.id}</td>
+                  <td className="text-center">{teacher.name}</td>
+                  <td className="text-center">{teacher.phonenumber}</td>
+                  <td className="text-center">{JSON.stringify(teacher.birthday).slice(1, 11)}</td>
+                  <td className="text-center" >
                     <Button edit small onClick={() => handleEdit(teacher.id)}>
-                      Edit
+                      <FontAwesomeIcon icon={faPenToSquare} /> Edit
                     </Button>
-                    <Button
-                      remove
-                      small
-                      onClick={() => handleRemove(teacher.name)}
-                    >
-                      Remove
-                    </Button>
+                    <button className={cx("btn-dl")} onClick={() => handleRemove(teacher.name)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                   </td>
                 </tr>
               );

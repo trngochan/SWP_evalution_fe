@@ -8,6 +8,8 @@ import styles from "./admin.module.scss";
 import TableGenerator from "~/pages/generateTable/index";
 import AddTemplate from "../create/AddTemplate";
 import moment from "moment";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -53,7 +55,7 @@ function ListTemplatesAdmin() {
 
       const req1 = await axios.post("/template/add", addTemplate);
 
-      if (req1.data.status == 401) {
+      if (req1.data.status === 401) {
         setErrorTemplate(req1.data.massage);
         setShowScoreDetails(false);
         return;
@@ -64,7 +66,7 @@ function ListTemplatesAdmin() {
         templateId: addTemplate.id,
       });
 
-      if (req2.data.status == 200) {
+      if (req2.data.status === 200) {
         setShowScoreDetails(false);
         setCallApi(!callApi);
         setShowAdd(false);
@@ -102,6 +104,7 @@ function ListTemplatesAdmin() {
                 <th scope="col">Subject Id</th>
                 <th scope="col">Status</th>
                 <th scope="col">Apply Date</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -113,6 +116,9 @@ function ListTemplatesAdmin() {
                     <td className="text-center">{template.SubjectId}</td>
                     <td className="text-center">{template.Status.data[0]}</td>
                     <td className="text-center">{template?.ApplyDate?.slice(0, 10)}</td>
+                    <td className="text-center">
+                      <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                    </td>
                   </tr>
                 );
               })}

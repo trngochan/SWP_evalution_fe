@@ -1,14 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Button from "~/components/button";
-import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
 
 import AddBoard from "../create/AddBoard";
 import styles from "./admin.module.scss";
-import Footer from "~/components/layouts/footer";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 
 function ListBoardAdmin() {
@@ -106,7 +105,8 @@ function ListBoardAdmin() {
                       <td className="text-center">{item.EndTime} </td>
                       <td className="text-center">{item.Date.slice(0, 10)} </td>
                       <td className="text-center">
-                        <Button to={`/boarddetails/${item.Id}`}>Details</Button>
+                        <Button to={`/boarddetails/${item.Id}`}><FontAwesomeIcon icon={faCircleInfo} /> Details</Button>
+                        <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                       </td>
                     </tr>
                   );

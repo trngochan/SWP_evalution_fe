@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
 import Button from "~/components/button";
@@ -7,7 +7,6 @@ import ListTeacherAdmin from "../admin/listTeacherAdmin";
 import ListSemesterAdmin from "../admin/listSemesterAdmin";
 import ListSubjectAdmin from "../admin/listSubjectsAdmin";
 import ListCourseAdmin from "../admin/listCourse";
-import Public from "../create/Public";
 import ListProjectAdmin from "../admin/listProjectAdmin";
 import ListTemplatesAdmin from "../admin/listTemplates";
 import ListBoardAdmin from "../admin/listEvaluation";
@@ -15,7 +14,8 @@ import ListScoreColumnAdmin from "../admin/listScoreColumnAdmin";
 import { Header2 } from "~/components/layouts/header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMarker, faS, faGraduationCap, faPersonChalkboard, faCalendarDays, faScroll, faLaptopFile, faFilm }
-  from '@fortawesome/free-solid-svg-icons'
+  from '@fortawesome/free-solid-svg-icons';
+
 
 const cx = classNames.bind(styles);
 

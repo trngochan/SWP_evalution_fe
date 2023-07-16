@@ -13,6 +13,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import moment from "moment";
 import Table from "react-bootstrap/Table";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -137,7 +139,7 @@ function ListProjectAdmin() {
                 <th>Project ID</th>
                 <th>Name</th>
                 <th>Notion</th>
-                <th>Edit</th>
+                <th>Detail</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -153,14 +155,16 @@ function ListProjectAdmin() {
                     <td>{project.Name}</td>
                     <td>{project.Notion}</td>
                     <td>
-                      <Button edit onClick={() => handleEdit(project.Id)}>
-                        Edit
-                      </Button>
-                    </td>
-                    <td>
                       <Button to={`/projectdetails/${project.Id}`}>
                         Details
                       </Button>
+
+                    </td>
+                    <td className="text-center">
+                      <Button edit onClick={() => handleEdit(project.Id)}>
+                        <FontAwesomeIcon icon={faPenToSquare} /> Edit
+                      </Button>
+                      <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                     </td>
                   </tr>
                 ))}

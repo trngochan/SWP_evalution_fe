@@ -7,6 +7,8 @@ import Table from "react-bootstrap/Table";
 
 import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -104,8 +106,9 @@ function ListCourseAdmin() {
                     </td>
                     <td className="text-center">
                       <Button to={`/coursedetails/${course.id}`}>
-                        Details
+                        <FontAwesomeIcon icon={faCircleInfo} /> Details
                       </Button>
+                      <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                     </td>
                   </tr>
                 ))}

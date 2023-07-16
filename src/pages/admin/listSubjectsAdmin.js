@@ -6,6 +6,8 @@ import axios from "axios";
 import Button from "~/components/button";
 import styles from "./admin.module.scss";
 import AddSubject from "../create/AddSubject";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -52,8 +54,9 @@ function ListSubjectAdmin() {
                 <td>{subject.Description}</td>
                 <td className="text-center">
                   <Button to={`/subjectdetails/${subject.Id}`}>
-                    Details
+                    <FontAwesomeIcon icon={faCircleInfo} /> Details
                   </Button>
+                  <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                 </td>
               </tr>
             ))}

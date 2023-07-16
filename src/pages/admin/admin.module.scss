@@ -53,3 +53,17 @@ form {
         margin-right: 5px;
     }
 }
+
+.btn-dl {
+    padding: 5px 10px;
+    color: #fff;
+    background-color: #3d3838;
+    border-radius: 20px;
+    border: 1px solid #000;
+}
+
+.btn-dl:hover,
+.btn-dl:focus {
+    color: #e6e4e4;
+    background-color: #f04242;
+}

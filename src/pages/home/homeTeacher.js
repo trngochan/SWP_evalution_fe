@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
-
 import { Header2 } from "~/components/layouts/header";
 import Footer from "~/components/layouts/footer";
 import ListBoardTeacher from "../Teacher/listBoardTeacher";
-
 
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
@@ -13,6 +11,8 @@ import { useCookies } from "react-cookie";
 import { useState } from "react";
 import Button from "~/components/button";
 import ListCourseTeacher from "../Teacher/ListCourseTeacher";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faScroll, faMarker } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -38,7 +38,7 @@ function HomeTeacher() {
   };
 
   if (!cookies.user) navigate("/");
-  
+
   return (
     <>
       <Header2 />
@@ -47,10 +47,10 @@ function HomeTeacher() {
           <div className={cx("col-3")}>
             <div className={cx("nav-teacher")}>
               <Button onClick={handleCourses} primary={isCoursesButtonPrimary}>
-                Courses
+                <FontAwesomeIcon icon={faScroll} /> Courses
               </Button>
               <Button onClick={handleEvaluation} primary={isEvaluationsButtonPrimary}>
-                Evaluations
+                <FontAwesomeIcon icon={faMarker} /> Evaluations
               </Button>
             </div>
           </div>
