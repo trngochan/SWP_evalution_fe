@@ -12,8 +12,8 @@ import axios from "axios";
 
 import { Header2 } from "~/components/layouts/header";
 import Divider from "~/components/Divider";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -41,11 +41,11 @@ function BoardDetail() {
 
   const handleClose = () => {
     setShowConfirm(false);
-  }
+  };
 
   const handleDelete = (id) => {
     setShowConfirm(true);
-  }
+  };
 
   const handleOpenTeachers = () => {
     setShowModalTeachers(true);
@@ -137,7 +137,7 @@ function BoardDetail() {
       if (data.status === 201) {
         setListProOutBoard(data.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async function handlePublic(id, marked, quan) {
@@ -163,7 +163,7 @@ function BoardDetail() {
       } else {
         setError("Error: at handleShowAddTeacher");
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async function handleAddTeacherInBoard(teacherId) {
@@ -360,11 +360,16 @@ function BoardDetail() {
                       <React.Fragment key={index}>
                         <tr>
                           <td className="text-center">{item.Id}</td>
-                          <td className="text-center" >{item.Name}</td>
+                          <td className="text-center">{item.Name}</td>
                           <td className="text-center">{item.PhoneNumber}</td>
                           <td className="text-center">
                             <Button small>Details</Button>
-                            <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                            <button
+                              className={cx("btn-dl")}
+                              onClick={() => handleDelete()}
+                            >
+                              <FontAwesomeIcon icon={faTrashCan} /> Remove
+                            </button>
                           </td>
                         </tr>
                       </React.Fragment>
@@ -413,7 +418,7 @@ function BoardDetail() {
                               onClick={() => {
                                 if (
                                   item.teacherMark.teacherQuanMarked ==
-                                  item.teacherMark.teacherQuan &&
+                                    item.teacherMark.teacherQuan &&
                                   item.teacherMark.teacherQuan > 0
                                 ) {
                                   handlePublic(
@@ -600,7 +605,9 @@ function BoardDetail() {
           keyboard={false}
         >
           <Modal.Header closeButton>
-            <Modal.Title><h1>Delete teacher.</h1></Modal.Title>
+            <Modal.Title>
+              <h1>Delete teacher.</h1>
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="body-add-new">
@@ -609,10 +616,18 @@ function BoardDetail() {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+            <Btn
+              variant="primary"
+              className={cx("btn-bt")}
+              onClick={handleClose}
+            >
               Confirm
             </Btn>
-            <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+            <Btn
+              variant="secondary"
+              className={cx("btn-bt")}
+              onClick={handleClose}
+            >
               Cancel
             </Btn>
           </Modal.Footer>

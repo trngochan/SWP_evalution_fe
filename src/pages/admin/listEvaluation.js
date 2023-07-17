@@ -21,6 +21,7 @@ function ListBoardAdmin() {
   const [rerender, setRerender] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState("");
+  const [subjects, setSubjects] = useState([]);
 
   const handleClose = (id) => {
     setShowConfirm(false);
@@ -38,12 +39,14 @@ function ListBoardAdmin() {
       const req2 = await axios.get(`/semester/getall`, {
         withCredentials: true,
       });
+      const req3 = await axios.get("/subject/getall");
 
-      return axios.all([req1, req2]).then(
-        axios.spread((listAvaluation, listSemester) => {
+      return axios.all([req1, req2, req3]).then(
+        axios.spread((listAvaluation, listSemester, listSubjects) => {
           // Xử lý response từ request1 và requests
           setBoards(listAvaluation.data);
           setsemesterList(listSemester.data);
+          setSubjects(listSubjects.data);
         })
       );
     }
@@ -55,6 +58,7 @@ function ListBoardAdmin() {
     setSemId(semesterId);
   }
 
+  console.log(subjects);
   return (
     <div className="">
       <div className={cx("container-header")}>
@@ -98,6 +102,8 @@ function ListBoardAdmin() {
             <thead>
               <tr>
                 <th scope="col">ID</th>
+                <th scope="col">Semester</th>
+                <th scope="col">Subject</th>
                 <th scope="col">Name</th>
                 <th scope="col">Room</th>
                 <th scope="col">Time start</th>
@@ -113,9 +119,19 @@ function ListBoardAdmin() {
                   else return parseInt(item.SemesterId) === parseInt(semId);
                 })
                 .map((item, index) => {
+                  const sem = semesterList.find(
+                    (semester) => semester.Id === item.SemesterId
+                  );
+                  const sub = subjects.find(
+                    (subject) => subject.Id === item.SubjectId
+                  );
                   return (
                     <tr key={index}>
                       <td className="text-center">{item.Id}</td>
+                      <td className="text-center">
+                        {sem?.Year} - {sem?.Session}
+                      </td>
+                      <td>{sub.Name}</td>
                       <td className="text-center">{item.Name}</td>
                       <td className="text-center">{item.Room} </td>
                       <td className="text-center">{item.StartTime} </td>
