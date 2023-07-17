@@ -8,6 +8,7 @@ import Button from "~/components/button";
 import styles from "./admin.module.scss";
 import AddSubject from "../create/AddSubject";
 import { Modal, Button as Btn } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
@@ -66,12 +67,9 @@ function ListSubjectAdmin() {
             {subjects.map((subject, i) => (
               <tr key={i}>
                 <td className="text-center">{subject.Id}</td>
-                <td className="text-center">{subject.Name}</td>
+                <td className="text-center"><Link to={`/subjectdetails/${subject.Id}`} className={cx("link-style")}><FontAwesomeIcon icon={faCircleInfo} /> {subject.Name}</Link></td>
                 <td>{subject.Description}</td>
                 <td className="text-center">
-                  <Button to={`/subjectdetails/${subject.Id}`}>
-                    <FontAwesomeIcon icon={faCircleInfo} /> Details
-                  </Button>
                   <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                 </td>
               </tr>

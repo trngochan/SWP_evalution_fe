@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
 import BoardHeader from "~/components/headeritem";
+import { Link } from "react-router-dom";
 
 import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
@@ -119,7 +120,7 @@ function ListCourseAdmin() {
                 })
                 .map((course, i) => (
                   <tr key={i}>
-                    <td>
+                    <td className="text-center">
                       {
                         semesterList.find(
                           (semester) => semester.Id === course.SemesterId
@@ -132,7 +133,7 @@ function ListCourseAdmin() {
                         )?.Session
                       }
                     </td>
-                    <td>
+                    <td className="text-center">
                       {
                         subjects.find(
                           (subject) => subject.Id === course.SubjectId
@@ -146,12 +147,11 @@ function ListCourseAdmin() {
                         handleShowProjects(course.id);
                       }}
                     >
-                      {course.name}
+                      <Link to={`/coursedetails/${course.id}`} className={cx("link-style")}>
+                        <FontAwesomeIcon icon={faCircleInfo} /> {course.name}
+                      </Link>
                     </td>
                     <td className="text-center">
-                      <Button to={`/coursedetails/${course.id}`}>
-                        <FontAwesomeIcon icon={faCircleInfo} /> Details
-                      </Button>
                       <button
                         className={cx("btn-dl")}
                         onClick={() => handleDelete(course.id)}

@@ -4,6 +4,7 @@ import Button from "~/components/button";
 import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import AddBoard from "../create/AddBoard";
 import styles from "./admin.module.scss";
@@ -131,16 +132,13 @@ function ListBoardAdmin() {
                       <td className="text-center">
                         {sem?.Year} - {sem?.Session}
                       </td>
-                      <td>{sub.Name}</td>
-                      <td className="text-center">{item.Name}</td>
-                      <td className="text-center">{item.Room} </td>
+                      <td className="text-center">{sub.Name}</td>
+                      <td className="text-center"><Link to={`/boarddetails/${item.Id}`} className={cx("link-style")}><FontAwesomeIcon icon={faCircleInfo} /> {item.Name}</Link></td>
+                      <td className="text-center">{item.Room}</td>
                       <td className="text-center">{item.StartTime} </td>
                       <td className="text-center">{item.EndTime} </td>
                       <td className="text-center">{item.Date.slice(0, 10)} </td>
                       <td className="text-center">
-                        <Button to={`/boarddetails/${item.Id}`}>
-                          <FontAwesomeIcon icon={faCircleInfo} /> Details
-                        </Button>
                         <button
                           className={cx("btn-dl")}
                           onClick={() => handleDelete()}
