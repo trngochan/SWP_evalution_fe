@@ -1,9 +1,9 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use(
     createProxyMiddleware({
-      target: 'http://localhost:9000',
+      target: process.env.URL_BACKEND || "http://localhost:9000",
       changeOrigin: true,
     })
   );
