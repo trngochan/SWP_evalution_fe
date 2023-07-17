@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Button from "~/components/button";
 import AddStudentList from "~/pages/create/AddStudentList";
 import styles from './admin.module.scss'
+import BoardHeader from "~/components/headeritem";
+
 
 import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
@@ -127,12 +129,12 @@ function ListStdAdmin() {
   return (
     <>
       <div>
-        <h2 className="mt-3 mb-3">List students</h2>
-        <div className={cx('group-btn')}>
-          <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add"}
-          </Button>
-          <div>
+        <div className={cx("container-header")}>
+          <div className={cx("title")}><BoardHeader /></div>
+          <div className={cx("btn-view-add")}>
+            <Button active onClick={() => setShowAdd(!isShowAdd)}>
+              {isShowAdd ? "View" : "Add+"}
+            </Button>
             <CSVLink
               filename={"students.csv"}
               className="btn btn-primary btn-lg"
@@ -141,13 +143,18 @@ function ListStdAdmin() {
               onClick={getStudentsExport}
             >
               <i><FontAwesomeIcon icon={faFileArrowDown} /></i>
-              Export</CSVLink>
+              Export
+            </CSVLink>
           </div>
+
         </div>
+
       </div>
       {isShowAdd ? (
         <AddStudentList />
       ) : (
+
+
         <Table striped bordered hover>
           <thead>
             <tr>

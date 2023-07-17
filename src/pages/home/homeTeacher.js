@@ -46,10 +46,10 @@ function HomeTeacher() {
         <div className={cx("row")}>
           <div className={cx("col-3")}>
             <div className={cx("nav-teacher")}>
-              <Button onClick={handleCourses} primary={isCoursesButtonPrimary}>
+              <Button onClick={handleCourses} small={isCoursesButtonPrimary}>
                 <FontAwesomeIcon icon={faScroll} /> Courses
               </Button>
-              <Button onClick={handleEvaluation} primary={isEvaluationsButtonPrimary}>
+              <Button onClick={handleEvaluation} small={isEvaluationsButtonPrimary}>
                 <FontAwesomeIcon icon={faMarker} /> Evaluations
               </Button>
             </div>

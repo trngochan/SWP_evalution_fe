@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import BoardHeader from "~/components/headeritem";
 
 import Button from "~/components/button";
 import AddProject from "../create/AddProject";
@@ -110,9 +111,13 @@ function ListProjectAdmin() {
         >
           List projects
         </h2> */}
-        <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-          {isShowAdd ? "View" : "Add"}
-        </Button>
+        <div className={cx("container-header")}>
+          <BoardHeader />
+          <Button active onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add+"}
+          </Button>
+        </div>
+
       </div>
       {isShowAdd ? (
         <AddProject setRerender={setRerender} setShowAdd={setShowAdd} />

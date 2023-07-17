@@ -9,6 +9,7 @@ import { Modal, Button as Btn } from "react-bootstrap";
 import { CSVLink } from "react-csv";
 import { faFileArrowDown, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BoardHeader from "~/components/headeritem";
 
 import styles from "./admin.module.scss";
 import Button from "~/components/button";
@@ -107,58 +108,59 @@ function ListTeacherAdmin() {
 
   return (
     <>
-      <div>
-        <h2 className="mt-3 mb-3">List teachers</h2>
-        <div className={cx('group-btn')}>
-          <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add"}
+      <div className={cx("container-header")}>
+        <div className={cx("title")}><BoardHeader /></div>
+        <div className={cx("btn-view-add")}>
+          <Button active onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add+"}
           </Button>
-          <div>
-            <CSVLink
-              filename={"teachers.csv"}
-              className="btn btn-primary btn-lg"
-              data={dataExport}
-              asyncOnClick={true}
-              onClick={getTeachersExport}
-            >
-              <i><FontAwesomeIcon icon={faFileArrowDown} /></i>
-              Export</CSVLink>
-          </div>
+
+          <CSVLink
+            filename={"teachers.csv"}
+            className="btn btn-primary btn-lg"
+            data={dataExport}
+            asyncOnClick={true}
+            onClick={getTeachersExport}
+          >
+            <i><FontAwesomeIcon icon={faFileArrowDown} /></i>
+            Export</CSVLink>
         </div>
-      </div>
-      {isShowAdd ? (
-        <AddTeacherList />
-      ) : (
-        <Table striped bordered hover>
-          <thead className="text-center">
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Phone Number</th>
-              <th>Birthday</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {teachers?.map((teacher, i) => {
-              return (
-                <tr key={i}>
-                  <td className="text-center">{teacher.id}</td>
-                  <td className="text-center">{teacher.name}</td>
-                  <td className="text-center">{teacher.phonenumber}</td>
-                  <td className="text-center">{JSON.stringify(teacher.birthday).slice(1, 11)}</td>
-                  <td className="text-center" >
-                    <Button edit small onClick={() => handleEdit(teacher.id)}>
-                      <FontAwesomeIcon icon={faPenToSquare} /> Edit
-                    </Button>
-                    <button className={cx("btn-dl")} onClick={() => handleRemove(teacher.name)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      )}
+      </div >
+      {
+        isShowAdd ? (
+          <AddTeacherList />
+        ) : (
+          <Table striped bordered hover>
+            <thead className="text-center">
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Birthday</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {teachers?.map((teacher, i) => {
+                return (
+                  <tr key={i}>
+                    <td className="text-center">{teacher.id}</td>
+                    <td className="text-center">{teacher.name}</td>
+                    <td className="text-center">{teacher.phonenumber}</td>
+                    <td className="text-center">{JSON.stringify(teacher.birthday).slice(1, 11)}</td>
+                    <td className="text-center" >
+                      <Button edit small onClick={() => handleEdit(teacher.id)}>
+                        <FontAwesomeIcon icon={faPenToSquare} /> Edit
+                      </Button>
+                      <button className={cx("btn-dl")} onClick={() => handleRemove(teacher.name)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        )
+      }
 
 
       <div>

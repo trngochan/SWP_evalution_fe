@@ -2,7 +2,6 @@
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
-    // border-width: none !important;
 }
 
 .form-message {
@@ -54,6 +53,14 @@ form {
     }
 }
 
+.container-table {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+//button-delete
+
 .btn-dl {
     padding: 5px 10px;
     color: #fff;
@@ -62,8 +69,39 @@ form {
     border: 1px solid #000;
 }
 
-.btn-dl:hover,
-.btn-dl:focus {
+.btn-dl:hover {
     color: #e6e4e4;
     background-color: #f04242;
+}
+
+// header-board
+.container-header {
+    display: flex;
+    margin: auto;
+    color: #f04242;
+    margin-bottom: 10px;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+
+    .title {
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.btn-view-add {
+    border-radius: 10px;
+    position: inherit;
+    right: 50px;
+    align-items: center;
+
+}
+
+.btn-export {
+    position: absolute;
+    right: 0px;
+    top: -40px;
 }

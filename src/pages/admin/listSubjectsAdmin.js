@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import Table from 'react-bootstrap/Table';
 import axios from "axios";
+import BoardHeader from "~/components/headeritem";
 
 import Button from "~/components/button";
 import styles from "./admin.module.scss";
@@ -40,10 +41,15 @@ function ListSubjectAdmin() {
 
 
   return (
-    <div>
-      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-        {isShowAdd ? "View" : "Add"}
-      </Button>
+    <div className={cx("container-board")}>
+      <div className={cx("container-header")}>
+        <BoardHeader />
+        <div className={cx("btn-view-add")}>
+          <Button active onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add+"}
+          </Button>
+        </div>
+      </div>
       {isShowAdd ? (
         <AddSubject />
       ) : (

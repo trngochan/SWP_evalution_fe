@@ -4,6 +4,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
+import BoardHeader from "~/components/headeritem";
 
 import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
@@ -60,9 +61,12 @@ function ListCourseAdmin() {
 
   return (
     <div>
-      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-        {isShowAdd ? "View" : "Add"}
-      </Button>
+      <div className={cx("container-header")}>
+        <BoardHeader />
+        <Button active onClick={() => setShowAdd(!isShowAdd)}>
+          {isShowAdd ? "View" : "Add+"}
+        </Button>
+      </div>
       {isShowAdd ? (
         <AddCourse setShowAdd={setShowAdd} />
       ) : (

@@ -20,9 +20,7 @@
         background-color: #f7c79b;
     }
 
-    &:focus {
-        background-color: #FEAE65;
-    }
+
 
     .title {
         color: #000000;
@@ -33,15 +31,30 @@
 .primary {
     background-color: #fff;
     display: flex;
+    padding: 10px;
+
+    &:focus {
+        background-color: #FEAE65;
+    }
 }
 
 .small {
     padding: 5px 15px;
+
+    &:focus {
+        background-color: #FEAE65;
+    }
 }
 
 
 .active {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(152, 147, 146);
+    background-color: #6de8db;
+    border-radius: 10px;
+    padding: 3px 10px;
+
+    &:hover {
+        background-color: #92e2da;
+    }
 }
 
 
