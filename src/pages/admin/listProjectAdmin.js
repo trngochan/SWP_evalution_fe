@@ -157,10 +157,10 @@ function ListProjectAdmin() {
           <Table striped bordered hover>
             <thead className="text-center">
               <tr>
+                <th>ID</th>
                 <th>Semester</th>
                 <th>Subject</th>
                 <th>Course</th>
-                <th>Project ID</th>
                 <th>Name</th>
                 <th>Notion</th>
                 <th>Detail</th>
@@ -177,19 +177,21 @@ function ListProjectAdmin() {
                   const cournow = courses.find(
                     (course) => course.id === project.CourseId
                   );
-                  console.log(semesters);
                   const sub = subjects.find(
-                    (subject) => subject.Id === cournow.SubjectId
+                    (subject) => subject.Id == cournow.SubjectId
                   );
+                  console.log(sub);
                   const sem = semesters.find(
-                    (sem) => sem.Id === cournow.SemesterId
+                    (sem) => sem.Id == cournow.SemesterId
                   );
                   return (
                     <tr key={i}>
-                      <td className="text-center">{cournow?.name}</td>
-                      <td className="text-center">{sem?.year}</td>
-                      <td className="text-center">{sub?.name}</td>
                       <td className="text-center">{project.Id}</td>
+                      <td className="text-center">{cournow?.name}</td>
+                      <td className="text-center">
+                        {sem?.Year} - {sem?.Session}
+                      </td>
+                      <td className="text-center">{sub?.Name}</td>
                       <td>{project.Name}</td>
                       <td>{project.Notion}</td>
                       <td>

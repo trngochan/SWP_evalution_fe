@@ -2,20 +2,25 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "~/components/button";
 import AddStudentList from "~/pages/create/AddStudentList";
-import styles from './admin.module.scss'
+import styles from "./admin.module.scss";
 import BoardHeader from "~/components/headeritem";
-
 
 import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import moment from "moment";
 import classNames from "classnames/bind";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDownLong, faArrowUpLong, faFileArrowDown, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowDownLong,
+  faArrowUpLong,
+  faFileArrowDown,
+  faTrashCan,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { CSVLink } from "react-csv";
-import _ from 'lodash';
+import _ from "lodash";
 
 const cx = classNames.bind(styles);
 
@@ -28,10 +33,9 @@ function ListStdAdmin() {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
   const [selectedCode, setSelectedCode] = useState(null);
-  const [sortBy, setSortBy] = useState('asc');
-  const [sortField, setSortField] = useState('code');
+  const [sortBy, setSortBy] = useState("asc");
+  const [sortField, setSortField] = useState("code");
   const [dataExport, setDataExport] = useState([]);
-
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -46,7 +50,7 @@ function ListStdAdmin() {
 
   const handleClose = () => {
     setShowModalEdit(false);
-    setShowModalRemove(false)
+    setShowModalRemove(false);
   };
 
   const handleSort = (sortBy, sortField) => {
@@ -56,7 +60,7 @@ function ListStdAdmin() {
     let cloneListUsers = _.cloneDeep(students);
     cloneListUsers = _.orderBy(students, [sortField], [sortBy]);
     setStudents(cloneListUsers);
-  }
+  };
 
   const getStudentsExport = (event, done) => {
     let result = [];
@@ -70,12 +74,12 @@ function ListStdAdmin() {
         arr[3] = student.birthday;
         arr[4] = student.address;
         result.push(arr);
-      })
+      });
 
       setDataExport(result);
       done();
     }
-  }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -130,7 +134,9 @@ function ListStdAdmin() {
     <>
       <div>
         <div className={cx("container-header")}>
-          <div className={cx("title")}><BoardHeader /></div>
+          <div className={cx("title")}>
+            <BoardHeader />
+          </div>
           <div className={cx("btn-view-add")}>
             <Button active onClick={() => setShowAdd(!isShowAdd)}>
               {isShowAdd ? "View" : "Add+"}
@@ -142,49 +148,60 @@ function ListStdAdmin() {
               asyncOnClick={true}
               onClick={getStudentsExport}
             >
-              <i><FontAwesomeIcon icon={faFileArrowDown} /></i>
+              <i>
+                <FontAwesomeIcon icon={faFileArrowDown} />
+              </i>
               Export
             </CSVLink>
           </div>
-
         </div>
-
       </div>
       {isShowAdd ? (
         <AddStudentList />
       ) : (
-
-
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>
-                <div className={cx('sort-header')}>
+                <div className={cx("sort-header")}>
                   <span>Code</span>
                   <span>
-                    <i><FontAwesomeIcon icon={faArrowDownLong}
-                      onClick={() => handleSort('desc', 'code')}
-                    /></i>
-                    <i><FontAwesomeIcon icon={faArrowUpLong}
-                      onClick={() => handleSort('asc', 'code')}
-                    /></i>
+                    <i>
+                      <FontAwesomeIcon
+                        icon={faArrowDownLong}
+                        onClick={() => handleSort("desc", "code")}
+                      />
+                    </i>
+                    <i>
+                      <FontAwesomeIcon
+                        icon={faArrowUpLong}
+                        onClick={() => handleSort("asc", "code")}
+                      />
+                    </i>
                   </span>
                 </div>
               </th>
               <th>
-                <div className={cx('sort-header')}>
+                <div className={cx("sort-header")}>
                   <span>Name</span>
                   <span>
-                    <i><FontAwesomeIcon icon={faArrowDownLong}
-                      onClick={() => handleSort('desc', 'name')}
-                    /></i>
-                    <i><FontAwesomeIcon icon={faArrowUpLong}
-                      onClick={() => handleSort('asc', 'name')}
-                    /></i>
+                    <i>
+                      <FontAwesomeIcon
+                        icon={faArrowDownLong}
+                        onClick={() => handleSort("desc", "name")}
+                      />
+                    </i>
+                    <i>
+                      <FontAwesomeIcon
+                        icon={faArrowUpLong}
+                        onClick={() => handleSort("asc", "name")}
+                      />
+                    </i>
                   </span>
                 </div>
               </th>
               <th>Adress</th>
+              <th>Birthday</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -195,11 +212,17 @@ function ListStdAdmin() {
                   <td>{student.code}</td>
                   <td>{student.name}</td>
                   <td>{student.address}</td>
+                  <td>{student.birthday?.slice(0, 10)}</td>
                   <td className="text-center">
                     <Button edit small onClick={() => handleEdit(students.id)}>
                       <FontAwesomeIcon icon={faPenToSquare} /> Edit
                     </Button>
-                    <button className={cx("btn-dl")} onClick={() => handleRemove(students.id, student.name)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                    <button
+                      className={cx("btn-dl")}
+                      onClick={() => handleRemove(students.id, student.name)}
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} /> Remove
+                    </button>
                   </td>
                 </tr>
               );
@@ -258,10 +281,19 @@ function ListStdAdmin() {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="secondary" onClick={handleClose} className={cx('btn-bt')}>
+          <Btn
+            variant="secondary"
+            onClick={handleClose}
+            className={cx("btn-bt")}
+          >
             Close
           </Btn>
-          <Btn type="submit" variant="primary" onClick={formik.handleSubmit} className={cx('btn-bt')}>
+          <Btn
+            type="submit"
+            variant="primary"
+            onClick={formik.handleSubmit}
+            className={cx("btn-bt")}
+          >
             Save changes
           </Btn>
         </Modal.Footer>
@@ -274,21 +306,30 @@ function ListStdAdmin() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title><h1 className={cx('modal-title')}>Delete a user</h1></Modal.Title>
+          <Modal.Title>
+            <h1 className={cx("modal-title")}>Delete a user</h1>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className='body-add-new'>
-            This action can't be undone!!
-            Do you want to remove this user?
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this user?
             <br />
             <b>Name = "{selectedCode}" </b>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="secondary" className={cx('btn-bt')} onClick={handleClose}>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
             Close
           </Btn>
-          <Btn variant="primary" className={cx('btn-bt')} onClick={formik.handleSubmit}>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={formik.handleSubmit}
+          >
             Confirm
           </Btn>
         </Modal.Footer>
