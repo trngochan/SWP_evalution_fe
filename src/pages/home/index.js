@@ -7,10 +7,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Footer from "~/components/layouts/footer";
 import Button from "~/components/button";
+import teacher from "~/components/img/teacher.jpg";
+import student from "~/components/img/student.jpg";
+import admin from "~/components/img/admin.jpg";
+
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightToBracket, faCube } from '@fortawesome/free-solid-svg-icons';
-import { faPaperPlane, faLightbulb } from '@fortawesome/free-regular-svg-icons';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 
 const cx = classNames.bind(styles);
@@ -29,17 +32,17 @@ function Home() {
           <Row className={cx("links")}>
             <Col>
               <Button primary to={"/loginstudent"}>
-                <FontAwesomeIcon icon={faPaperPlane} /> Login for Student
+                <img src={student} alt="student" /> Login for Student
               </Button>
             </Col>
             <Col>
               <Button primary to={"/loginteacher"}>
-                <FontAwesomeIcon icon={faLightbulb} /> Login for Lecturer
+                <img src={teacher} alt="teacher" /> Login for Lecturer
               </Button>
             </Col>
             <Col>
               <Button primary to={"/loginadmin"}>
-                <FontAwesomeIcon icon={faCube} /> Login for Admin
+                <img src={admin} alt="admin" /> Login for Admin
               </Button>
             </Col>
           </Row>

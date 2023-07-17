@@ -58,7 +58,7 @@ function ListBoardTeacher() {
   return (
     <div className={cx("container")}>
       <div className="row mt-3">
-        <p className="mb-5">List evaluations of teacher {cookies.user.name}</p>
+        <p className="mb-5">List evaluations of lecturer {cookies.user.name}</p>
         <div className="col-2">
           <select
             className={cx('form-select')}

@@ -143,8 +143,8 @@ function InforStudent() {
                       message
                         ? { color: "black" }
                         : !status
-                        ? { color: "red" }
-                        : {}
+                          ? { color: "red" }
+                          : {}
                     }
                   >
                     {message ? message : status ? "PASS" : "NOT PASS"}
