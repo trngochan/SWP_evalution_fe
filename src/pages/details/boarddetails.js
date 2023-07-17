@@ -4,9 +4,7 @@ import { useParams } from "react-router-dom";
 import styles from "./details.module.scss";
 import classNames from "classnames/bind";
 import { Modal, Button as Btn } from "react-bootstrap";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import moment from "moment";
+
 import { Snackbar, Alert } from "@mui/material";
 import Table from "react-bootstrap/Table";
 
@@ -14,6 +12,8 @@ import axios from "axios";
 
 import { Header2 } from "~/components/layouts/header";
 import Divider from "~/components/Divider";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -37,6 +37,15 @@ function BoardDetail() {
   const [isTeachersButtonPrimary, setIsTeachersButtonPrimary] = useState(true);
   const [isProjectsButtonPrimary, setIsProjectsButtonPrimary] = useState(false);
   const [boardDetails, setBoardDetails] = useState({});
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleClose = () => {
+    setShowConfirm(false);
+  }
+
+  const handleDelete = (id) => {
+    setShowConfirm(true);
+  }
 
   const handleOpenTeachers = () => {
     setShowModalTeachers(true);
@@ -128,7 +137,7 @@ function BoardDetail() {
       if (data.status === 201) {
         setListProOutBoard(data.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function handlePublic(id, marked, quan) {
@@ -154,7 +163,7 @@ function BoardDetail() {
       } else {
         setError("Error: at handleShowAddTeacher");
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function handleAddTeacherInBoard(teacherId) {
@@ -277,14 +286,14 @@ function BoardDetail() {
           <Button
             className={cx("btn-show")}
             onClick={handleShowTableTeachers}
-            primary={isTeachersButtonPrimary}
+            small={isTeachersButtonPrimary}
           >
             <span>List teacher</span>
           </Button>
           <Button
             className={cx("mb-5 mt-5")}
             onClick={handleShowTableProjects}
-            primary={isProjectsButtonPrimary}
+            small={isProjectsButtonPrimary}
           >
             List project
           </Button>
@@ -337,7 +346,7 @@ function BoardDetail() {
           {showTableListTeachers && (
             <div className="row">
               <Table striped bordered hover>
-                <thead>
+                <thead className="text-center">
                   <tr>
                     <th>Teacher ID</th>
                     <th>Name</th>
@@ -350,11 +359,12 @@ function BoardDetail() {
                     return (
                       <React.Fragment key={index}>
                         <tr>
-                          <td>{item.Id}</td>
-                          <td>{item.Name}</td>
-                          <td>{item.PhoneNumber}</td>
-                          <td>
-                            <Button>Details</Button>
+                          <td className="text-center">{item.Id}</td>
+                          <td className="text-center" >{item.Name}</td>
+                          <td className="text-center">{item.PhoneNumber}</td>
+                          <td className="text-center">
+                            <Button small>Details</Button>
+                            <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                           </td>
                         </tr>
                       </React.Fragment>
@@ -403,7 +413,7 @@ function BoardDetail() {
                               onClick={() => {
                                 if (
                                   item.teacherMark.teacherQuanMarked ==
-                                    item.teacherMark.teacherQuan &&
+                                  item.teacherMark.teacherQuan &&
                                   item.teacherMark.teacherQuan > 0
                                 ) {
                                   handlePublic(
@@ -509,7 +519,7 @@ function BoardDetail() {
             {listProOutBoard.length > 0 ? (
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%" }}>
-                  <thead>
+                  <thead className="text-center">
                     <tr>
                       <th>Project ID</th>
                       <th>Name</th>
@@ -580,6 +590,32 @@ function BoardDetail() {
               </h4>
             )}
           </Modal.Body>
+        </Modal>
+
+        {/* Modal Confirm */}
+        <Modal
+          show={showConfirm}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title><h1>Delete teacher.</h1></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="body-add-new">
+              This action can't be undone!! Do you want to remove this teacher?
+              <br />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+              Confirm
+            </Btn>
+            <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+              Cancel
+            </Btn>
+          </Modal.Footer>
         </Modal>
       </div>
     </>

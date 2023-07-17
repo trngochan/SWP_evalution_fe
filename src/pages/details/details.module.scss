@@ -83,3 +83,27 @@ button span::before {
     bottom: 0;
     transition-duration: 0.4s;
 }
+
+// button-confirm
+
+.btn-dl {
+    padding: 5px 10px;
+    color: #fff;
+    background-color: #3d3838;
+    border-radius: 20px;
+    border: 1px solid #000;
+}
+
+.btn-dl:hover {
+    color: #e6e4e4;
+    background-color: #f04242;
+}
+
+.btn-bt {
+    padding: 9px 16px !important;
+    border-radius: 4px !important;
+    font-size: 1.6rem !important;
+    color: white !important;
+    font-weight: 500 !important;
+    border: 1px solid transparent !important;
+}

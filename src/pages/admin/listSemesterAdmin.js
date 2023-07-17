@@ -2,7 +2,7 @@ import Button from "~/components/button";
 import AddSemester from "../create/AddSemester";
 import styles from "./admin.module.scss";
 import classNames from "classnames/bind";
-
+import BoardHeader from "~/components/headeritem";
 
 
 import { useEffect, useState } from "react";
@@ -47,12 +47,14 @@ function ListSemesterAdmin() {
   console.log(rerender);
 
   return (
-    <>
-      <div>
-        <h2 className="mt-3 mb-3">List semesters</h2>
-        <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-          {isShowAdd ? "View" : "Add"}
-        </Button>
+    <div>
+      <div className={cx("container-header")}>
+        <div className={cx("title")}><BoardHeader /></div>
+        <div className={cx("btn-view-add")}>
+          <Button active onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add+"}
+          </Button>
+        </div>
       </div>
       {isShowAdd ? (
         <AddSemester rerender={setRerender} />
@@ -110,7 +112,7 @@ function ListSemesterAdmin() {
           </Btn>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }
 

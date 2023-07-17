@@ -172,14 +172,14 @@ function ProjectDetails() {
           <Button
             className={cx("mb-5 mt-5 show")}
             onClick={handleShowTableStudents}
-            primary={isStudentsButtonPrimary}
+            small={isStudentsButtonPrimary}
           >
             List students
           </Button>
           <Button
             className={cx("mb-5 mt-5 show")}
             onClick={handleShowTableStudentsNoInCourse}
-            primary={isStudentsNoInCourseButtonPrimary}
+            small={isStudentsNoInCourseButtonPrimary}
           >
             Add student
           </Button>

@@ -35,52 +35,52 @@ function HomeAdmin() {
             <div className={cx("feature-list")}>
               <Button
                 onClick={() => handleButtonClick("board")}
-                primary={activeButton === "board"}
+                small={activeButton === "board"}
               >
                 <FontAwesomeIcon icon={faMarker} /> Evaluation Board
               </Button>
               <Button
                 onClick={() => handleButtonClick("subject")}
-                primary={activeButton === "subject"}
+                small={activeButton === "subject"}
               >
                 <FontAwesomeIcon icon={faS} /> Subject
               </Button>
               <Button
                 onClick={() => handleButtonClick("course")}
-                primary={activeButton === "course"}
+                small={activeButton === "course"}
               >
                 <FontAwesomeIcon icon={faScroll} /> Course
               </Button>
               <Button
                 onClick={() => handleButtonClick("project")}
-                primary={activeButton === "project"}
+                small={activeButton === "project"}
               >
                 <FontAwesomeIcon icon={faLaptopFile} />  Project
               </Button>
               <Button
                 onClick={() => handleButtonClick("std")}
-                primary={activeButton === "std"}
+                small={activeButton === "std"}
               >
                 <FontAwesomeIcon icon={faGraduationCap} /> Student
               </Button>
 
               <Button
                 onClick={() => handleButtonClick("teach")}
-                primary={activeButton === "teach"}
+                small={activeButton === "teach"}
               >
                 <FontAwesomeIcon icon={faPersonChalkboard} /> Lecturer
               </Button>
 
               <Button
                 onClick={() => handleButtonClick("template")}
-                primary={activeButton === "template"}
+                small={activeButton === "template"}
               >
                 <FontAwesomeIcon icon={faFilm} />  Template
               </Button>
 
               <Button
                 onClick={() => handleButtonClick("semester")}
-                primary={activeButton === "semester"}
+                small={activeButton === "semester"}
               >
                 <FontAwesomeIcon icon={faCalendarDays} /> Semester
               </Button>

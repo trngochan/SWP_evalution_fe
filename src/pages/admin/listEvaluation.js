@@ -9,6 +9,7 @@ import AddBoard from "../create/AddBoard";
 import styles from "./admin.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import BoardHeader from "~/components/headeritem";
 
 const cx = classNames.bind(styles);
 
@@ -57,11 +58,15 @@ function ListBoardAdmin() {
 
   return (
     <div className="">
-      <div className="col-1">
-        <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-          {isShowAdd ? "View" : "Add"}
-        </Button>
+      <div className={cx("container-header")}>
+        <BoardHeader />
+        <div className="col-1"  >
+          <Button active onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add+"}
+          </Button>
+        </div>
       </div>
+
       {isShowAdd ? (
         <div className="col-11">
           <AddBoard rerender={setRerender} />
@@ -77,7 +82,7 @@ function ListBoardAdmin() {
                 handleChooseSem(e.target.value);
               }}
             >
-              <option className="text-center" value="0">
+              <option className={cx("text-center selecter")} value="0">
                 All semester
               </option>
               {semesterList.map((semester, i) => {
