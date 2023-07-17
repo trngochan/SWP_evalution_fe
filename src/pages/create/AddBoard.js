@@ -43,6 +43,7 @@ function AddBoard({ rerender }) {
       } else {
         setMessage(data.message);
       }
+      console.log(values.date);
     },
   });
 
