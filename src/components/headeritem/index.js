@@ -7,7 +7,7 @@ function BoardHeader({ message }) {
   return (
     <div className={cx("container-header")}>
       <div className={cx("title")}>
-        <h1>{message ? message : "Evaluation Management"}</h1>
+        <h1>{message ? message : "Evaluation"} Management</h1>
       </div>
     </div>
   );

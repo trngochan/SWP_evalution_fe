@@ -7,14 +7,17 @@ import moment from "moment";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { CSVLink } from "react-csv";
-import { faFileArrowDown, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFileArrowDown,
+  faTrashCan,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BoardHeader from "~/components/headeritem";
 
 import styles from "./admin.module.scss";
 import Button from "~/components/button";
 import AddTeacherList from "../create/AddTeacherList";
-
 
 const cx = classNames.bind(styles);
 
@@ -65,12 +68,12 @@ function ListTeacherAdmin() {
         arr[3] = teacher.phonenumber;
         arr[4] = teacher.address;
         result.push(arr);
-      })
+      });
 
       setDataExport(result);
       done();
     }
-  }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -109,7 +112,9 @@ function ListTeacherAdmin() {
   return (
     <>
       <div className={cx("container-header")}>
-        <div className={cx("title")}><BoardHeader /></div>
+        <div className={cx("title")}>
+          <BoardHeader message={"Teachers"} />
+        </div>
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
             {isShowAdd ? "View" : "Add+"}
@@ -122,46 +127,53 @@ function ListTeacherAdmin() {
             asyncOnClick={true}
             onClick={getTeachersExport}
           >
-            <i><FontAwesomeIcon icon={faFileArrowDown} /></i>
-            Export</CSVLink>
+            <i>
+              <FontAwesomeIcon icon={faFileArrowDown} />
+            </i>
+            Export
+          </CSVLink>
         </div>
-      </div >
-      {
-        isShowAdd ? (
-          <AddTeacherList />
-        ) : (
-          <Table striped bordered hover>
-            <thead className="text-center">
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Birthday</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teachers?.map((teacher, i) => {
-                return (
-                  <tr key={i}>
-                    <td className="text-center">{teacher.id}</td>
-                    <td className="text-center">{teacher.name}</td>
-                    <td className="text-center">{teacher.phonenumber}</td>
-                    <td className="text-center">{JSON.stringify(teacher.birthday).slice(1, 11)}</td>
-                    <td className="text-center" >
-                      <Button edit small onClick={() => handleEdit(teacher.id)}>
-                        <FontAwesomeIcon icon={faPenToSquare} /> Edit
-                      </Button>
-                      <button className={cx("btn-dl")} onClick={() => handleRemove(teacher.name)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        )
-      }
-
+      </div>
+      {isShowAdd ? (
+        <AddTeacherList />
+      ) : (
+        <Table striped bordered hover>
+          <thead className="text-center">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Birthday</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {teachers?.map((teacher, i) => {
+              return (
+                <tr key={i}>
+                  <td className="text-center">{teacher.id}</td>
+                  <td className="text-center">{teacher.name}</td>
+                  <td className="text-center">{teacher.phonenumber}</td>
+                  <td className="text-center">
+                    {JSON.stringify(teacher.birthday).slice(1, 11)}
+                  </td>
+                  <td className="text-center">
+                    <Button edit small onClick={() => handleEdit(teacher.id)}>
+                      <FontAwesomeIcon icon={faPenToSquare} /> Edit
+                    </Button>
+                    <button
+                      className={cx("btn-dl")}
+                      onClick={() => handleRemove(teacher.name)}
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} /> Remove
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      )}
 
       <div>
         {/* Modal */}
@@ -231,10 +243,18 @@ function ListTeacherAdmin() {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Btn variant="secondary" onClick={handleClose} className={cx("btn-bt")}>
+            <Btn
+              variant="secondary"
+              onClick={handleClose}
+              className={cx("btn-bt")}
+            >
               Close
             </Btn>
-            <Btn variant="primary" onClick={formik.handleSubmit} className={cx("btn-bt")}>
+            <Btn
+              variant="primary"
+              onClick={formik.handleSubmit}
+              className={cx("btn-bt")}
+            >
               Save changes
             </Btn>
           </Modal.Footer>

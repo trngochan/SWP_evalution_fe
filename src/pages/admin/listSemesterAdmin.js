@@ -4,16 +4,14 @@ import styles from "./admin.module.scss";
 import classNames from "classnames/bind";
 import BoardHeader from "~/components/headeritem";
 
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
-
 
 function ListSemesterAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
@@ -23,11 +21,11 @@ function ListSemesterAdmin() {
 
   const handleClose = () => {
     setShowConfirm(false);
-  }
+  };
 
   const handleDelete = (id) => {
     setShowConfirm(true);
-  }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -49,7 +47,9 @@ function ListSemesterAdmin() {
   return (
     <div>
       <div className={cx("container-header")}>
-        <div className={cx("title")}><BoardHeader /></div>
+        <div className={cx("title")}>
+          <BoardHeader message={"Semesters"} />
+        </div>
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
             {isShowAdd ? "View" : "Add+"}
@@ -75,10 +75,19 @@ function ListSemesterAdmin() {
                 <tr key={i}>
                   <td className="text-center">{semester.Year}</td>
                   <td className="text-center">{semester.Session}</td>
-                  <td className="text-center">{semester.StartTime.slice(0, 10)}</td>
-                  <td className="text-center">{semester.EndTime.slice(0, 10)}</td>
                   <td className="text-center">
-                    <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                    {semester.StartTime.slice(0, 10)}
+                  </td>
+                  <td className="text-center">
+                    {semester.EndTime.slice(0, 10)}
+                  </td>
+                  <td className="text-center">
+                    <button
+                      className={cx("btn-dl")}
+                      onClick={() => handleDelete()}
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} /> Remove
+                    </button>
                   </td>
                 </tr>
               );
@@ -95,7 +104,9 @@ function ListSemesterAdmin() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title><h1>Delete a Semester</h1></Modal.Title>
+          <Modal.Title>
+            <h1>Delete a Semester</h1>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
@@ -107,7 +118,11 @@ function ListSemesterAdmin() {
           <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
             Confirm
           </Btn>
-          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
             Cancel
           </Btn>
         </Modal.Footer>
