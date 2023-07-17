@@ -30,17 +30,17 @@ function Home() {
           <Row className={cx("links")}>
             <Col>
               <Button primary to={"/loginstudent"}>
-                Login for Student
+                <FontAwesomeIcon icon={faPaperPlane} /> Login for Student
               </Button>
             </Col>
             <Col>
               <Button primary to={"/loginteacher"}>
-                Login for Lecturer
+                <FontAwesomeIcon icon={faLightbulb} /> Login for Lecturer
               </Button>
             </Col>
             <Col>
               <Button primary to={"/loginadmin"}>
-                Login for Admin
+                <FontAwesomeIcon icon={faCube} /> Login for Admin
               </Button>
             </Col>
           </Row>
