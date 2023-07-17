@@ -11,11 +11,6 @@ import { Header } from "~/components/layouts/header";
 
 const cx = classNames.bind(styles);
 
-const api = axios.create({
-  baseURL: "https://fpt.onrender.com", // Địa chỉ backend đã triển khai trên Render
-  withCredentials: true, // Đảm bảo gửi cookie (nếu cần thiết)
-});
-
 function LoginAdmin() {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +32,7 @@ function LoginAdmin() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    api
+    axios
       .post("/loginadmin", {
         username,
         password,
