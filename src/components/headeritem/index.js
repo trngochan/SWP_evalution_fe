@@ -8,7 +8,7 @@ function BoardHeader() {
     return (
         <div className={cx("container-header")}>
             <div className={cx("title")}>
-                <h1>Evaluation Manager</h1>
+                <h1>Evaluation Management</h1>
             </div>
         </div>
     );

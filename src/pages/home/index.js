@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faCube } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane, faLightbulb } from '@fortawesome/free-regular-svg-icons';
 
-import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
