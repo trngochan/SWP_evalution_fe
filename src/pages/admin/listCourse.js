@@ -21,6 +21,7 @@ function ListCourseAdmin() {
   const [semesterList, setsemesterList] = useState([]);
   const [semId, setSemId] = useState(0);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [subjects, setSubjects] = useState([]);
 
   const handleClose = () => {
     setShowConfirm(false);
@@ -38,12 +39,14 @@ function ListCourseAdmin() {
       const req2 = await axios.get(`/semester/getall`, {
         withCredentials: true,
       });
+      const req3 = await axios.get("/subject/getall");
 
-      return axios.all([req1, req2]).then(
-        axios.spread((listCourse, listSemester) => {
+      return axios.all([req1, req2, req3]).then(
+        axios.spread((listCourse, listSemester, listSubject) => {
           // Xử lý response từ request1 và requests
           setCourse(listCourse.data);
           setsemesterList(listSemester.data);
+          setSubjects(listSubject.data);
         })
       );
     }
@@ -58,6 +61,8 @@ function ListCourseAdmin() {
   function handleShowProjects(id) {
     setCookie("course_id", id);
   }
+
+  console.log(subjects);
 
   return (
     <div>
@@ -99,6 +104,8 @@ function ListCourseAdmin() {
           <Table striped bordered hover className="text-center">
             <thead>
               <tr>
+                <th>Semester</th>
+                <th>Subject</th>
                 <th>Course ID</th>
                 <th>Name</th>
                 <th>Action</th>
@@ -112,6 +119,26 @@ function ListCourseAdmin() {
                 })
                 .map((course, i) => (
                   <tr key={i}>
+                    <td>
+                      {
+                        semesterList.find(
+                          (semester) => semester.Id === course.SemesterId
+                        )?.Year
+                      }{" "}
+                      -{" "}
+                      {
+                        semesterList.find(
+                          (semester) => semester.Id === course.SemesterId
+                        )?.Session
+                      }
+                    </td>
+                    <td>
+                      {
+                        subjects.find(
+                          (subject) => subject.Id === course.SubjectId
+                        )?.Name
+                      }
+                    </td>
                     <td className="text-center">{course.id}</td>
                     <td
                       className="text-center"

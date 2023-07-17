@@ -32,6 +32,8 @@ function ListProjectAdmin() {
   const [showModal, setShowModal] = useState(false);
   const [rerender, setRerender] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [subjects, setSubjects] = useState([]);
+  const [semesters, setSemesters] = useState([]);
 
   const handleDelete = (id) => {
     setShowConfirm(true);
@@ -83,12 +85,18 @@ function ListProjectAdmin() {
       const req2 = await axios.get(`/course/getall`, {
         withCredentials: true,
       });
+      const req3 = await axios.get(`/semester/getall`, {
+        withCredentials: true,
+      });
+      const req4 = await axios.get("/subject/getall");
 
-      return axios.all([req1, req2]).then(
-        axios.spread((listproject, listCourse) => {
+      return axios.all([req1, req2, req3, req4]).then(
+        axios.spread((listproject, listCourse, listSemester, listSubjects) => {
           // Xử lý response từ request1 và requests
           setProject(listproject.data);
           setCourses(listCourse.data);
+          setSemesters(listSemester.data);
+          setSubjects(listSubjects.data);
         })
       );
     }
@@ -99,6 +107,8 @@ function ListProjectAdmin() {
   function handleChooseCour(courId) {
     setCourID(courId);
   }
+
+  console.log(semesters);
 
   return (
     <>
@@ -147,6 +157,9 @@ function ListProjectAdmin() {
           <Table striped bordered hover>
             <thead className="text-center">
               <tr>
+                <th>Semester</th>
+                <th>Subject</th>
+                <th>Course</th>
                 <th>Project ID</th>
                 <th>Name</th>
                 <th>Notion</th>
@@ -160,29 +173,46 @@ function ListProjectAdmin() {
                   if (parseInt(courID) === 0) return true;
                   else return parseInt(item.CourseId) === parseInt(courID);
                 })
-                .map((project, i) => (
-                  <tr key={i}>
-                    <td className="text-center">{project.Id}</td>
-                    <td>{project.Name}</td>
-                    <td>{project.Notion}</td>
-                    <td>
-                      <Button to={`/projectdetails/${project.Id}`}>
-                        Details
-                      </Button>
-                    </td>
-                    <td className="text-center">
-                      <Button edit onClick={() => handleEdit(project.Id)}>
-                        <FontAwesomeIcon icon={faPenToSquare} /> Edit
-                      </Button>
-                      <button
-                        className={cx("btn-dl")}
-                        onClick={() => handleDelete(project.Id)}
-                      >
-                        <FontAwesomeIcon icon={faTrashCan} /> Remove
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                .map((project, i) => {
+                  const cournow = courses.find(
+                    (course) => course.id === project.CourseId
+                  );
+                  console.log(semesters);
+                  const sub = subjects.find(
+                    (subject) => subject.Id === cournow.SubjectId
+                  );
+                  const sem = semesters.find(
+                    (sem) => sem.Id === cournow.SemesterId
+                  );
+                  return (
+                    <tr key={i}>
+                      <td className="text-center">{cournow?.name}</td>
+                      <td className="text-center">{sem?.year}</td>
+                      <td className="text-center">{sub?.name}</td>
+                      <td className="text-center">{project.Id}</td>
+                      <td>{project.Name}</td>
+                      <td>{project.Notion}</td>
+                      <td>
+                        <Button
+                          to={`/projectdetails/${cournow.id}/${project.Id}`}
+                        >
+                          Details
+                        </Button>
+                      </td>
+                      <td className="text-center">
+                        <Button edit onClick={() => handleEdit(project.Id)}>
+                          <FontAwesomeIcon icon={faPenToSquare} /> Edit
+                        </Button>
+                        <button
+                          className={cx("btn-dl")}
+                          onClick={() => handleDelete(project.Id)}
+                        >
+                          <FontAwesomeIcon icon={faTrashCan} /> Remove
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </Table>
         </>
