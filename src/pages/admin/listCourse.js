@@ -9,8 +9,8 @@ import BoardHeader from "~/components/headeritem";
 import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
 import { Modal, Button as Btn } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -24,11 +24,11 @@ function ListCourseAdmin() {
 
   const handleClose = () => {
     setShowConfirm(false);
-  }
+  };
 
   const handleDelete = (id) => {
     setShowConfirm(true);
-  }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -63,9 +63,12 @@ function ListCourseAdmin() {
     <div>
       <div className={cx("container-header")}>
         <BoardHeader />
-        <Button active onClick={() => setShowAdd(!isShowAdd)}>
-          {isShowAdd ? "View" : "Add+"}
-        </Button>
+
+        <div className={cx("btns")}>
+          <Button active onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add+"}
+          </Button>
+        </div>
       </div>
       {isShowAdd ? (
         <AddCourse setShowAdd={setShowAdd} />
@@ -80,7 +83,9 @@ function ListCourseAdmin() {
                 handleChooseSem(e.target.value);
               }}
             >
-              <option className="text-center" value="0">All semester</option>
+              <option className="text-center" value="0">
+                All semester
+              </option>
               {semesterList.map((semester, i) => {
                 return (
                   <option value={semester.Id} key={i}>
@@ -99,7 +104,7 @@ function ListCourseAdmin() {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody >
+            <tbody>
               {courses
                 ?.filter(function (item) {
                   if (parseInt(semId) === 0) return true;
@@ -108,7 +113,8 @@ function ListCourseAdmin() {
                 .map((course, i) => (
                   <tr key={i}>
                     <td className="text-center">{course.id}</td>
-                    <td className="text-center"
+                    <td
+                      className="text-center"
                       onClick={() => {
                         handleShowProjects(course.id);
                       }}
@@ -119,7 +125,12 @@ function ListCourseAdmin() {
                       <Button to={`/coursedetails/${course.id}`}>
                         <FontAwesomeIcon icon={faCircleInfo} /> Details
                       </Button>
-                      <button className={cx("btn-dl")} onClick={() => handleDelete(course.id)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                      <button
+                        className={cx("btn-dl")}
+                        onClick={() => handleDelete(course.id)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} /> Remove
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -136,7 +147,9 @@ function ListCourseAdmin() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title><h1>Delete a course</h1></Modal.Title>
+          <Modal.Title>
+            <h1>Delete a course</h1>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
@@ -148,7 +161,11 @@ function ListCourseAdmin() {
           <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
             Confirm
           </Btn>
-          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
             Cancel
           </Btn>
         </Modal.Footer>

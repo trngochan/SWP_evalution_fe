@@ -97,6 +97,7 @@ form {
     position: inherit;
     right: 50px;
     align-items: center;
+    margin-top: 20px;
 
 }
 
@@ -104,4 +105,10 @@ form {
     position: absolute;
     right: 0px;
     top: -40px;
+}
+
+.btns {
+    position: relative;
+    top: 48px;
+    right: 10px;
 }

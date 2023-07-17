@@ -7,8 +7,8 @@ import { Modal, Button as Btn } from "react-bootstrap";
 
 import AddBoard from "../create/AddBoard";
 import styles from "./admin.module.scss";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import BoardHeader from "~/components/headeritem";
 
 const cx = classNames.bind(styles);
@@ -24,11 +24,11 @@ function ListBoardAdmin() {
 
   const handleClose = (id) => {
     setShowConfirm(false);
-  }
+  };
 
   const handleDelete = (id) => {
     setShowConfirm(true);
-  }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -51,7 +51,6 @@ function ListBoardAdmin() {
     fetchData();
   }, [rerender]);
 
-
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
   }
@@ -60,7 +59,7 @@ function ListBoardAdmin() {
     <div className="">
       <div className={cx("container-header")}>
         <BoardHeader />
-        <div className="col-1"  >
+        <div className={cx("btns")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
             {isShowAdd ? "View" : "Add+"}
           </Button>
@@ -123,8 +122,15 @@ function ListBoardAdmin() {
                       <td className="text-center">{item.EndTime} </td>
                       <td className="text-center">{item.Date.slice(0, 10)} </td>
                       <td className="text-center">
-                        <Button to={`/boarddetails/${item.Id}`}><FontAwesomeIcon icon={faCircleInfo} /> Details</Button>
-                        <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                        <Button to={`/boarddetails/${item.Id}`}>
+                          <FontAwesomeIcon icon={faCircleInfo} /> Details
+                        </Button>
+                        <button
+                          className={cx("btn-dl")}
+                          onClick={() => handleDelete()}
+                        >
+                          <FontAwesomeIcon icon={faTrashCan} /> Remove
+                        </button>
                       </td>
                     </tr>
                   );
@@ -142,7 +148,9 @@ function ListBoardAdmin() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title><h2>Delete a board</h2></Modal.Title>
+          <Modal.Title>
+            <h2>Delete a board</h2>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
@@ -154,7 +162,11 @@ function ListBoardAdmin() {
           <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
             Confirm
           </Btn>
-          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
             Cancel
           </Btn>
         </Modal.Footer>

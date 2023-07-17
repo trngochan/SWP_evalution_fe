@@ -13,8 +13,8 @@ import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Table from "react-bootstrap/Table";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -35,7 +35,7 @@ function ListProjectAdmin() {
 
   const handleDelete = (id) => {
     setShowConfirm(true);
-  }
+  };
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -113,11 +113,12 @@ function ListProjectAdmin() {
         </h2> */}
         <div className={cx("container-header")}>
           <BoardHeader />
-          <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
-          </Button>
+          <div className={cx("btns")}>
+            <Button active onClick={() => setShowAdd(!isShowAdd)}>
+              {isShowAdd ? "View" : "Add+"}
+            </Button>
+          </div>
         </div>
-
       </div>
       {isShowAdd ? (
         <AddProject setRerender={setRerender} setShowAdd={setShowAdd} />
@@ -168,13 +169,17 @@ function ListProjectAdmin() {
                       <Button to={`/projectdetails/${project.Id}`}>
                         Details
                       </Button>
-
                     </td>
                     <td className="text-center">
                       <Button edit onClick={() => handleEdit(project.Id)}>
                         <FontAwesomeIcon icon={faPenToSquare} /> Edit
                       </Button>
-                      <button className={cx("btn-dl")} onClick={() => handleDelete(project.Id)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                      <button
+                        className={cx("btn-dl")}
+                        onClick={() => handleDelete(project.Id)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} /> Remove
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -236,7 +241,9 @@ function ListProjectAdmin() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title><h1>Delete a project</h1></Modal.Title>
+          <Modal.Title>
+            <h1>Delete a project</h1>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
@@ -248,7 +255,11 @@ function ListProjectAdmin() {
           <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
             Confirm
           </Btn>
-          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
             Cancel
           </Btn>
         </Modal.Footer>
