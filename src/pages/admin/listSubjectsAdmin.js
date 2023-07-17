@@ -6,6 +6,7 @@ import axios from "axios";
 import Button from "~/components/button";
 import styles from "./admin.module.scss";
 import AddSubject from "../create/AddSubject";
+import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,6 +16,15 @@ function ListSubjectAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [semesters, setSemesters] = useState([]);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleClose = () => {
+    setShowConfirm(false);
+  }
+
+  const handleDelete = (id) => {
+    setShowConfirm(true);
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -28,7 +38,7 @@ function ListSubjectAdmin() {
     fetchData();
   }, []);
 
-  console.log(semesters);
+
   return (
     <div>
       <Button primary onClick={() => setShowAdd(!isShowAdd)}>
@@ -56,13 +66,39 @@ function ListSubjectAdmin() {
                   <Button to={`/subjectdetails/${subject.Id}`}>
                     <FontAwesomeIcon icon={faCircleInfo} /> Details
                   </Button>
-                  <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                  <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       )}
+
+      {/* Modal Confirm */}
+      <Modal
+        show={showConfirm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title><h2>Delete a subject</h2></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this Subject?
+            <br />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+            Confirm
+          </Btn>
+          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+            Cancel
+          </Btn>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

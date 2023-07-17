@@ -7,6 +7,7 @@ import Table from "react-bootstrap/Table";
 
 import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
+import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,13 +15,19 @@ const cx = classNames.bind(styles);
 
 function ListCourseAdmin() {
   const [cookies, setCookie, removeCookie] = useCookies();
-
   const [isShowAdd, setShowAdd] = useState(false);
-
   const [courses, setCourse] = useState([]);
   const [semesterList, setsemesterList] = useState([]);
-
   const [semId, setSemId] = useState(0);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleClose = () => {
+    setShowConfirm(false);
+  }
+
+  const handleDelete = (id) => {
+    setShowConfirm(true);
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -108,7 +115,7 @@ function ListCourseAdmin() {
                       <Button to={`/coursedetails/${course.id}`}>
                         <FontAwesomeIcon icon={faCircleInfo} /> Details
                       </Button>
-                      <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                      <button className={cx("btn-dl")} onClick={() => handleDelete(course.id)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                     </td>
                   </tr>
                 ))}
@@ -116,6 +123,32 @@ function ListCourseAdmin() {
           </Table>
         </>
       )}
+
+      {/* Modal Confirm */}
+      <Modal
+        show={showConfirm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title><h1>Delete a course</h1></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this Course?
+            <br />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+            Confirm
+          </Btn>
+          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+            Cancel
+          </Btn>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

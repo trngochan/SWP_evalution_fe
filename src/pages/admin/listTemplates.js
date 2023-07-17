@@ -8,6 +8,7 @@ import styles from "./admin.module.scss";
 import TableGenerator from "~/pages/generateTable/index";
 import AddTemplate from "../create/AddTemplate";
 import moment from "moment";
+import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,13 +16,19 @@ const cx = classNames.bind(styles);
 
 function ListTemplatesAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
-
   const [templates, setTemplates] = useState([]);
   const [subjects, setSubjects] = useState([]);
-
   const [showsCoreDetails, setShowScoreDetails] = useState(false);
-
   const [callApi, setCallApi] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleClose = () => {
+    setShowConfirm(false);
+  }
+
+  const handleDelete = (id) => {
+    setShowConfirm(true);
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -117,7 +124,7 @@ function ListTemplatesAdmin() {
                     <td className="text-center">{template.Status.data[0]}</td>
                     <td className="text-center">{template?.ApplyDate?.slice(0, 10)}</td>
                     <td className="text-center">
-                      <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                      <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                     </td>
                   </tr>
                 );
@@ -126,6 +133,32 @@ function ListTemplatesAdmin() {
           </Table>
         </>
       )}
+
+      {/* Modal Confirm */}
+      <Modal
+        show={showConfirm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title><h1>Delete a template</h1></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this Template?
+            <br />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+            Confirm
+          </Btn>
+          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+            Cancel
+          </Btn>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

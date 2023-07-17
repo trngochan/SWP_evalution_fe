@@ -11,7 +11,6 @@ import classNames from "classnames/bind";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import moment from "moment";
 import Table from "react-bootstrap/Table";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +30,11 @@ function ListProjectAdmin() {
   const [editId, setEditId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [rerender, setRerender] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleDelete = (id) => {
+    setShowConfirm(true);
+  }
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -39,6 +43,7 @@ function ListProjectAdmin() {
 
   const handleClose = () => {
     setShowModal(false);
+    setShowConfirm(false);
   };
 
   const formik = useFormik({
@@ -164,7 +169,7 @@ function ListProjectAdmin() {
                       <Button edit onClick={() => handleEdit(project.Id)}>
                         <FontAwesomeIcon icon={faPenToSquare} /> Edit
                       </Button>
-                      <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                      <button className={cx("btn-dl")} onClick={() => handleDelete(project.Id)}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                     </td>
                   </tr>
                 ))}
@@ -172,6 +177,7 @@ function ListProjectAdmin() {
           </Table>
         </>
       )}
+
       {/* Modal */}
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -214,6 +220,32 @@ function ListProjectAdmin() {
           <Button type="submit" variant="primary" onClick={formik.handleSubmit}>
             Save changes
           </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal Confirm */}
+      <Modal
+        show={showConfirm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title><h1>Delete a project</h1></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this Project?
+            <br />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+            Confirm
+          </Btn>
+          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+            Cancel
+          </Btn>
         </Modal.Footer>
       </Modal>
     </>

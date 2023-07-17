@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import Button from "~/components/button";
 import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
+import { Modal, Button as Btn } from "react-bootstrap";
 
 import AddBoard from "../create/AddBoard";
 import styles from "./admin.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+
 const cx = classNames.bind(styles);
 
 function ListBoardAdmin() {
@@ -16,6 +18,16 @@ function ListBoardAdmin() {
   const [semesterList, setsemesterList] = useState([]);
   const [isShowAdd, setShowAdd] = useState(false);
   const [rerender, setRerender] = useState(true);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+
+  const handleClose = (id) => {
+    setShowConfirm(false);
+  }
+
+  const handleDelete = (id) => {
+    setShowConfirm(true);
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -37,6 +49,7 @@ function ListBoardAdmin() {
 
     fetchData();
   }, [rerender]);
+
 
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
@@ -106,7 +119,7 @@ function ListBoardAdmin() {
                       <td className="text-center">{item.Date.slice(0, 10)} </td>
                       <td className="text-center">
                         <Button to={`/boarddetails/${item.Id}`}><FontAwesomeIcon icon={faCircleInfo} /> Details</Button>
-                        <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                        <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                       </td>
                     </tr>
                   );
@@ -115,7 +128,32 @@ function ListBoardAdmin() {
           </Table>
         </>
       )}
-      {/* <Footer /> */}
+
+      {/* Modal Confirm */}
+      <Modal
+        show={showConfirm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title><h2>Delete a board</h2></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this Board?
+            <br />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+            Confirm
+          </Btn>
+          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+            Cancel
+          </Btn>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

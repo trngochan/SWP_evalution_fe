@@ -8,6 +8,7 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
+import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,9 +17,17 @@ const cx = classNames.bind(styles);
 
 function ListSemesterAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
-
   const [semesters, setsemesters] = useState([]);
   const [rerender, setRerender] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleClose = () => {
+    setShowConfirm(false);
+  }
+
+  const handleDelete = (id) => {
+    setShowConfirm(true);
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -67,7 +76,7 @@ function ListSemesterAdmin() {
                   <td className="text-center">{semester.StartTime.slice(0, 10)}</td>
                   <td className="text-center">{semester.EndTime.slice(0, 10)}</td>
                   <td className="text-center">
-                    <button className={cx("btn-dl")}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                    <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                   </td>
                 </tr>
               );
@@ -75,6 +84,32 @@ function ListSemesterAdmin() {
           </tbody>
         </Table>
       )}
+
+      {/* Modal Confirm */}
+      <Modal
+        show={showConfirm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title><h1>Delete a Semester</h1></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this Semester?
+            <br />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+            Confirm
+          </Btn>
+          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+            Cancel
+          </Btn>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
