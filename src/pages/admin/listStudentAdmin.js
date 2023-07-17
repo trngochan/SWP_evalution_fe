@@ -135,7 +135,7 @@ function ListStdAdmin() {
       <div>
         <div className={cx("container-header")}>
           <div className={cx("title")}>
-            <BoardHeader />
+            <BoardHeader message={"Students"} />
           </div>
           <div className={cx("btn-view-add")}>
             <Button active onClick={() => setShowAdd(!isShowAdd)}>

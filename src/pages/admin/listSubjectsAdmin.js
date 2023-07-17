@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 import axios from "axios";
 import BoardHeader from "~/components/headeritem";
 
@@ -8,8 +8,8 @@ import Button from "~/components/button";
 import styles from "./admin.module.scss";
 import AddSubject from "../create/AddSubject";
 import { Modal, Button as Btn } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -21,11 +21,11 @@ function ListSubjectAdmin() {
 
   const handleClose = () => {
     setShowConfirm(false);
-  }
+  };
 
   const handleDelete = (id) => {
     setShowConfirm(true);
-  }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -39,11 +39,10 @@ function ListSubjectAdmin() {
     fetchData();
   }, []);
 
-
   return (
     <div className={cx("container-board")}>
       <div className={cx("container-header")}>
-        <BoardHeader />
+        <BoardHeader message={"Subjects"} />
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
             {isShowAdd ? "View" : "Add+"}
@@ -62,7 +61,7 @@ function ListSubjectAdmin() {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody >
+          <tbody>
             {subjects.map((subject, i) => (
               <tr key={i}>
                 <td className="text-center">{subject.Id}</td>
@@ -72,7 +71,12 @@ function ListSubjectAdmin() {
                   <Button to={`/subjectdetails/${subject.Id}`}>
                     <FontAwesomeIcon icon={faCircleInfo} /> Details
                   </Button>
-                  <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                  <button
+                    className={cx("btn-dl")}
+                    onClick={() => handleDelete()}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} /> Remove
+                  </button>
                 </td>
               </tr>
             ))}
@@ -88,7 +92,9 @@ function ListSubjectAdmin() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title><h2>Delete a subject</h2></Modal.Title>
+          <Modal.Title>
+            <h2>Delete a subject</h2>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
@@ -100,7 +106,11 @@ function ListSubjectAdmin() {
           <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
             Confirm
           </Btn>
-          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
             Cancel
           </Btn>
         </Modal.Footer>

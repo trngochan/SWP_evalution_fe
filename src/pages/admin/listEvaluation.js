@@ -62,7 +62,7 @@ function ListBoardAdmin() {
   return (
     <div className="">
       <div className={cx("container-header")}>
-        <BoardHeader />
+        <BoardHeader message={"Evaluations"} />
         <div className={cx("btns")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
             {isShowAdd ? "View" : "Add+"}

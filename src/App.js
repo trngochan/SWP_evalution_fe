@@ -14,6 +14,7 @@ import CourseDetails from "./pages/details/coursedetails";
 import ProjectDetails from "./pages/details/ProjectDetails";
 import SubjectDetails from "./pages/details/subjectDetails";
 import User from "./pages/users/user";
+import TemplateDetail from "./pages/details/templateDetails";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/subjectdetails/:subject" element={<SubjectDetails />} />
           <Route path="/studentsInCourse" element={<StudentsInCourse />} />
           <Route path="/user" element={<User />} />
+          <Route path="/templatedetails/:id" element={<TemplateDetail />} />
         </Routes>
       </Router>
     </div>

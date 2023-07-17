@@ -122,7 +122,7 @@ function ListProjectAdmin() {
           List projects
         </h2> */}
         <div className={cx("container-header")}>
-          <BoardHeader />
+          <BoardHeader message={"Projects"} />
           <div className={cx("btns")}>
             <Button active onClick={() => setShowAdd(!isShowAdd)}>
               {isShowAdd ? "View" : "Add+"}

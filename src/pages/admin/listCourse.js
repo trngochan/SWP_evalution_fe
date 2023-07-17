@@ -22,6 +22,7 @@ function ListCourseAdmin() {
   const [semId, setSemId] = useState(0);
   const [showConfirm, setShowConfirm] = useState(false);
   const [subjects, setSubjects] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
   const handleClose = () => {
     setShowConfirm(false);
@@ -40,13 +41,15 @@ function ListCourseAdmin() {
         withCredentials: true,
       });
       const req3 = await axios.get("/subject/getall");
+      const req4 = await axios.get("/teacher/getall");
 
-      return axios.all([req1, req2, req3]).then(
-        axios.spread((listCourse, listSemester, listSubject) => {
+      return axios.all([req1, req2, req3, req4]).then(
+        axios.spread((listCourse, listSemester, listSubject, listTeacher) => {
           // Xử lý response từ request1 và requests
           setCourse(listCourse.data);
           setsemesterList(listSemester.data);
           setSubjects(listSubject.data);
+          setTeachers(listTeacher.data);
         })
       );
     }
@@ -62,12 +65,12 @@ function ListCourseAdmin() {
     setCookie("course_id", id);
   }
 
-  console.log(subjects);
+  console.log(courses);
 
   return (
     <div>
       <div className={cx("container-header")}>
-        <BoardHeader />
+        <BoardHeader message={"Courses"} />
 
         <div className={cx("btns")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
@@ -104,10 +107,11 @@ function ListCourseAdmin() {
           <Table striped bordered hover className="text-center">
             <thead>
               <tr>
+                <th>Course ID</th>
                 <th>Semester</th>
                 <th>Subject</th>
-                <th>Course ID</th>
                 <th>Name</th>
+                <th>Teacher</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -119,7 +123,8 @@ function ListCourseAdmin() {
                 })
                 .map((course, i) => (
                   <tr key={i}>
-                    <td>
+                    <td className="text-center">{course.id}</td>
+                    <td className="text-center">
                       {
                         semesterList.find(
                           (semester) => semester.Id === course.SemesterId
@@ -132,14 +137,13 @@ function ListCourseAdmin() {
                         )?.Session
                       }
                     </td>
-                    <td>
+                    <td className="text-center">
                       {
                         subjects.find(
                           (subject) => subject.Id === course.SubjectId
                         )?.Name
                       }
                     </td>
-                    <td className="text-center">{course.id}</td>
                     <td
                       className="text-center"
                       onClick={() => {
@@ -147,6 +151,13 @@ function ListCourseAdmin() {
                       }}
                     >
                       {course.name}
+                    </td>
+                    <td className="text-center">
+                      {
+                        teachers.find(
+                          (teacher) => teacher.id === course.LectureId
+                        )?.name
+                      }
                     </td>
                     <td className="text-center">
                       <Button to={`/coursedetails/${course.id}`}>

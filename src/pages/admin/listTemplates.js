@@ -4,15 +4,14 @@ import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
 import BoardHeader from "~/components/headeritem";
 
-
 import Button from "~/components/button";
 import styles from "./admin.module.scss";
 import TableGenerator from "~/pages/generateTable/index";
 import AddTemplate from "../create/AddTemplate";
 import moment from "moment";
 import { Modal, Button as Btn } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -26,11 +25,11 @@ function ListTemplatesAdmin() {
 
   const handleClose = () => {
     setShowConfirm(false);
-  }
+  };
 
   const handleDelete = (id) => {
     setShowConfirm(true);
-  }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -88,7 +87,9 @@ function ListTemplatesAdmin() {
   return (
     <div>
       <div className={cx("container-header")}>
-        <div className={cx("title")}><BoardHeader /></div>
+        <div className={cx("title")}>
+          <BoardHeader message={"Teachers"} />
+        </div>
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
             {isShowAdd ? "View" : "Add+"}
@@ -129,9 +130,19 @@ function ListTemplatesAdmin() {
                     <td className="text-center">{template.Name}</td>
                     <td className="text-center">{template.SubjectId}</td>
                     <td className="text-center">{template.Status.data[0]}</td>
-                    <td className="text-center">{template?.ApplyDate?.slice(0, 10)}</td>
                     <td className="text-center">
-                      <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                      {template?.ApplyDate?.slice(0, 10)}
+                    </td>
+                    <td className="text-center">
+                      <Button to={`/templatedetails/${template.Id}`}>
+                        <FontAwesomeIcon icon={faCircleInfo} /> Details
+                      </Button>
+                      <button
+                        className={cx("btn-dl")}
+                        onClick={() => handleDelete()}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} /> Remove
+                      </button>
                     </td>
                   </tr>
                 );
@@ -149,7 +160,9 @@ function ListTemplatesAdmin() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title><h1>Delete a template</h1></Modal.Title>
+          <Modal.Title>
+            <h1>Delete a template</h1>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
@@ -161,7 +174,11 @@ function ListTemplatesAdmin() {
           <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
             Confirm
           </Btn>
-          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
             Cancel
           </Btn>
         </Modal.Footer>

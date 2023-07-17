@@ -12,10 +12,17 @@ import ListTemplatesAdmin from "../admin/listTemplates";
 import ListBoardAdmin from "../admin/listEvaluation";
 import ListScoreColumnAdmin from "../admin/listScoreColumnAdmin";
 import { Header2 } from "~/components/layouts/header";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMarker, faS, faGraduationCap, faPersonChalkboard, faCalendarDays, faScroll, faLaptopFile, faFilm }
-  from '@fortawesome/free-solid-svg-icons';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMarker,
+  faS,
+  faGraduationCap,
+  faPersonChalkboard,
+  faCalendarDays,
+  faScroll,
+  faLaptopFile,
+  faFilm,
+} from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -55,7 +62,7 @@ function HomeAdmin() {
                 onClick={() => handleButtonClick("project")}
                 small={activeButton === "project"}
               >
-                <FontAwesomeIcon icon={faLaptopFile} />  Project
+                <FontAwesomeIcon icon={faLaptopFile} /> Project
               </Button>
               <Button
                 onClick={() => handleButtonClick("std")}
@@ -75,7 +82,7 @@ function HomeAdmin() {
                 onClick={() => handleButtonClick("template")}
                 small={activeButton === "template"}
               >
-                <FontAwesomeIcon icon={faFilm} />  Template
+                <FontAwesomeIcon icon={faFilm} /> Template
               </Button>
 
               <Button
@@ -98,7 +105,7 @@ function HomeAdmin() {
             {activeButton === "scorecolumn" && <ListScoreColumnAdmin />}
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 }
