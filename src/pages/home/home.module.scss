@@ -21,6 +21,13 @@
     color: #fff;
     font-size: 3.125rem;
   }
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid #000;
+  }
 }
 
 .btn {
@@ -47,19 +54,19 @@
   border: 2px solid #000;
 
   .container-title {
-    font-weight: 900px;
+    font-weight: bold;
     text-align: center;
   }
 
   .form-select {
-    padding: 0 2rem;
-    border-radius: 20px;
+    padding-left: 2px;
+    border-radius: 10px;
     margin-bottom: 20px;
   }
 
   .course-list {
     list-style: none;
-    padding-left: 35px;
+    padding-left: 42px;
 
     .course-btn {
       width: 120px;
@@ -91,6 +98,7 @@
   margin: 50px auto 10px auto;
   border: 2px solid #000;
   border-radius: 40px;
+
 
 
   .nav-teacher {

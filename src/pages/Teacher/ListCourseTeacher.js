@@ -52,7 +52,7 @@ function ListCourseTeacher() {
   return (
     <div className={cx("container")}>
       <div className="row">
-        <b className="mb-3 mt-4">List course</b>
+        <h1>List of courses the lecturer {cookies.user.name} is teaching:</h1>
         <div className="col-2">
           <select
             className={cx("form-select")}
