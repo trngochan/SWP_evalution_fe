@@ -11,6 +11,7 @@ import styles from "./admin.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import BoardHeader from "~/components/headeritem";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -23,12 +24,14 @@ function ListBoardAdmin() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState("");
   const [subjects, setSubjects] = useState([]);
+  const [idDelete, setIdDelete] = useState(0);
 
   const handleClose = (id) => {
     setShowConfirm(false);
   };
 
-  const handleDelete = (id) => {
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
     setShowConfirm(true);
   };
 
@@ -57,6 +60,15 @@ function ListBoardAdmin() {
 
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
+  }
+
+  async function handleDelete() {
+    const req3 = await axios.delete(`/evalution/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
   }
 
   return (
@@ -147,7 +159,7 @@ function ListBoardAdmin() {
                       <td className="text-center">
                         <button
                           className={cx("btn-dl")}
-                          onClick={() => handleDelete()}
+                          onClick={() => handleClickDelete(item.Id)}
                         >
                           <FontAwesomeIcon icon={faTrashCan} /> Remove
                         </button>
@@ -174,12 +186,17 @@ function ListBoardAdmin() {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            This action can't be undone!! Do you want to remove this Board?
+            This action can't be undone!! Do you want to remove Evaluation Board
+            ID = {idDelete} ?
             <br />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
             Confirm
           </Btn>
           <Btn

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import BoardHeader from "~/components/headeritem";
 
@@ -39,8 +40,10 @@ function ListProjectAdmin() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [semesters, setSemesters] = useState([]);
+  const [idDelete, setIdDelete] = useState(0);
 
-  const handleDelete = (id) => {
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
     setShowConfirm(true);
   };
 
@@ -113,7 +116,14 @@ function ListProjectAdmin() {
     setCourID(courId);
   }
 
-  console.log(semesters);
+  async function handleDelete() {
+    const req3 = await axios.delete(`/project/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
+  }
 
   return (
     <>
@@ -211,7 +221,7 @@ function ListProjectAdmin() {
                         </Button>
                         <button
                           className={cx("btn-dl")}
-                          onClick={() => handleDelete(project.Id)}
+                          onClick={() => handleClickDelete(project.Id)}
                         >
                           <FontAwesomeIcon icon={faTrashCan} /> Remove
                         </button>
@@ -283,12 +293,17 @@ function ListProjectAdmin() {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            This action can't be undone!! Do you want to remove this Project?
+            This action can't be undone!! Do you want to remove this Project ID
+            = {idDelete} ?
             <br />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
             Confirm
           </Btn>
           <Btn

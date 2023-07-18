@@ -1,6 +1,6 @@
 import Button from "~/components/button";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./details.module.scss";
 import classNames from "classnames/bind";
 import { Modal, Button as Btn } from "react-bootstrap";
@@ -14,6 +14,7 @@ import { Header2 } from "~/components/layouts/header";
 import Divider from "~/components/Divider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -38,12 +39,15 @@ function BoardDetail() {
   const [isProjectsButtonPrimary, setIsProjectsButtonPrimary] = useState(false);
   const [boardDetails, setBoardDetails] = useState({});
   const [showConfirm, setShowConfirm] = useState(false);
+  const [idDelete, setIdDelete] = useState(0);
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setShowConfirm(false);
   };
 
-  const handleDelete = (id) => {
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
     setShowConfirm(true);
   };
 
@@ -119,15 +123,23 @@ function BoardDetail() {
     [rerender]
   );
 
+  const [template, setTemplate] = useState({});
+  const [subject, setSubject] = useState({});
+
   useEffect(() => {
     async function fetchData() {
       const req7 = await axios.get(`/semester/${boardDetails.SemesterId}`);
       setSem(req7.data.data?.[0]);
+      const req8 = await axios.get(
+        `/subject/${boardDetails.SubjectId}/getbyid`
+      );
+      const req9 = await axios.get(`/template/${boardDetails.TemplateId}`);
+      setTemplate(req9.data.data?.[0]);
+      setSubject(req8.data?.[0]);
     }
 
     fetchData();
   }, [boardDetails]);
-  console.log(boardDetails);
 
   async function handleShowProInBoard() {
     try {
@@ -220,7 +232,14 @@ function BoardDetail() {
     setOpenSnackBar(false);
   }
 
-  console.log(boardDetails);
+  async function handleDelete() {
+    const req3 = await axios.delete(`/lectureinboard/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
+  }
 
   return (
     <>
@@ -259,7 +278,7 @@ function BoardDetail() {
               <tbody>
                 <tr>
                   <th scope="row">Room</th>
-                  <td>{boardDetails.Room}</td>
+                  <td>{boardDetails?.Room}</td>
                 </tr>
                 <tr>
                   <th scope="row">Semester</th>
@@ -269,11 +288,11 @@ function BoardDetail() {
                 </tr>
                 <tr>
                   <th scope="row">Subject Id</th>
-                  <td>{boardDetails.SubjectId}</td>
+                  <td>{subject?.Name}</td>
                 </tr>
                 <tr>
                   <th scope="row">Template Id</th>
-                  <td>{boardDetails.TemplateId}</td>
+                  <td>{template?.Name}</td>
                 </tr>
               </tbody>
             </table>
@@ -366,7 +385,7 @@ function BoardDetail() {
                             <Button small>Details</Button>
                             <button
                               className={cx("btn-dl")}
-                              onClick={() => handleDelete()}
+                              onClick={() => handleClickDelete(item.Id)}
                             >
                               <FontAwesomeIcon icon={faTrashCan} /> Remove
                             </button>
@@ -399,7 +418,15 @@ function BoardDetail() {
                     return (
                       <tr key={index}>
                         <td>{item.id}</td>
-                        <td>{item.name}</td>
+                        <td
+                          onClick={() => {
+                            navigate(
+                              `/projectdetails/${item.CourseId}/${item.id}`
+                            );
+                          }}
+                        >
+                          {item.name}
+                        </td>
                         <td>{item.notion}</td>
                         <td>
                           {item.teacherMark.teacherQuanMarked}/
@@ -611,7 +638,8 @@ function BoardDetail() {
           </Modal.Header>
           <Modal.Body>
             <div className="body-add-new">
-              This action can't be undone!! Do you want to remove this teacher?
+              This action can't be undone!! Do you want to remove teacher ID ={" "}
+              {idDelete} ?
               <br />
             </div>
           </Modal.Body>
@@ -619,7 +647,7 @@ function BoardDetail() {
             <Btn
               variant="primary"
               className={cx("btn-bt")}
-              onClick={handleClose}
+              onClick={handleDelete}
             >
               Confirm
             </Btn>

@@ -4,6 +4,7 @@ import Button from "~/components/button";
 import AddStudentList from "~/pages/create/AddStudentList";
 import styles from "./admin.module.scss";
 import BoardHeader from "~/components/headeritem";
+import { toast } from "react-toastify";
 
 import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
@@ -32,20 +33,19 @@ function ListStdAdmin() {
   const [editId, setEditId] = useState(null);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
-  const [selectedCode, setSelectedCode] = useState(null);
   const [sortBy, setSortBy] = useState("asc");
   const [sortField, setSortField] = useState("code");
   const [dataExport, setDataExport] = useState([]);
+  const [idDelete, setIdDelete] = useState(0);
 
   const handleEdit = (id) => {
     setEditId(id);
     setShowModalEdit(true);
   };
 
-  const handleRemove = (id, name) => {
+  const handleRemove = (id) => {
+    setIdDelete(id);
     setShowModalRemove(true);
-    setEditId(id);
-    setSelectedCode(name);
   };
 
   const handleClose = () => {
@@ -130,6 +130,14 @@ function ListStdAdmin() {
     fetchData();
   }, [rerender]);
 
+  async function handleDelete() {
+    const req3 = await axios.delete(`/student/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowModalRemove(false);
+      toast.success("Delele successfully");
+    }
+  }
   return (
     <>
       <div>
@@ -162,6 +170,7 @@ function ListStdAdmin() {
         <Table striped bordered hover>
           <thead>
             <tr>
+              <th>ID</th>
               <th>
                 <div className={cx("sort-header")}>
                   <span>Code</span>
@@ -209,6 +218,8 @@ function ListStdAdmin() {
             {students?.map((student, i) => {
               return (
                 <tr key={i}>
+                  <td>{student.id}</td>
+
                   <td>{student.code}</td>
                   <td>{student.name}</td>
                   <td>{student.address}</td>
@@ -219,7 +230,7 @@ function ListStdAdmin() {
                     </Button>
                     <button
                       className={cx("btn-dl")}
-                      onClick={() => handleRemove(students.id, student.name)}
+                      onClick={() => handleRemove(student.id)}
                     >
                       <FontAwesomeIcon icon={faTrashCan} /> Remove
                     </button>
@@ -312,9 +323,8 @@ function ListStdAdmin() {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            This action can't be undone!! Do you want to remove this user?
-            <br />
-            <b>Name = "{selectedCode}" </b>
+            This action can't be undone!! Do you want to remove this user ID ={" "}
+            {idDelete} ?
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -328,7 +338,7 @@ function ListStdAdmin() {
           <Btn
             variant="primary"
             className={cx("btn-bt")}
-            onClick={formik.handleSubmit}
+            onClick={handleDelete}
           >
             Confirm
           </Btn>

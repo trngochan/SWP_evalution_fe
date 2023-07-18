@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import BoardHeader from "~/components/headeritem";
 
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
@@ -18,12 +19,14 @@ function ListSemesterAdmin() {
   const [semesters, setsemesters] = useState([]);
   const [rerender, setRerender] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [idDelete, setIdDelete] = useState(0);
 
   const handleClose = () => {
     setShowConfirm(false);
   };
 
-  const handleDelete = (id) => {
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
     setShowConfirm(true);
   };
 
@@ -42,7 +45,14 @@ function ListSemesterAdmin() {
     fetchData();
   }, [rerender]);
 
-  console.log(rerender);
+  async function handleDelete() {
+    const req3 = await axios.delete(`/semester/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
+  }
 
   return (
     <div>
@@ -62,6 +72,7 @@ function ListSemesterAdmin() {
         <Table striped bordered hover>
           <thead className="text-center">
             <tr>
+              <th>ID</th>
               <th>Year</th>
               <th>Session</th>
               <th>Start time</th>
@@ -73,6 +84,7 @@ function ListSemesterAdmin() {
             {semesters?.map((semester, i) => {
               return (
                 <tr key={i}>
+                  <td className="text-center">{semester.Id}</td>
                   <td className="text-center">{semester.Year}</td>
                   <td className="text-center">{semester.Session}</td>
                   <td className="text-center">
@@ -84,7 +96,7 @@ function ListSemesterAdmin() {
                   <td className="text-center">
                     <button
                       className={cx("btn-dl")}
-                      onClick={() => handleDelete()}
+                      onClick={() => handleClickDelete(semester.Id)}
                     >
                       <FontAwesomeIcon icon={faTrashCan} /> Remove
                     </button>
@@ -110,12 +122,17 @@ function ListSemesterAdmin() {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            This action can't be undone!! Do you want to remove this Semester?
+            This action can't be undone!! Do you want to remove this Semester ID
+            = {idDelete} ?
             <br />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
             Confirm
           </Btn>
           <Btn

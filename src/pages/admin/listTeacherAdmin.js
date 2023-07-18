@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BoardHeader from "~/components/headeritem";
+import { toast } from "react-toastify";
 
 import styles from "./admin.module.scss";
 import Button from "~/components/button";
@@ -26,8 +27,8 @@ function ListTeacherAdmin() {
   const [teachers, setTeachers] = useState([]);
   const [edit, setEdit] = useState(null);
   const [rerender, setRerender] = useState(false);
-  const [selectedCode, setSelectedCode] = useState(null);
   const [dataExport, setDataExport] = useState([]);
+  const [idDelete, setIdDelete] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -46,9 +47,9 @@ function ListTeacherAdmin() {
     setShowModalEdit(true);
   };
 
-  const handleRemove = (name) => {
+  const handleRemove = (id) => {
+    setIdDelete(id);
     setShowModalRemove(true);
-    setSelectedCode(name);
   };
 
   const handleClose = () => {
@@ -109,6 +110,15 @@ function ListTeacherAdmin() {
     },
   });
 
+  async function handleDelete() {
+    const req3 = await axios.delete(`/teacher/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowModalRemove(false);
+      toast.success("Delele successfully");
+    }
+  }
+
   return (
     <>
       <div className={cx("container-header")}>
@@ -144,6 +154,7 @@ function ListTeacherAdmin() {
               <th>Name</th>
               <th>Phone Number</th>
               <th>Birthday</th>
+              <th>Address</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -157,13 +168,14 @@ function ListTeacherAdmin() {
                   <td className="text-center">
                     {JSON.stringify(teacher.birthday).slice(1, 11)}
                   </td>
+                  <td className="text-center">{teacher.address}</td>
                   <td className="text-center">
                     <Button edit small onClick={() => handleEdit(teacher.id)}>
                       <FontAwesomeIcon icon={faPenToSquare} /> Edit
                     </Button>
                     <button
                       className={cx("btn-dl")}
-                      onClick={() => handleRemove(teacher.name)}
+                      onClick={() => handleRemove(teacher.id)}
                     >
                       <FontAwesomeIcon icon={faTrashCan} /> Remove
                     </button>
@@ -273,9 +285,8 @@ function ListTeacherAdmin() {
           </Modal.Header>
           <Modal.Body>
             <div className="body-add-new">
-              This action can't be undone!! Do you want to remove this user?
-              <br />
-              <b>Name = "{selectedCode}" </b>
+              This action can't be undone!! Do you want to remove this user ID ={" "}
+              {idDelete} ?
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -289,7 +300,7 @@ function ListTeacherAdmin() {
             <Btn
               variant="primary"
               className={cx("btn-bt")}
-              onClick={formik.handleSubmit}
+              onClick={handleDelete}
             >
               Confirm
             </Btn>

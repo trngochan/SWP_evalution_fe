@@ -6,6 +6,7 @@ import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
 import BoardHeader from "~/components/headeritem";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
@@ -24,12 +25,15 @@ function ListCourseAdmin() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [rerender, setRerender] = useState(true);
+  const [idDelete, setIdDelete] = useState(0);
 
   const handleClose = () => {
     setShowConfirm(false);
   };
 
-  const handleDelete = (id) => {
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
     setShowConfirm(true);
   };
 
@@ -56,7 +60,7 @@ function ListCourseAdmin() {
     }
 
     fetchData();
-  }, [isShowAdd]);
+  }, [isShowAdd, rerender]);
 
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
@@ -66,7 +70,14 @@ function ListCourseAdmin() {
     setCookie("course_id", id);
   }
 
-  console.log(courses);
+  async function handleDelete() {
+    const req3 = await axios.delete(`/course/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
+  }
 
   return (
     <div>
@@ -151,7 +162,10 @@ function ListCourseAdmin() {
                         handleShowProjects(course.id);
                       }}
                     >
-                      <Link to={`/coursedetails/${course.id}`} className={cx("link-style")}>
+                      <Link
+                        to={`/coursedetails/${course.id}`}
+                        className={cx("link-style")}
+                      >
                         <FontAwesomeIcon icon={faCircleInfo} /> {course.name}
                       </Link>
                     </td>
@@ -163,10 +177,9 @@ function ListCourseAdmin() {
                       }
                     </td>
                     <td className="text-center">
-
                       <button
                         className={cx("btn-dl")}
-                        onClick={() => handleDelete(course.id)}
+                        onClick={() => handleClickDelete(course.id)}
                       >
                         <FontAwesomeIcon icon={faTrashCan} /> Remove
                       </button>
@@ -192,12 +205,17 @@ function ListCourseAdmin() {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            This action can't be undone!! Do you want to remove this Course?
+            This action can't be undone!! Do you want to remove this Course ID ={" "}
+            {idDelete} ?
             <br />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
             Confirm
           </Btn>
           <Btn

@@ -3,14 +3,15 @@ import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import BoardHeader from "~/components/headeritem";
+import { toast } from "react-toastify";
 
 import Button from "~/components/button";
 import styles from "./admin.module.scss";
 import AddSubject from "../create/AddSubject";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -19,12 +20,15 @@ function ListSubjectAdmin() {
   const [subjects, setSubjects] = useState([]);
   const [semesters, setSemesters] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [idDelete, setIdDelete] = useState(0);
+  const [rerender, setRerender] = useState(false);
 
   const handleClose = () => {
     setShowConfirm(false);
   };
 
-  const handleDelete = (id) => {
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
     setShowConfirm(true);
   };
 
@@ -38,7 +42,16 @@ function ListSubjectAdmin() {
     }
 
     fetchData();
-  }, []);
+  }, [rerender]);
+
+  async function handleDelete() {
+    const req3 = await axios.delete(`/subject/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
+  }
 
   return (
     <div className={cx("container-board")}>
@@ -66,10 +79,22 @@ function ListSubjectAdmin() {
             {subjects.map((subject, i) => (
               <tr key={i}>
                 <td className="text-center">{subject.Id}</td>
-                <td className="text-center"><Link to={`/subjectdetails/${subject.Id}`} className={cx("link-style")}><FontAwesomeIcon icon={faCircleInfo} /> {subject.Name}</Link></td>
+                <td className="text-center">
+                  <Link
+                    to={`/subjectdetails/${subject.Id}`}
+                    className={cx("link-style")}
+                  >
+                    <FontAwesomeIcon icon={faCircleInfo} /> {subject.Name}
+                  </Link>
+                </td>
                 <td>{subject.Description}</td>
                 <td className="text-center">
-                  <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
+                  <button
+                    className={cx("btn-dl")}
+                    onClick={() => handleClickDelete(subject.Id)}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} /> Remove
+                  </button>
                 </td>
               </tr>
             ))}
@@ -91,12 +116,17 @@ function ListSubjectAdmin() {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            This action can't be undone!! Do you want to remove this Subject?
+            This action can't be undone!! Do you want to remove this Subject ID
+            = {idDelete}?
             <br />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
             Confirm
           </Btn>
           <Btn

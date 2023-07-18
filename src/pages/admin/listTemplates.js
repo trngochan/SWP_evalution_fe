@@ -3,6 +3,7 @@ import axios from "axios";
 import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
 import BoardHeader from "~/components/headeritem";
+import { toast } from "react-toastify";
 
 import { Link } from "react-router-dom";
 import Button from "~/components/button";
@@ -23,12 +24,15 @@ function ListTemplatesAdmin() {
   const [showsCoreDetails, setShowScoreDetails] = useState(false);
   const [callApi, setCallApi] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [idDelete, setIdDelete] = useState(0);
+  const [rerender, setRerender] = useState(false);
 
   const handleClose = () => {
     setShowConfirm(false);
   };
 
-  const handleDelete = (id) => {
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
     setShowConfirm(true);
   };
 
@@ -47,14 +51,11 @@ function ListTemplatesAdmin() {
     }
 
     fetchData();
-  }, [callApi]);
+  }, [callApi, rerender]);
 
   const [addTemplate, setAddTemplate] = useState({});
   const [addScoreColumn, setAddScoreColumn] = useState({});
   const [errorTemplate, setErrorTemplate] = useState("");
-
-  console.log(addTemplate);
-  console.log(addScoreColumn);
 
   async function haddleAddTemplate(dataScoreColumn) {
     try {
@@ -85,7 +86,15 @@ function ListTemplatesAdmin() {
     }
   }
 
-  console.log(subjects);
+  async function handleDelete() {
+    const req3 = await axios.delete(`/template/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
+  }
+
   return (
     <div>
       <div className={cx("container-header")}>
@@ -151,7 +160,7 @@ function ListTemplatesAdmin() {
                     <td className="text-center">
                       <button
                         className={cx("btn-dl")}
-                        onClick={() => handleDelete()}
+                        onClick={() => handleClickDelete(template.Id)}
                       >
                         <FontAwesomeIcon icon={faTrashCan} /> Remove
                       </button>
@@ -178,12 +187,17 @@ function ListTemplatesAdmin() {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            This action can't be undone!! Do you want to remove this Template?
+            This action can't be undone!! Do you want to remove this Template ID
+            = {idDelete} ?
             <br />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
             Confirm
           </Btn>
           <Btn
