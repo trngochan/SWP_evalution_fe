@@ -6,6 +6,8 @@ import Infor from "~/components/infor";
 import { useCookies } from "react-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons"
+import { useNavigate } from "react-router-dom";
+
 
 const cx = classNames.bind(styles);
 
@@ -21,9 +23,22 @@ function Header() {
 
 function Header2() {
   const [cookies, setCookie] = useCookies();
+  const navigate = useNavigate();
+  const handleImgClick = () => {
+    // Điều hướng người dùng đến các trang "home Student", "home teacher", và "home admin"
+    const role = cookies.user?.role;
+    if (role === "admin") {
+      navigate("/admin");
+    } else if (role === "std") {
+      navigate("/student");
+    } else if (role === "teach") {
+      navigate("/teacher");
+    }
+  };
+
   return (
     <div className={cx("header")}>
-      <img className={cx("logo")} alt="FPT" src={fptlogo} />
+      <img className={cx("logo")} alt="FPT" src={fptlogo} onClick={handleImgClick} />
       <h1 className={cx("title")}><FontAwesomeIcon icon={faGraduationCap} /> FPT Evaluation Project  </h1>
       <Infor name={cookies.user?.username} />
     </div>
