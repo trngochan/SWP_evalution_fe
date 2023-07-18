@@ -134,7 +134,7 @@ function CourseDetails() {
               <tr>
                 <th scope="row">Semester </th>
                 <td>
-                  {inforSem.Year}_{inforSem.Session}
+                  {inforSem?.Year}_{inforSem?.Session}
                 </td>
                 <td>
                   <button
@@ -147,7 +147,7 @@ function CourseDetails() {
               <tr>
                 <th scope="row">Subject</th>
                 <td>
-                  {inforCourse.SubjectId}_{inforSub.Name}
+                  {inforSub?.Id}_{inforSub?.Name}
                 </td>
                 <td>
                   <button
@@ -162,7 +162,7 @@ function CourseDetails() {
               <tr>
                 <th>Course </th>
                 <td>
-                  {inforCourse.id}_{inforCourse.name}
+                  {inforCourse?.id}_{inforCourse?.name}
                 </td>
                 <td>
                   <button
