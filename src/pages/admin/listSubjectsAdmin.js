@@ -69,9 +69,6 @@ function ListSubjectAdmin() {
                 <td className="text-center"><Link to={`/subjectdetails/${subject.Id}`} className={cx("link-style")}><FontAwesomeIcon icon={faCircleInfo} /> {subject.Name}</Link></td>
                 <td>{subject.Description}</td>
                 <td className="text-center">
-                  <Button to={`/subjectdetails/${subject.Id}`}>
-                    <FontAwesomeIcon icon={faCircleInfo} /> Details
-                  </Button>
                   <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
                 </td>
               </tr>

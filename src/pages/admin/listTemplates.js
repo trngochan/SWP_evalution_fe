@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
 import BoardHeader from "~/components/headeritem";
 
+import { Link } from "react-router-dom";
 import Button from "~/components/button";
 import styles from "./admin.module.scss";
 import TableGenerator from "~/pages/generateTable/index";
@@ -127,16 +128,13 @@ function ListTemplatesAdmin() {
                 return (
                   <tr>
                     <td className="text-center">{template.Id}</td>
-                    <td className="text-center">{template.Name}</td>
+                    <td className="text-center"><Link to={`/templatedetails/${template.Id}`} className={cx("link-style")}><FontAwesomeIcon icon={faCircleInfo} /> {template.Name}</Link></td>
                     <td className="text-center">{template.SubjectId}</td>
                     <td className="text-center">{template.Status.data[0]}</td>
                     <td className="text-center">
                       {template?.ApplyDate?.slice(0, 10)}
                     </td>
                     <td className="text-center">
-                      <Button to={`/templatedetails/${template.Id}`}>
-                        <FontAwesomeIcon icon={faCircleInfo} /> Details
-                      </Button>
                       <button
                         className={cx("btn-dl")}
                         onClick={() => handleDelete()}

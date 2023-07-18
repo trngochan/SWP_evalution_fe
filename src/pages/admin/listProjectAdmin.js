@@ -5,6 +5,7 @@ import BoardHeader from "~/components/headeritem";
 
 import Button from "~/components/button";
 import AddProject from "../create/AddProject";
+import { Link } from "react-router-dom";
 
 import styles from "./admin.module.scss";
 import classNames from "classnames/bind";
@@ -14,7 +15,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Table from "react-bootstrap/Table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faPenToSquare, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -158,12 +159,11 @@ function ListProjectAdmin() {
             <thead className="text-center">
               <tr>
                 <th>ID</th>
-                <th>Semester</th>
                 <th>Subject</th>
+                <th>Semester</th>
                 <th>Course</th>
                 <th>Name</th>
                 <th>Notion</th>
-                <th>Detail</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -192,15 +192,11 @@ function ListProjectAdmin() {
                         {sem?.Year} - {sem?.Session}
                       </td>
                       <td className="text-center">{sub?.Name}</td>
-                      <td>{project.Name}</td>
-                      <td>{project.Notion}</td>
-                      <td>
-                        <Button
-                          to={`/projectdetails/${cournow.id}/${project.Id}`}
-                        >
-                          Details
-                        </Button>
+                      <td className="text-center">
+                        <Link to={`/projectdetails/${cournow.id}/${project.Id}`} className={cx("link-style")}>
+                          <FontAwesomeIcon icon={faCircleInfo} /> {project.Name}</Link>
                       </td>
+                      <td>{project.Notion}</td>
                       <td className="text-center">
                         <Button edit onClick={() => handleEdit(project.Id)}>
                           <FontAwesomeIcon icon={faPenToSquare} /> Edit
