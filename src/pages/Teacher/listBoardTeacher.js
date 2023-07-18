@@ -5,6 +5,8 @@ import Table from "react-bootstrap/Table";
 import { useCookies } from "react-cookie";
 import styles from "./teacher.module.scss";
 import classNames from "classnames/bind";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -87,7 +89,7 @@ function ListBoardTeacher() {
                 <th scope="col">ID</th>
                 <th scope="col">Semester</th>
                 <th scope="col">Subject</th>
-                <th scope="col">Name</th>
+                <th scope="col"><FontAwesomeIcon icon={faPaperPlane} /> Name</th>
                 <th scope="col">Room</th>
                 <th scope="col">Date</th>
                 <th scope="col">Time start</th>
@@ -116,6 +118,7 @@ function ListBoardTeacher() {
                       <td className="text-center">{subnow?.Name} </td>
                       <td
                         className="text-center"
+                        style={{ color: "#fe2c2c" }}
                         onClick={() =>
                           handleShowStd(
                             item.Id,

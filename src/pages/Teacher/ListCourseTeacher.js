@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./teacher.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLandmark } from "@fortawesome/free-solid-svg-icons";
+import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -93,7 +93,7 @@ function ListCourseTeacher() {
                 <th scope="col">Subject</th>
                 <th scope="col">Course ID</th>
                 <th scope="col">
-                  Name <FontAwesomeIcon icon={faLandmark} />
+                  <FontAwesomeIcon icon={faSeedling} /> Name
                 </th>
               </tr>
             </thead>
@@ -119,6 +119,7 @@ function ListCourseTeacher() {
                       <td className="text-center">{course.id}</td>
                       <td
                         className="text-center"
+                        style={{ color: "#fe2c2c" }}
                         onClick={() => {
                           handleChooseCourse(course);
                         }}

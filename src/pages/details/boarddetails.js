@@ -7,10 +7,10 @@ import { Modal, Button as Btn } from "react-bootstrap";
 
 import { Snackbar, Alert } from "@mui/material";
 import Table from "react-bootstrap/Table";
-
 import axios from "axios";
 
 import { Header2 } from "~/components/layouts/header";
+import { Link } from "react-router-dom";
 import Divider from "~/components/Divider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -149,7 +149,7 @@ function BoardDetail() {
       if (data.status === 201) {
         setListProOutBoard(data.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function handlePublic(id, marked, quan) {
@@ -175,7 +175,7 @@ function BoardDetail() {
       } else {
         setError("Error: at handleShowAddTeacher");
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function handleAddTeacherInBoard(teacherId) {
@@ -292,7 +292,14 @@ function BoardDetail() {
                 </tr>
                 <tr>
                   <th scope="row">Template Id</th>
-                  <td>{template?.Name}</td>
+                  <td>
+                    <Link
+                      to={`/templatedetails/${template?.Id}`}
+                      className={cx("link-style")}
+                    >
+                      {template?.Name}
+                    </Link>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -445,7 +452,7 @@ function BoardDetail() {
                               onClick={() => {
                                 if (
                                   item.teacherMark.teacherQuanMarked ==
-                                    item.teacherMark.teacherQuan &&
+                                  item.teacherMark.teacherQuan &&
                                   item.teacherMark.teacherQuan > 0
                                 ) {
                                   handlePublic(
