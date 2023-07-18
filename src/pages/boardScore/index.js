@@ -38,7 +38,7 @@ function TeacherBoardScore() {
         .then(([response1, response2]) => {
           // Xử lý kết quả của cả hai API
           setStudentList(response1.data);
-          setScoreList(response2.data);
+          setScoreList(response2.data.data);
           response1.data.map((std) => {
             setScoreStudents((prev) => [
               ...prev,
