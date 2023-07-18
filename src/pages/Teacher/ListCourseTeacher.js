@@ -5,8 +5,8 @@ import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import styles from "./teacher.module.scss";
 import classNames from "classnames/bind";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLandmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLandmark } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +15,7 @@ function ListCourseTeacher() {
   const [courses, setCourses] = useState([]);
   const [semesters, setSemesters] = useState([]);
   const [semId, setSemId] = useState(0);
+  const [subjects, setSubjects] = useState([]);
 
   const navigate = useNavigate();
 
@@ -26,12 +27,14 @@ function ListCourseTeacher() {
       const req2 = await axios.get(`/semester/getall`, {
         withCredentials: true,
       });
+      const req3 = await axios.get("/subject/getall");
 
-      return axios.all([req1, req2]).then(
-        axios.spread((listCourses, listSemester) => {
+      return axios.all([req1, req2, req3]).then(
+        axios.spread((listCourses, listSemester, listSubs) => {
           // Xử lý response từ request1 và requests
           setCourses(listCourses.data);
           setSemesters(listSemester.data);
+          setSubjects(listSubs.data);
         })
       );
     }
@@ -49,10 +52,19 @@ function ListCourseTeacher() {
     navigate("/studentsInCourse");
   }
 
+  console.log(semesters);
+
   return (
     <div className={cx("container")}>
       <div className="row">
-        <h1>List of courses the lecturer {cookies.user.name} is teaching:</h1>
+        <h1
+          className=""
+          style={{
+            fontWeight: 700,
+          }}
+        >
+          List of courses the lecturer {cookies.user.name} is teaching
+        </h1>
         <div className="col-2">
           <select
             className={cx("form-select")}
@@ -77,8 +89,12 @@ function ListCourseTeacher() {
           <Table striped bordered hover className="text-center">
             <thead>
               <tr>
+                <th scope="col">Semester</th>
+                <th scope="col">Subject</th>
                 <th scope="col">Course ID</th>
-                <th scope="col">Name <FontAwesomeIcon icon={faLandmark} /></th>
+                <th scope="col">
+                  Name <FontAwesomeIcon icon={faLandmark} />
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -88,8 +104,18 @@ function ListCourseTeacher() {
                   else return parseInt(item.SemesterId) === parseInt(semId);
                 })
                 .map((course, i) => {
+                  const semnow = semesters.find(
+                    (sem) => sem.Id === course.SemesterId
+                  );
+                  const subnow = subjects.find(
+                    (sem) => (sem.Id = course.SubjectId)
+                  );
                   return (
                     <tr key={i}>
+                      <td className="text-center">
+                        {semnow?.Year} - {semnow?.Session}
+                      </td>
+                      <td className="text-center">{subnow?.Name}</td>
                       <td className="text-center">{course.id}</td>
                       <td
                         className="text-center"

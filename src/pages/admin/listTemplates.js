@@ -85,6 +85,7 @@ function ListTemplatesAdmin() {
     }
   }
 
+  console.log(subjects);
   return (
     <div>
       <div className={cx("container-header")}>
@@ -128,8 +129,21 @@ function ListTemplatesAdmin() {
                 return (
                   <tr>
                     <td className="text-center">{template.Id}</td>
-                    <td className="text-center"><Link to={`/templatedetails/${template.Id}`} className={cx("link-style")}><FontAwesomeIcon icon={faCircleInfo} /> {template.Name}</Link></td>
-                    <td className="text-center">{template.SubjectId}</td>
+                    <td className="text-center">
+                      <Link
+                        to={`/templatedetails/${template.Id}`}
+                        className={cx("link-style")}
+                      >
+                        <FontAwesomeIcon icon={faCircleInfo} /> {template.Name}
+                      </Link>
+                    </td>
+                    <td className="text-center">
+                      {
+                        subjects.find(
+                          (subject) => subject.Id === template.SubjectId
+                        )?.Name
+                      }
+                    </td>
                     <td className="text-center">{template.Status.data[0]}</td>
                     <td className="text-center">
                       {template?.ApplyDate?.slice(0, 10)}
