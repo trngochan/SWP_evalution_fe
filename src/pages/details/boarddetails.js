@@ -288,7 +288,12 @@ function BoardDetail() {
                 </tr>
                 <tr>
                   <th scope="row">Subject Id</th>
-                  <td>{subject?.Name}</td>
+                  <td><Link
+                    to={`/subjectdetails/${subject?.Id}`}
+                    className={cx("link-style")}
+                  >
+                    {subject?.Name}
+                  </Link></td>
                 </tr>
                 <tr>
                   <th scope="row">Template Id</th>

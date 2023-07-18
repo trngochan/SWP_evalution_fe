@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import styles from "./details.module.scss";
 import Table from "react-bootstrap/Table";
 import classNames from "classnames/bind";
@@ -168,7 +168,7 @@ function ProjectDetails() {
                 </tr>
                 <tr>
                   <th scope="row">CourseID</th>
-                  <td>{courseNow?.name}</td>
+                  <td><Link to={`/coursedetails/${courseNow?.id}`} className={cx("link-style")}>{courseNow?.name}</Link></td>
                 </tr>
                 <tr>
                   <th>Project ID</th>
