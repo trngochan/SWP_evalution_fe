@@ -252,23 +252,23 @@ function BoardDetail() {
               <tbody>
                 <tr>
                   <th scope="row">Board ID</th>
-                  <td>{boardDetails.Id}</td>
+                  <td>{boardDetails?.Id}</td>
                 </tr>
                 <tr>
                   <th scope="row">Board name</th>
-                  <td>{boardDetails.Name}</td>
+                  <td>{boardDetails?.Name}</td>
                 </tr>
                 <tr>
                   <th scope="row">Start time</th>
-                  <td>{boardDetails.StartTime}</td>
+                  <td>{boardDetails?.StartTime}</td>
                 </tr>
                 <tr>
                   <th scope="row">End time</th>
-                  <td>{boardDetails.EndTime}</td>
+                  <td>{boardDetails?.EndTime}</td>
                 </tr>
                 <tr>
                   <th scope="row">Date</th>
-                  <td>{boardDetails.Date?.slice(0, 10)}</td>
+                  <td>{boardDetails?.Date?.slice(0, 10)}</td>
                 </tr>
               </tbody>
             </table>

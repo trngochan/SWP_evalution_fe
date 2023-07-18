@@ -103,7 +103,7 @@ function ListBoardAdmin() {
               {semesterList.map((semester, i) => {
                 return (
                   <option key={i} value={semester.Id}>
-                    {semester.Year} - {semester.Session}{" "}
+                    {semester?.Year} - {semester?.Session}{" "}
                   </option>
                 );
               })}

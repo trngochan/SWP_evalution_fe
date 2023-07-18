@@ -162,7 +162,7 @@ function ListProjectAdmin() {
               {courses.map((course, i) => {
                 return (
                   <option value={course.id} key={i}>
-                    {course.id}-{course.name}
+                    {course?.id}-{course?.name}
                   </option>
                 );
               })}
@@ -208,10 +208,11 @@ function ListProjectAdmin() {
                       <td className="text-center">{cournow?.name}</td>
                       <td className="text-center">
                         <Link
-                          to={`/projectdetails/${cournow.id}/${project.Id}`}
+                          to={`/projectdetails/${cournow.id}/${project?.Id}`}
                           className={cx("link-style")}
                         >
-                          <FontAwesomeIcon icon={faCircleInfo} /> {project.Name}
+                          <FontAwesomeIcon icon={faCircleInfo} />{" "}
+                          {project?.Name}
                         </Link>
                       </td>
                       {/* <td>{project.Notion}</td> */}
