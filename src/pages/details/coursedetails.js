@@ -132,7 +132,7 @@ function CourseDetails() {
           <table className="table table-striped">
             <tbody>
               <tr>
-                <th scope="row">Semester ID</th>
+                <th scope="row">Semester </th>
                 <td>
                   {inforSem.Year}_{inforSem.Session}
                 </td>

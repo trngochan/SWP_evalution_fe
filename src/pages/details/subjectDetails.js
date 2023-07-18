@@ -8,11 +8,9 @@ import { Header2 } from "~/components/layouts/header";
 import styles from "./details.module.scss";
 import Divider from "~/components/Divider";
 import Button from "~/components/button";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button as Btn } from "react-bootstrap";
-
-
 
 const cx = classNames.bind(styles);
 
@@ -21,26 +19,34 @@ function SubjectDetails() {
   const [courses, setCourses] = useState([]);
   const [inforSubject, setInforSubject] = useState({});
   const [showConfirm, setShowConfirm] = useState(false);
+  const [semesterList, setsemesterList] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
   const handleClose = () => {
     setShowConfirm(false);
-  }
+  };
 
   const handleDelete = (id) => {
     setShowConfirm(true);
-  }
+  };
 
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get(`/subject/${subject}/getbyid`);
       const response1 = await axios.get(`/course/${subject}/getbysubject`);
+      const req2 = await axios.get(`/semester/getall`, {
+        withCredentials: true,
+      });
+      const req4 = await axios.get("/teacher/getall");
+      setTeachers(req4.data);
       setCourses(response1.data);
       setInforSubject(response.data?.[0]);
+      setsemesterList(req2.data);
     }
     fetchData();
   }, []);
 
-  console.log(courses);
+  console.log(teachers);
   return (
     <>
       <Header2 />
@@ -82,22 +88,40 @@ function SubjectDetails() {
                 <th>Semester ID</th>
                 <th>Course ID</th>
                 <th>Name</th>
+                <th>Teacher</th>
                 <th>Details</th>
               </tr>
             </thead>
             <tbody>
-              {courses.map((course, i) => (
-                <tr key={i}>
-                  <td className="text-center">{course.SemesterId}</td>
-                  <td className="text-center">{course.id}</td>
-                  <td className="text-center">{course.name}</td>
-                  <td className="text-center">
-                    <Button to={`/coursedetails/${course.id}`}>Details</Button>
-                    <button className={cx("btn-dl")} onClick={() => handleDelete()}><FontAwesomeIcon icon={faTrashCan} /> Remove</button>
-
-                  </td>
-                </tr>
-              ))}
+              {courses.map((course, i) => {
+                const semnow = semesterList.find(
+                  (sem) => sem.Id == course.SemesterId
+                );
+                const teachernow = teachers.find(
+                  (teacher) => teacher.id == course.LectureId
+                );
+                return (
+                  <tr key={i}>
+                    <td className="text-center">
+                      {semnow?.Year} - {semnow?.Session}
+                    </td>
+                    <td className="text-center">{course.id}</td>
+                    <td className="text-center">{course.name}</td>
+                    <td className="text-center">{teachernow?.name}</td>
+                    <td className="text-center">
+                      <Button to={`/coursedetails/${course.id}`}>
+                        Details
+                      </Button>
+                      <button
+                        className={cx("btn-dl")}
+                        onClick={() => handleDelete()}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} /> Remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
         </div>
@@ -111,7 +135,9 @@ function SubjectDetails() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title><h1>Delete a subject.</h1></Modal.Title>
+          <Modal.Title>
+            <h1>Delete a subject.</h1>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
@@ -123,7 +149,11 @@ function SubjectDetails() {
           <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
             Confirm
           </Btn>
-          <Btn variant="secondary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
             Cancel
           </Btn>
         </Modal.Footer>

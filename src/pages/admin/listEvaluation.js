@@ -59,7 +59,6 @@ function ListBoardAdmin() {
     setSemId(semesterId);
   }
 
-  console.log(subjects);
   return (
     <div className="">
       <div className={cx("container-header")}>
@@ -132,8 +131,15 @@ function ListBoardAdmin() {
                       <td className="text-center">
                         {sem?.Year} - {sem?.Session}
                       </td>
-                      <td className="text-center">{sub.Name}</td>
-                      <td className="text-center"><Link to={`/boarddetails/${item.Id}`} className={cx("link-style")}><FontAwesomeIcon icon={faCircleInfo} /> {item.Name}</Link></td>
+                      <td className="text-center">{sub?.Name}</td>
+                      <td className="text-center">
+                        <Link
+                          to={`/boarddetails/${item.Id}`}
+                          className={cx("link-style")}
+                        >
+                          <FontAwesomeIcon icon={faCircleInfo} /> {item.Name}
+                        </Link>
+                      </td>
                       <td className="text-center">{item.Room}</td>
                       <td className="text-center">{item.StartTime} </td>
                       <td className="text-center">{item.EndTime} </td>
