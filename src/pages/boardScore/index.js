@@ -38,7 +38,7 @@ function TeacherBoardScore() {
         .then(([response1, response2]) => {
           // Xử lý kết quả của cả hai API
           setStudentList(response1.data);
-          setScoreList(response2.data);
+          setScoreList(response2.data.data);
           response1.data.map((std) => {
             setScoreStudents((prev) => [
               ...prev,
@@ -56,24 +56,45 @@ function TeacherBoardScore() {
 
   const [projectSPublics, setProjectSPublics] = useState([]);
   const [inforProject, setInforProject] = useState({});
-
+  const [semesterList, setsemesterList] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [evalution, setEvaluation] = useState({});
   useEffect(() => {
     async function fetchData() {
       const req2 = await axios.get(`/project/${cookies.project_id}/getbyid`);
-      const req5 = await axios.get(`/project/getallpubliced`);
+      const req3 = await axios.get(`/project/getallpubliced`);
+      const req6 = await axios.get(
+        `/evalution/${cookies.project_id}/getbyproject`
+      );
+      const req7 = await axios.get(`/semester/getall`, {
+        withCredentials: true,
+      });
+      const req8 = await axios.get("/subject/getall");
+      const req9 = await axios.get(`/course/getall`, {
+        withCredentials: true,
+      });
 
-      return axios.all([req2, req5]).then(
-        axios.spread((response1, respone4) => {
-          // Xử lý response từ request1 và requests
-          setInforProject(response1.data?.[0]);
-          setProjectSPublics(respone4.data.data);
-        })
+      return axios.all([req2, req3, req6, req7, req8, req9]).then(
+        axios.spread(
+          (response1, respone2, listEva, listSem, listSub, listCour) => {
+            // Xử lý response từ request1 và requests
+            setInforProject(response1.data?.[0]);
+            setProjectSPublics(respone2.data.data);
+            setEvaluation(listEva.data.data?.[0]);
+            setsemesterList(listSem.data);
+            setSubjects(listSub.data);
+            setCourses(listCour.data);
+          }
+        )
       );
     }
     fetchData();
   }, []);
 
-  console.log(inforProject);
+  const courseNow = courses.find((c) => c.id === inforProject?.CourseId);
+  const subjectNow = subjects.find((s) => s.Id === courseNow?.SubjectId);
+  const semNow = semesterList.find((s) => s.Id === courseNow?.SemesterId);
 
   useEffect(() => {
     async function fetchData() {
@@ -105,7 +126,7 @@ function TeacherBoardScore() {
           const value = parseInt(obj[key]);
 
           // Kiểm tra giá trị số nằm trong khoảng từ 0 đến 10
-          if (value <= 0 || value >= 10) {
+          if (value < 0 || value > 10) {
             return false; // Trả về false nếu giá trị không hợp lệ
           }
         }
@@ -194,40 +215,62 @@ function TeacherBoardScore() {
       <Header2 />
       <div className={cx("container")}>
         <div className={cx("table-1")}>
-          <h2 className={cx("title")}>Information details of project</h2>
-          <div className="col-6">
-            <table class="table table-striped">
-              <tbody>
-                <tr>
-                  <th scope="row">CourseID</th>
-                  <td>{inforProject?.CourseId}</td>
-                </tr>
-                <tr>
-                  <th>Project ID</th>
-                  <td>{inforProject.Id}</td>
-                </tr>
-                <tr>
-                  <th>Topic</th>
-                  <td>{inforProject.Name}</td>
-                </tr>
-                <tr>
-                  <th>Notion</th>
-                  <td>{inforProject.Notion}</td>
-                </tr>
+          <h1 className={cx("title")}>Information details of project</h1>
+          <div className="row">
+            <div className="col-6">
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <th scope="row">Semester</th>
+                    <td>
+                      {semNow?.Year} - {semNow?.Session}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Subject</th>
+                    <td>{subjectNow?.Name}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">CourseID</th>
+                    <td>{courseNow?.name}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Evaluation board</th>
+                    <td>{evalution?.Name}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="col-6">
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <th>Project ID</th>
+                    <td>{inforProject?.Id}</td>
+                  </tr>
+                  <tr>
+                    <th>Topic</th>
+                    <td>{inforProject?.Name}</td>
+                  </tr>
+                  <tr>
+                    <th>Notion</th>
+                    <td>{inforProject?.Notion}</td>
+                  </tr>
 
-                <tr>
-                  <th>Status</th>
-                  <td>
-                    {projectSPublics.some(
-                      (projectSPublic) =>
-                        projectSPublic.ProjectId == inforProject.Id
-                    )
-                      ? "Publiced"
-                      : "No puclic"}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr>
+                    <th>Status</th>
+                    <td>
+                      {projectSPublics.some(
+                        (projectSPublic) =>
+                          projectSPublic.ProjectId == inforProject.Id
+                      )
+                        ? "Publiced"
+                        : "No public"}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -239,7 +282,7 @@ function TeacherBoardScore() {
                 {ScoreList.map((column, i) => {
                   return (
                     <th key={i}>
-                      {column.name} ({column.percent})
+                      {column.name} ({column.percent * 100}%)
                     </th>
                   );
                 })}

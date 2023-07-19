@@ -4,21 +4,38 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
+import BoardHeader from "~/components/headeritem";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import AddCourse from "../create/AddCourse";
 import styles from "./admin.module.scss";
+import { Modal, Button as Btn } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
 function ListCourseAdmin() {
   const [cookies, setCookie, removeCookie] = useCookies();
-
   const [isShowAdd, setShowAdd] = useState(false);
-
   const [courses, setCourse] = useState([]);
   const [semesterList, setsemesterList] = useState([]);
-
   const [semId, setSemId] = useState(0);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [subjects, setSubjects] = useState([]);
+  const [teachers, setTeachers] = useState([]);
+  const [rerender, setRerender] = useState(true);
+  const [idDelete, setIdDelete] = useState(0);
+
+  const handleClose = () => {
+    setShowConfirm(false);
+  };
+
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
+    setShowConfirm(true);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -28,18 +45,22 @@ function ListCourseAdmin() {
       const req2 = await axios.get(`/semester/getall`, {
         withCredentials: true,
       });
+      const req3 = await axios.get("/subject/getall");
+      const req4 = await axios.get("/teacher/getall");
 
-      return axios.all([req1, req2]).then(
-        axios.spread((listCourse, listSemester) => {
+      return axios.all([req1, req2, req3, req4]).then(
+        axios.spread((listCourse, listSemester, listSubject, listTeacher) => {
           // Xử lý response từ request1 và requests
           setCourse(listCourse.data);
           setsemesterList(listSemester.data);
+          setSubjects(listSubject.data);
+          setTeachers(listTeacher.data);
         })
       );
     }
 
     fetchData();
-  }, [isShowAdd]);
+  }, [isShowAdd, rerender]);
 
   function handleChooseSem(semesterId) {
     setSemId(semesterId);
@@ -49,11 +70,26 @@ function ListCourseAdmin() {
     setCookie("course_id", id);
   }
 
+  async function handleDelete() {
+    const req3 = await axios.delete(`/course/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
+  }
+
   return (
     <div>
-      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-        {isShowAdd ? "View" : "Add"}
-      </Button>
+      <div className={cx("container-header")}>
+        <BoardHeader message={"Courses"} />
+
+        <div className={cx("btns")}>
+          <Button active onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add+"}
+          </Button>
+        </div>
+      </div>
       {isShowAdd ? (
         <AddCourse setShowAdd={setShowAdd} />
       ) : (
@@ -67,11 +103,13 @@ function ListCourseAdmin() {
                 handleChooseSem(e.target.value);
               }}
             >
-              <option className="text-center" value="0">All semester</option>
+              <option className="text-center" value="0">
+                All semester
+              </option>
               {semesterList.map((semester, i) => {
                 return (
                   <option value={semester.Id} key={i}>
-                    {semester.Year}-{semester.Session}
+                    {semester?.Year}-{semester?.Session}
                   </option>
                 );
               })}
@@ -82,11 +120,14 @@ function ListCourseAdmin() {
             <thead>
               <tr>
                 <th>Course ID</th>
+                <th>Semester</th>
+                <th>Subject</th>
                 <th>Name</th>
+                <th>Teacher</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody >
+            <tbody>
               {courses
                 ?.filter(function (item) {
                   if (parseInt(semId) === 0) return true;
@@ -95,17 +136,53 @@ function ListCourseAdmin() {
                 .map((course, i) => (
                   <tr key={i}>
                     <td className="text-center">{course.id}</td>
-                    <td className="text-center"
+                    <td className="text-center">
+                      {
+                        semesterList.find(
+                          (semester) => semester.Id === course.SemesterId
+                        )?.Year
+                      }{" "}
+                      -{" "}
+                      {
+                        semesterList.find(
+                          (semester) => semester.Id === course.SemesterId
+                        )?.Session
+                      }
+                    </td>
+                    <td className="text-center">
+                      {
+                        subjects.find(
+                          (subject) => subject.Id === course.SubjectId
+                        )?.Name
+                      }
+                    </td>
+                    <td
+                      className="text-center"
                       onClick={() => {
                         handleShowProjects(course.id);
                       }}
                     >
-                      {course.name}
+                      <Link
+                        to={`/coursedetails/${course.id}`}
+                        className={cx("link-style")}
+                      >
+                        <FontAwesomeIcon icon={faCircleInfo} /> {course.name}
+                      </Link>
                     </td>
                     <td className="text-center">
-                      <Button to={`/coursedetails/${course.id}`}>
-                        Details
-                      </Button>
+                      {
+                        teachers.find(
+                          (teacher) => teacher.id === course.LectureId
+                        )?.name
+                      }
+                    </td>
+                    <td className="text-center">
+                      <button
+                        className={cx("btn-dl")}
+                        onClick={() => handleClickDelete(course.id)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} /> Remove
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -113,6 +190,43 @@ function ListCourseAdmin() {
           </Table>
         </>
       )}
+
+      {/* Modal Confirm */}
+      <Modal
+        show={showConfirm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <h1>Delete a course</h1>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this Course ID ={" "}
+            {idDelete} ?
+            <br />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
+            Confirm
+          </Btn>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
+            Cancel
+          </Btn>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

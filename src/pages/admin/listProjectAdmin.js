@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
+import BoardHeader from "~/components/headeritem";
 
 import Button from "~/components/button";
 import AddProject from "../create/AddProject";
+import { Link } from "react-router-dom";
 
 import styles from "./admin.module.scss";
 import classNames from "classnames/bind";
@@ -11,8 +14,13 @@ import classNames from "classnames/bind";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import moment from "moment";
 import Table from "react-bootstrap/Table";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrashCan,
+  faPenToSquare,
+  faCircleInfo,
+} from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -29,6 +37,15 @@ function ListProjectAdmin() {
   const [editId, setEditId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [rerender, setRerender] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [subjects, setSubjects] = useState([]);
+  const [semesters, setSemesters] = useState([]);
+  const [idDelete, setIdDelete] = useState(0);
+
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
+    setShowConfirm(true);
+  };
 
   const handleEdit = (id) => {
     setEditId(id);
@@ -37,6 +54,7 @@ function ListProjectAdmin() {
 
   const handleClose = () => {
     setShowModal(false);
+    setShowConfirm(false);
   };
 
   const formik = useFormik({
@@ -75,12 +93,18 @@ function ListProjectAdmin() {
       const req2 = await axios.get(`/course/getall`, {
         withCredentials: true,
       });
+      const req3 = await axios.get(`/semester/getall`, {
+        withCredentials: true,
+      });
+      const req4 = await axios.get("/subject/getall");
 
-      return axios.all([req1, req2]).then(
-        axios.spread((listproject, listCourse) => {
+      return axios.all([req1, req2, req3, req4]).then(
+        axios.spread((listproject, listCourse, listSemester, listSubjects) => {
           // Xử lý response từ request1 và requests
           setProject(listproject.data);
           setCourses(listCourse.data);
+          setSemesters(listSemester.data);
+          setSubjects(listSubjects.data);
         })
       );
     }
@@ -90,6 +114,15 @@ function ListProjectAdmin() {
 
   function handleChooseCour(courId) {
     setCourID(courId);
+  }
+
+  async function handleDelete() {
+    const req3 = await axios.delete(`/project/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
   }
 
   return (
@@ -103,9 +136,14 @@ function ListProjectAdmin() {
         >
           List projects
         </h2> */}
-        <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-          {isShowAdd ? "View" : "Add"}
-        </Button>
+        <div className={cx("container-header")}>
+          <BoardHeader message={"Projects"} />
+          <div className={cx("btns")}>
+            <Button active onClick={() => setShowAdd(!isShowAdd)}>
+              {isShowAdd ? "View" : "Add+"}
+            </Button>
+          </div>
+        </div>
       </div>
       {isShowAdd ? (
         <AddProject setRerender={setRerender} setShowAdd={setShowAdd} />
@@ -124,7 +162,7 @@ function ListProjectAdmin() {
               {courses.map((course, i) => {
                 return (
                   <option value={course.id} key={i}>
-                    {course.id}-{course.name}
+                    {course?.id}-{course?.name}
                   </option>
                 );
               })}
@@ -134,10 +172,12 @@ function ListProjectAdmin() {
           <Table striped bordered hover>
             <thead className="text-center">
               <tr>
-                <th>Project ID</th>
+                <th>ID</th>
+                <th>Semester</th>
+                <th>Subject</th>
+                <th>Course</th>
                 <th>Name</th>
-                <th>Notion</th>
-                <th>Edit</th>
+                {/* <th>Notion</th> */}
                 <th>Action</th>
               </tr>
             </thead>
@@ -147,27 +187,54 @@ function ListProjectAdmin() {
                   if (parseInt(courID) === 0) return true;
                   else return parseInt(item.CourseId) === parseInt(courID);
                 })
-                .map((project, i) => (
-                  <tr key={i}>
-                    <td className="text-center">{project.Id}</td>
-                    <td>{project.Name}</td>
-                    <td>{project.Notion}</td>
-                    <td>
-                      <Button edit onClick={() => handleEdit(project.Id)}>
-                        Edit
-                      </Button>
-                    </td>
-                    <td>
-                      <Button to={`/projectdetails/${project.Id}`}>
-                        Details
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                .map((project, i) => {
+                  const cournow = courses.find(
+                    (course) => course.id === project.CourseId
+                  );
+                  const sub = subjects.find(
+                    (subject) => subject.Id == cournow.SubjectId
+                  );
+                  console.log(sub);
+                  const sem = semesters.find(
+                    (sem) => sem.Id == cournow.SemesterId
+                  );
+                  return (
+                    <tr key={i}>
+                      <td className="text-center">{project.Id}</td>
+                      <td className="text-center">
+                        {sem?.Year} - {sem?.Session}
+                      </td>
+                      <td className="text-center">{sub?.Name}</td>
+                      <td className="text-center">{cournow?.name}</td>
+                      <td className="text-center">
+                        <Link
+                          to={`/projectdetails/${cournow.id}/${project?.Id}`}
+                          className={cx("link-style")}
+                        >
+                          <FontAwesomeIcon icon={faCircleInfo} />{" "}
+                          {project?.Name}
+                        </Link>
+                      </td>
+                      {/* <td>{project.Notion}</td> */}
+                      <td className="text-center">
+                        <Button edit onClick={() => handleEdit(project.Id)}>
+                          <FontAwesomeIcon icon={faPenToSquare} /> Edit
+                        </Button>
+                        <button
+                          className={cx("btn-dl")}
+                          onClick={() => handleClickDelete(project.Id)}
+                        >
+                          <FontAwesomeIcon icon={faTrashCan} /> Remove
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </Table>
         </>
       )}
+
       {/* Modal */}
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -210,6 +277,43 @@ function ListProjectAdmin() {
           <Button type="submit" variant="primary" onClick={formik.handleSubmit}>
             Save changes
           </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal Confirm */}
+      <Modal
+        show={showConfirm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <h1>Delete a project</h1>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this Project ID
+            = {idDelete} ?
+            <br />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
+            Confirm
+          </Btn>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
+            Cancel
+          </Btn>
         </Modal.Footer>
       </Modal>
     </>

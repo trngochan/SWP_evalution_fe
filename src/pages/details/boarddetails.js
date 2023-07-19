@@ -1,19 +1,20 @@
 import Button from "~/components/button";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./details.module.scss";
 import classNames from "classnames/bind";
 import { Modal, Button as Btn } from "react-bootstrap";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import moment from "moment";
+
 import { Snackbar, Alert } from "@mui/material";
 import Table from "react-bootstrap/Table";
-
 import axios from "axios";
 
 import { Header2 } from "~/components/layouts/header";
+import { Link } from "react-router-dom";
 import Divider from "~/components/Divider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -37,6 +38,18 @@ function BoardDetail() {
   const [isTeachersButtonPrimary, setIsTeachersButtonPrimary] = useState(true);
   const [isProjectsButtonPrimary, setIsProjectsButtonPrimary] = useState(false);
   const [boardDetails, setBoardDetails] = useState({});
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [idDelete, setIdDelete] = useState(0);
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    setShowConfirm(false);
+  };
+
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
+    setShowConfirm(true);
+  };
 
   const handleOpenTeachers = () => {
     setShowModalTeachers(true);
@@ -71,6 +84,7 @@ function BoardDetail() {
   };
 
   const { board } = useParams();
+  const [sem, setSem] = useState({});
 
   useEffect(
     function () {
@@ -109,7 +123,23 @@ function BoardDetail() {
     [rerender]
   );
 
-  console.log(boardDetails);
+  const [template, setTemplate] = useState({});
+  const [subject, setSubject] = useState({});
+
+  useEffect(() => {
+    async function fetchData() {
+      const req7 = await axios.get(`/semester/${boardDetails.SemesterId}`);
+      setSem(req7.data.data?.[0]);
+      const req8 = await axios.get(
+        `/subject/${boardDetails.SubjectId}/getbyid`
+      );
+      const req9 = await axios.get(`/template/${boardDetails.TemplateId}`);
+      setTemplate(req9.data.data?.[0]);
+      setSubject(req8.data?.[0]);
+    }
+
+    fetchData();
+  }, [boardDetails]);
 
   async function handleShowProInBoard() {
     try {
@@ -202,36 +232,83 @@ function BoardDetail() {
     setOpenSnackBar(false);
   }
 
+  async function handleDelete() {
+    const req3 = await axios.delete(`/lectureinboard/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
+  }
+
   return (
     <>
       <Header2 />
       <div className={cx("table-1")}>
         <h2 className={cx("title")}>Information details of board</h2>
-        <div className="col-6">
-          <table class="table table-striped">
-            <tbody>
-              <tr>
-                <th scope="row">Board ID</th>
-                <td>{boardDetails.Id}</td>
-              </tr>
-              <tr>
-                <th scope="row">Board name</th>
-                <td>{boardDetails.Name}</td>
-              </tr>
-              <tr>
-                <th scope="row">Start time</th>
-                <td>{boardDetails.StartTime}</td>
-              </tr>
-              <tr>
-                <th scope="row">End time</th>
-                <td>{boardDetails.EndTime}</td>
-              </tr>
-              <tr>
-                <th scope="row">Date</th>
-                <td>{boardDetails.Date?.slice(0, 10)}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="row">
+          <div className="col-6">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <th scope="row">Board ID</th>
+                  <td>{boardDetails?.Id}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Board name</th>
+                  <td>{boardDetails?.Name}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Start time</th>
+                  <td>{boardDetails?.StartTime}</td>
+                </tr>
+                <tr>
+                  <th scope="row">End time</th>
+                  <td>{boardDetails?.EndTime}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Date</th>
+                  <td>{boardDetails?.Date?.slice(0, 10)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="col-6">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <th scope="row">Room</th>
+                  <td>{boardDetails?.Room}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Semester</th>
+                  <td>
+                    {sem?.Year} - {sem?.Session}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Subject Id</th>
+                  <td><Link
+                    to={`/subjectdetails/${subject?.Id}`}
+                    className={cx("link-style")}
+                  >
+                    {subject?.Name}
+                  </Link></td>
+                </tr>
+                <tr>
+                  <th scope="row">Template Id</th>
+                  <td>
+                    <Link
+                      to={`/templatedetails/${template?.Id}`}
+                      className={cx("link-style")}
+                    >
+                      {template?.Name}
+                    </Link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -240,14 +317,14 @@ function BoardDetail() {
           <Button
             className={cx("btn-show")}
             onClick={handleShowTableTeachers}
-            primary={isTeachersButtonPrimary}
+            small={isTeachersButtonPrimary}
           >
             <span>List teacher</span>
           </Button>
           <Button
             className={cx("mb-5 mt-5")}
             onClick={handleShowTableProjects}
-            primary={isProjectsButtonPrimary}
+            small={isProjectsButtonPrimary}
           >
             List project
           </Button>
@@ -300,7 +377,7 @@ function BoardDetail() {
           {showTableListTeachers && (
             <div className="row">
               <Table striped bordered hover>
-                <thead>
+                <thead className="text-center">
                   <tr>
                     <th>Teacher ID</th>
                     <th>Name</th>
@@ -313,11 +390,17 @@ function BoardDetail() {
                     return (
                       <React.Fragment key={index}>
                         <tr>
-                          <td>{item.Id}</td>
-                          <td>{item.Name}</td>
-                          <td>{item.PhoneNumber}</td>
-                          <td>
-                            <Button>Details</Button>
+                          <td className="text-center">{item.Id}</td>
+                          <td className="text-center">{item.Name}</td>
+                          <td className="text-center">{item.PhoneNumber}</td>
+                          <td className="text-center">
+                            <Button small>Details</Button>
+                            <button
+                              className={cx("btn-dl")}
+                              onClick={() => handleClickDelete(item.Id)}
+                            >
+                              <FontAwesomeIcon icon={faTrashCan} /> Remove
+                            </button>
                           </td>
                         </tr>
                       </React.Fragment>
@@ -347,7 +430,15 @@ function BoardDetail() {
                     return (
                       <tr key={index}>
                         <td>{item.id}</td>
-                        <td>{item.name}</td>
+                        <td
+                          onClick={() => {
+                            navigate(
+                              `/projectdetails/${item.CourseId}/${item.id}`
+                            );
+                          }}
+                        >
+                          {item.name}
+                        </td>
                         <td>{item.notion}</td>
                         <td>
                           {item.teacherMark.teacherQuanMarked}/
@@ -358,7 +449,9 @@ function BoardDetail() {
                             (projectPucliced) =>
                               projectPucliced.ProjectId == item.id
                           ) ? (
-                            <button className={cx("btn-publiced")}>Publiced</button>
+                            <button className={cx("btn-publiced")}>
+                              Publiced
+                            </button>
                           ) : (
                             <Button
                               onClick={() => {
@@ -470,7 +563,7 @@ function BoardDetail() {
             {listProOutBoard.length > 0 ? (
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%" }}>
-                  <thead>
+                  <thead className="text-center">
                     <tr>
                       <th>Project ID</th>
                       <th>Name</th>
@@ -541,6 +634,43 @@ function BoardDetail() {
               </h4>
             )}
           </Modal.Body>
+        </Modal>
+
+        {/* Modal Confirm */}
+        <Modal
+          show={showConfirm}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <h1>Delete teacher.</h1>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="body-add-new">
+              This action can't be undone!! Do you want to remove teacher ID ={" "}
+              {idDelete} ?
+              <br />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Btn
+              variant="primary"
+              className={cx("btn-bt")}
+              onClick={handleDelete}
+            >
+              Confirm
+            </Btn>
+            <Btn
+              variant="secondary"
+              className={cx("btn-bt")}
+              onClick={handleClose}
+            >
+              Cancel
+            </Btn>
+          </Modal.Footer>
         </Modal>
       </div>
     </>

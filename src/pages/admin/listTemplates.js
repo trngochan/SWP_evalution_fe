@@ -2,24 +2,39 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
+import BoardHeader from "~/components/headeritem";
+import { toast } from "react-toastify";
 
+import { Link } from "react-router-dom";
 import Button from "~/components/button";
 import styles from "./admin.module.scss";
 import TableGenerator from "~/pages/generateTable/index";
 import AddTemplate from "../create/AddTemplate";
 import moment from "moment";
+import { Modal, Button as Btn } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
 function ListTemplatesAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
-
   const [templates, setTemplates] = useState([]);
   const [subjects, setSubjects] = useState([]);
-
   const [showsCoreDetails, setShowScoreDetails] = useState(false);
-
   const [callApi, setCallApi] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [idDelete, setIdDelete] = useState(0);
+  const [rerender, setRerender] = useState(false);
+
+  const handleClose = () => {
+    setShowConfirm(false);
+  };
+
+  const handleClickDelete = (id) => {
+    setIdDelete(id);
+    setShowConfirm(true);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -36,14 +51,11 @@ function ListTemplatesAdmin() {
     }
 
     fetchData();
-  }, [callApi]);
+  }, [callApi, rerender]);
 
   const [addTemplate, setAddTemplate] = useState({});
   const [addScoreColumn, setAddScoreColumn] = useState({});
   const [errorTemplate, setErrorTemplate] = useState("");
-
-  console.log(addTemplate);
-  console.log(addScoreColumn);
 
   async function haddleAddTemplate(dataScoreColumn) {
     try {
@@ -53,7 +65,7 @@ function ListTemplatesAdmin() {
 
       const req1 = await axios.post("/template/add", addTemplate);
 
-      if (req1.data.status == 401) {
+      if (req1.data.status === 401) {
         setErrorTemplate(req1.data.massage);
         setShowScoreDetails(false);
         return;
@@ -64,7 +76,7 @@ function ListTemplatesAdmin() {
         templateId: addTemplate.id,
       });
 
-      if (req2.data.status == 200) {
+      if (req2.data.status === 200) {
         setShowScoreDetails(false);
         setCallApi(!callApi);
         setShowAdd(false);
@@ -74,11 +86,27 @@ function ListTemplatesAdmin() {
     }
   }
 
+  async function handleDelete() {
+    const req3 = await axios.delete(`/template/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowConfirm(false);
+      toast.success("Delele successfully");
+    }
+  }
+
   return (
     <div>
-      <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-        {isShowAdd ? "View" : "Add"}
-      </Button>
+      <div className={cx("container-header")}>
+        <div className={cx("title")}>
+          <BoardHeader message={"Templates Score"} />
+        </div>
+        <div className={cx("btn-view-add")}>
+          <Button active onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add+"}
+          </Button>
+        </div>
+      </div>
       {isShowAdd ? (
         <>
           {showsCoreDetails ? (
@@ -102,6 +130,7 @@ function ListTemplatesAdmin() {
                 <th scope="col">Subject Id</th>
                 <th scope="col">Status</th>
                 <th scope="col">Apply Date</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -109,10 +138,33 @@ function ListTemplatesAdmin() {
                 return (
                   <tr>
                     <td className="text-center">{template.Id}</td>
-                    <td className="text-center">{template.Name}</td>
-                    <td className="text-center">{template.SubjectId}</td>
+                    <td className="text-center">
+                      <Link
+                        to={`/templatedetails/${template.Id}`}
+                        className={cx("link-style")}
+                      >
+                        <FontAwesomeIcon icon={faCircleInfo} /> {template.Name}
+                      </Link>
+                    </td>
+                    <td className="text-center">
+                      {
+                        subjects.find(
+                          (subject) => subject.Id === template.SubjectId
+                        )?.Name
+                      }
+                    </td>
                     <td className="text-center">{template.Status.data[0]}</td>
-                    <td className="text-center">{template?.ApplyDate?.slice(0, 10)}</td>
+                    <td className="text-center">
+                      {template?.ApplyDate?.slice(0, 10)}
+                    </td>
+                    <td className="text-center">
+                      <button
+                        className={cx("btn-dl")}
+                        onClick={() => handleClickDelete(template.Id)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} /> Remove
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
@@ -120,6 +172,43 @@ function ListTemplatesAdmin() {
           </Table>
         </>
       )}
+
+      {/* Modal Confirm */}
+      <Modal
+        show={showConfirm}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <h1>Delete a template</h1>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="body-add-new">
+            This action can't be undone!! Do you want to remove this Template ID
+            = {idDelete} ?
+            <br />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
+            Confirm
+          </Btn>
+          <Btn
+            variant="secondary"
+            className={cx("btn-bt")}
+            onClick={handleClose}
+          >
+            Cancel
+          </Btn>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

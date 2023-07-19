@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
 import Button from "~/components/button";
@@ -7,15 +7,22 @@ import ListTeacherAdmin from "../admin/listTeacherAdmin";
 import ListSemesterAdmin from "../admin/listSemesterAdmin";
 import ListSubjectAdmin from "../admin/listSubjectsAdmin";
 import ListCourseAdmin from "../admin/listCourse";
-import Public from "../create/Public";
 import ListProjectAdmin from "../admin/listProjectAdmin";
 import ListTemplatesAdmin from "../admin/listTemplates";
 import ListBoardAdmin from "../admin/listEvaluation";
 import ListScoreColumnAdmin from "../admin/listScoreColumnAdmin";
 import { Header2 } from "~/components/layouts/header";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMarker, faS, faGraduationCap, faPersonChalkboard, faCalendarDays, faScroll, faLaptopFile, faFilm }
-  from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMarker,
+  faS,
+  faGraduationCap,
+  faPersonChalkboard,
+  faCalendarDays,
+  faScroll,
+  faLaptopFile,
+  faFilm,
+} from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -35,52 +42,52 @@ function HomeAdmin() {
             <div className={cx("feature-list")}>
               <Button
                 onClick={() => handleButtonClick("board")}
-                primary={activeButton === "board"}
+                small={activeButton === "board"}
               >
                 <FontAwesomeIcon icon={faMarker} /> Evaluation Board
               </Button>
               <Button
                 onClick={() => handleButtonClick("subject")}
-                primary={activeButton === "subject"}
+                small={activeButton === "subject"}
               >
                 <FontAwesomeIcon icon={faS} /> Subject
               </Button>
               <Button
                 onClick={() => handleButtonClick("course")}
-                primary={activeButton === "course"}
+                small={activeButton === "course"}
               >
                 <FontAwesomeIcon icon={faScroll} /> Course
               </Button>
               <Button
                 onClick={() => handleButtonClick("project")}
-                primary={activeButton === "project"}
+                small={activeButton === "project"}
               >
-                <FontAwesomeIcon icon={faLaptopFile} />  Project
+                <FontAwesomeIcon icon={faLaptopFile} /> Project
               </Button>
               <Button
                 onClick={() => handleButtonClick("std")}
-                primary={activeButton === "std"}
+                small={activeButton === "std"}
               >
                 <FontAwesomeIcon icon={faGraduationCap} /> Student
               </Button>
 
               <Button
                 onClick={() => handleButtonClick("teach")}
-                primary={activeButton === "teach"}
+                small={activeButton === "teach"}
               >
                 <FontAwesomeIcon icon={faPersonChalkboard} /> Lecturer
               </Button>
 
               <Button
                 onClick={() => handleButtonClick("template")}
-                primary={activeButton === "template"}
+                small={activeButton === "template"}
               >
-                <FontAwesomeIcon icon={faFilm} />  Template
+                <FontAwesomeIcon icon={faFilm} /> Template Score
               </Button>
 
               <Button
                 onClick={() => handleButtonClick("semester")}
-                primary={activeButton === "semester"}
+                small={activeButton === "semester"}
               >
                 <FontAwesomeIcon icon={faCalendarDays} /> Semester
               </Button>
@@ -98,7 +105,7 @@ function HomeAdmin() {
             {activeButton === "scorecolumn" && <ListScoreColumnAdmin />}
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 }

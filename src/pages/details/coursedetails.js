@@ -1,15 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import React from "react";
 import Table from "react-bootstrap/Table";
-import { useCookies } from "react-cookie";
 
 import { Header2 } from "~/components/layouts/header";
 import Button from "~/components/button";
 import styles from "./details.module.scss";
 import classNames from "classnames/bind";
-import Divider from "~/components/Divider";
 
 const cx = classNames.bind(styles);
 
@@ -132,44 +130,26 @@ function CourseDetails() {
           <table className="table table-striped">
             <tbody>
               <tr>
-                <th scope="row">Semester ID</th>
+                <th scope="row">Semester </th>
                 <td>
-                  {inforSem.Year}_{inforSem.Session}
-                </td>
-                <td>
-                  <button
-                    style={{
-                      background: "transparent",
-                    }}
-                  ></button>
+                  {inforSem?.Year}_{inforSem?.Session}
                 </td>
               </tr>
               <tr>
                 <th scope="row">Subject</th>
                 <td>
-                  {inforCourse.SubjectId}_{inforSub.Name}
-                </td>
-                <td>
-                  <button
-                    style={{
-                      background: "transparent",
-                    }}
+                  <Link
+                    to={`/subjectdetails/${inforSub?.Id}`}
+                    className={cx("link-style")}
                   >
-                    Details
-                  </button>
+                    {inforSub?.Id}_{inforSub?.Name}
+                  </Link>
                 </td>
               </tr>
               <tr>
                 <th>Course </th>
                 <td>
-                  {inforCourse.id}_{inforCourse.name}
-                </td>
-                <td>
-                  <button
-                    style={{
-                      background: "transparent",
-                    }}
-                  ></button>
+                  {inforCourse?.id}_{inforCourse?.name}
                 </td>
               </tr>
 
@@ -177,15 +157,6 @@ function CourseDetails() {
                 <th>Lecturer</th>
                 <td>
                   {inforCourse.LectureId} - {inforTeach.Name}
-                </td>
-                <td>
-                  <button
-                    style={{
-                      background: "transparent",
-                    }}
-                  >
-                    Details
-                  </button>
                 </td>
               </tr>
             </tbody>
@@ -198,14 +169,14 @@ function CourseDetails() {
           <Button
             className={cx("mb-5 mt-5 show")}
             onClick={handleShowTableProjects}
-            primary={isProjectsButtonPrimary}
+            small={isProjectsButtonPrimary}
           >
             List projects
           </Button>
           <Button
             className={cx("mb-5 mt-5 show")}
             onClick={handleShowTableStudents}
-            primary={isStudentsButtonPrimary}
+            small={isStudentsButtonPrimary}
           >
             List students
           </Button>
@@ -215,7 +186,7 @@ function CourseDetails() {
               handleShowTableStudentsNotInCourse();
               handleShowStudentNotInCourse();
             }}
-            primary={isStudentsNotInCourseButtonPrimary}
+            small={isStudentsNotInCourseButtonPrimary}
           >
             Add student
           </Button>
@@ -225,10 +196,10 @@ function CourseDetails() {
           {showTableListProjects && (
             <section>
               <Table striped bordered hover>
-                <thead>
+                <thead className="text-center">
                   <tr>
                     <th>Project ID</th>
-                    <th>Name</th>
+                    <th>Project Name</th>
                     <th>Note</th>
                     <th>Action</th>
                   </tr>
@@ -238,10 +209,17 @@ function CourseDetails() {
                     project.map((item, index) => {
                       return (
                         <tr key={index}>
-                          <td>{item.prjId}</td>
-                          <td>{item.Name}</td>
+                          <td className="text-center">{item.prjId}</td>
+                          <td className="text-center">
+                            <Link
+                              to={`/projectdetails/${inforCourse?.id}/${item.prjId}`}
+                              className={cx("link-style")}
+                            >
+                              {item.Name}
+                            </Link>
+                          </td>
                           <td>{item.notion}</td>
-                          <td>
+                          <td className="text-center">
                             <Button
                               to={`/projectdetails/${course}/${item.prjId}`}
                             >
@@ -312,7 +290,7 @@ function CourseDetails() {
                               ? JSON.stringify(item.birthday).slice(1, 11)
                               : "No infor"}
                           </td>
-                          <td>{item.adress ? item.adress : "No infor"}</td>
+                          <td>{item.address ? item.address : "No infor"}</td>
                         </tr>
                       );
                     })

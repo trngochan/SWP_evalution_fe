@@ -16,11 +16,15 @@ function AddProject({ setShowAdd, setRerender }) {
       name: "",
       notion: "",
       courseId: "",
+      semester: "",
+      subject: "",
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       notion: yup.string().required("Notion is required"),
       courseId: yup.string().required("Course ID is required"),
+      semester: yup.string().required("Semester ID is required"),
+      subject: yup.string().required("Subject is required"),
     }),
     onSubmit: (values) => {
       axios
@@ -38,14 +42,18 @@ function AddProject({ setShowAdd, setRerender }) {
     },
   });
 
+  const [semesters, setSemesters] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   useEffect(() => {
     try {
       async function fetchData() {
-        const r1 = await axios.get("/course/getall");
+        const r2 = await axios.get("/semester/getall");
+        const r3 = await axios.get("/subject/getAll");
 
-        return axios.all([r1]).then(
-          axios.spread((r1) => {
-            setCourses(r1.data);
+        return axios.all([r2, r3]).then(
+          axios.spread((r2, r3) => {
+            setSemesters(r2.data);
+            setSubjects(r3.data);
           })
         );
       }
@@ -53,6 +61,28 @@ function AddProject({ setShowAdd, setRerender }) {
       fetchData();
     } catch (error) {}
   }, []);
+
+  useEffect(() => {
+    try {
+      if (formik.values.semester != 0 && formik.values.subject != 0) {
+        async function fetchData() {
+          const r = await axios.get(
+            `/course/${formik.values.semester}/${formik.values.subject}`
+          );
+
+          return axios.all([r]).then(
+            axios.spread((r1) => {
+              setCourses(r1.data.data);
+            })
+          );
+        }
+
+        fetchData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [formik.values.semester, formik.values.subject]);
 
   return (
     <div className={cx("login")}>
@@ -88,6 +118,55 @@ function AddProject({ setShowAdd, setRerender }) {
             <span className={cx("form-message")}>{formik.errors.notion}</span>
           )}
         </div>
+        <div className={cx("form-group")}>
+          <label className={cx("form-label", "mb-2")}>Semester:</label>
+          <select
+            className={cx("form-select")}
+            name="semester"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.semester}
+          >
+            <option value={0} defaultValue>
+              Select semester
+            </option>
+            {semesters.map((item, i) => {
+              return (
+                <option key={i} value={item.Id}>
+                  {item.Year} - {item.Session}
+                </option>
+              );
+            })}
+          </select>
+          {formik.errors.semester && formik.touched.semester && (
+            <span className={cx("form-message")}>{formik.errors.semester}</span>
+          )}
+        </div>
+
+        <div className={cx("form-group")}>
+          <label className={cx("form-label", "mb-2")}>Subject:</label>
+          <select
+            className={cx("form-select")}
+            name="subject"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.subject}
+          >
+            <option value={0} defaultValue>
+              Select subject
+            </option>
+            {subjects.map((item, i) => {
+              return (
+                <option key={i} value={item.Id}>
+                  {item.Id} - {item.Name}
+                </option>
+              );
+            })}
+          </select>
+          {formik.errors.subject && formik.touched.subject && (
+            <span className={cx("form-message")}>{formik.errors.subject}</span>
+          )}
+        </div>
 
         <div className={cx("form-group")}>
           <label className={cx("form-label", "mb-2")}>Course Id:</label>
@@ -101,11 +180,18 @@ function AddProject({ setShowAdd, setRerender }) {
             <option value="" defaultValue>
               Select Course Id
             </option>
-            {courses.map((item, i) => (
-              <option key={i} value={item.id}>
-                {item.id} - {item.name}
-              </option>
-            ))}
+            {courses.map((item, i) => {
+              {
+                /* const semmester = semesters.find((s) => s.Id == item.SemesterId);
+              const subject = subjects.find((s) => s.Id == item.SubjectId);
+              console.log(semesters); */
+              }
+              return (
+                <option key={i} value={item.id}>
+                  {item.id} - {item.name}
+                </option>
+              );
+            })}
           </select>
           {formik.errors.courseId && formik.touched.courseId && (
             <span className={cx("form-message")}>{formik.errors.courseId}</span>

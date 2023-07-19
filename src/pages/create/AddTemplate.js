@@ -11,24 +11,23 @@ function AddTemplate({
   onSetShowScoreDetails,
   subjects,
 }) {
-  const subjectId = ["subject1", "subject2"];
-
   const formik = useFormik({
     initialValues: {
       id: "",
       name: "",
       subjectId: "",
-      status: "",
+
       applydate: "",
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       id: yup.number().required("ID is required"),
       subjectId: yup.string().required("Subject ID is required"),
-      status: yup.string().required("Status is required"),
+
       applydate: yup.date().required("Apply date is required"),
     }),
     onSubmit: (values) => {
+      console.log(values);
       onUpdataDataTemplate(values);
       onSetShowScoreDetails(true);
     },
@@ -88,23 +87,6 @@ function AddTemplate({
             <span className={cx("form-message")}>
               {formik.errors.subjectId}
             </span>
-          )}
-        </div>
-
-        <div className={cx("form-group")}>
-          <label className={cx("form-label")}>Status:</label>
-          <input
-            min={0}
-            max={1}
-            className={cx("form-control")}
-            placeholder="Enter status"
-            type="number"
-            name="status"
-            value={formik.values.status}
-            onChange={formik.handleChange}
-          />
-          {formik.errors.status && formik.touched.status && (
-            <span className={cx("form-message")}>{formik.errors.status}</span>
           )}
         </div>
 

@@ -9,26 +9,39 @@
   align-items: center;
   border-radius: 40px;
   border: 2px solid #000000;
-}
+
   .links {
     margin-top: 30px;
   }
 
-.links {
-  margin-left: 149px !important;
+  .login {
+    text-align: center;
+    margin-top: 30px;
+    font-weight: bolder;
+    color: #fff;
+    font-size: 3.125rem;
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid #000;
+  }
 }
 
 .btn {
   background-color: transparent;
   border-color: transparent;
-  color:  rgb(255, 111, 59);
+  color: rgb(255, 111, 59);
 
   &:hover {
-    color:  rgb(243, 75, 14);
+    color: rgb(243, 75, 14);
   }
 }
 
 //home-student
+
 .container-student {
   width: auto;
   height: 100vh;
@@ -41,19 +54,19 @@
   border: 2px solid #000;
 
   .container-title {
-    font-weight: 900px;
+    font-weight: bold;
     text-align: center;
   }
 
   .form-select {
-    padding-left: 2rem;
+    padding-left: 2px;
     border-radius: 10px;
     margin-bottom: 20px;
   }
 
   .course-list {
     list-style: none;
-    padding-left: 15px;
+    padding-left: 42px;
 
     .course-btn {
       width: 120px;
@@ -87,6 +100,7 @@
   border-radius: 40px;
 
 
+
   .nav-teacher {
     display: flex;
     flex-direction: column;
@@ -96,7 +110,8 @@
   .row {
     display: flex;
     flex-direction: row;
-    margin: 30px 20px;
+    margin: 20px 0 30px 40px;
+    overflow: hidden;
   }
 }
 

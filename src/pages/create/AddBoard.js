@@ -8,7 +8,7 @@ import moment from "moment";
 
 const cx = classNames.bind(styles);
 
-function AddBoard() {
+function AddBoard({ rerender }) {
   const [message, setMessage] = useState("");
 
   const formik = useFormik({
@@ -39,9 +39,11 @@ function AddBoard() {
       if (data.status === 201) {
         resetForm();
         setMessage(data.message);
+        rerender((prev) => !prev);
       } else {
         setMessage(data.message);
       }
+      console.log(values.date);
     },
   });
 

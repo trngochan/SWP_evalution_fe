@@ -7,13 +7,18 @@ import moment from "moment";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { CSVLink } from "react-csv";
-import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFileArrowDown,
+  faTrashCan,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BoardHeader from "~/components/headeritem";
+import { toast } from "react-toastify";
 
 import styles from "./admin.module.scss";
 import Button from "~/components/button";
 import AddTeacherList from "../create/AddTeacherList";
-
 
 const cx = classNames.bind(styles);
 
@@ -22,8 +27,8 @@ function ListTeacherAdmin() {
   const [teachers, setTeachers] = useState([]);
   const [edit, setEdit] = useState(null);
   const [rerender, setRerender] = useState(false);
-  const [selectedCode, setSelectedCode] = useState(null);
   const [dataExport, setDataExport] = useState([]);
+  const [idDelete, setIdDelete] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -42,9 +47,9 @@ function ListTeacherAdmin() {
     setShowModalEdit(true);
   };
 
-  const handleRemove = (name) => {
+  const handleRemove = (id) => {
+    setIdDelete(id);
     setShowModalRemove(true);
-    setSelectedCode(name);
   };
 
   const handleClose = () => {
@@ -55,21 +60,21 @@ function ListTeacherAdmin() {
   const getTeachersExport = (event, done) => {
     let result = [];
     if (teachers && teachers.length > 0) {
-        result.push(["ID", "Name", "Birthday", "Phone Number", "Address"]);
-        teachers.map((teacher, index) => {
-            let arr = [];
-            arr[0] = teacher.id;
-            arr[1] = teacher.name;
-            arr[2] = teacher.birthday;
-            arr[3] = teacher.phonenumber;
-            arr[4] = teacher.address;
-            result.push(arr);
-        })
-  
-        setDataExport(result);
-        done();
+      result.push(["ID", "Name", "Birthday", "Phone Number", "Address"]);
+      teachers.map((teacher, index) => {
+        let arr = [];
+        arr[0] = teacher.id;
+        arr[1] = teacher.name;
+        arr[2] = teacher.birthday;
+        arr[3] = teacher.phonenumber;
+        arr[4] = teacher.address;
+        result.push(arr);
+      });
+
+      setDataExport(result);
+      done();
     }
-  }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -105,37 +110,51 @@ function ListTeacherAdmin() {
     },
   });
 
+  async function handleDelete() {
+    const req3 = await axios.delete(`/teacher/${idDelete}`);
+    if (req3.data.status === 200) {
+      setRerender(!rerender);
+      setShowModalRemove(false);
+      toast.success("Delele successfully");
+    }
+  }
+
   return (
     <>
-      <div>
-        <h2 className="mt-3 mb-3">List teachers</h2>
-        <div className={cx('group-btn')}>
-          <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add"}
+      <div className={cx("container-header")}>
+        <div className={cx("title")}>
+          <BoardHeader message={"Teachers"} />
+        </div>
+        <div className={cx("btn-view-add")}>
+          <Button active onClick={() => setShowAdd(!isShowAdd)}>
+            {isShowAdd ? "View" : "Add+"}
           </Button>
-            <div>
-              <CSVLink 
-                   filename={"teachers.csv"}
-                  className="btn btn-primary btn-lg"
-                  data={dataExport}
-                  asyncOnClick={true}
-                  onClick={getTeachersExport}
-              > 
-                <i><FontAwesomeIcon icon={faFileArrowDown}/></i>
-                Export</CSVLink>
-            </div>
-          </div>
+
+          <CSVLink
+            filename={"teachers.csv"}
+            className="btn btn-primary btn-lg"
+            data={dataExport}
+            asyncOnClick={true}
+            onClick={getTeachersExport}
+          >
+            <i>
+              <FontAwesomeIcon icon={faFileArrowDown} />
+            </i>
+            Export
+          </CSVLink>
+        </div>
       </div>
       {isShowAdd ? (
         <AddTeacherList />
       ) : (
         <Table striped bordered hover>
-          <thead>
+          <thead className="text-center">
             <tr>
               <th>ID</th>
               <th>Name</th>
               <th>Phone Number</th>
               <th>Birthday</th>
+              <th>Address</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -143,21 +162,23 @@ function ListTeacherAdmin() {
             {teachers?.map((teacher, i) => {
               return (
                 <tr key={i}>
-                  <td>{teacher.id}</td>
-                  <td>{teacher.name}</td>
-                  <td>{teacher.phonenumber}</td>
-                  <td>{JSON.stringify(teacher.birthday).slice(1, 11)}</td>
-                  <td>
+                  <td className="text-center">{teacher.id}</td>
+                  <td className="text-center">{teacher.name}</td>
+                  <td className="text-center">{teacher.phonenumber}</td>
+                  <td className="text-center">
+                    {JSON.stringify(teacher.birthday).slice(1, 11)}
+                  </td>
+                  <td className="text-center">{teacher.address}</td>
+                  <td className="text-center">
                     <Button edit small onClick={() => handleEdit(teacher.id)}>
-                      Edit
+                      <FontAwesomeIcon icon={faPenToSquare} /> Edit
                     </Button>
-                    <Button
-                      remove
-                      small
-                      onClick={() => handleRemove(teacher.name)}
+                    <button
+                      className={cx("btn-dl")}
+                      onClick={() => handleRemove(teacher.id)}
                     >
-                      Remove
-                    </Button>
+                      <FontAwesomeIcon icon={faTrashCan} /> Remove
+                    </button>
                   </td>
                 </tr>
               );
@@ -165,6 +186,7 @@ function ListTeacherAdmin() {
           </tbody>
         </Table>
       )}
+
       <div>
         {/* Modal */}
         <Modal show={showModalEdit} onHide={handleClose}>
@@ -233,10 +255,18 @@ function ListTeacherAdmin() {
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Btn variant="secondary" onClick={handleClose} className={cx("btn-bt")}>
+            <Btn
+              variant="secondary"
+              onClick={handleClose}
+              className={cx("btn-bt")}
+            >
               Close
             </Btn>
-            <Btn variant="primary" onClick={formik.handleSubmit} className={cx("btn-bt")}>
+            <Btn
+              variant="primary"
+              onClick={formik.handleSubmit}
+              className={cx("btn-bt")}
+            >
               Save changes
             </Btn>
           </Modal.Footer>
@@ -255,9 +285,8 @@ function ListTeacherAdmin() {
           </Modal.Header>
           <Modal.Body>
             <div className="body-add-new">
-              This action can't be undone!! Do you want to remove this user?
-              <br />
-              <b>Name = "{selectedCode}" </b>
+              This action can't be undone!! Do you want to remove this user ID ={" "}
+              {idDelete} ?
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -271,7 +300,7 @@ function ListTeacherAdmin() {
             <Btn
               variant="primary"
               className={cx("btn-bt")}
-              onClick={formik.handleSubmit}
+              onClick={handleDelete}
             >
               Confirm
             </Btn>

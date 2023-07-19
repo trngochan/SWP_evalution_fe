@@ -1,0 +1,14 @@
+.container-header {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .title {
+        h1 {
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+        }
+    }
+}
