@@ -158,7 +158,6 @@ function CourseDetails() {
                 <td>
                   {inforCourse.LectureId} - {inforTeach.Name}
                 </td>
-
               </tr>
             </tbody>
           </table>
@@ -212,7 +211,12 @@ function CourseDetails() {
                         <tr key={index}>
                           <td className="text-center">{item.prjId}</td>
                           <td className="text-center">
-                            <Link to={`/projectdetails/${inforCourse?.id}/${item.prjId}`} className={cx("link-style")}>{item.Name}</Link>
+                            <Link
+                              to={`/projectdetails/${inforCourse?.id}/${item.prjId}`}
+                              className={cx("link-style")}
+                            >
+                              {item.Name}
+                            </Link>
                           </td>
                           <td>{item.notion}</td>
                           <td className="text-center">
@@ -286,7 +290,7 @@ function CourseDetails() {
                               ? JSON.stringify(item.birthday).slice(1, 11)
                               : "No infor"}
                           </td>
-                          <td>{item.adress ? item.adress : "No infor"}</td>
+                          <td>{item.address ? item.address : "No infor"}</td>
                         </tr>
                       );
                     })

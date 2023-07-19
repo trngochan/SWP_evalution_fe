@@ -99,7 +99,7 @@ function ListTemplatesAdmin() {
     <div>
       <div className={cx("container-header")}>
         <div className={cx("title")}>
-          <BoardHeader message={"Teachers"} />
+          <BoardHeader message={"Templates Score"} />
         </div>
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>

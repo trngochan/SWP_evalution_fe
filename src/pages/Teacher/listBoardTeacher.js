@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import styles from "./teacher.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
+import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -89,7 +89,9 @@ function ListBoardTeacher() {
                 <th scope="col">ID</th>
                 <th scope="col">Semester</th>
                 <th scope="col">Subject</th>
-                <th scope="col"><FontAwesomeIcon icon={faPaperPlane} /> Name</th>
+                <th scope="col">
+                  <FontAwesomeIcon icon={faPaperPlane} /> Name
+                </th>
                 <th scope="col">Room</th>
                 <th scope="col">Date</th>
                 <th scope="col">Time start</th>
@@ -104,10 +106,10 @@ function ListBoardTeacher() {
                 })
                 .map((item, index) => {
                   const semnow = semesterList.find(
-                    (sem) => (sem.Id = item.SemesterId)
+                    (sem) => sem.Id === item.SemesterId
                   );
                   const subnow = subjects.find(
-                    (sem) => (sem.Id = item.SubjectId)
+                    (sem) => sem.Id === item.SubjectId
                   );
                   return (
                     <tr key={index}>

@@ -82,7 +82,7 @@ function HomeAdmin() {
                 onClick={() => handleButtonClick("template")}
                 small={activeButton === "template"}
               >
-                <FontAwesomeIcon icon={faFilm} /> Template
+                <FontAwesomeIcon icon={faFilm} /> Template Score
               </Button>
 
               <Button

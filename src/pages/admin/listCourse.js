@@ -109,7 +109,7 @@ function ListCourseAdmin() {
               {semesterList.map((semester, i) => {
                 return (
                   <option value={semester.Id} key={i}>
-                    {semester.Year}-{semester.Session}
+                    {semester?.Year}-{semester?.Session}
                   </option>
                 );
               })}

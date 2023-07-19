@@ -126,7 +126,7 @@ function TeacherBoardScore() {
           const value = parseInt(obj[key]);
 
           // Kiểm tra giá trị số nằm trong khoảng từ 0 đến 10
-          if (value <= 0 || value >= 10) {
+          if (value < 0 || value > 10) {
             return false; // Trả về false nếu giá trị không hợp lệ
           }
         }
@@ -282,7 +282,7 @@ function TeacherBoardScore() {
                 {ScoreList.map((column, i) => {
                   return (
                     <th key={i}>
-                      {column.name} ({column.percent})
+                      {column.name} ({column.percent * 100}%)
                     </th>
                   );
                 })}
