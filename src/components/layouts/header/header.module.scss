@@ -5,6 +5,8 @@
     justify-content: space-between;
     align-items: center;
     background-color: #F6FAFF;
+    padding: 0px 50px 0 50px;
+    border-bottom: 1px solid #000;
 
     .title {
         font-size: 4rem;
@@ -44,6 +46,10 @@
 .header {
     display: flex;
     justify-content: space-between;
+    padding: 30px 50px 20px 50px;
+    background-color: #F6FAFF;
+    border-bottom: 1px solid #000;
+
 
     .logo {
         width: 220px;

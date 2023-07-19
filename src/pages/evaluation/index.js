@@ -9,6 +9,8 @@ import { Header2 } from "~/components/layouts/header";
 import Button from "~/components/button";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 
 const cx = classNames.bind(styles);
 
@@ -83,7 +85,7 @@ function Evaluation() {
                     to={"/teacherboardscore"}
                   >
                     {project.name}
-                    {isMarked && <span>(Marked)</span>}
+                    {isMarked && <span> (<FontAwesomeIcon icon={faCircleCheck} style={{ color: "#55b112" }} />)</span>}
                   </Button>
                 </li>
               );

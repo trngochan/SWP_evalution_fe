@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-    margin-top: 50px;
+    margin: 50px;
 
     .table-1 {
         padding: 20px;
@@ -29,6 +29,32 @@ body {
         .btn-submit {
             display: block;
             margin-left: auto;
+        }
+    }
+
+    .btn-public {
+        width: 80px;
+        border-radius: 20px;
+        border: 1px solid #000;
+        background-color: #70f65b;
+        color: #000;
+        text-align: center;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .btn-nopublic {
+        width: 80px;
+        border-radius: 20px;
+        border: 1px solid #000;
+        background-color: #f46868;
+        color: #000;
+        text-align: center;
+
+        &:hover {
+            opacity: 0.8;
         }
     }
 

@@ -1,22 +1,91 @@
-footer {
-    padding: 30px;
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    background-color: #F6FAFF;
+html {
+    margin: 0;
+    padding: 0;
 }
 
-footer a {
-    color: #8B4513;
-    text-decoration: none;
+.container-footer {
+    background-color: #FEAE65;
+    height: 250px;
+    width: 100%;
+
+    margin: 100px 0 0 0;
+    border-top: 5px solid #e7e0d9;
+
+    .container-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        .img {
+            margin-left: -30px;
+
+            img {
+                width: 396px;
+                height: 223px;
+                border-radius: 10px;
+                margin-top: 10px;
+            }
+        }
+
+        .infor {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 300px;
+            width: fit-content;
+
+            p {
+                width: auto;
+                text-align: center;
+                line-height: 0.8;
+            }
+
+            p:hover {
+                color: #131211;
+                cursor: pointer;
+            }
+        }
+    }
+
 }
 
-.container {
-    color: #8B4513;
-    justify-content: space-around;
-}
+.modal {
+    width: 100%;
+    margin-top: 200px;
 
-.text-light {
-    margin-top: 9rem !important;
-    border-top: 1px solid #a7a5a5;
-    font-size: 1.2rem;
+    .header {
+        background: #f3af9a;
+        border-bottom: 3px solid #3b3838;
+
+        h1 {
+            font-weight: bold;
+            color: #b45050;
+            padding: 5px 130px;
+        }
+    }
+
+    .header-contact {
+        background: #f3af9a;
+        border-bottom: 3px solid #3b3838;
+
+        h1 {
+            font-weight: bold;
+            color: #b45050;
+            padding: 5px 160px;
+        }
+    }
+
+    .header-term {
+        background: #f3af9a;
+        border-bottom: 3px solid #3b3838;
+
+        h1 {
+            font-weight: bold;
+            color: #b45050;
+            padding: 5px 130px;
+        }
+    }
+
+    .body {
+        padding: 30px;
+    }
 }

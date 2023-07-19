@@ -22,7 +22,7 @@ function Infor({ name }) {
 
   return (
     <div className={cx("wrapper")}>
-      <button onClick={handleUser} ><p className={cx("name")}>{cookies.user.username}</p></button>
+      <button onClick={handleUser} className={cx("wrapper-name")}><p className={cx("name")}>{cookies.user.username}</p></button>
       <button onClick={handleLogout} className={cx('btn', "btn-primary", "btn-logout")}>Logout</button>
     </div>
   );

@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import styles from "./boardscore.module.scss";
 import axios from "axios";
 import classNames from "classnames/bind";
-import { Snackbar, Alert, TextField, Typography } from "@mui/material";
+import { Snackbar, Alert, Typography } from "@mui/material";
 
 import { Header2 } from "~/components/layouts/header";
 import Button from "~/components/button";
@@ -264,8 +264,9 @@ function TeacherBoardScore() {
                         (projectSPublic) =>
                           projectSPublic.ProjectId == inforProject.Id
                       )
-                        ? "Publiced"
-                        : "No public"}
+                        ? <div className={cx("btn-public")}>Publiced</div>
+
+                        : <div className={cx("btn-nopublic")}>No Public</div>}
                     </td>
                   </tr>
                 </tbody>
