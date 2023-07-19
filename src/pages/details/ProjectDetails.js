@@ -151,9 +151,16 @@ function ProjectDetails() {
                 <tr>
                   <th scope="row">EvaluationBoard ID</th>
                   <td>
-                    {boardDetails
-                      ? `${boardDetails?.Id} - ${boardDetails?.Name}`
-                      : "No infor"}
+                    {boardDetails ? (
+                      <Link
+                        to={`/boarddetails/${boardDetails?.Id}`}
+                        className={cx("link-style")}
+                      >
+                        {boardDetails?.Id} - {boardDetails?.Name}
+                      </Link>
+                    ) : (
+                      "No infor"
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -164,11 +171,25 @@ function ProjectDetails() {
                 </tr>
                 <tr>
                   <th scope="row">Subject</th>
-                  <td>{subNow?.Name}</td>
+                  <td>
+                    <Link
+                      to={`/subjectdetails/${subNow?.Id}`}
+                      className={cx("link-style")}
+                    >
+                      {subNow?.Name}
+                    </Link>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">CourseID</th>
-                  <td><Link to={`/coursedetails/${courseNow?.id}`} className={cx("link-style")}>{courseNow?.name}</Link></td>
+                  <td>
+                    <Link
+                      to={`/coursedetails/${courseNow?.id}`}
+                      className={cx("link-style")}
+                    >
+                      {courseNow?.name}
+                    </Link>
+                  </td>
                 </tr>
                 <tr>
                   <th>Project ID</th>
