@@ -52,7 +52,7 @@ function ListCourseTeacher() {
     navigate("/studentsInCourse");
   }
 
-  console.log(semesters);
+  // console.log(semesters);
 
   return (
     <div className={cx("container")}>

@@ -60,7 +60,7 @@ function ListBoardTeacher() {
     setSemId(semesterId);
   }
 
-  console.log(subjects);
+  // console.log(subjects);
   return (
     <div className={cx("container")}>
       <div className="row mt-3">
