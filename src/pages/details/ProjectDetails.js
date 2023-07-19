@@ -8,7 +8,8 @@ import { Snackbar, Alert } from "@mui/material";
 
 import Button from "~/components/button";
 import { Header2 } from "~/components/layouts/header";
-import BoardDetail from "./boarddetails";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -232,7 +233,7 @@ function ProjectDetails() {
         {showTableListStudents && (
           <section>
             <Table striped bordered hover>
-              <thead>
+              <thead className="text-center">
                 <tr>
                   <th>Student CODE</th>
                   <th>Name</th>
@@ -244,10 +245,10 @@ function ProjectDetails() {
               <tbody>
                 {students.map((student, i) => (
                   <tr key={i}>
-                    <td>{student.CODE}</td>
-                    <td>{student.Name}</td>
-                    <td>{student.Address}</td>
-                    <td>
+                    <td className="text-center">{student.CODE}</td>
+                    <td className="text-center">{student.Name}</td>
+                    <td className="text-center">{student.Address}</td>
+                    <td className="text-center">
                       <Button
                         onClick={() => {
                           if (numTeacherMarked > 0) {
@@ -260,10 +261,10 @@ function ProjectDetails() {
                           }
                         }}
                       >
-                        Remove
+                        <FontAwesomeIcon icon={faTrashCan} /> Remove
                       </Button>
                     </td>
-                    <td
+                    <td className="text-center"
                       style={{
                         display: "flex",
                       }}

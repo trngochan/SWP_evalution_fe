@@ -201,7 +201,6 @@ function CourseDetails() {
                     <th>Project ID</th>
                     <th>Project Name</th>
                     <th>Note</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -219,13 +218,7 @@ function CourseDetails() {
                             </Link>
                           </td>
                           <td>{item.notion}</td>
-                          <td className="text-center">
-                            <Button
-                              to={`/projectdetails/${course}/${item.prjId}`}
-                            >
-                              Details
-                            </Button>
-                          </td>
+
                         </tr>
                       );
                     })
