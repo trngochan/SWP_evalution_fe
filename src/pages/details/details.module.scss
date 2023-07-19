@@ -57,29 +57,29 @@ button {
     position: relative;
 }
 
-span::before,
-span::after {
-    content: "";
-    width: 0;
-    height: 2px;
-    position: absolute;
-    transition: all 0.2s linear;
-    background-color: rgb(255, 111, 59);
-}
+// span::before,
+// span::after {
+//     content: "";
+//     width: 0;
+//     height: 2px;
+//     position: absolute;
+//     transition: all 0.2s linear;
+//     background-color: rgb(255, 111, 59);
+// }
 
-button:hover span::before,
-button:hover span::after {
-    width: 100%;
-}
+// button:hover span::before,
+// button:hover span::after {
+//     width: 100%;
+// }
 
-button span::after {
-    right: 0;
-    bottom: 0;
-    transition-duration: 0.4s;
-}
+// button span::after {
+//     right: 0;
+//     bottom: 0;
+//     transition-duration: 0.4s;
+// }
 
-button span::before {
-    right: 0;
-    bottom: 0;
-    transition-duration: 0.4s;
-}
+// button span::before {
+//     right: 0;
+//     bottom: 0;
+//     transition-duration: 0.4s;
+// }

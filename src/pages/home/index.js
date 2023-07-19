@@ -1,5 +1,4 @@
 import React from "react";
-import { Header } from "~/components/layouts/header";
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
 import Container from "react-bootstrap/Container";
@@ -9,6 +8,7 @@ import Footer from "~/components/layouts/footer";
 import Button from "~/components/button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
+import { Header } from "~/components/layouts/header";
 
 const cx = classNames.bind(styles);
 
