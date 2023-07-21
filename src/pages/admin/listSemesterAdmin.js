@@ -21,7 +21,6 @@ function ListSemesterAdmin() {
   const [rerender, setRerender] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
-  const [semesterNow, setSemesterNow] = useState({});
   const currentTime = moment().format("YYYY-MM-DD");
   const handleClose = () => {
     setShowConfirm(false);

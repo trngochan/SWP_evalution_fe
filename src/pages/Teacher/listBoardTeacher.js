@@ -7,6 +7,7 @@ import styles from "./teacher.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
+import moment from "moment";
 
 const cx = classNames.bind(styles);
 
@@ -16,6 +17,7 @@ function ListBoardTeacher() {
   const [evaluationList, setevaluationList] = useState([]);
   const [semesterList, setsemesterList] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const currentTime = moment().format("YYYY-MM-DD");
 
   const [semId, setSemId] = useState(0);
 
@@ -60,7 +62,6 @@ function ListBoardTeacher() {
     setSemId(semesterId);
   }
 
-  // console.log(subjects);
   return (
     <div className={cx("container")}>
       <div className="row mt-3">
@@ -96,6 +97,7 @@ function ListBoardTeacher() {
                 <th scope="col">Date</th>
                 <th scope="col">Time start</th>
                 <th scope="col">Time end</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -111,6 +113,13 @@ function ListBoardTeacher() {
                   const subnow = subjects.find(
                     (sem) => sem.Id === item.SubjectId
                   );
+                  const isSemCurrent =
+                    semnow.StartTime.slice(0, 10) <= currentTime &&
+                    semnow.EndTime.slice(0, 10) >= currentTime
+                      ? 0
+                      : currentTime < semnow.StartTime.slice(0, 10)
+                      ? 1
+                      : -1;
                   return (
                     <tr key={index}>
                       <td className="text-center">{item.Id} </td>
@@ -139,6 +148,13 @@ function ListBoardTeacher() {
                       </td>
                       <td className="text-center">{item.StartTime} </td>
                       <td className="text-center">{item.EndTime} </td>
+                      {isSemCurrent > 0 ? (
+                        <td>Future</td>
+                      ) : isSemCurrent < 0 ? (
+                        <td>Pass</td>
+                      ) : (
+                        <td>On going</td>
+                      )}
                     </tr>
                   );
                 })}
