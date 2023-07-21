@@ -62,7 +62,7 @@ function ListSemesterAdmin() {
         </div>
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
+            {isShowAdd ? "View" : "+Add"}
           </Button>
         </div>
       </div>

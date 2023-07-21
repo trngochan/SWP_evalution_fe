@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useCookies } from "react-cookie";
 import BoardHeader from "~/components/headeritem";
 
 import Button from "~/components/button";
@@ -25,8 +24,6 @@ import {
 const cx = classNames.bind(styles);
 
 function ListProjectAdmin() {
-  const [cookies, setCookie, removeCookie] = useCookies();
-
   const [isShowAdd, setShowAdd] = useState(false);
 
   const [projects, setProject] = useState([]);
@@ -128,19 +125,11 @@ function ListProjectAdmin() {
   return (
     <>
       <div>
-        {/* <h2
-          className="mt-3 mb-3"
-          style={{
-            textAlign: "center",
-          }}
-        >
-          List projects
-        </h2> */}
         <div className={cx("container-header")}>
           <BoardHeader message={"Projects"} />
           <div className={cx("btns")}>
             <Button active onClick={() => setShowAdd(!isShowAdd)}>
-              {isShowAdd ? "View" : "Add+"}
+              {isShowAdd ? "View" : "+Add"}
             </Button>
           </div>
         </div>
@@ -192,11 +181,11 @@ function ListProjectAdmin() {
                     (course) => course.id === project.CourseId
                   );
                   const sub = subjects.find(
-                    (subject) => subject.Id == cournow.SubjectId
+                    (subject) => subject.Id === cournow.SubjectId
                   );
                   console.log(sub);
                   const sem = semesters.find(
-                    (sem) => sem.Id == cournow.SemesterId
+                    (sem) => sem.Id === cournow.SemesterId
                   );
                   return (
                     <tr key={i}>

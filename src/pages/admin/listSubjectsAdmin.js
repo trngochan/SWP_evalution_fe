@@ -18,7 +18,7 @@ const cx = classNames.bind(styles);
 function ListSubjectAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
   const [subjects, setSubjects] = useState([]);
-  const [semesters, setSemesters] = useState([]);
+  const [, setSemesters] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
   const [rerender, setRerender] = useState(false);
@@ -59,7 +59,7 @@ function ListSubjectAdmin() {
         <BoardHeader message={"Subjects"} />
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
+            {isShowAdd ? "View" : "+Add"}
           </Button>
         </div>
       </div>

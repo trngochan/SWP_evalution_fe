@@ -22,11 +22,10 @@ function ListBoardAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
   const [rerender, setRerender] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [deleteId, setDeleteId] = useState("");
   const [subjects, setSubjects] = useState([]);
   const [idDelete, setIdDelete] = useState(0);
 
-  const handleClose = (id) => {
+  const handleClose = () => {
     setShowConfirm(false);
   };
 
@@ -37,9 +36,7 @@ function ListBoardAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/evalution/getall`, {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(`/evalution/getall`, {});
       const req2 = await axios.get(`/semester/getall`, {
         withCredentials: true,
       });
@@ -77,7 +74,7 @@ function ListBoardAdmin() {
         <BoardHeader message={"Evaluations"} />
         <div className={cx("btns")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
+            {isShowAdd ? "View" : "+Add"}
           </Button>
         </div>
       </div>
