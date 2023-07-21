@@ -17,14 +17,14 @@ import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 const cx = classNames.bind(styles);
 
 function ListCourseAdmin() {
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [, setCookie] = useCookies();
   const [isShowAdd, setShowAdd] = useState(false);
   const [courses, setCourse] = useState([]);
   const [semesterList, setsemesterList] = useState([]);
   const [semId, setSemId] = useState(0);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [rerender, setRerender] = useState(true);
   const [idDelete, setIdDelete] = useState(0);
 
@@ -86,7 +86,7 @@ function ListCourseAdmin() {
 
         <div className={cx("btns")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
+            {isShowAdd ? "View" : "+Add"}
           </Button>
         </div>
       </div>

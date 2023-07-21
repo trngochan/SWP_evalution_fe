@@ -54,7 +54,6 @@ function ListTemplatesAdmin() {
   }, [callApi, rerender]);
 
   const [addTemplate, setAddTemplate] = useState({});
-  const [addScoreColumn, setAddScoreColumn] = useState({});
   const [errorTemplate, setErrorTemplate] = useState("");
 
   async function haddleAddTemplate(dataScoreColumn) {
@@ -103,7 +102,7 @@ function ListTemplatesAdmin() {
         </div>
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
+            {isShowAdd ? "View" : "+Add"}
           </Button>
         </div>
       </div>
@@ -193,8 +192,7 @@ function ListTemplatesAdmin() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn
-            variant="primary"
+          <Btn variant="primary"
             className={cx("btn-bt")}
             onClick={handleDelete}
           >

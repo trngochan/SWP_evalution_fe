@@ -33,8 +33,8 @@ function ListStdAdmin() {
   const [editId, setEditId] = useState(null);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
-  const [sortBy, setSortBy] = useState("asc");
-  const [sortField, setSortField] = useState("code");
+  const [, setSortBy] = useState("asc");
+  const [, setSortField] = useState("code");
   const [dataExport, setDataExport] = useState([]);
   const [idDelete, setIdDelete] = useState(0);
 
@@ -147,7 +147,7 @@ function ListStdAdmin() {
           </div>
           <div className={cx("btn-view-add")}>
             <Button active onClick={() => setShowAdd(!isShowAdd)}>
-              {isShowAdd ? "View" : "Add+"}
+              {isShowAdd ? "View" : "+Add"}
             </Button>
             <CSVLink
               filename={"students.csv"}
