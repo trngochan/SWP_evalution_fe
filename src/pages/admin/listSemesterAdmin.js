@@ -3,6 +3,7 @@ import AddSemester from "../create/AddSemester";
 import styles from "./admin.module.scss";
 import classNames from "classnames/bind";
 import BoardHeader from "~/components/headeritem";
+import moment from "moment";
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -20,7 +21,8 @@ function ListSemesterAdmin() {
   const [rerender, setRerender] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
-
+  const [semesterNow, setSemesterNow] = useState({});
+  const currentTime = moment().format("YYYY-MM-DD");
   const handleClose = () => {
     setShowConfirm(false);
   };
@@ -77,11 +79,19 @@ function ListSemesterAdmin() {
               <th>Session</th>
               <th>Start time</th>
               <th>End time</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {semesters?.map((semester, i) => {
+              const isSemCurrent =
+                semester.StartTime.slice(0, 10) <= currentTime &&
+                semester.EndTime.slice(0, 10) >= currentTime
+                  ? 0
+                  : currentTime < semester.StartTime.slice(0, 10)
+                  ? 1
+                  : -1;
               return (
                 <tr key={i}>
                   <td className="text-center">{semester.Id}</td>
@@ -93,6 +103,13 @@ function ListSemesterAdmin() {
                   <td className="text-center">
                     {semester.EndTime.slice(0, 10)}
                   </td>
+                  {isSemCurrent > 0 ? (
+                    <td>Future</td>
+                  ) : isSemCurrent < 0 ? (
+                    <td>Pass</td>
+                  ) : (
+                    <td>On going</td>
+                  )}
                   <td className="text-center">
                     <button
                       className={cx("btn-dl")}
