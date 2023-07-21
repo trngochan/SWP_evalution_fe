@@ -69,7 +69,7 @@ function ListBoardAdmin() {
   }
 
   return (
-    <div className="">
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <BoardHeader message={"Evaluations"} />
         <div className={cx("btns")}>
@@ -107,7 +107,7 @@ function ListBoardAdmin() {
             </select>
           </div>
 
-          <Table striped bordered hover className="text-center">
+          <Table bordered hover className="text-center">
             <thead>
               <tr>
                 <th scope="col">ID</th>

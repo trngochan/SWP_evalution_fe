@@ -4,9 +4,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #F6FAFF;
+    background-color: #fff;
+    border-bottom: 2px solid #000;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
     padding: 0px 50px 0 50px;
-    border-bottom: 1px solid #000;
 
     .title {
         font-size: 4rem;
@@ -47,9 +49,10 @@
     display: flex;
     justify-content: space-between;
     padding: 30px 50px 20px 50px;
-    background-color: #F6FAFF;
-    border-bottom: 1px solid #000;
-
+    background-color: #fff;
+    border-bottom: 2px solid #000;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
 
     .logo {
         width: 220px;

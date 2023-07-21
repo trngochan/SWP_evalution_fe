@@ -2,10 +2,19 @@
     width: auto;
     height: auto;
     margin: 30px;
-    background-color: #fff;
+    background-color: #fff8f8;
+    border: 2px solid #f00c0c;
     border-radius: 30px;
     padding: 20px;
-    border: 2px solid #000;
+
+    .form-select {
+        text-align: center;
+        font-weight: bolder;
+        border-radius: 15px;
+        padding: 6px 5px;
+        border: 2px solid #000;
+        background-color: #f29d9d;
+    }
 
     h1 {
         text-align: center;
@@ -17,11 +26,33 @@
         font-weight: bold;
         text-align: center;
     }
+
+    table {
+        background-color: #fff;
+        border: 1px solid #000;
+
+        th {
+            background-color: #f29d9d;
+        }
+
+        td {
+            background-color: #fff;
+        }
+    }
+
+    .table {
+        background-color: #fff;
+    }
 }
 
-.form-select {
-    padding-left: 2px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    margin-right: 40px;
+
+
+.container-list {
+    background-color: #fff;
+    width: auto;
+    height: auto;
+    margin: 30px;
+    border: 2px solid #000;
+    border-radius: 30px;
+    padding: 20px;
 }

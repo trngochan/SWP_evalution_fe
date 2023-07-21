@@ -33,7 +33,7 @@ function StudentsInCourse() {
   return (
     <div>
       <Header2 />
-      <div className={cx("container")}>
+      <div className={cx("container-list")}>
         <h2 className="mt-3 mb-3" >
           List student of course {cookies.course.name}
         </h2>

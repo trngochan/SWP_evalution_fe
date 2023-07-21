@@ -86,8 +86,8 @@ function ListCourseTeacher() {
         </div>
 
         <div className="col-10">
-          <Table striped bordered hover className="text-center">
-            <thead>
+          <Table bordered hover className={cx("table")}>
+            <thead className="text-center">
               <tr>
                 <th scope="col">Semester</th>
                 <th scope="col">Subject</th>

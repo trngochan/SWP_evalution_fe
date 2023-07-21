@@ -139,7 +139,7 @@ function ListStdAdmin() {
     }
   }
   return (
-    <>
+    <div className={cx("container")}>
       <div>
         <div className={cx("container-header")}>
           <div className={cx("title")}>
@@ -167,8 +167,8 @@ function ListStdAdmin() {
       {isShowAdd ? (
         <AddStudentList />
       ) : (
-        <Table striped bordered hover>
-          <thead>
+        <Table bordered hover>
+          <thead className="text-center">
             <tr>
               <th>ID</th>
               <th>
@@ -218,12 +218,12 @@ function ListStdAdmin() {
             {students?.map((student, i) => {
               return (
                 <tr key={i}>
-                  <td>{student.id}</td>
+                  <td className="text-center">{student.id}</td>
 
-                  <td>{student.code}</td>
-                  <td>{student.name}</td>
-                  <td>{student.address}</td>
-                  <td>{student.birthday?.slice(0, 10)}</td>
+                  <td className="text-center">{student.code}</td>
+                  <td className="text-center">{student.name}</td>
+                  <td className="text-center">{student.address}</td>
+                  <td className="text-center">{student.birthday?.slice(0, 10)}</td>
                   <td className="text-center">
                     <Button edit small onClick={() => handleEdit(students.id)}>
                       <FontAwesomeIcon icon={faPenToSquare} /> Edit
@@ -344,7 +344,7 @@ function ListStdAdmin() {
           </Btn>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }
 

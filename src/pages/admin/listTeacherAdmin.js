@@ -120,7 +120,7 @@ function ListTeacherAdmin() {
   }
 
   return (
-    <>
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <div className={cx("title")}>
           <BoardHeader message={"Teachers"} />
@@ -147,7 +147,7 @@ function ListTeacherAdmin() {
       {isShowAdd ? (
         <AddTeacherList />
       ) : (
-        <Table striped bordered hover>
+        <Table bordered hover>
           <thead className="text-center">
             <tr>
               <th>ID</th>
@@ -307,7 +307,7 @@ function ListTeacherAdmin() {
           </Modal.Footer>
         </Modal>
       </div>
-    </>
+    </div>
   );
 }
 

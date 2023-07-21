@@ -54,7 +54,7 @@ function ListSubjectAdmin() {
   }
 
   return (
-    <div className={cx("container-board")}>
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <BoardHeader message={"Subjects"} />
         <div className={cx("btn-view-add")}>
@@ -66,7 +66,7 @@ function ListSubjectAdmin() {
       {isShowAdd ? (
         <AddSubject />
       ) : (
-        <Table striped bordered hover>
+        <Table bordered hover>
           <thead className="text-center">
             <tr>
               <th>ID</th>

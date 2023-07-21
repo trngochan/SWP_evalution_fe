@@ -95,7 +95,7 @@ function ListTemplatesAdmin() {
   }
 
   return (
-    <div>
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <div className={cx("title")}>
           <BoardHeader message={"Templates Score"} />
@@ -121,7 +121,7 @@ function ListTemplatesAdmin() {
         </>
       ) : (
         <>
-          <Table striped bordered hover>
+          <Table bordered hover>
             <thead className="text-center">
               <tr>
                 <th scope="col">ID</th>

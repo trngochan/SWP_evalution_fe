@@ -83,7 +83,7 @@ function ListBoardTeacher() {
           </select>
         </div>
         <div className="col-10">
-          <Table striped bordered hover>
+          <Table bordered hover>
             <thead className="text-center">
               <tr>
                 <th scope="col">ID</th>

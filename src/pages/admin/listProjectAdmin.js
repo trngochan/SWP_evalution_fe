@@ -123,8 +123,8 @@ function ListProjectAdmin() {
   }
 
   return (
-    <>
-      <div>
+    <div className={cx("container")}>
+      <div >
         <div className={cx("container-header")}>
           <BoardHeader message={"Projects"} />
           <div className={cx("btns")}>
@@ -158,7 +158,7 @@ function ListProjectAdmin() {
             </select>
           </div>
 
-          <Table striped bordered hover>
+          <Table bordered hover>
             <thead className="text-center">
               <tr>
                 <th>ID</th>
@@ -305,7 +305,7 @@ function ListProjectAdmin() {
           </Btn>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }
 

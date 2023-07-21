@@ -80,7 +80,7 @@ function ListCourseAdmin() {
   }
 
   return (
-    <div>
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <BoardHeader message={"Courses"} />
 
@@ -116,7 +116,7 @@ function ListCourseAdmin() {
             </select>
           </div>
 
-          <Table striped bordered hover className="text-center">
+          <Table bordered hover className="text-center">
             <thead>
               <tr>
                 <th>Course ID</th>

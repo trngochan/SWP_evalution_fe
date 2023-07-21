@@ -8,7 +8,7 @@
     font-size: 1.6rem;
     color: white;
     font-weight: 500px;
-    background-color: transparent;
+    background-color: #fff;
     user-select: none;
     border: 1px solid #000000;
     margin-right: 20px;
@@ -16,17 +16,29 @@
     margin-left: 8px;
     margin-bottom: 3px;
 
+
+
     &:hover {
         background-color: #f7c79b;
     }
-
-
 
     .title {
         color: #000000;
     }
 }
 
+.list {
+    padding: 5px 15px;
+    background-color: #fff;
+
+    &:hover {
+        background-color: #fac4c4;
+    }
+
+    &:focus {
+        background-color: #f29d9d;
+    }
+}
 
 .primary {
     background-color: #fff;
@@ -38,14 +50,17 @@
     &:focus {
         background-color: #FEAE65;
     }
+
 }
 
 .small {
     padding: 5px 15px;
+    background-color: #fff;
 
     &:focus {
         background-color: #FEAE65;
     }
+
 }
 
 

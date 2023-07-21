@@ -11,7 +11,7 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faForwardFast, faAtom, faPlaneUp } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +21,6 @@ function ListSemesterAdmin() {
   const [rerender, setRerender] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
-  const [semesterNow, setSemesterNow] = useState({});
   const currentTime = moment().format("YYYY-MM-DD");
   const handleClose = () => {
     setShowConfirm(false);
@@ -57,7 +56,7 @@ function ListSemesterAdmin() {
   }
 
   return (
-    <div>
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <div className={cx("title")}>
           <BoardHeader message={"Semesters"} />
@@ -71,7 +70,7 @@ function ListSemesterAdmin() {
       {isShowAdd ? (
         <AddSemester rerender={setRerender} />
       ) : (
-        <Table striped bordered hover>
+        <Table bordered hover>
           <thead className="text-center">
             <tr>
               <th>ID</th>
@@ -87,11 +86,11 @@ function ListSemesterAdmin() {
             {semesters?.map((semester, i) => {
               const isSemCurrent =
                 semester.StartTime.slice(0, 10) <= currentTime &&
-                semester.EndTime.slice(0, 10) >= currentTime
+                  semester.EndTime.slice(0, 10) >= currentTime
                   ? 0
                   : currentTime < semester.StartTime.slice(0, 10)
-                  ? 1
-                  : -1;
+                    ? 1
+                    : -1;
               return (
                 <tr key={i}>
                   <td className="text-center">{semester.Id}</td>
@@ -104,11 +103,17 @@ function ListSemesterAdmin() {
                     {semester.EndTime.slice(0, 10)}
                   </td>
                   {isSemCurrent > 0 ? (
-                    <td>Future</td>
+                    <td className={cx("text-center")} style={{ backgroundColor: "#fe7d7d", fontWeight: "bolder" }}>
+                      <FontAwesomeIcon icon={faPlaneUp} /> Future
+                    </td>
                   ) : isSemCurrent < 0 ? (
-                    <td>Pass</td>
+                    <td className={cx("text-center")} style={{ backgroundColor: "#b3aeae", fontWeight: "bolder" }}>
+                      <FontAwesomeIcon icon={faForwardFast} /> Past
+                    </td>
                   ) : (
-                    <td>On going</td>
+                    <td className={cx("text-center")} style={{ backgroundColor: "#9ffd74", fontWeight: "bolder" }}>
+                      <FontAwesomeIcon icon={faAtom} /> On going
+                    </td>
                   )}
                   <td className="text-center">
                     <button
