@@ -7,6 +7,7 @@ import styles from "./teacher.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
+import { faPlaneUp, faForwardFast, faAtom } from '@fortawesome/free-solid-svg-icons'
 import moment from "moment";
 
 const cx = classNames.bind(styles);
@@ -115,11 +116,11 @@ function ListBoardTeacher() {
                   );
                   const isSemCurrent =
                     semnow.StartTime.slice(0, 10) <= currentTime &&
-                    semnow.EndTime.slice(0, 10) >= currentTime
+                      semnow.EndTime.slice(0, 10) >= currentTime
                       ? 0
                       : currentTime < semnow.StartTime.slice(0, 10)
-                      ? 1
-                      : -1;
+                        ? 1
+                        : -1;
                   return (
                     <tr key={index}>
                       <td className="text-center">{item.Id} </td>
@@ -149,11 +150,14 @@ function ListBoardTeacher() {
                       <td className="text-center">{item.StartTime} </td>
                       <td className="text-center">{item.EndTime} </td>
                       {isSemCurrent > 0 ? (
-                        <td>Future</td>
+                        <td style={{ backgroundColor: "#fe7d7d", fontWeight: "bolder" }}>
+                          <FontAwesomeIcon icon={faPlaneUp} />Future</td>
                       ) : isSemCurrent < 0 ? (
-                        <td>Pass</td>
+                        <td className={cx("text-center")} style={{ backgroundColor: "#b3aeae", fontWeight: "bolder" }}>
+                          <FontAwesomeIcon icon={faForwardFast} /> Past</td>
                       ) : (
-                        <td>On going</td>
+                        <td className={cx("text-center")} style={{ backgroundColor: "#9ffd74", fontWeight: "bolder" }}>
+                          <FontAwesomeIcon icon={faAtom} /> On going</td>
                       )}
                     </tr>
                   );
