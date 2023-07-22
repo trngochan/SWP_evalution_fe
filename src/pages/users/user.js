@@ -4,7 +4,6 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 // import Header from "~/components/layouts/header";
 import { Header2 } from "~/components/layouts/header";
-import Divider from "~/components/Divider";
 import Infor from "~/components/infor";
 import Footer from "~/components/layouts/footer";
 

@@ -50,14 +50,6 @@
     margin-right: 20px;
 }
 
-.btn-publiced {
-    padding: 4px 10px;
-    background-color: #8df45e;
-    border-radius: 20px;
-    border: 1px solid #000;
-    margin-left: 10px;
-}
-
 button {
     position: relative;
 }
@@ -116,4 +108,21 @@ button span::before {
 //link-style
 .link-style {
     color: #005dfe;
+}
+
+// button public-no public
+.btn-publiced {
+    padding: 2px 10px;
+    background-color: #8df45e;
+    border-radius: 20px;
+    border: 1px solid #000;
+    margin-left: 10px;
+}
+
+.btn-nopublic {
+    padding: 2px 10px;
+    background-color: #ff1900;
+    border-radius: 20px;
+    border: 1px solid #000;
+    margin-left: 10px;
 }

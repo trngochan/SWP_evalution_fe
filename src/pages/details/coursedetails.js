@@ -263,7 +263,7 @@ function CourseDetails() {
               </tbody>
             </table> */}
               <Table striped bordered hover>
-                <thead>
+                <thead className="text-center">
                   <tr>
                     <th>Code</th>
                     <th>Name</th>
@@ -276,14 +276,14 @@ function CourseDetails() {
                     student.map((item, index) => {
                       return (
                         <tr key={index}>
-                          <td>{item.code}</td>
-                          <td>{item.name}</td>
-                          <td>
+                          <td className="text-center">{item.code}</td>
+                          <td className="text-center">{item.name}</td>
+                          <td className="text-center">
                             {item.birthday
                               ? JSON.stringify(item.birthday).slice(1, 11)
                               : "No infor"}
                           </td>
-                          <td>{item.address ? item.address : "No infor"}</td>
+                          <td className="text-center">{item.address ? item.address : "No infor"}</td>
                         </tr>
                       );
                     })
@@ -332,7 +332,7 @@ function CourseDetails() {
               </tbody>
             </table> */}
               <Table striped bordered hover>
-                <thead>
+                <thead className="text-center">
                   <tr>
                     <th>Code</th>
                     <th>Name</th>
@@ -345,16 +345,16 @@ function CourseDetails() {
                     studentNotCour.map((item, index) => {
                       return (
                         <tr key={index}>
-                          <td>{item.Code}</td>
-                          <td>{item.Name}</td>
-                          <td>
+                          <td className="text-center">{item.Code}</td>
+                          <td className="text-center">{item.Name}</td>
+                          <td className="text-center">
                             {item.BirthDay
                               ? JSON.stringify(item.BirthDay).slice(1, 11)
                               : "No infor"}
                           </td>
-                          <td>
-                            <Button onClick={() => handleAddStdInCour(item.Id)}>
-                              Add
+                          <td className="text-center">
+                            <Button active onClick={() => handleAddStdInCour(item.Id)}>
+                              + Add
                             </Button>
                           </td>
                         </tr>

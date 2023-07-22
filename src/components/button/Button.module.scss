@@ -87,10 +87,14 @@
 }
 
 .remove {
-    color: whitesmoke;
-    background-color: #ff707e;
+    padding: 5px 10px;
+    background-color: #887f7f;
+    border-radius: 20px;
+    border: 2px solid #000;
+    color: #fff;
 
     &:hover {
-        background-color: #f44153;
+        color: #e6e4e4;
+        background-color: #f04242;
     }
 }

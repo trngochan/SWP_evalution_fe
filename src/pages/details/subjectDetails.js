@@ -6,7 +6,6 @@ import Table from "react-bootstrap/Table";
 
 import { Header2 } from "~/components/layouts/header";
 import styles from "./details.module.scss";
-import Divider from "~/components/Divider";
 import Button from "~/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -73,7 +72,6 @@ function SubjectDetails() {
       </div>
 
       <div className={cx("table-2")}>
-        <Divider />
         <div className="row">
           <th
             style={{

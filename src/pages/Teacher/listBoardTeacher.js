@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faPlaneUp, faForwardFast, faAtom } from '@fortawesome/free-solid-svg-icons'
 import moment from "moment";
+import './teacher.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -65,9 +66,9 @@ function ListBoardTeacher() {
 
   return (
     <div className={cx("container")}>
-      <div className="row mt-3">
+      <div className="column mt-3">
         <p className="mb-5">List evaluations of lecturer {cookies.user.name}</p>
-        <div className="col-2">
+        <div className="col-5">
           <select
             className={cx("form-select")}
             aria-label="Default select example"
@@ -84,7 +85,7 @@ function ListBoardTeacher() {
             })}
           </select>
         </div>
-        <div className="col-10">
+        <div className="col-12">
           <Table bordered hover>
             <thead className="text-center">
               <tr>

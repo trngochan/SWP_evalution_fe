@@ -37,7 +37,7 @@ function StudentsInCourse() {
         <h2 className="mt-3 mb-3" >
           List student of course {cookies.course.name}
         </h2>
-        <Table striped bordered hover className="text-center">
+        <Table bordered hover className="text-center">
           <thead>
             <tr>
               <th>Code</th>

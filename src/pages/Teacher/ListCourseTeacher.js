@@ -56,7 +56,7 @@ function ListCourseTeacher() {
 
   return (
     <div className={cx("container")}>
-      <div className="row">
+      <div className="column">
         <h1
           className=""
           style={{
@@ -65,7 +65,7 @@ function ListCourseTeacher() {
         >
           List of courses the lecturer {cookies.user.name} is teaching
         </h1>
-        <div className="col-2">
+        <div className="col-5">
           <select
             className={cx("form-select")}
             aria-label="Default select example"
@@ -85,7 +85,7 @@ function ListCourseTeacher() {
           </select>
         </div>
 
-        <div className="col-10">
+        <div className="col-12">
           <Table bordered hover className={cx("table")}>
             <thead className="text-center">
               <tr>

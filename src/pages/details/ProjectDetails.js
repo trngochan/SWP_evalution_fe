@@ -223,8 +223,8 @@ function ProjectDetails() {
                       (projectSPublic) =>
                         projectSPublic.ProjectId == inforProject.Id
                     )
-                      ? "Publiced"
-                      : "No puclic"}
+                      ? <button className={cx("btn-publiced")}>Publiced</button>
+                      : <button className={cx("btn-nopublic")}>No public</button>}
                   </td>
                 </tr>
               </tbody>
@@ -270,7 +270,7 @@ function ProjectDetails() {
                     <td className="text-center">{student.Name}</td>
                     <td className="text-center">{student.Address}</td>
                     <td className="text-center">
-                      <Button
+                      <Button remove
                         onClick={() => {
                           if (numTeacherMarked > 0) {
                             setError(
@@ -302,7 +302,7 @@ function ProjectDetails() {
         {showTableListStudentNoInCourse && (
           <section>
             <Table striped bordered hover>
-              <thead>
+              <thead className="text-center">
                 <tr>
                   <th>Student CODE</th>
                   <th>Name</th>
@@ -313,11 +313,11 @@ function ProjectDetails() {
               <tbody>
                 {studentNoInPro.map((student, i) => (
                   <tr key={i}>
-                    <td>{student.Code}</td>
-                    <td>{student.Name}</td>
-                    <td>{student.Address}</td>
-                    <td>
-                      <Button
+                    <td className="text-center">{student.Code}</td>
+                    <td className="text-center">{student.Name}</td>
+                    <td className="text-center">{student.Address}</td>
+                    <td className="text-center">
+                      <Button active
                         onClick={() => {
                           if (numTeacherMarked > 0) {
                             setError("Can not add becasue project is graded");
@@ -327,7 +327,7 @@ function ProjectDetails() {
                           }
                         }}
                       >
-                        Add
+                        + Add
                       </Button>
                     </td>
                   </tr>

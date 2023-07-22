@@ -7,13 +7,16 @@
     border-radius: 30px;
     padding: 20px;
 
+
     .form-select {
         text-align: center;
         font-weight: bolder;
         border-radius: 15px;
-        padding: 6px 5px;
+        padding: 5px 5px;
         border: 2px solid #000;
         background-color: #f29d9d;
+        display: inline-block;
+        margin-bottom: 10px;
     }
 
     h1 {
@@ -45,8 +48,6 @@
     }
 }
 
-
-
 .container-list {
     background-color: #fff;
     width: auto;
@@ -55,4 +56,27 @@
     border: 2px solid #000;
     border-radius: 30px;
     padding: 20px;
+
+    .table-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h2 {
+        font-weight: bold;
+        text-align: center;
+    }
+
+    table {
+        background-color: #fff;
+        border: 1px solid #000;
+
+        th {
+            background-color: #f29d9d;
+        }
+
+        td {
+            background-color: #fff;
+        }
+    }
 }

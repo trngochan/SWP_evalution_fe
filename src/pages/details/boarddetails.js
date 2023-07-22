@@ -11,7 +11,6 @@ import axios from "axios";
 
 import { Header2 } from "~/components/layouts/header";
 import { Link } from "react-router-dom";
-import Divider from "~/components/Divider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
@@ -411,8 +410,6 @@ function BoardDetail() {
             </div>
           )}
 
-          {/* <Divider /> */}
-
           <div className="row">
             {showTableListProjects && (
               <Table striped bordered hover>
@@ -484,7 +481,6 @@ function BoardDetail() {
           </div>
         </div>
 
-        <Divider />
 
         <Snackbar
           open={openSnackBar}
