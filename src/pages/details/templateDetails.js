@@ -94,9 +94,9 @@ function TemplateDetail() {
 
       <div className={cx("table-2")}>
         <div className={cx("title-table")}>
-          <button className={cx("mb-5 mt-5 show")} small={true}>
+          <Button className={cx("mb-5 mt-5 show")} small={true}>
             List score column
-          </button>
+          </Button>
         </div>
         <div className="table-list">
           <Table striped bordered hover>
