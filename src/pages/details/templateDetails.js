@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "~/components/button";
 import { Table } from "react-bootstrap";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -23,11 +24,11 @@ function TemplateDetail() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/template/${id}`, {
+      const req1 = await axios.get(`${backendURL}/template/${id}`, {
         withCredentials: true,
       });
-      const req2 = await axios.get("/subject/getall");
-      const req3 = await axios.get(`/scorecolumn/${id}/subject`);
+      const req2 = await axios.get(`${backendURL}/subject/getall`);
+      const req3 = await axios.get(`${backendURL}/scorecolumn/${id}/subject`);
 
       return axios.all([req1, req2, req3]).then(
         axios.spread((templ, listSub, listScore) => {

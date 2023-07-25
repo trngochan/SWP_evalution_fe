@@ -13,6 +13,7 @@ import styles from "./admin.module.scss";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -39,14 +40,14 @@ function ListCourseAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/course/getall`, {
+      const req1 = await axios.get(`${backendURL}/course/getall`, {
         withCredentials: true,
       });
-      const req2 = await axios.get(`/semester/getall`, {
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {
         withCredentials: true,
       });
-      const req3 = await axios.get("/subject/getall");
-      const req4 = await axios.get("/teacher/getall");
+      const req3 = await axios.get(`${backendURL}/subject/getall`);
+      const req4 = await axios.get(`${backendURL}/teacher/getall`);
 
       return axios.all([req1, req2, req3, req4]).then(
         axios.spread((listCourse, listSemester, listSubject, listTeacher) => {
@@ -71,7 +72,7 @@ function ListCourseAdmin() {
   }
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/course/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/course/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);

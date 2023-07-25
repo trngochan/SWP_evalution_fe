@@ -10,6 +10,7 @@ import Button from "~/components/button";
 import { Header2 } from "~/components/layouts/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -42,17 +43,23 @@ function ProjectDetails() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/student/${project}/project`);
-      const req2 = await axios.get(`/project/${project}/getbyid`);
-      const req3 = await axios.get(`/teacher/${project}/quaninboard`);
-      const req4 = await axios.get(`/teacher/${project}/quanmarked`);
-      const req5 = await axios.get(`/project/getallpubliced`);
-      const req6 = await axios.get(`/evalution/${project}/getbyproject`);
-      const req7 = await axios.get(`/semester/getall`, {
+      const req1 = await axios.get(`${backendURL}/student/${project}/project`);
+      const req2 = await axios.get(`${backendURL}/project/${project}/getbyid`);
+      const req3 = await axios.get(
+        `${backendURL}/teacher/${project}/quaninboard`
+      );
+      const req4 = await axios.get(
+        `${backendURL}/teacher/${project}/quanmarked`
+      );
+      const req5 = await axios.get(`${backendURL}/project/getallpubliced`);
+      const req6 = await axios.get(
+        `${backendURL}/evalution/${project}/getbyproject`
+      );
+      const req7 = await axios.get(`${backendURL}/semester/getall`, {
         withCredentials: true,
       });
-      const req8 = await axios.get("/subject/getall");
-      const req9 = await axios.get(`/course/getall`, {
+      const req8 = await axios.get(`${backendURL}/subject/getall`);
+      const req9 = await axios.get(`${backendURL}/course/getall`, {
         withCredentials: true,
       });
 
@@ -93,12 +100,14 @@ function ProjectDetails() {
   const semnow = semesterList.find((sem) => sem.Id == courseNow.SemesterId);
 
   async function handleShowStdNoHasProject() {
-    const response = await axios.get(`/student/${course}/getstdnotinproject`);
+    const response = await axios.get(
+      `${backendURL}/student/${course}/getstdnotinproject`
+    );
     setStudentNoInPro(response.data.data);
   }
 
   async function handleAddIntoProject(id) {
-    const response = await axios.post(`/studentinproject/add`, {
+    const response = await axios.post(`${backendURL}/studentinproject/add`, {
       student: id,
       project,
     });
@@ -110,7 +119,9 @@ function ProjectDetails() {
   }
 
   async function handRemoveStd(id) {
-    const response = await axios.delete(`/studentinproject/${id}/remove`);
+    const response = await axios.delete(
+      `${backendURL}/studentinproject/${id}/remove`
+    );
 
     if (response.status === 200) {
       setRerender(!rerender);
@@ -222,9 +233,11 @@ function ProjectDetails() {
                     {projectSPublics.some(
                       (projectSPublic) =>
                         projectSPublic.ProjectId == inforProject.Id
-                    )
-                      ? <button className={cx("btn-publiced")}>Publiced</button>
-                      : <button className={cx("btn-nopublic")}>No public</button>}
+                    ) ? (
+                      <button className={cx("btn-publiced")}>Publiced</button>
+                    ) : (
+                      <button className={cx("btn-nopublic")}>No public</button>
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -270,7 +283,8 @@ function ProjectDetails() {
                     <td className="text-center">{student.Name}</td>
                     <td className="text-center">{student.Address}</td>
                     <td className="text-center">
-                      <Button remove
+                      <Button
+                        remove
                         onClick={() => {
                           if (numTeacherMarked > 0) {
                             setError(
@@ -285,7 +299,8 @@ function ProjectDetails() {
                         <FontAwesomeIcon icon={faTrashCan} /> Remove
                       </Button>
                     </td>
-                    <td className="text-center"
+                    <td
+                      className="text-center"
                       style={{
                         display: "flex",
                       }}
@@ -317,7 +332,8 @@ function ProjectDetails() {
                     <td className="text-center">{student.Name}</td>
                     <td className="text-center">{student.Address}</td>
                     <td className="text-center">
-                      <Button active
+                      <Button
+                        active
                         onClick={() => {
                           if (numTeacherMarked > 0) {
                             setError("Can not add becasue project is graded");

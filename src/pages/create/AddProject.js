@@ -4,6 +4,7 @@ import styles from "./add.module.scss";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -28,7 +29,7 @@ function AddProject({ setShowAdd, setRerender }) {
     }),
     onSubmit: (values) => {
       axios
-        .post("/project/add", values)
+        .post(`${backendURL}${backendURL}/project/add`, values)
         .then((res) => res.data)
         .then((data) => {
           if (data.status === 200) {
@@ -47,8 +48,8 @@ function AddProject({ setShowAdd, setRerender }) {
   useEffect(() => {
     try {
       async function fetchData() {
-        const r2 = await axios.get("/semester/getall");
-        const r3 = await axios.get("/subject/getAll");
+        const r2 = await axios.get(`${backendURL}/semester/getall`);
+        const r3 = await axios.get(`${backendURL}/subject/getAll`);
 
         return axios.all([r2, r3]).then(
           axios.spread((r2, r3) => {

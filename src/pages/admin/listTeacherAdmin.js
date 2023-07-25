@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import styles from "./admin.module.scss";
 import Button from "~/components/button";
 import AddTeacherList from "../create/AddTeacherList";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -32,7 +33,7 @@ function ListTeacherAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get("/teacher/getall");
+      const response = await axios.get(`${backendURL}/teacher/getall`);
       setTeachers(response.data);
     }
 
@@ -98,7 +99,7 @@ function ListTeacherAdmin() {
       values.birthday = formattedDate;
       values.id = edit;
       async function fetchData() {
-        const response = await axios.put("/teacher/edit", values);
+        const response = await axios.put(`${backendURL}/teacher/edit`, values);
         if (response.data.status === 200) {
           setRerender(!rerender);
           formik.resetForm();
@@ -111,7 +112,7 @@ function ListTeacherAdmin() {
   });
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/teacher/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/teacher/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowModalRemove(false);

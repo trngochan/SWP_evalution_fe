@@ -10,7 +10,8 @@ import Button from "~/components/button";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -25,14 +26,14 @@ function Evaluation() {
   useEffect(() => {
     async function fetchData() {
       const req1 = await axios.get(
-        `/project/${cookies.evaluation_id}/evalution`,
+        `${backendURL}/project/${cookies.evaluation_id}/evalution`,
         {
           withCredentials: true,
         }
       );
 
       const req2 = await axios.get(
-        `/project/${cookies.lectureinboard_id}/getprojectmarked`
+        `${backendURL}/project/${cookies.lectureinboard_id}/getprojectmarked`
       );
 
       return axios.all([req1, req2]).then(
@@ -54,8 +55,8 @@ function Evaluation() {
     });
   }
 
-  console.log(projectsMarked);
-  console.log(projectList);
+  // console.log(projectsMarked);
+  // console.log(projectList);
 
   return (
     <>
@@ -85,7 +86,17 @@ function Evaluation() {
                     to={"/teacherboardscore"}
                   >
                     {project.name}
-                    {isMarked && <span> (<FontAwesomeIcon icon={faCircleCheck} style={{ color: "#55b112" }} />)</span>}
+                    {isMarked && (
+                      <span>
+                        {" "}
+                        (
+                        <FontAwesomeIcon
+                          icon={faCircleCheck}
+                          style={{ color: "#55b112" }}
+                        />
+                        )
+                      </span>
+                    )}
                   </Button>
                 </li>
               );

@@ -9,6 +9,7 @@ import { Header2 } from "~/components/layouts/header";
 import Button from "~/components/button";
 import Footer from "~/components/layouts/footer";
 import { useParams } from "react-router-dom";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -22,12 +23,12 @@ function TeacherBoardScore() {
   const { marked } = useParams();
 
   const listStd = () => {
-    return axios.get(`/student/${cookies.project_id}/project`, {
+    return axios.get(`${backendURL}/student/${cookies.project_id}/project`, {
       withCredentials: true,
     });
   };
   const listScore = () => {
-    return axios.get(`/scorecolumn/${cookies.template_id}`, {
+    return axios.get(`${backendURL}/scorecolumn/${cookies.template_id}`, {
       withCredentials: true,
     });
   };
@@ -62,16 +63,18 @@ function TeacherBoardScore() {
   const [evalution, setEvaluation] = useState({});
   useEffect(() => {
     async function fetchData() {
-      const req2 = await axios.get(`/project/${cookies.project_id}/getbyid`);
-      const req3 = await axios.get(`/project/getallpubliced`);
+      const req2 = await axios.get(
+        `${backendURL}/project/${cookies.project_id}/getbyid`
+      );
+      const req3 = await axios.get(`${backendURL}/project/getallpubliced`);
       const req6 = await axios.get(
         `/evalution/${cookies.project_id}/getbyproject`
       );
-      const req7 = await axios.get(`/semester/getall`, {
+      const req7 = await axios.get(`${backendURL}/semester/getall`, {
         withCredentials: true,
       });
-      const req8 = await axios.get("/subject/getall");
-      const req9 = await axios.get(`/course/getall`, {
+      const req8 = await axios.get(`${backendURL}/subject/getall`);
+      const req9 = await axios.get(`${backendURL}/course/getall`, {
         withCredentials: true,
       });
 
@@ -101,7 +104,7 @@ function TeacherBoardScore() {
       for (let i = 0; i < studentList.length; i++) {
         const student = studentList[i];
         const response = await axios.get(
-          `/score/${cookies.lectureinboard_id}/${student.StudentId}/${cookies.project_id}`
+          `${backendURL}/score/${cookies.lectureinboard_id}/${student.StudentId}/${cookies.project_id}`
         );
         if (response.data.status === 200) {
           const score = response.data.data;
@@ -144,7 +147,7 @@ function TeacherBoardScore() {
           e.preventDefault();
 
           axios
-            .post("/score/insert", {
+            .post(`${backendURL}/score/insert`, {
               score: ScoreStudents[i],
               lectureinboardId: cookies.lectureinboard_id,
               courseID: cookies.course_id,
@@ -183,7 +186,10 @@ function TeacherBoardScore() {
                   lecInBoard: parseInt(cookies.lectureinboard_id),
                   course: parseInt(cookies.course_id),
                 };
-                const response = await axios.put("/score/update", data);
+                const response = await axios.put(
+                  `${backendURL}/score/update`,
+                  data
+                );
                 if (response.data.status != 200) {
                   console.log("Error updating");
                 }
@@ -263,10 +269,11 @@ function TeacherBoardScore() {
                       {projectSPublics.some(
                         (projectSPublic) =>
                           projectSPublic.ProjectId == inforProject.Id
-                      )
-                        ? <div className={cx("btn-public")}>Publiced</div>
-
-                        : <div className={cx("btn-nopublic")}>No Public</div>}
+                      ) ? (
+                        <div className={cx("btn-public")}>Publiced</div>
+                      ) : (
+                        <div className={cx("btn-nopublic")}>No Public</div>
+                      )}
                     </td>
                   </tr>
                 </tbody>

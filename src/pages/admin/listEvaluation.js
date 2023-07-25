@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import BoardHeader from "~/components/headeritem";
 import { toast } from "react-toastify";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -36,11 +37,11 @@ function ListBoardAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/evalution/getall`, {});
-      const req2 = await axios.get(`/semester/getall`, {
+      const req1 = await axios.get(`${backendURL}/evalution/getall`, {});
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {
         withCredentials: true,
       });
-      const req3 = await axios.get("/subject/getall");
+      const req3 = await axios.get(`${backendURL}/subject/getall`);
 
       return axios.all([req1, req2, req3]).then(
         axios.spread((listAvaluation, listSemester, listSubjects) => {
@@ -60,7 +61,7 @@ function ListBoardAdmin() {
   }
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/evalution/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/evalution/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);

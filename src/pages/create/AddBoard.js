@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +35,10 @@ function AddBoard({ rerender }) {
     }),
     onSubmit: async (values, { resetForm }) => {
       values.date = moment(values.date).format("YYYY-MM-DD");
-      const respone = await axios.post("/evalution/add", values);
+      const respone = await axios.post(
+        `${backendURL}${backendURL}/evalution/add`,
+        values
+      );
       const data = respone.data;
       if (data.status === 201) {
         resetForm();
@@ -56,9 +60,9 @@ function AddBoard({ rerender }) {
     try {
       async function fetchData() {
         // const r1 = await axios.get("/teacher/getall");
-        const r2 = await axios.get("/semester/getall");
-        const r3 = await axios.get("/subject/getAll");
-        const r4 = await axios.get("/template/getall");
+        const r2 = await axios.get(`${backendURL}/semester/getall`);
+        const r3 = await axios.get(`${backendURL}/subject/getAll`);
+        const r4 = await axios.get(`${backendURL}/template/getall`);
 
         return axios.all([r2, r3, r4]).then(
           axios.spread((r2, r3, r4) => {

@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import { useFormik, Field } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +24,7 @@ function AddCourse({ setShowAdd }) {
     }),
     onSubmit: async (values) => {
       try {
-        const respone = await axios.post("/course/add", values);
+        const respone = await axios.post(`${backendURL}/course/add`, values);
         if (respone.data.status === 200) {
           setShowAdd(false);
         }
@@ -42,9 +43,9 @@ function AddCourse({ setShowAdd }) {
   useEffect(() => {
     try {
       async function fetchData() {
-        const r1 = await axios.get("/teacher/getall");
-        const r2 = await axios.get("/semester/getall");
-        const r3 = await axios.get("/subject/getAll");
+        const r1 = await axios.get(`${backendURL}/teacher/getall`);
+        const r2 = await axios.get(`${backendURL}/semester/getall`);
+        const r3 = await axios.get(`${backendURL}/subject/getAll`);
 
         return axios.all([r1, r2, r3]).then(
           axios.spread((r1, r2, r3) => {
