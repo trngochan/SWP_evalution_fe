@@ -19,7 +19,7 @@ const cx = classNames.bind(styles);
 function ListSubjectAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
   const [subjects, setSubjects] = useState([]);
-  const [, setSemesters] = useState([]);
+  const [semester, setSemesters] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
   const [rerender, setRerender] = useState(false);
