@@ -8,6 +8,7 @@ import { faUserTie, faKey } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames/bind";
 import styles from "./login.module.scss";
 import { Header } from "~/components/layouts/header";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +34,7 @@ function LoginAdmin() {
     event.preventDefault();
 
     axios
-      .post("/loginadmin", {
+      .post(`${backendURL}/loginadmin`, {
         username,
         password,
       })
