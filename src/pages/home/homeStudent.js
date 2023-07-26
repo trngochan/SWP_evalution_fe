@@ -29,13 +29,9 @@ function InforStudent() {
     async function fetchData() {
       const req1 = await axios.get(
         `${backendURL}/course/${cookies.user.id}/student`,
-        {
-          withCredentials: true,
-        }
+        {}
       );
-      const req2 = await axios.get(`${backendURL}/semester/getall`, {
-        withCredentials: true,
-      });
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
 
       return axios.all([req1, req2]).then(
         axios.spread((listCourse, listSemester) => {
@@ -60,9 +56,7 @@ function InforStudent() {
         id: cookies.user.id,
         courseId: courseId,
       },
-      {
-        withCredentials: true,
-      }
+      {}
     );
 
     if (response.data.status === 201) {

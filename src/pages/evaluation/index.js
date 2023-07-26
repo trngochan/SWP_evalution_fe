@@ -27,9 +27,7 @@ function Evaluation() {
     async function fetchData() {
       const req1 = await axios.get(
         `${backendURL}/project/${cookies.evaluation_id}/evalution`,
-        {
-          withCredentials: true,
-        }
+        {}
       );
 
       const req2 = await axios.get(

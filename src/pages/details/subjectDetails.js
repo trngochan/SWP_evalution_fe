@@ -38,9 +38,7 @@ function SubjectDetails() {
       const response1 = await axios.get(
         `${backendURL}/course/${subject}/getbysubject`
       );
-      const req2 = await axios.get(`${backendURL}/semester/getall`, {
-        withCredentials: true,
-      });
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
       const req4 = await axios.get(`${backendURL}/teacher/getall`);
       setTeachers(req4.data);
       setCourses(response1.data);

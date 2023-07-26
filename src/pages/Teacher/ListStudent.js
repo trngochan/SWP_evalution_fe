@@ -18,9 +18,7 @@ function StudentsInCourse() {
     async function fetchData() {
       const req1 = await axios.get(
         `${backendURL}/student/${cookies.course.id}/course`,
-        {
-          withCredentials: true,
-        }
+        {}
       );
 
       return axios.all([req1]).then(

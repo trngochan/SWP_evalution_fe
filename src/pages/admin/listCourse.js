@@ -40,12 +40,8 @@ function ListCourseAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`${backendURL}/course/getall`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`${backendURL}/semester/getall`, {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(`${backendURL}/course/getall`);
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
       const req3 = await axios.get(`${backendURL}/subject/getall`);
       const req4 = await axios.get(`${backendURL}/teacher/getall`);
 

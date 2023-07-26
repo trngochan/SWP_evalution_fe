@@ -24,9 +24,7 @@ function TemplateDetail() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`${backendURL}/template/${id}`, {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(`${backendURL}/template/${id}`, {});
       const req2 = await axios.get(`${backendURL}/subject/getall`);
       const req3 = await axios.get(`${backendURL}/scorecolumn/${id}/subject`);
 

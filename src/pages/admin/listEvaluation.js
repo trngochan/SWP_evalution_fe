@@ -37,7 +37,7 @@ function ListBoardAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`${backendURL}/evalution/getall`);
+      const req1 = await axios.get(`${backendURL}/evalution/getall`, {});
       const req2 = await axios.get(`${backendURL}/semester/getall`);
       const req3 = await axios.get(`${backendURL}/subject/getall`);
 

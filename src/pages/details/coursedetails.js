@@ -67,14 +67,13 @@ function CourseDetails() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`${backendURL}/student/${course}/course`, {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(
+        `${backendURL}/student/${course}/course`,
+        {}
+      );
       const req2 = await axios.get(
         `${backendURL}/project/${course}/projectincourses`,
-        {
-          withCredentials: true,
-        }
+        {}
       );
       const req3 = await axios.get(`${backendURL}/course/${course}/getbyid`);
 

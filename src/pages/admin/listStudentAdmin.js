@@ -116,9 +116,7 @@ function ListStdAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`${backendURL}/student/getall`, {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(`${backendURL}/student/getall`, {});
 
       return axios.all([req1]).then(
         axios.spread((listStudent) => {

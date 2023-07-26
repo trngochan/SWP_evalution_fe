@@ -55,13 +55,9 @@ function ProjectDetails() {
       const req6 = await axios.get(
         `${backendURL}/evalution/${project}/getbyproject`
       );
-      const req7 = await axios.get(`${backendURL}/semester/getall`, {
-        withCredentials: true,
-      });
+      const req7 = await axios.get(`${backendURL}/semester/getall`, {});
       const req8 = await axios.get(`${backendURL}/subject/getall`);
-      const req9 = await axios.get(`${backendURL}/course/getall`, {
-        withCredentials: true,
-      });
+      const req9 = await axios.get(`${backendURL}/course/getall`, {});
 
       return axios
         .all([req1, req2, req3, req4, req5, req6, req7, req8, req9])

@@ -23,14 +23,10 @@ function TeacherBoardScore() {
   const { marked } = useParams();
 
   const listStd = () => {
-    return axios.get(`${backendURL}/student/${cookies.project_id}/project`, {
-      withCredentials: true,
-    });
+    return axios.get(`${backendURL}/student/${cookies.project_id}/project`, {});
   };
   const listScore = () => {
-    return axios.get(`${backendURL}/scorecolumn/${cookies.template_id}`, {
-      withCredentials: true,
-    });
+    return axios.get(`${backendURL}/scorecolumn/${cookies.template_id}`, {});
   };
 
   useEffect(() => {
@@ -70,13 +66,9 @@ function TeacherBoardScore() {
       const req6 = await axios.get(
         `/evalution/${cookies.project_id}/getbyproject`
       );
-      const req7 = await axios.get(`${backendURL}/semester/getall`, {
-        withCredentials: true,
-      });
+      const req7 = await axios.get(`${backendURL}/semester/getall`, {});
       const req8 = await axios.get(`${backendURL}/subject/getall`);
-      const req9 = await axios.get(`${backendURL}/course/getall`, {
-        withCredentials: true,
-      });
+      const req9 = await axios.get(`${backendURL}/course/getall`, {});
 
       return axios.all([req2, req3, req6, req7, req8, req9]).then(
         axios.spread(
