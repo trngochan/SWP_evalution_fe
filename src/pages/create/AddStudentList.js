@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import styles from "./add.module.scss";
 import classNames from "classnames/bind";
 import backendURL from "~/URL_BACKEND/urlbackend";
+import moment from "moment";
 
 const cx = classNames.bind(styles);
 
@@ -42,6 +43,7 @@ function AddStudentList() {
         .required("Your code is required"),
     }),
     onSubmit: (values) => {
+      values.birthday = moment(values.birthday).format("YYYY-MM-DD");
       axios
         .post(`${backendURL}/student/add`, values)
         .then((res) => res.data)
