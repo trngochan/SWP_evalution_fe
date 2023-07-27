@@ -97,7 +97,7 @@ function CourseDetails() {
           `${backendURL}/semester/${inforCourse.SemesterId}`
         );
         const req2 = await axios.get(
-          `/subject/${inforCourse.SubjectId}/getbyid`
+          `${backendURL}/subject/${inforCourse.SubjectId}/getbyid`
         );
         const req3 = await axios.get(
           `${backendURL}/teacher/${inforCourse.LectureId}`
