@@ -145,8 +145,8 @@ function ListProjectAdmin() {
               <option value="0">All Course</option>
               {courses.map((course, i) => {
                 return (
-                  <option value={course.id} key={i}>
-                    {course?.id}-{course?.name}
+                  <option value={course.Id} key={i}>
+                    {course?.Id}-{course?.Name}
                   </option>
                 );
               })}
