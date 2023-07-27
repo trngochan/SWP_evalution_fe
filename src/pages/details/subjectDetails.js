@@ -10,6 +10,7 @@ import Button from "~/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button as Btn } from "react-bootstrap";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -31,12 +32,14 @@ function SubjectDetails() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(`/subject/${subject}/getbyid`);
-      const response1 = await axios.get(`/course/${subject}/getbysubject`);
-      const req2 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
-      const req4 = await axios.get("/teacher/getall");
+      const response = await axios.get(
+        `${backendURL}/subject/${subject}/getbyid`
+      );
+      const response1 = await axios.get(
+        `${backendURL}/course/${subject}/getbysubject`
+      );
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
+      const req4 = await axios.get(`${backendURL}/teacher/getall`);
       setTeachers(req4.data);
       setCourses(response1.data);
       setInforSubject(response.data?.[0]);

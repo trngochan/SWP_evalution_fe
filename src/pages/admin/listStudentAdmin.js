@@ -22,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { CSVLink } from "react-csv";
 import _ from "lodash";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -101,7 +102,7 @@ function ListStdAdmin() {
         const formattedDate = moment(values.birthday).format("YYYY-MM-DD");
         values.birthday = formattedDate;
         values.id = editId;
-        const response = await axios.put("/student/edit", values);
+        const response = await axios.put(`${backendURL}/student/edit`, values);
         if (response.data.status === 200) {
           setRerender(!rerender);
           formik.resetForm();
@@ -115,9 +116,7 @@ function ListStdAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get("/student/getall", {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(`${backendURL}/student/getall`, {});
 
       return axios.all([req1]).then(
         axios.spread((listStudent) => {
@@ -131,7 +130,7 @@ function ListStdAdmin() {
   }, [rerender]);
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/student/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/student/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowModalRemove(false);
@@ -223,7 +222,9 @@ function ListStdAdmin() {
                   <td className="text-center">{student.code}</td>
                   <td className="text-center">{student.name}</td>
                   <td className="text-center">{student.address}</td>
-                  <td className="text-center">{student.birthday?.slice(0, 10)}</td>
+                  <td className="text-center">
+                    {student.birthday?.slice(0, 10)}
+                  </td>
                   <td className="text-center">
                     <Button edit small onClick={() => handleEdit(students.id)}>
                       <FontAwesomeIcon icon={faPenToSquare} /> Edit

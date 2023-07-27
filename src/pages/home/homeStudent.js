@@ -6,12 +6,13 @@ import { Header2 } from "~/components/layouts/header";
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
 import Footer from "~/components/layouts/footer";
-import toad from "~/components/img/toad.png"
+import toad from "~/components/img/toad.png";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
 function InforStudent() {
-  const [cookies,] = useCookies();
+  const [cookies] = useCookies();
   if (!cookies.user) {
     // window.location.href = "/";
   }
@@ -26,12 +27,11 @@ function InforStudent() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/course/${cookies.user.id}/student`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(
+        `${backendURL}/course/${cookies.user.id}/student`,
+        {}
+      );
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
 
       return axios.all([req1, req2]).then(
         axios.spread((listCourse, listSemester) => {
@@ -51,14 +51,12 @@ function InforStudent() {
 
   async function showScore(courseId) {
     const response = await axios.post(
-      "score/get",
+      `${backendURL}/score/get`,
       {
         id: cookies.user.id,
         courseId: courseId,
       },
-      {
-        withCredentials: true,
-      }
+      {}
     );
 
     if (response.data.status === 201) {
@@ -147,8 +145,8 @@ function InforStudent() {
                         message
                           ? { color: "black" }
                           : !status
-                            ? { color: "red" }
-                            : {}
+                          ? { color: "red" }
+                          : {}
                       }
                     >
                       {message ? message : status ? "PASS" : "NOT PASS"}

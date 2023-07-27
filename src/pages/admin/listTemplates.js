@@ -14,6 +14,7 @@ import moment from "moment";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -38,8 +39,8 @@ function ListTemplatesAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get("/template/getall");
-      const req2 = await axios.get("/subject/getall");
+      const req1 = await axios.get(`${backendURL}/template/getall`);
+      const req2 = await axios.get(`${backendURL}/subject/getall`);
 
       return axios.all([req1, req2]).then(
         axios.spread((templates, subjects) => {
@@ -62,7 +63,7 @@ function ListTemplatesAdmin() {
         "YYYY-MM-DD"
       );
 
-      const req1 = await axios.post("/template/add", addTemplate);
+      const req1 = await axios.post(`${backendURL}/template/add`, addTemplate);
 
       if (req1.data.status === 401) {
         setErrorTemplate(req1.data.massage);
@@ -70,7 +71,7 @@ function ListTemplatesAdmin() {
         return;
       }
 
-      const req2 = await axios.post("scoreColumn/adds", {
+      const req2 = await axios.post(`${backendURL}/scoreColumn/adds`, {
         dataColumn: dataScoreColumn,
         templateId: addTemplate.id,
       });
@@ -86,7 +87,7 @@ function ListTemplatesAdmin() {
   }
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/template/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/template/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);
@@ -192,7 +193,8 @@ function ListTemplatesAdmin() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="primary"
+          <Btn
+            variant="primary"
             className={cx("btn-bt")}
             onClick={handleDelete}
           >

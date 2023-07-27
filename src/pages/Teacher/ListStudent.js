@@ -5,7 +5,8 @@ import Table from "react-bootstrap/Table";
 
 import { Header2 } from "~/components/layouts/header";
 import classNames from "classnames/bind";
-import styles from "./teacher.module.scss"
+import styles from "./teacher.module.scss";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -15,9 +16,10 @@ function StudentsInCourse() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/student/${cookies.course.id}/course`, {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(
+        `${backendURL}/student/${cookies.course.id}/course`,
+        {}
+      );
 
       return axios.all([req1]).then(
         axios.spread((listStudent) => {
@@ -34,7 +36,7 @@ function StudentsInCourse() {
     <div>
       <Header2 />
       <div className={cx("container-list")}>
-        <h2 className="mt-3 mb-3" >
+        <h2 className="mt-3 mb-3">
           List student of course {cookies.course.name}
         </h2>
         <Table bordered hover className="text-center">

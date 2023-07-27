@@ -6,6 +6,7 @@ import * as Yup from "yup";
 
 import styles from "./add.module.scss";
 import classNames from "classnames/bind";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -42,7 +43,7 @@ function AddStudentList() {
     }),
     onSubmit: (values) => {
       axios
-        .post("/student/add", values)
+        .post(`${backendURL}/student/add`, values)
         .then((res) => res.data)
         .then((data) => {
           if (data.status === 200) {

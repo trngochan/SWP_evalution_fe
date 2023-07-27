@@ -20,6 +20,7 @@ import {
   faPenToSquare,
   faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -70,7 +71,7 @@ function ListProjectAdmin() {
     onSubmit: (values) => {
       async function fetchData() {
         values.id = editId;
-        const response = await axios.put("/project/edit", values);
+        const response = await axios.put(`${backendURL}/project/edit`, values);
         if (response.data.status === 200) {
           setRerender(!rerender);
           formik.resetForm();
@@ -84,16 +85,10 @@ function ListProjectAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/project/getall`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/course/getall`, {
-        withCredentials: true,
-      });
-      const req3 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
-      const req4 = await axios.get("/subject/getall");
+      const req1 = await axios.get(`${backendURL}/project/getall`, {});
+      const req2 = await axios.get(`${backendURL}/course/getall`, {});
+      const req3 = await axios.get(`${backendURL}/semester/getall`, {});
+      const req4 = await axios.get(`${backendURL}/subject/getall`);
 
       return axios.all([req1, req2, req3, req4]).then(
         axios.spread((listproject, listCourse, listSemester, listSubjects) => {
@@ -114,7 +109,7 @@ function ListProjectAdmin() {
   }
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/project/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/project/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);
@@ -124,7 +119,7 @@ function ListProjectAdmin() {
 
   return (
     <div className={cx("container")}>
-      <div >
+      <div>
         <div className={cx("container-header")}>
           <BoardHeader message={"Projects"} />
           <div className={cx("btns")}>

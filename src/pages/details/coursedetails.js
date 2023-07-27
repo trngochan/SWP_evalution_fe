@@ -8,6 +8,7 @@ import { Header2 } from "~/components/layouts/header";
 import Button from "~/components/button";
 import styles from "./details.module.scss";
 import classNames from "classnames/bind";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -66,13 +67,15 @@ function CourseDetails() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/student/${course}/course`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/project/${course}/projectincourses`, {
-        withCredentials: true,
-      });
-      const req3 = await axios.get(`/course/${course}/getbyid`);
+      const req1 = await axios.get(
+        `${backendURL}/student/${course}/course`,
+        {}
+      );
+      const req2 = await axios.get(
+        `${backendURL}/project/${course}/projectincourses`,
+        {}
+      );
+      const req3 = await axios.get(`${backendURL}/course/${course}/getbyid`);
 
       return axios.all([req1, req2, req3]).then(
         axios.spread((listStd, listPrj, inforCourse) => {
@@ -90,11 +93,15 @@ function CourseDetails() {
   useEffect(() => {
     async function getDataSemester() {
       if (Object.keys(inforCourse).length > 0) {
-        const response = await axios.get(`/semester/${inforCourse.SemesterId}`);
+        const response = await axios.get(
+          `${backendURL}/semester/${inforCourse.SemesterId}`
+        );
         const req2 = await axios.get(
           `/subject/${inforCourse.SubjectId}/getbyid`
         );
-        const req3 = await axios.get(`/teacher/${inforCourse.LectureId}`);
+        const req3 = await axios.get(
+          `${backendURL}/teacher/${inforCourse.LectureId}`
+        );
         setInforSem(response.data.data?.[0]);
         setInforSub(req2.data?.[0]);
         setInforTeach(req3.data.data?.[0]);
@@ -107,13 +114,15 @@ function CourseDetails() {
   console.log(inforTeach);
 
   async function handleShowStudentNotInCourse() {
-    const response = await axios.get(`/student/${course}/getstdnotincour`);
+    const response = await axios.get(
+      `${backendURL}/student/${course}/getstdnotincour`
+    );
 
     setStudentNotCour(response.data.data);
   }
 
   async function handleAddStdInCour(student) {
-    const response = await axios.post(`/studentincourse/add`, {
+    const response = await axios.post(`${backendURL}/studentincourse/add`, {
       course,
       student,
     });
@@ -218,7 +227,6 @@ function CourseDetails() {
                             </Link>
                           </td>
                           <td>{item.notion}</td>
-
                         </tr>
                       );
                     })
@@ -283,7 +291,9 @@ function CourseDetails() {
                               ? JSON.stringify(item.birthday).slice(1, 11)
                               : "No infor"}
                           </td>
-                          <td className="text-center">{item.address ? item.address : "No infor"}</td>
+                          <td className="text-center">
+                            {item.address ? item.address : "No infor"}
+                          </td>
                         </tr>
                       );
                     })
@@ -353,7 +363,10 @@ function CourseDetails() {
                               : "No infor"}
                           </td>
                           <td className="text-center">
-                            <Button active onClick={() => handleAddStdInCour(item.Id)}>
+                            <Button
+                              active
+                              onClick={() => handleAddStdInCour(item.Id)}
+                            >
                               + Add
                             </Button>
                           </td>

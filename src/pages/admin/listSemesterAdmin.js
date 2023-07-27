@@ -11,7 +11,13 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan, faForwardFast, faAtom, faPlaneUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashCan,
+  faForwardFast,
+  faAtom,
+  faPlaneUp,
+} from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +39,7 @@ function ListSemesterAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get("/semester/getall");
+      const req1 = await axios.get(`${backendURL}/semester/getall`);
 
       return axios.all([req1]).then(
         axios.spread((semesters) => {
@@ -47,7 +53,7 @@ function ListSemesterAdmin() {
   }, [rerender]);
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/semester/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/semester/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);
@@ -86,11 +92,11 @@ function ListSemesterAdmin() {
             {semesters?.map((semester, i) => {
               const isSemCurrent =
                 semester.StartTime.slice(0, 10) <= currentTime &&
-                  semester.EndTime.slice(0, 10) >= currentTime
+                semester.EndTime.slice(0, 10) >= currentTime
                   ? 0
                   : currentTime < semester.StartTime.slice(0, 10)
-                    ? 1
-                    : -1;
+                  ? 1
+                  : -1;
               return (
                 <tr key={i}>
                   <td className="text-center">{semester.Id}</td>
@@ -103,15 +109,33 @@ function ListSemesterAdmin() {
                     {semester.EndTime.slice(0, 10)}
                   </td>
                   {isSemCurrent > 0 ? (
-                    <td className={cx("text-center")} style={{ backgroundColor: "#fe7d7d", fontWeight: "bolder" }}>
+                    <td
+                      className={cx("text-center")}
+                      style={{
+                        backgroundColor: "#fe7d7d",
+                        fontWeight: "bolder",
+                      }}
+                    >
                       <FontAwesomeIcon icon={faPlaneUp} /> Future
                     </td>
                   ) : isSemCurrent < 0 ? (
-                    <td className={cx("text-center")} style={{ backgroundColor: "#b3aeae", fontWeight: "bolder" }}>
+                    <td
+                      className={cx("text-center")}
+                      style={{
+                        backgroundColor: "#b3aeae",
+                        fontWeight: "bolder",
+                      }}
+                    >
                       <FontAwesomeIcon icon={faForwardFast} /> Past
                     </td>
                   ) : (
-                    <td className={cx("text-center")} style={{ backgroundColor: "#9ffd74", fontWeight: "bolder" }}>
+                    <td
+                      className={cx("text-center")}
+                      style={{
+                        backgroundColor: "#9ffd74",
+                        fontWeight: "bolder",
+                      }}
+                    >
                       <FontAwesomeIcon icon={faAtom} /> On going
                     </td>
                   )}

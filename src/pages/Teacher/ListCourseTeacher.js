@@ -7,6 +7,7 @@ import styles from "./teacher.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -21,13 +22,12 @@ function ListCourseTeacher() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/course/${cookies.user.id}/teacher`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
-      const req3 = await axios.get("/subject/getall");
+      const req1 = await axios.get(
+        `${backendURL}/course/${cookies.user.id}/teacher`,
+        {}
+      );
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
+      const req3 = await axios.get(`${backendURL}/subject/getall`);
 
       return axios.all([req1, req2, req3]).then(
         axios.spread((listCourses, listSemester, listSubs) => {
