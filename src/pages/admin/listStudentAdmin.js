@@ -98,6 +98,7 @@ function ListStdAdmin() {
       birthday: yup.date().required("Your birthday is required"),
     }),
     onSubmit: (values) => {
+      console.log(values);
       async function fetchData() {
         const formattedDate = moment(values.birthday).format("YYYY-MM-DD");
         values.birthday = formattedDate;
@@ -226,7 +227,7 @@ function ListStdAdmin() {
                     {student.birthday?.slice(0, 10)}
                   </td>
                   <td className="text-center">
-                    <Button edit small onClick={() => handleEdit(students.id)}>
+                    <Button edit small onClick={() => handleEdit(student.id)}>
                       <FontAwesomeIcon icon={faPenToSquare} /> Edit
                     </Button>
                     <button

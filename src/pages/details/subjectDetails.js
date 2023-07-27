@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button as Btn } from "react-bootstrap";
 import backendURL from "~/URL_BACKEND/urlbackend";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -21,14 +22,27 @@ function SubjectDetails() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [semesterList, setsemesterList] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [idDelete, setIdDelete] = useState(0);
+  const [rerender, setRerender] = useState(false);
 
   const handleClose = () => {
     setShowConfirm(false);
   };
 
-  const handleDelete = (id) => {
+  const handleClickDelete = async (id) => {
     setShowConfirm(true);
+    setIdDelete(id);
   };
+
+  async function handleDelete() {
+    const response = await axios.delete(`${backendURL}/course/${idDelete}`);
+
+    if (response.data.status === 200) {
+      setRerender(!rerender);
+      toast.success("Deleted course successfully");
+      handleClose();
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -46,7 +60,7 @@ function SubjectDetails() {
       setsemesterList(req2.data);
     }
     fetchData();
-  }, []);
+  }, [rerender]);
 
   console.log(teachers);
   return (
@@ -116,7 +130,7 @@ function SubjectDetails() {
                       </Button>
                       <button
                         className={cx("btn-dl")}
-                        onClick={() => handleDelete()}
+                        onClick={() => handleClickDelete(course.Id)}
                       >
                         <FontAwesomeIcon icon={faTrashCan} /> Remove
                       </button>
@@ -143,12 +157,17 @@ function SubjectDetails() {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            This action can't be undone!! Do you want to remove this subject?
+            This action can't be undone!! Do you want to remove this subject ID
+            = {idDelete}?
             <br />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
             Confirm
           </Btn>
           <Btn

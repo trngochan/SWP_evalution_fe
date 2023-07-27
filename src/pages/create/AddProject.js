@@ -68,7 +68,7 @@ function AddProject({ setShowAdd, setRerender }) {
       if (formik.values.semester != 0 && formik.values.subject != 0) {
         async function fetchData() {
           const r = await axios.get(
-            `/course/${formik.values.semester}/${formik.values.subject}`
+            `${backendURL}/course/${formik.values.semester}/${formik.values.subject}`
           );
 
           return axios.all([r]).then(

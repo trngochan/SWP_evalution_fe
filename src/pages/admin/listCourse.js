@@ -176,7 +176,7 @@ function ListCourseAdmin() {
                     <td className="text-center">
                       <button
                         className={cx("btn-dl")}
-                        onClick={() => handleClickDelete(course.id)}
+                        onClick={() => handleClickDelete(course.Id)}
                       >
                         <FontAwesomeIcon icon={faTrashCan} /> Remove
                       </button>
