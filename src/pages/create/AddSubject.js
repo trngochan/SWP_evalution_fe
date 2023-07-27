@@ -74,7 +74,15 @@ function AddSubject() {
         <button type="submit" className={cx("form-submit")}>
           Add
         </button>
-        {message.length > 0 && <p>{message}</p>}
+        {message.length > 0 && (
+          <p
+            style={{
+              color: "red",
+            }}
+          >
+            {message}
+          </p>
+        )}
       </form>
     </div>
   );

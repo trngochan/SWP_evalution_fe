@@ -29,7 +29,7 @@ function AddProject({ setShowAdd, setRerender }) {
     }),
     onSubmit: (values) => {
       axios
-        .post(`${backendURL}${backendURL}/project/add`, values)
+        .post(`${backendURL}/project/add`, values)
         .then((res) => res.data)
         .then((data) => {
           if (data.status === 200) {
@@ -188,8 +188,8 @@ function AddProject({ setShowAdd, setRerender }) {
               console.log(semesters); */
               }
               return (
-                <option key={i} value={item.id}>
-                  {item.id} - {item.name}
+                <option key={i} value={item.Id}>
+                  {item.Id} - {item.Name}
                 </option>
               );
             })}
