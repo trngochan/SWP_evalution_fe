@@ -76,7 +76,8 @@ function SubjectDetails() {
 
       <div className={cx("table-2")}>
         <div className="row">
-          <th className={cx("head-title")}
+          <th
+            className={cx("head-title")}
             style={{
               fontSize: "20px",
             }}
@@ -99,18 +100,18 @@ function SubjectDetails() {
                   (sem) => sem.Id == course.SemesterId
                 );
                 const teachernow = teachers.find(
-                  (teacher) => teacher.id == course.LectureId
+                  (teacher) => teacher.Id == course.LectureId
                 );
                 return (
                   <tr key={i}>
                     <td className="text-center">
                       {semnow?.Year} - {semnow?.Session}
                     </td>
-                    <td className="text-center">{course.id}</td>
-                    <td className="text-center">{course.name}</td>
+                    <td className="text-center">{course.Id}</td>
+                    <td className="text-center">{course.Name}</td>
                     <td className="text-center">{teachernow?.name}</td>
                     <td className="text-center">
-                      <Button to={`/coursedetails/${course.id}`}>
+                      <Button to={`/coursedetails/${course.Id}`}>
                         Details
                       </Button>
                       <button
