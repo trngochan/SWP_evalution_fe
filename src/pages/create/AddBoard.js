@@ -35,10 +35,7 @@ function AddBoard({ rerender }) {
     }),
     onSubmit: async (values, { resetForm }) => {
       values.date = moment(values.date).format("YYYY-MM-DD");
-      const respone = await axios.post(
-        `${backendURL}${backendURL}/evalution/add`,
-        values
-      );
+      const respone = await axios.post(`${backendURL}/evalution/add`, values);
       const data = respone.data;
       if (data.status === 201) {
         resetForm();
