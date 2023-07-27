@@ -156,7 +156,7 @@ function InforStudent() {
                   </tr>
                 </tbody>
               </table>
-              <img src={toad} alt="idea" />
+              <img src={toad} alt="idea" className={cx("image")} />
             </div>
           </div>
         </div>

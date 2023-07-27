@@ -9,7 +9,7 @@
     .wrapper-name {
         border-radius: 15px;
         background-color: #FEAE65;
-        padding: 3px 0;
+        padding: 3px 5px;
 
         .name {
             font-size: 1.6rem;
@@ -21,8 +21,12 @@
 
 
             &:hover {
-                color: #fff;
+                color: #ffffff;
             }
+        }
+
+        &:hover {
+            background-color: rgb(253, 119, 53);
         }
     }
 }

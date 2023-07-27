@@ -253,7 +253,7 @@ function ProjectDetails() {
 
         {showTableListStudents && (
           <section>
-            <Table striped bordered hover>
+            <Table bordered hover>
               <thead className="text-center">
                 <tr>
                   <th>Student CODE</th>
@@ -301,7 +301,7 @@ function ProjectDetails() {
 
         {showTableListStudentNoInCourse && (
           <section>
-            <Table striped bordered hover>
+            <Table bordered hover>
               <thead className="text-center">
                 <tr>
                   <th>Student CODE</th>

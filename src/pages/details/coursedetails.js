@@ -195,7 +195,7 @@ function CourseDetails() {
         <div className="table-list">
           {showTableListProjects && (
             <section>
-              <Table striped bordered hover>
+              <Table bordered hover>
                 <thead className="text-center">
                   <tr>
                     <th>Project ID</th>
@@ -262,7 +262,7 @@ function CourseDetails() {
                 )}
               </tbody>
             </table> */}
-              <Table striped bordered hover>
+              <Table bordered hover>
                 <thead className="text-center">
                   <tr>
                     <th>Code</th>
@@ -331,7 +331,7 @@ function CourseDetails() {
                 )}
               </tbody>
             </table> */}
-              <Table striped bordered hover>
+              <Table bordered hover>
                 <thead className="text-center">
                   <tr>
                     <th>Code</th>
