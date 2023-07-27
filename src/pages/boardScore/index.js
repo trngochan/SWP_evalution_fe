@@ -87,9 +87,14 @@ function TeacherBoardScore() {
     fetchData();
   }, []);
 
-  const courseNow = courses.find((c) => c.id === inforProject?.CourseId);
-  const subjectNow = subjects.find((s) => s.Id === courseNow?.SubjectId);
-  const semNow = semesterList.find((s) => s.Id === courseNow?.SemesterId);
+  const [courseNow, setCourseNow] = useState({});
+  const [subjectNow, setSubnNow] = useState({});
+  const [semNow, setSemNow] = useState({});
+  useEffect(() => {
+    setCourseNow(courses.find((c) => c.id === inforProject?.CourseId));
+    setSubnNow(subjects.find((s) => s.Id === courseNow?.SubjectId));
+    setSemNow(semesterList.find((s) => s.Id === courseNow?.SemesterId));
+  });
 
   useEffect(() => {
     async function fetchData() {
