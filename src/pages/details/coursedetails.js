@@ -158,7 +158,7 @@ function CourseDetails() {
               <tr>
                 <th>Course </th>
                 <td>
-                  {inforCourse?.Nd}_{inforCourse?.Name}
+                  {inforCourse?.Id}_{inforCourse?.Name}
                 </td>
               </tr>
 
