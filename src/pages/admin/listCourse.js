@@ -132,7 +132,7 @@ function ListCourseAdmin() {
                 })
                 .map((course, i) => (
                   <tr key={i}>
-                    <td className="text-center">{course.id}</td>
+                    <td className="text-center">{course.Id}</td>
                     <td className="text-center">
                       {
                         semesterList.find(
@@ -156,14 +156,14 @@ function ListCourseAdmin() {
                     <td
                       className="text-center"
                       onClick={() => {
-                        handleShowProjects(course.id);
+                        handleShowProjects(course.Id);
                       }}
                     >
                       <Link
-                        to={`/coursedetails/${course.id}`}
+                        to={`/coursedetails/${course.Id}`}
                         className={cx("link-style")}
                       >
-                        <FontAwesomeIcon icon={faCircleInfo} /> {course.name}
+                        <FontAwesomeIcon icon={faCircleInfo} /> {course.Name}
                       </Link>
                     </td>
                     <td className="text-center">

@@ -106,12 +106,12 @@ function InforStudent() {
                       className={cx("course-list")}
                       key={i}
                       onClick={() => {
-                        setCourse(course.name);
+                        setCourse(course.Name);
                         showScore(course.CourseId);
                       }}
                     >
                       <button className={cx("course-btn")}>
-                        {course.id} - {course.name}
+                        {course.Id} - {course.Name}
                       </button>
                     </li>
                   );

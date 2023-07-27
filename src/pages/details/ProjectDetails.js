@@ -91,9 +91,9 @@ function ProjectDetails() {
     fetchData();
   }, [rerender]);
 
-  const courseNow = courses.find((c) => c.id == course);
-  const subNow = subjects.find((s) => s.Id == courseNow.SubjectId);
-  const semnow = semesterList.find((sem) => sem.Id == courseNow.SemesterId);
+  const courseNow = courses.find((c) => c.Id == course);
+  const subNow = subjects.find((s) => s.Id == courseNow?.SubjectId);
+  const semnow = semesterList.find((sem) => sem.Id == courseNow?.SemesterId);
 
   async function handleShowStdNoHasProject() {
     const response = await axios.get(
@@ -192,10 +192,10 @@ function ProjectDetails() {
                   <th scope="row">CourseID</th>
                   <td>
                     <Link
-                      to={`/coursedetails/${courseNow?.id}`}
+                      to={`/coursedetails/${courseNow?.Id}`}
                       className={cx("link-style")}
                     >
-                      {courseNow?.name}
+                      {courseNow?.Name}
                     </Link>
                   </td>
                 </tr>

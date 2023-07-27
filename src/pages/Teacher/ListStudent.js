@@ -17,7 +17,7 @@ function StudentsInCourse() {
   useEffect(() => {
     async function fetchData() {
       const req1 = await axios.get(
-        `${backendURL}/student/${cookies.course.id}/course`,
+        `${backendURL}/student/${cookies.course.Id}/course`,
         {}
       );
 
@@ -37,7 +37,7 @@ function StudentsInCourse() {
       <Header2 />
       <div className={cx("container-list")}>
         <h2 className="mt-3 mb-3">
-          List student of course {cookies.course.name}
+          List student of course {cookies.course.Name}
         </h2>
         <Table bordered hover className="text-center">
           <thead>

@@ -100,7 +100,7 @@ function SubjectDetails() {
                   (sem) => sem.Id == course.SemesterId
                 );
                 const teachernow = teachers.find(
-                  (teacher) => teacher.Id == course.LectureId
+                  (teacher) => teacher.id == course.LectureId
                 );
                 return (
                   <tr key={i}>

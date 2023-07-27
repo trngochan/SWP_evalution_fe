@@ -91,7 +91,7 @@ function TeacherBoardScore() {
   const [subjectNow, setSubnNow] = useState({});
   const [semNow, setSemNow] = useState({});
   useEffect(() => {
-    setCourseNow(courses.find((c) => c.id === inforProject?.CourseId));
+    setCourseNow(courses.find((c) => c.Id === inforProject?.CourseId));
     setSubnNow(subjects.find((s) => s.Id === courseNow?.SubjectId));
     setSemNow(semesterList.find((s) => s.Id === courseNow?.SemesterId));
   });
@@ -235,7 +235,7 @@ function TeacherBoardScore() {
                   </tr>
                   <tr>
                     <th scope="row">CourseID</th>
-                    <td>{courseNow?.name}</td>
+                    <td>{courseNow?.Name}</td>
                   </tr>
                   <tr>
                     <th scope="row">Evaluation board</th>

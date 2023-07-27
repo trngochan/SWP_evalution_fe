@@ -158,7 +158,7 @@ function CourseDetails() {
               <tr>
                 <th>Course </th>
                 <td>
-                  {inforCourse?.id}_{inforCourse?.name}
+                  {inforCourse?.Nd}_{inforCourse?.Name}
                 </td>
               </tr>
 
@@ -220,7 +220,7 @@ function CourseDetails() {
                           <td className="text-center">{item.prjId}</td>
                           <td className="text-center">
                             <Link
-                              to={`/projectdetails/${inforCourse?.id}/${item.prjId}`}
+                              to={`/projectdetails/${inforCourse?.Id}/${item.prjId}`}
                               className={cx("link-style")}
                             >
                               {item.Name}

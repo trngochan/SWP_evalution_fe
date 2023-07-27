@@ -173,7 +173,7 @@ function ListProjectAdmin() {
                 })
                 .map((project, i) => {
                   const cournow = courses.find(
-                    (course) => course.id === project.CourseId
+                    (course) => course.Id === project.CourseId
                   );
                   const sub = subjects.find(
                     (subject) => subject.Id === cournow.SubjectId
@@ -189,10 +189,10 @@ function ListProjectAdmin() {
                         {sem?.Year} - {sem?.Session}
                       </td>
                       <td className="text-center">{sub?.Name}</td>
-                      <td className="text-center">{cournow?.name}</td>
+                      <td className="text-center">{cournow?.Name}</td>
                       <td className="text-center">
                         <Link
-                          to={`/projectdetails/${cournow.id}/${project?.Id}`}
+                          to={`/projectdetails/${cournow.Id}/${project?.Id}`}
                           className={cx("link-style")}
                         >
                           <FontAwesomeIcon icon={faCircleInfo} />{" "}

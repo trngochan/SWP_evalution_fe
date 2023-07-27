@@ -116,7 +116,7 @@ function ListCourseTeacher() {
                         {semnow?.Year} - {semnow?.Session}
                       </td>
                       <td className="text-center">{subnow?.Name}</td>
-                      <td className="text-center">{course.id}</td>
+                      <td className="text-center">{course.Id}</td>
                       <td
                         className="text-center"
                         style={{ color: "#fe2c2c" }}
@@ -124,7 +124,7 @@ function ListCourseTeacher() {
                           handleChooseCourse(course);
                         }}
                       >
-                        {course.name}
+                        {course.Name}
                       </td>
                     </tr>
                   );
