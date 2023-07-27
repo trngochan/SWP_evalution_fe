@@ -20,7 +20,25 @@
         margin-bottom: 15px;
 
     }
+
+    table {
+        thead {
+            background-color: #f9b473;
+        }
+    }
+
+    .table {
+        thead {
+            background-color: #f9b473;
+        }
+    }
+
+    .head-title {
+        text-align: center;
+    }
+
 }
+
 
 .btn-showadd {
     background: transparent;

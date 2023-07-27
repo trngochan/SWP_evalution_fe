@@ -134,6 +134,19 @@
       border: 3px solid #91b2ff;
     }
 
+    .image {
+      filter: brightness(90%);
+      /* Áp dụng hiệu ứng mờ */
+      transition: filter 0.3s;
+
+      /* Thêm hiệu ứng chuyển đổi mượt khi hover */
+      &:hover {
+        filter: brightness(110%);
+        border: 3px solid #000;
+        /* Sáng lên khi hover */
+      }
+    }
+
   }
 }
 
@@ -148,12 +161,12 @@
   margin: 100px 60px 150px 60px;
 
   img {
-    width: 70%;
-    height: 70%;
+    width: 86%;
+    height: 86%;
     margin-top: 20px;
     text-align: center;
     border: 3px solid #fb0707;
-    border-radius: 50px;
+    border-radius: 30px;
     margin-left: auto;
     margin-right: auto;
   }

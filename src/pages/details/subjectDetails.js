@@ -76,14 +76,14 @@ function SubjectDetails() {
 
       <div className={cx("table-2")}>
         <div className="row">
-          <th
+          <th className={cx("head-title")}
             style={{
               fontSize: "20px",
             }}
           >
             List course in subject
           </th>
-          <Table striped bordered hover>
+          <Table bordered hover>
             <thead className="text-center">
               <tr>
                 <th>Semester ID</th>

@@ -393,7 +393,7 @@ function BoardDetail() {
         <div className={cx("table-list")}>
           {showTableListTeachers && (
             <div className="row">
-              <Table striped bordered hover>
+              <Table bordered hover>
                 <thead className="text-center">
                   <tr>
                     <th>Teacher ID</th>
@@ -430,7 +430,7 @@ function BoardDetail() {
 
           <div className="row">
             {showTableListProjects && (
-              <Table striped bordered hover>
+              <Table bordered hover>
                 <thead>
                   <tr>
                     <th>Project ID</th>

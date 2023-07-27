@@ -98,7 +98,7 @@ function TemplateDetail() {
           </Button>
         </div>
         <div className="table-list">
-          <Table striped bordered hover>
+          <Table bordered hover>
             <thead>
               <tr>
                 <th className="text-center">Score column ID</th>
