@@ -103,6 +103,7 @@ function CourseDetails() {
           `${backendURL}/teacher/${inforCourse.LectureId}`
         );
         setInforSem(response.data.data?.[0]);
+        console.log(req2.data);
         setInforSub(req2.data?.[0]);
         setInforTeach(req3.data.data?.[0]);
       }
@@ -110,8 +111,6 @@ function CourseDetails() {
 
     getDataSemester();
   }, [inforCourse]);
-
-  console.log(inforCourse);
 
   async function handleShowStudentNotInCourse() {
     const response = await axios.get(
