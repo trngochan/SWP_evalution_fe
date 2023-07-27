@@ -8,6 +8,7 @@ import styles from "./add.module.scss";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import backendURL from "~/URL_BACKEND/urlbackend";
+import moment from "moment";
 
 const cx = classNames.bind(styles);
 
@@ -41,6 +42,7 @@ function AddTeacherList() {
       phone: Yup.string().required("Your phone number is required"),
     }),
     onSubmit: (values) => {
+      values.birthday = moment(values.birthday).format("YYYY-MM-DD");
       axios
         .post(`${backendURL}/teacher/add`, values)
         .then((res) => res.data)
@@ -159,8 +161,24 @@ function AddTeacherList() {
               </span>
             )}
           </div>
-          {error.length > 0 && <p>{error}</p>}
-          {sucess.length > 0 && <p>{sucess}</p>}
+          {error.length > 0 && (
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {error}
+            </p>
+          )}
+          {sucess.length > 0 && (
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {sucess}
+            </p>
+          )}
           <button type="submit" className={cx("form-submit")}>
             Add
           </button>
