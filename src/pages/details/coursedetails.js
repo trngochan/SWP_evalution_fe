@@ -111,7 +111,7 @@ function CourseDetails() {
     getDataSemester();
   }, [inforCourse]);
 
-  console.log(inforSub);
+  console.log(inforCourse);
 
   async function handleShowStudentNotInCourse() {
     const response = await axios.get(
