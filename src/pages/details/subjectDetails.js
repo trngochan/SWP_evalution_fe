@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
+// import { Modal, Button as Btn } from "react-bootstrap";
 
 import { Header2 } from "~/components/layouts/header";
 import styles from "./details.module.scss";
@@ -24,9 +25,16 @@ function SubjectDetails() {
   const [teachers, setTeachers] = useState([]);
   const [idDelete, setIdDelete] = useState(0);
   const [rerender, setRerender] = useState(false);
+  const [showModalAdd, setShowModalAdd] = useState(false);
+
 
   const handleClose = () => {
-    setShowConfirm(false);
+    setShowModalAdd(false);
+    setShowModalAdd(false);
+  };
+
+  const handleAdd = () => {
+    setShowModalAdd(true);
   };
 
   const handleClickDelete = async (id) => {
@@ -97,7 +105,13 @@ function SubjectDetails() {
             }}
           >
             List course in subject
+            {/* <div className={cx("btn-view-add")}> */}
+          <Button active onClick={() => handleAdd()}>
+            + Add
+          </Button>
+        {/* </div> */}
           </th>
+          
           <Table bordered hover>
             <thead className="text-center">
               <tr>
@@ -111,10 +125,10 @@ function SubjectDetails() {
             <tbody>
               {courses.map((course, i) => {
                 const semnow = semesterList.find(
-                  (sem) => sem.Id == course.SemesterId
+                  (sem) => sem.Id === course.SemesterId
                 );
                 const teachernow = teachers.find(
-                  (teacher) => teacher.id == course.LectureId
+                  (teacher) => teacher.id === course.LectureId
                 );
                 return (
                   <tr key={i}>
@@ -176,6 +190,88 @@ function SubjectDetails() {
             onClick={handleClose}
           >
             Cancel
+          </Btn>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showModalAdd} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add project</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form >
+          <label className={cx("form-label", "mb-2")}>Semester:</label>
+          <select
+            className={cx("form-select")}
+            name="semesterId"
+            // onBlur={formik.handleBlur}
+            // onChange={formik.handleChange}
+            // value={formik.values.semesterId}
+          >
+            <option value="">Select Semester</option>
+            {/* {semesters.map((semester, i) => (
+              <option key={i} value={semester.Id}>
+                {semester.Year} {semester.Session}
+              </option>
+            ))} */}
+          </select>
+          {/* {formik.errors.semesterId && formik.touched.semesterId && (
+            <span className={cx("form-message")}>
+              {formik.errors.semesterId}
+            </span>
+          )} */}
+
+        <label className={cx("form-label", "mb-2")}>Lecture:</label>
+          <select
+            className={cx("form-select")}
+            name="semesterId"
+            // onBlur={formik.handleBlur}
+            // onChange={formik.handleChange}
+            // value={formik.values.semesterId}
+          >
+            <option value="">Select Lecture</option>
+            {/* {semesters.map((semester, i) => (
+              <option key={i} value={semester.Id}>
+                {semester.Year} {semester.Session}
+              </option>
+            ))} */}
+          </select>
+          {/* {formik.errors.semesterId && formik.touched.semesterId && (
+            <span className={cx("form-message")}>
+              {formik.errors.semesterId}
+            </span>
+          )} */}
+
+          <label>Name:</label>
+            <input
+              className={"form-control"}
+              placeholder="Enter name"
+              type="text"
+              // name="birthday"
+              // value={formik.values.birthday}
+              // onChange={formik.handleChange}
+            />
+            {/* {formik.errors.birthday && formik.touched.birthday && (
+              <span className={"form-message"}>{formik.errors.birthday}</span>
+            )} */}    
+            
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn
+            variant="secondary"
+            onClick={handleClose}
+            className={cx("btn-bt")}
+          >
+            Close
+          </Btn>
+          <Btn
+            type="submit"
+            variant="primary"
+            // onClick={formik.handleSubmit}
+            className={cx("btn-bt")}
+          >
+            Add
           </Btn>
         </Modal.Footer>
       </Modal>

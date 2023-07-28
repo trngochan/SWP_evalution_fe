@@ -60,12 +60,12 @@ function AddProject({ setShowAdd, setRerender }) {
       }
 
       fetchData();
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   useEffect(() => {
     try {
-      if (formik.values.semester != 0 && formik.values.subject != 0) {
+      if (formik.values.semester !== 0 && formik.values.subject !== 0) {
         async function fetchData() {
           const r = await axios.get(
             `${backendURL}/course/${formik.values.semester}/${formik.values.subject}`

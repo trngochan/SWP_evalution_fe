@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import React from "react";
 import Table from "react-bootstrap/Table";
+import { Modal, Button as Btn } from "react-bootstrap";
 
 import { Header2 } from "~/components/layouts/header";
 import Button from "~/components/button";
@@ -33,6 +34,7 @@ function CourseDetails() {
   const [inforSem, setInforSem] = useState({});
   const [inforSub, setInforSub] = useState({});
   const [inforTeach, setInforTeach] = useState({});
+  const [showModalAdd, setShowModalAdd] = useState(false);
 
   const handleShowTableProjects = () => {
     setShowTableListProjects(true);
@@ -129,6 +131,14 @@ function CourseDetails() {
     setRerender(!rerender);
   }
 
+  const handleClose = () => {
+    setShowModalAdd(false);
+  };
+
+  const handleAdd = () => {
+    setShowModalAdd(true);
+  }
+
   return (
     <>
       <Header2 />
@@ -198,6 +208,12 @@ function CourseDetails() {
           >
             Add student
           </Button>
+          <Button
+            className={cx("mb-5 mt-5 show")}
+            onClick={() => handleAdd()}
+          >
+            Add project
+          </Button>
         </div>
 
         <div className="table-list">
@@ -239,36 +255,6 @@ function CourseDetails() {
 
           {showTableListStudents && (
             <section>
-              {/* <table>
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Name</th>
-                  <th>Birth day</th>
-                  <th>Adress</th>
-                </tr>
-              </thead>
-              <tbody>
-                {student.length > 0 ? (
-                  student.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{item.code}</td>
-                        <td>{item.name}</td>
-                        <td>
-                          {item.birthday
-                            ? JSON.stringify(item.birthday).slice(1, 11)
-                            : "No infor"}
-                        </td>
-                        <td>{item.adress ? item.adress : "No infor"}</td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <p>No item</p>
-                )}
-              </tbody>
-            </table> */}
               <Table bordered hover>
                 <thead className="text-center">
                   <tr>
@@ -306,40 +292,6 @@ function CourseDetails() {
 
           {showTableListStudentsNotInCourse && (
             <section>
-              {/* <table>
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Name</th>
-                  <th>Birth day</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {studentNotCour.length > 0 ? (
-                  studentNotCour.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{item.Code}</td>
-                        <td>{item.Name}</td>
-                        <td>
-                          {item.BirthDay
-                            ? JSON.stringify(item.BirthDay).slice(1, 11)
-                            : "No infor"}
-                        </td>
-                        <td>
-                          <Button onClick={() => handleAddStdInCour(item.Id)}>
-                            Add
-                          </Button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <p>No item</p>
-                )}
-              </tbody>
-            </table> */}
               <Table bordered hover>
                 <thead className="text-center">
                   <tr>
@@ -381,6 +333,62 @@ function CourseDetails() {
           )}
         </div>
       </div>
+
+      <Modal show={showModalAdd} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add project</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form >
+            <label htmlFor="name">Project Name:</label>
+            <input
+              className={"form-control"}
+              placeholder="Enter name for project"
+              // type="text"
+              // name="name"
+              // value={formik.values.name}
+              // onChange={formik.handleChange}
+            />
+            {/* {formik.errors.name && formik.touched.name && (
+              <span className={"form-message"}>{formik.errors.name}</span>
+            )} */}
+            <br />
+
+            <label>Note:</label>
+            <input
+              className={"form-control"}
+              placeholder="Enter note"
+              // type="date"
+              // name="birthday"
+              // value={formik.values.birthday}
+              // onChange={formik.handleChange}
+            />
+            {/* {formik.errors.birthday && formik.touched.birthday && (
+              <span className={"form-message"}>{formik.errors.birthday}</span>
+            )} */}
+            <br />
+
+            
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Btn
+            variant="secondary"
+            onClick={handleClose}
+            className={cx("btn-bt")}
+          >
+            Close
+          </Btn>
+          <Btn
+            type="submit"
+            variant="primary"
+            // onClick={formik.handleSubmit}
+            className={cx("btn-bt")}
+          >
+            Add
+          </Btn>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
