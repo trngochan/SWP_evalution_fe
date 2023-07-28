@@ -43,30 +43,35 @@ function HomeAdmin() {
               <Button
                 onClick={() => handleButtonClick("board")}
                 small={activeButton === "board"}
+                list={activeButton === "board"}
               >
                 <FontAwesomeIcon icon={faMarker} /> Evaluation Board
               </Button>
               <Button
                 onClick={() => handleButtonClick("subject")}
                 small={activeButton === "subject"}
+                list={activeButton === "subject"}
               >
                 <FontAwesomeIcon icon={faS} /> Subject
               </Button>
               <Button
                 onClick={() => handleButtonClick("course")}
                 small={activeButton === "course"}
+                list={activeButton === "course"}
               >
                 <FontAwesomeIcon icon={faScroll} /> Course
               </Button>
               <Button
                 onClick={() => handleButtonClick("project")}
                 small={activeButton === "project"}
+                list={activeButton === "project"}
               >
                 <FontAwesomeIcon icon={faLaptopFile} /> Project
               </Button>
               <Button
                 onClick={() => handleButtonClick("std")}
                 small={activeButton === "std"}
+                list={activeButton === "std"}
               >
                 <FontAwesomeIcon icon={faGraduationCap} /> Student
               </Button>
@@ -74,6 +79,7 @@ function HomeAdmin() {
               <Button
                 onClick={() => handleButtonClick("teach")}
                 small={activeButton === "teach"}
+                list={activeButton === "teach"}
               >
                 <FontAwesomeIcon icon={faPersonChalkboard} /> Lecturer
               </Button>
@@ -81,6 +87,7 @@ function HomeAdmin() {
               <Button
                 onClick={() => handleButtonClick("template")}
                 small={activeButton === "template"}
+                list={activeButton === "template"}
               >
                 <FontAwesomeIcon icon={faFilm} /> Template Score
               </Button>
@@ -88,6 +95,7 @@ function HomeAdmin() {
               <Button
                 onClick={() => handleButtonClick("semester")}
                 small={activeButton === "semester"}
+                list={activeButton === "semester"}
               >
                 <FontAwesomeIcon icon={faCalendarDays} /> Semester
               </Button>

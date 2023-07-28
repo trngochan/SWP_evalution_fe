@@ -26,17 +26,15 @@
     }
 }
 
-.list {
+.small {
     padding: 5px 15px;
     background-color: #fff;
 
-    &:hover {
-        background-color: #fac4c4;
-    }
+}
 
-    &:focus {
-        background-color: #f29d9d;
-    }
+.list {
+    padding: 5px 15px;
+    background-color: #FEAE65;
 }
 
 .primary {
@@ -52,15 +50,7 @@
 
 }
 
-.small {
-    padding: 5px 15px;
-    background-color: #fff;
 
-    &:focus {
-        background-color: #FEAE65;
-    }
-
-}
 
 
 .active {
