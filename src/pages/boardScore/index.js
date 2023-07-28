@@ -64,7 +64,7 @@ function TeacherBoardScore() {
       );
       const req3 = await axios.get(`${backendURL}/project/getallpubliced`);
       const req6 = await axios.get(
-        `/evalution/${cookies.project_id}/getbyproject`
+        `${backendURL}/evalution/${cookies.project_id}/getbyproject`
       );
       const req7 = await axios.get(`${backendURL}/semester/getall`, {});
       const req8 = await axios.get(`${backendURL}/subject/getall`);
