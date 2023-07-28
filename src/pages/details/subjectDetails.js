@@ -6,11 +6,12 @@ import Table from "react-bootstrap/Table";
 
 import { Header2 } from "~/components/layouts/header";
 import styles from "./details.module.scss";
-import Divider from "~/components/Divider";
 import Button from "~/components/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button as Btn } from "react-bootstrap";
+import backendURL from "~/URL_BACKEND/urlbackend";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -21,30 +22,45 @@ function SubjectDetails() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [semesterList, setsemesterList] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [idDelete, setIdDelete] = useState(0);
+  const [rerender, setRerender] = useState(false);
 
   const handleClose = () => {
     setShowConfirm(false);
   };
 
-  const handleDelete = (id) => {
+  const handleClickDelete = async (id) => {
     setShowConfirm(true);
+    setIdDelete(id);
   };
+
+  async function handleDelete() {
+    const response = await axios.delete(`${backendURL}/course/${idDelete}`);
+
+    if (response.data.status === 200) {
+      setRerender(!rerender);
+      toast.success("Deleted course successfully");
+      handleClose();
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(`/subject/${subject}/getbyid`);
-      const response1 = await axios.get(`/course/${subject}/getbysubject`);
-      const req2 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
-      const req4 = await axios.get("/teacher/getall");
+      const response = await axios.get(
+        `${backendURL}/subject/${subject}/getbyid`
+      );
+      const response1 = await axios.get(
+        `${backendURL}/course/${subject}/getbysubject`
+      );
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
+      const req4 = await axios.get(`${backendURL}/teacher/getall`);
       setTeachers(req4.data);
       setCourses(response1.data);
       setInforSubject(response.data?.[0]);
       setsemesterList(req2.data);
     }
     fetchData();
-  }, []);
+  }, [rerender]);
 
   console.log(teachers);
   return (
@@ -73,16 +89,16 @@ function SubjectDetails() {
       </div>
 
       <div className={cx("table-2")}>
-        <Divider />
         <div className="row">
           <th
+            className={cx("head-title")}
             style={{
               fontSize: "20px",
             }}
           >
             List course in subject
           </th>
-          <Table striped bordered hover>
+          <Table bordered hover>
             <thead className="text-center">
               <tr>
                 <th>Semester ID</th>
@@ -95,26 +111,26 @@ function SubjectDetails() {
             <tbody>
               {courses.map((course, i) => {
                 const semnow = semesterList.find(
-                  (sem) => sem.Id == course.SemesterId
+                  (sem) => sem.Id === course.SemesterId
                 );
                 const teachernow = teachers.find(
-                  (teacher) => teacher.id == course.LectureId
+                  (teacher) => teacher.id === course.LectureId
                 );
                 return (
                   <tr key={i}>
                     <td className="text-center">
                       {semnow?.Year} - {semnow?.Session}
                     </td>
-                    <td className="text-center">{course.id}</td>
-                    <td className="text-center">{course.name}</td>
+                    <td className="text-center">{course.Id}</td>
+                    <td className="text-center">{course.Name}</td>
                     <td className="text-center">{teachernow?.name}</td>
                     <td className="text-center">
-                      <Button to={`/coursedetails/${course.id}`}>
+                      <Button to={`/coursedetails/${course.Id}`}>
                         Details
                       </Button>
                       <button
                         className={cx("btn-dl")}
-                        onClick={() => handleDelete()}
+                        onClick={() => handleClickDelete(course.Id)}
                       >
                         <FontAwesomeIcon icon={faTrashCan} /> Remove
                       </button>
@@ -141,12 +157,17 @@ function SubjectDetails() {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            This action can't be undone!! Do you want to remove this subject?
+            This action can't be undone!! Do you want to remove this subject ID
+            = {idDelete}?
             <br />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Btn variant="primary" className={cx("btn-bt")} onClick={handleClose}>
+          <Btn
+            variant="primary"
+            className={cx("btn-bt")}
+            onClick={handleDelete}
+          >
             Confirm
           </Btn>
           <Btn

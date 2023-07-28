@@ -13,6 +13,7 @@ import Button from "~/components/button";
 import ListCourseTeacher from "../Teacher/ListCourseTeacher";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faScroll, faMarker } from '@fortawesome/free-solid-svg-icons';
+import albert from '~/components/img/albert.jpg'
 
 const cx = classNames.bind(styles);
 
@@ -46,16 +47,18 @@ function HomeTeacher() {
         <div className={cx("row")}>
           <div className={cx("col-3")}>
             <div className={cx("nav-teacher")}>
-              <Button onClick={handleCourses} small={isCoursesButtonPrimary}>
+              <Button onClick={handleCourses} list={isCoursesButtonPrimary} >
                 <FontAwesomeIcon icon={faScroll} /> Courses
               </Button>
-              <Button onClick={handleEvaluation} small={isEvaluationsButtonPrimary}>
+              <Button onClick={handleEvaluation} list={isEvaluationsButtonPrimary}>
                 <FontAwesomeIcon icon={faMarker} /> Evaluations
               </Button>
+              <img src={albert} alt="Albert Einstein" />
             </div>
           </div>
-          <div className={cx("col-9")}>
+          <div className={cx("col-10")}>
             {isShowBoard ? <ListBoardTeacher /> : <ListCourseTeacher />}
+
           </div>
         </div>
       </div>

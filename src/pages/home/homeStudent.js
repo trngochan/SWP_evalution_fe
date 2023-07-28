@@ -6,11 +6,13 @@ import { Header2 } from "~/components/layouts/header";
 import classNames from "classnames/bind";
 import styles from "./home.module.scss";
 import Footer from "~/components/layouts/footer";
+import toad from "~/components/img/toad.png";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
 function InforStudent() {
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies] = useCookies();
   if (!cookies.user) {
     // window.location.href = "/";
   }
@@ -25,12 +27,11 @@ function InforStudent() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/course/${cookies.user.id}/student`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(
+        `${backendURL}/course/${cookies.user.id}/student`,
+        {}
+      );
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
 
       return axios.all([req1, req2]).then(
         axios.spread((listCourse, listSemester) => {
@@ -50,14 +51,12 @@ function InforStudent() {
 
   async function showScore(courseId) {
     const response = await axios.post(
-      "score/get",
+      `${backendURL}/score/get`,
       {
         id: cookies.user.id,
         courseId: courseId,
       },
-      {
-        withCredentials: true,
-      }
+      {}
     );
 
     if (response.data.status === 201) {
@@ -76,82 +75,87 @@ function InforStudent() {
     <div>
       <Header2 />
       <div className={cx("container-student")}>
-        <h2 className={cx("container-title")}>
-          Grade report for {cookies.user?.username}
-        </h2>
         <div className="row mt-4">
           <div className="col-3">
-            <select
-              className={cx("form-select")}
-              aria-label="Default select example"
-              defaultValue={""}
-              onClick={(e) => {
-                handleChooseSem(e.target.value);
-              }}
-            >
-              <option value="0">All semester</option>
-              {semesters.map((semester, i) => {
-                return (
-                  <option key={i} value={semester.Id}>
-                    {semester.Year} - {semester.Session}{" "}
-                  </option>
-                );
-              })}
-            </select>
-            {listCourse
-              .filter(function (item) {
-                if (parseInt(semId) === 0) return true;
-                else return parseInt(item.SemesterId) === parseInt(semId);
-              })
-              .map((course, i) => {
-                return (
-                  <li
-                    className={cx("course-list")}
-                    key={i}
-                    onClick={() => {
-                      setCourse(course.name);
-                      showScore(course.CourseId);
-                    }}
-                  >
-                    <button className={cx("course-btn")}>
-                      {course.id} - {course.name}
-                    </button>
-                  </li>
-                );
-              })}
+            <div className={cx("container-select")}>
+              <select
+                className={cx("form-select")}
+                aria-label="Default select example"
+                defaultValue={""}
+                onClick={(e) => {
+                  handleChooseSem(e.target.value);
+                }}
+              >
+                <option value="0">All semester</option>
+                {semesters.map((semester, i) => {
+                  return (
+                    <option key={i} value={semester.Id}>
+                      {semester.Year} - {semester.Session}{" "}
+                    </option>
+                  );
+                })}
+              </select>
+              {listCourse
+                .filter(function (item) {
+                  if (parseInt(semId) === 0) return true;
+                  else return parseInt(item.SemesterId) === parseInt(semId);
+                })
+                .map((course, i) => {
+                  return (
+                    <li
+                      className={cx("course-list")}
+                      key={i}
+                      onClick={() => {
+                        setCourse(course.Name);
+                        showScore(course.CourseId);
+                      }}
+                    >
+                      <button className={cx("course-btn")}>
+                        {course.Id} - {course.Name}
+                      </button>
+                    </li>
+                  );
+                })}
+            </div>
           </div>
           <div className="col-9">
-            <table className="table mt-5">
-              <thead>
-                <tr>
-                  <th scope="row">Course</th>
-                  <th scope="col">{course}</th>
-                </tr>
-                <tr>
-                  <th scope="col" className={cx("col")}>
-                    COURSE TOTAL AVERAGE
-                  </th>
-                  <th scope="col">{scores}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">STATUS</th>
-                  <td
-                    className={cx("pass")}
-                    style={
-                      message
-                        ? { color: "black" }
-                        : !status
+            <div className={cx("result-table")}>
+              <h2 className={cx("container-title")}>
+                Grade report for {cookies.user?.username}
+              </h2>
+              <table className="table mt-5">
+                <thead>
+                  <tr>
+                    <th scope="row">Course</th>
+                    <th scope="col">{course}</th>
+                  </tr>
+                  <tr>
+                    <th scope="col" className={cx("col")}>
+                      COURSE TOTAL AVERAGE
+                    </th>
+                    <th scope="col">{scores}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">STATUS</th>
+                    <td
+                      className={cx("pass")}
+                      style={
+                        message
+                          ? { color: "black" }
+                          : !status
                           ? { color: "red" }
                           : {}
-                    }
-                  >
-                    {message ? message : status ? "PASS" : "NOT PASS"}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      }
+                    >
+                      {message ? message : status ? "PASS" : "NOT PASS"}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <img src={toad} alt="idea" className={cx("image")} />
+            </div>
           </div>
         </div>
       </div>

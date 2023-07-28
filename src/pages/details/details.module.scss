@@ -12,7 +12,33 @@
     border-radius: 20px;
     border: 2px solid #000;
     margin: 0 40px 50px 40px;
+
+    .title-table {
+        display: flex;
+        cursor: pointer;
+        position: relative;
+        margin-bottom: 15px;
+
+    }
+
+    table {
+        thead {
+            background-color: #f9b473;
+        }
+    }
+
+    .table {
+        thead {
+            background-color: #f9b473;
+        }
+    }
+
+    .head-title {
+        text-align: center;
+    }
+
 }
+
 
 .btn-showadd {
     background: transparent;
@@ -28,13 +54,7 @@
     margin-top: 10px;
 }
 
-.title-table {
-    display: flex;
-    cursor: pointer;
-    margin-bottom: 30px;
-    position: relative;
-    margin-top: 20px;
-}
+
 
 .show {
     display: flex;
@@ -46,14 +66,6 @@
 
 .btn-show {
     margin-right: 20px;
-}
-
-.btn-publiced {
-    padding: 4px 10px;
-    background-color: #8df45e;
-    border-radius: 20px;
-    border: 1px solid #000;
-    margin-left: 10px;
 }
 
 button {
@@ -114,4 +126,21 @@ button span::before {
 //link-style
 .link-style {
     color: #005dfe;
+}
+
+// button public-no public
+.btn-publiced {
+    padding: 2px 10px;
+    background-color: #8df45e;
+    border-radius: 20px;
+    border: 1px solid #000;
+    margin-left: 10px;
+}
+
+.btn-nopublic {
+    padding: 2px 10px;
+    background-color: #ff1900;
+    border-radius: 20px;
+    border: 1px solid #000;
+    margin-left: 10px;
 }

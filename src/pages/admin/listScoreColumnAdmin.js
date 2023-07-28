@@ -15,7 +15,7 @@ function ListScoreColumnAdmin() {
   return (
     <div>
       <Button primary onClick={() => setShowAdd(!isShowAdd)}>
-        {isShowAdd ? "View" : "Add"}
+        {isShowAdd ? "View" : "+Add"}
       </Button>
       {isShowAdd ? (
         <AddScoreColumn />

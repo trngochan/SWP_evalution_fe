@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Brandon Printed Font Family';
+    src: url('../../font/HvDTrial_Brandon_Printed_Two_Shadow-BF64c1d1b912041.ttf') format('truetype');
+}
+
 .container {
     width: 100%;
     height: 150px;
@@ -5,13 +10,15 @@
     justify-content: space-between;
     align-items: center;
     background-color: #F6FAFF;
+    border-bottom: 2px solid #000;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
     padding: 0px 50px 0 50px;
-    border-bottom: 1px solid #000;
 
     .title {
         font-size: 4rem;
-        color: #E88F7C;
-        font-weight: bold;
+        color: #ec7a60;
+        font-family: 'Brandon Printed Font Family', sans-serif;
 
         @keyframes jump {
             0% {
@@ -48,18 +55,23 @@
     justify-content: space-between;
     padding: 30px 50px 20px 50px;
     background-color: #F6FAFF;
-    border-bottom: 1px solid #000;
+    border-bottom: 2px solid #000;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
 
 
     .logo {
-        width: 220px;
-        height: 85.5px;
+        width: 147px;
+        height: 57px;
+        margin-left: 10px;
+        cursor: pointer;
     }
 
     .title {
-        margin-top: 30px;
-        font-weight: bold;
-        color: #E88F7C;
+        margin-top: 15px;
+        color: #ec7a60;
+        font-size: 4rem;
+        font-family: 'Brandon Printed Font Family';
 
         @keyframes jump {
             0% {

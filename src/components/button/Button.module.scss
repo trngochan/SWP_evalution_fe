@@ -8,25 +8,36 @@
     font-size: 1.6rem;
     color: white;
     font-weight: 500px;
-    background-color: transparent;
+    background-color: #fff;
     user-select: none;
     border: 1px solid #000000;
-    margin-right: 20px;
+    margin-right: 10px;
     margin-top: 10px;
     margin-left: 8px;
-    margin-bottom: 3px;
+
+
 
     &:hover {
         background-color: #f7c79b;
     }
-
-
 
     .title {
         color: #000000;
     }
 }
 
+.list {
+    padding: 5px 15px;
+    background-color: #fff;
+
+    &:hover {
+        background-color: #fac4c4;
+    }
+
+    &:focus {
+        background-color: #f29d9d;
+    }
+}
 
 .primary {
     background-color: #fff;
@@ -38,14 +49,17 @@
     &:focus {
         background-color: #FEAE65;
     }
+
 }
 
 .small {
     padding: 5px 15px;
+    background-color: #fff;
 
     &:focus {
         background-color: #FEAE65;
     }
+
 }
 
 
@@ -60,10 +74,7 @@
 }
 
 
-.notActive {
-    color: whitesmoke;
-    background-color: gainsboro;
-}
+.notActive {}
 
 .edit {
     width: auto;
@@ -76,10 +87,14 @@
 }
 
 .remove {
-    color: whitesmoke;
-    background-color: #ff707e;
+    padding: 5px 10px;
+    background-color: #887f7f;
+    border-radius: 20px;
+    border: 2px solid #000;
+    color: #fff;
 
     &:hover {
-        background-color: #f44153;
+        color: #e6e4e4;
+        background-color: #f04242;
     }
 }

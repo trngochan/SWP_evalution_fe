@@ -11,10 +11,10 @@ import axios from "axios";
 
 import { Header2 } from "~/components/layouts/header";
 import { Link } from "react-router-dom";
-import Divider from "~/components/Divider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -91,26 +91,30 @@ function BoardDetail() {
       try {
         async function fetchData() {
           setShow("project");
-          const respone = await axios.get(`/project/${board}/evalution`);
-          const req5 = await axios.get(`/project/getallpubliced`);
-          const req6 = await axios.get(`/evalution/${board}`);
+          const respone = await axios.get(
+            `${backendURL}/project/${board}/evalution`
+          );
+          const req5 = await axios.get(`${backendURL}/project/getallpubliced`);
+          const req6 = await axios.get(`${backendURL}/evalution/${board}`);
           setBoardDetails(req6.data.data[0]);
 
           const data = respone.data;
 
           for (let i = 0; i < data.length; i++) {
             const response1 = await axios.get(
-              `/teacher/${data[i].id}/quaninboard`
+              `${backendURL}/teacher/${data[i].id}/quaninboard`
             );
             const response2 = await axios.get(
-              `/teacher/${data[i].id}/quanmarked`
+              `${backendURL}/teacher/${data[i].id}/quanmarked`
             );
             data[i].teacherMark = {
               teacherQuan: response1.data[0].totalTeacher,
               teacherQuanMarked: response2.data[0].totalTeachersMark,
             };
           }
-          const respone1 = await axios.get(`/teacher/${board}/linb`);
+          const respone1 = await axios.get(
+            `${backendURL}/teacher/${board}/linb`
+          );
           setTeachers(respone1.data);
           setListProject(data);
           setProjectsPucliced(req5.data.data);
@@ -128,12 +132,16 @@ function BoardDetail() {
 
   useEffect(() => {
     async function fetchData() {
-      const req7 = await axios.get(`/semester/${boardDetails.SemesterId}`);
+      const req7 = await axios.get(
+        `${backendURL}/semester/${boardDetails.SemesterId}`
+      );
       setSem(req7.data.data?.[0]);
       const req8 = await axios.get(
-        `/subject/${boardDetails.SubjectId}/getbyid`
+        `${backendURL}/subject/${boardDetails.SubjectId}/getbyid`
       );
-      const req9 = await axios.get(`/template/${boardDetails.TemplateId}`);
+      const req9 = await axios.get(
+        `${backendURL}/template/${boardDetails.TemplateId}`
+      );
       setTemplate(req9.data.data?.[0]);
       setSubject(req8.data?.[0]);
     }
@@ -144,17 +152,19 @@ function BoardDetail() {
   async function handleShowProInBoard() {
     try {
       setShow("add");
-      const respone = await axios.get(`/project/${board}/projectsnoboard`);
+      const respone = await axios.get(
+        `${backendURL}/project/${board}/projectsnoboard`
+      );
       const data = respone.data;
       if (data.status === 201) {
         setListProOutBoard(data.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async function handlePublic(id, marked, quan) {
     if (marked === quan && quan > 0) {
-      const response = await axios.post(`/project/${id}/public`);
+      const response = await axios.post(`${backendURL}/project/${id}/public`);
       if (response.data.status === 200) {
         window.location.reload();
         // setError("");
@@ -168,18 +178,20 @@ function BoardDetail() {
 
   async function handleShowAddTeacher() {
     try {
-      const respone = await axios.get(`/teacher/${board}/notinboard`);
+      const respone = await axios.get(
+        `${backendURL}/teacher/${board}/notinboard`
+      );
       if (respone.status === 200) {
         setShow("teacher");
         setTeachersnotinboard(respone.data);
       } else {
         setError("Error: at handleShowAddTeacher");
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async function handleAddTeacherInBoard(teacherId) {
-    const respone = await axios.post("/lectureinboard/add", {
+    const respone = await axios.post(`${backendURL}/lectureinboard/add`, {
       teacherId,
       boardId: board,
     });
@@ -205,13 +217,16 @@ function BoardDetail() {
       const protectTime = protectTimeInput.value; // Lấy giá trị của ô input protect time tương ứng
 
       if (intendTime.length > 0 && protectTime.length > 0 && order.length > 0) {
-        const response = await axios.post("/projectinboard/insert", {
-          projectId: projectId,
-          boardId: board,
-          intendTime: intendTime,
-          order: order,
-          protectTime: protectTime,
-        });
+        const response = await axios.post(
+          `${backendURL}/projectinboard/insert`,
+          {
+            projectId: projectId,
+            boardId: board,
+            intendTime: intendTime,
+            order: order,
+            protectTime: protectTime,
+          }
+        );
 
         if (response.status === 200) {
           setRerender(!rerender);
@@ -233,7 +248,7 @@ function BoardDetail() {
   }
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/lectureinboard/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/lectureinboard/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);
@@ -288,12 +303,14 @@ function BoardDetail() {
                 </tr>
                 <tr>
                   <th scope="row">Subject Id</th>
-                  <td><Link
-                    to={`/subjectdetails/${subject?.Id}`}
-                    className={cx("link-style")}
-                  >
-                    {subject?.Name}
-                  </Link></td>
+                  <td>
+                    <Link
+                      to={`/subjectdetails/${subject?.Id}`}
+                      className={cx("link-style")}
+                    >
+                      {subject?.Name}
+                    </Link>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Template Id</th>
@@ -376,7 +393,7 @@ function BoardDetail() {
         <div className={cx("table-list")}>
           {showTableListTeachers && (
             <div className="row">
-              <Table striped bordered hover>
+              <Table bordered hover>
                 <thead className="text-center">
                   <tr>
                     <th>Teacher ID</th>
@@ -411,11 +428,9 @@ function BoardDetail() {
             </div>
           )}
 
-          {/* <Divider /> */}
-
           <div className="row">
             {showTableListProjects && (
-              <Table striped bordered hover>
+              <Table bordered hover>
                 <thead>
                   <tr>
                     <th>Project ID</th>
@@ -457,7 +472,7 @@ function BoardDetail() {
                               onClick={() => {
                                 if (
                                   item.teacherMark.teacherQuanMarked ==
-                                  item.teacherMark.teacherQuan &&
+                                    item.teacherMark.teacherQuan &&
                                   item.teacherMark.teacherQuan > 0
                                 ) {
                                   handlePublic(
@@ -483,8 +498,6 @@ function BoardDetail() {
             )}
           </div>
         </div>
-
-        <Divider />
 
         <Snackbar
           open={openSnackBar}

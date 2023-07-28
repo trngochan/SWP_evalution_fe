@@ -12,13 +12,14 @@ import { Modal, Button as Btn } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
 function ListSubjectAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
   const [subjects, setSubjects] = useState([]);
-  const [semesters, setSemesters] = useState([]);
+  const [semester, setSemesters] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
   const [rerender, setRerender] = useState(false);
@@ -34,8 +35,8 @@ function ListSubjectAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get("subject/getall");
-      const response1 = await axios.get("semester/getall");
+      const response = await axios.get(`${backendURL}/subject/getall`);
+      const response1 = await axios.get(`${backendURL}/semester/getall`);
 
       setSubjects(response.data);
       setSemesters(response1.data);
@@ -45,7 +46,7 @@ function ListSubjectAdmin() {
   }, [rerender]);
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/subject/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/subject/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);
@@ -54,19 +55,19 @@ function ListSubjectAdmin() {
   }
 
   return (
-    <div className={cx("container-board")}>
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <BoardHeader message={"Subjects"} />
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
+            {isShowAdd ? "View" : "+Add"}
           </Button>
         </div>
       </div>
       {isShowAdd ? (
         <AddSubject />
       ) : (
-        <Table striped bordered hover>
+        <Table bordered hover>
           <thead className="text-center">
             <tr>
               <th>ID</th>

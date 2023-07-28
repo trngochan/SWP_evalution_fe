@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 function Public() {
   const [listProject, setListProject] = useState([]);
@@ -8,15 +9,15 @@ function Public() {
   useEffect(() => {
     try {
       async function fetchData() {
-        const response = await axios.get("/project/getall");
+        const response = await axios.get(`${backendURL}/project/getall`);
         const data = response.data;
 
         for (let i = 0; i < data.length; i++) {
           const response1 = await axios.get(
-            `/teacher/${data[i].Id}/quaninboard`
+            `${backendURL}/teacher/${data[i].Id}/quaninboard`
           );
           const response2 = await axios.get(
-            `/teacher/${data[i].Id}/quanmarked`
+            `${backendURL}/teacher/${data[i].Id}/quanmarked`
           );
           data[i].teacherMark = {
             teacherQuan: response1.data[0].totalTeacher,

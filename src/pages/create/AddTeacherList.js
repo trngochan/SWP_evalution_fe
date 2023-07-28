@@ -7,6 +7,8 @@ import classNames from "classnames/bind";
 import styles from "./add.module.scss";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import backendURL from "~/URL_BACKEND/urlbackend";
+import moment from "moment";
 
 const cx = classNames.bind(styles);
 
@@ -40,8 +42,9 @@ function AddTeacherList() {
       phone: Yup.string().required("Your phone number is required"),
     }),
     onSubmit: (values) => {
+      values.birthday = moment(values.birthday).format("YYYY-MM-DD");
       axios
-        .post("/teacher/add", values)
+        .post(`${backendURL}/teacher/add`, values)
         .then((res) => res.data)
         .then((data) => {
           if (data.status === 200) {
@@ -67,7 +70,7 @@ function AddTeacherList() {
         <form onSubmit={formik.handleSubmit} className={cx("form")}>
           <h2 className={cx("heading")}>Add Teacher</h2>
           <div className={cx("form-group")}>
-          <label className={cx("form-label")}>Name:</label>
+            <label className={cx("form-label")}>Name:</label>
             <input
               className={cx("form-control")}
               placeholder="Enter Name"
@@ -90,7 +93,9 @@ function AddTeacherList() {
               name="birthday"
             />
             {formik.errors.birthday && formik.touched.birthday && (
-              <span className={cx("form-message")}>{formik.errors.birthday}</span>
+              <span className={cx("form-message")}>
+                {formik.errors.birthday}
+              </span>
             )}
           </div>
           <div className={cx("form-group")}>
@@ -103,7 +108,7 @@ function AddTeacherList() {
               onChange={formik.handleChange}
               name="phone"
             />
-             {formik.errors.phone && formik.touched.phone && (
+            {formik.errors.phone && formik.touched.phone && (
               <span className={cx("form-message")}>{formik.errors.phone}</span>
             )}
           </div>
@@ -119,11 +124,13 @@ function AddTeacherList() {
               name="address"
             />
             {formik.errors.address && formik.touched.address && (
-              <span className={cx("form-message")}>{formik.errors.address}</span>
+              <span className={cx("form-message")}>
+                {formik.errors.address}
+              </span>
             )}
           </div>
           <div className={cx("form-group")}>
-          <label className={cx("form-label")}>Username:</label>
+            <label className={cx("form-label")}>Username:</label>
             <input
               className={cx("form-control")}
               placeholder="Enter Username"
@@ -154,8 +161,24 @@ function AddTeacherList() {
               </span>
             )}
           </div>
-          {error.length > 0 && <p>{error}</p>}
-          {sucess.length > 0 && <p>{sucess}</p>}
+          {error.length > 0 && (
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {error}
+            </p>
+          )}
+          {sucess.length > 0 && (
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {sucess}
+            </p>
+          )}
           <button type="submit" className={cx("form-submit")}>
             Add
           </button>

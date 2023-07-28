@@ -13,18 +13,19 @@ import styles from "./admin.module.scss";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
 function ListCourseAdmin() {
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [, setCookie] = useCookies();
   const [isShowAdd, setShowAdd] = useState(false);
   const [courses, setCourse] = useState([]);
   const [semesterList, setsemesterList] = useState([]);
   const [semId, setSemId] = useState(0);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [rerender, setRerender] = useState(true);
   const [idDelete, setIdDelete] = useState(0);
 
@@ -39,14 +40,10 @@ function ListCourseAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/course/getall`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
-      const req3 = await axios.get("/subject/getall");
-      const req4 = await axios.get("/teacher/getall");
+      const req1 = await axios.get(`${backendURL}/course/getall`);
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
+      const req3 = await axios.get(`${backendURL}/subject/getall`);
+      const req4 = await axios.get(`${backendURL}/teacher/getall`);
 
       return axios.all([req1, req2, req3, req4]).then(
         axios.spread((listCourse, listSemester, listSubject, listTeacher) => {
@@ -71,7 +68,7 @@ function ListCourseAdmin() {
   }
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/course/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/course/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);
@@ -80,13 +77,13 @@ function ListCourseAdmin() {
   }
 
   return (
-    <div>
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <BoardHeader message={"Courses"} />
 
         <div className={cx("btns")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
+            {isShowAdd ? "View" : "+Add"}
           </Button>
         </div>
       </div>
@@ -116,7 +113,7 @@ function ListCourseAdmin() {
             </select>
           </div>
 
-          <Table striped bordered hover className="text-center">
+          <Table bordered hover className="text-center">
             <thead>
               <tr>
                 <th>Course ID</th>
@@ -135,7 +132,7 @@ function ListCourseAdmin() {
                 })
                 .map((course, i) => (
                   <tr key={i}>
-                    <td className="text-center">{course.id}</td>
+                    <td className="text-center">{course.Id}</td>
                     <td className="text-center">
                       {
                         semesterList.find(
@@ -159,14 +156,14 @@ function ListCourseAdmin() {
                     <td
                       className="text-center"
                       onClick={() => {
-                        handleShowProjects(course.id);
+                        handleShowProjects(course.Id);
                       }}
                     >
                       <Link
-                        to={`/coursedetails/${course.id}`}
+                        to={`/coursedetails/${course.Id}`}
                         className={cx("link-style")}
                       >
-                        <FontAwesomeIcon icon={faCircleInfo} /> {course.name}
+                        <FontAwesomeIcon icon={faCircleInfo} /> {course.Name}
                       </Link>
                     </td>
                     <td className="text-center">
@@ -179,7 +176,7 @@ function ListCourseAdmin() {
                     <td className="text-center">
                       <button
                         className={cx("btn-dl")}
-                        onClick={() => handleClickDelete(course.id)}
+                        onClick={() => handleClickDelete(course.Id)}
                       >
                         <FontAwesomeIcon icon={faTrashCan} /> Remove
                       </button>

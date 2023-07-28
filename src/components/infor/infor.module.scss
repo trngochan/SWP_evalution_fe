@@ -9,7 +9,8 @@
     .wrapper-name {
         border-radius: 15px;
         background-color: #FEAE65;
-        padding: 3px 0;
+        padding: 3px 5px;
+        border: 1px solid #000;
 
         .name {
             font-size: 1.6rem;
@@ -21,8 +22,12 @@
 
 
             &:hover {
-                color: #fff;
+                color: #ffffff;
             }
+        }
+
+        &:hover {
+            background-color: rgb(253, 119, 53);
         }
     }
 }
@@ -37,8 +42,10 @@
     background-color: rgb(255, 111, 59);
     color: white;
     font-weight: 600px;
+    border: 1px solid #000;
 
     &:hover {
-        opacity: 0.8;
+        color: #000;
+        background-color: rgb(253, 119, 53);
     }
 }

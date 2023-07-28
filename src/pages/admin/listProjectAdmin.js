@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useCookies } from "react-cookie";
 import BoardHeader from "~/components/headeritem";
 
 import Button from "~/components/button";
@@ -21,12 +20,11 @@ import {
   faPenToSquare,
   faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
 function ListProjectAdmin() {
-  const [cookies, setCookie, removeCookie] = useCookies();
-
   const [isShowAdd, setShowAdd] = useState(false);
 
   const [projects, setProject] = useState([]);
@@ -73,7 +71,7 @@ function ListProjectAdmin() {
     onSubmit: (values) => {
       async function fetchData() {
         values.id = editId;
-        const response = await axios.put("/project/edit", values);
+        const response = await axios.put(`${backendURL}/project/edit`, values);
         if (response.data.status === 200) {
           setRerender(!rerender);
           formik.resetForm();
@@ -87,16 +85,10 @@ function ListProjectAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/project/getall`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/course/getall`, {
-        withCredentials: true,
-      });
-      const req3 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
-      const req4 = await axios.get("/subject/getall");
+      const req1 = await axios.get(`${backendURL}/project/getall`, {});
+      const req2 = await axios.get(`${backendURL}/course/getall`, {});
+      const req3 = await axios.get(`${backendURL}/semester/getall`, {});
+      const req4 = await axios.get(`${backendURL}/subject/getall`);
 
       return axios.all([req1, req2, req3, req4]).then(
         axios.spread((listproject, listCourse, listSemester, listSubjects) => {
@@ -117,7 +109,7 @@ function ListProjectAdmin() {
   }
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/project/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/project/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);
@@ -126,21 +118,13 @@ function ListProjectAdmin() {
   }
 
   return (
-    <>
+    <div className={cx("container")}>
       <div>
-        {/* <h2
-          className="mt-3 mb-3"
-          style={{
-            textAlign: "center",
-          }}
-        >
-          List projects
-        </h2> */}
         <div className={cx("container-header")}>
           <BoardHeader message={"Projects"} />
           <div className={cx("btns")}>
             <Button active onClick={() => setShowAdd(!isShowAdd)}>
-              {isShowAdd ? "View" : "Add+"}
+              {isShowAdd ? "View" : "+Add"}
             </Button>
           </div>
         </div>
@@ -161,15 +145,15 @@ function ListProjectAdmin() {
               <option value="0">All Course</option>
               {courses.map((course, i) => {
                 return (
-                  <option value={course.id} key={i}>
-                    {course?.id}-{course?.name}
+                  <option value={course.Id} key={i}>
+                    {course?.Id}-{course?.Name}
                   </option>
                 );
               })}
             </select>
           </div>
 
-          <Table striped bordered hover>
+          <Table bordered hover>
             <thead className="text-center">
               <tr>
                 <th>ID</th>
@@ -189,14 +173,14 @@ function ListProjectAdmin() {
                 })
                 .map((project, i) => {
                   const cournow = courses.find(
-                    (course) => course.id === project.CourseId
+                    (course) => course.Id === project.CourseId
                   );
                   const sub = subjects.find(
-                    (subject) => subject.Id == cournow.SubjectId
+                    (subject) => subject.Id === cournow.SubjectId
                   );
                   console.log(sub);
                   const sem = semesters.find(
-                    (sem) => sem.Id == cournow.SemesterId
+                    (sem) => sem.Id === cournow.SemesterId
                   );
                   return (
                     <tr key={i}>
@@ -205,10 +189,10 @@ function ListProjectAdmin() {
                         {sem?.Year} - {sem?.Session}
                       </td>
                       <td className="text-center">{sub?.Name}</td>
-                      <td className="text-center">{cournow?.name}</td>
+                      <td className="text-center">{cournow?.Name}</td>
                       <td className="text-center">
                         <Link
-                          to={`/projectdetails/${cournow.id}/${project?.Id}`}
+                          to={`/projectdetails/${cournow.Id}/${project?.Id}`}
                           className={cx("link-style")}
                         >
                           <FontAwesomeIcon icon={faCircleInfo} />{" "}
@@ -316,7 +300,7 @@ function ListProjectAdmin() {
           </Btn>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }
 

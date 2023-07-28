@@ -22,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { CSVLink } from "react-csv";
 import _ from "lodash";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -33,8 +34,8 @@ function ListStdAdmin() {
   const [editId, setEditId] = useState(null);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
-  const [sortBy, setSortBy] = useState("asc");
-  const [sortField, setSortField] = useState("code");
+  const [, setSortBy] = useState("asc");
+  const [, setSortField] = useState("code");
   const [dataExport, setDataExport] = useState([]);
   const [idDelete, setIdDelete] = useState(0);
 
@@ -97,11 +98,12 @@ function ListStdAdmin() {
       birthday: yup.date().required("Your birthday is required"),
     }),
     onSubmit: (values) => {
+      console.log(values);
       async function fetchData() {
         const formattedDate = moment(values.birthday).format("YYYY-MM-DD");
         values.birthday = formattedDate;
         values.id = editId;
-        const response = await axios.put("/student/edit", values);
+        const response = await axios.put(`${backendURL}/student/edit`, values);
         if (response.data.status === 200) {
           setRerender(!rerender);
           formik.resetForm();
@@ -115,9 +117,7 @@ function ListStdAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get("/student/getall", {
-        withCredentials: true,
-      });
+      const req1 = await axios.get(`${backendURL}/student/getall`, {});
 
       return axios.all([req1]).then(
         axios.spread((listStudent) => {
@@ -131,7 +131,7 @@ function ListStdAdmin() {
   }, [rerender]);
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/student/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/student/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowModalRemove(false);
@@ -139,7 +139,7 @@ function ListStdAdmin() {
     }
   }
   return (
-    <>
+    <div className={cx("container")}>
       <div>
         <div className={cx("container-header")}>
           <div className={cx("title")}>
@@ -147,7 +147,7 @@ function ListStdAdmin() {
           </div>
           <div className={cx("btn-view-add")}>
             <Button active onClick={() => setShowAdd(!isShowAdd)}>
-              {isShowAdd ? "View" : "Add+"}
+              {isShowAdd ? "View" : "+Add"}
             </Button>
             <CSVLink
               filename={"students.csv"}
@@ -167,8 +167,8 @@ function ListStdAdmin() {
       {isShowAdd ? (
         <AddStudentList />
       ) : (
-        <Table striped bordered hover>
-          <thead>
+        <Table bordered hover>
+          <thead className="text-center">
             <tr>
               <th>ID</th>
               <th>
@@ -218,14 +218,16 @@ function ListStdAdmin() {
             {students?.map((student, i) => {
               return (
                 <tr key={i}>
-                  <td>{student.id}</td>
+                  <td className="text-center">{student.id}</td>
 
-                  <td>{student.code}</td>
-                  <td>{student.name}</td>
-                  <td>{student.address}</td>
-                  <td>{student.birthday?.slice(0, 10)}</td>
+                  <td className="text-center">{student.code}</td>
+                  <td className="text-center">{student.name}</td>
+                  <td className="text-center">{student.address}</td>
                   <td className="text-center">
-                    <Button edit small onClick={() => handleEdit(students.id)}>
+                    {student.birthday?.slice(0, 10)}
+                  </td>
+                  <td className="text-center">
+                    <Button edit small onClick={() => handleEdit(student.id)}>
                       <FontAwesomeIcon icon={faPenToSquare} /> Edit
                     </Button>
                     <button
@@ -344,7 +346,7 @@ function ListStdAdmin() {
           </Btn>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }
 

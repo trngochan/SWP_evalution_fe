@@ -4,6 +4,7 @@ import styles from "./add.module.scss";
 import classNames from "classnames/bind";
 import axios from "axios";
 import { useState } from "react";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +22,7 @@ function AddSubject() {
     }),
     onSubmit: async (values) => {
       try {
-        const respone = await axios.post("/subject/add", values);
+        const respone = await axios.post(`${backendURL}/subject/add`, values);
         const data = respone.data;
         if (data.status === 200) {
           setMessage(data.message);
@@ -73,7 +74,15 @@ function AddSubject() {
         <button type="submit" className={cx("form-submit")}>
           Add
         </button>
-        {message.length > 0 && <p>{message}</p>}
+        {message.length > 0 && (
+          <p
+            style={{
+              color: "red",
+            }}
+          >
+            {message}
+          </p>
+        )}
       </form>
     </div>
   );

@@ -7,6 +7,7 @@ import styles from "./teacher.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -21,13 +22,12 @@ function ListCourseTeacher() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/course/${cookies.user.id}/teacher`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
-      const req3 = await axios.get("/subject/getall");
+      const req1 = await axios.get(
+        `${backendURL}/course/${cookies.user.id}/teacher`,
+        {}
+      );
+      const req2 = await axios.get(`${backendURL}/semester/getall`, {});
+      const req3 = await axios.get(`${backendURL}/subject/getall`);
 
       return axios.all([req1, req2, req3]).then(
         axios.spread((listCourses, listSemester, listSubs) => {
@@ -56,7 +56,7 @@ function ListCourseTeacher() {
 
   return (
     <div className={cx("container")}>
-      <div className="row">
+      <div className="column">
         <h1
           className=""
           style={{
@@ -65,7 +65,7 @@ function ListCourseTeacher() {
         >
           List of courses the lecturer {cookies.user.name} is teaching
         </h1>
-        <div className="col-2">
+        <div className="col-5">
           <select
             className={cx("form-select")}
             aria-label="Default select example"
@@ -85,9 +85,9 @@ function ListCourseTeacher() {
           </select>
         </div>
 
-        <div className="col-10">
-          <Table striped bordered hover className="text-center">
-            <thead>
+        <div className="col-12">
+          <Table bordered hover className={cx("table")}>
+            <thead className="text-center">
               <tr>
                 <th scope="col">Semester</th>
                 <th scope="col">Subject</th>
@@ -116,7 +116,7 @@ function ListCourseTeacher() {
                         {semnow?.Year} - {semnow?.Session}
                       </td>
                       <td className="text-center">{subnow?.Name}</td>
-                      <td className="text-center">{course.id}</td>
+                      <td className="text-center">{course.Id}</td>
                       <td
                         className="text-center"
                         style={{ color: "#fe2c2c" }}
@@ -124,7 +124,7 @@ function ListCourseTeacher() {
                           handleChooseCourse(course);
                         }}
                       >
-                        {course.name}
+                        {course.Name}
                       </td>
                     </tr>
                   );

@@ -1,13 +1,30 @@
+.container {
+    table {
+        border: 1px solid #000;
+        background-color: #fff;
+
+        thead {
+            background-color: #f9be88;
+
+        }
+    }
+
+}
+
 .form-select {
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
+    padding: 5px 20px;
+    text-align: center;
+    background-color: #f9b473;
 }
 
 .form-message {
     font-size: 1.4rem;
     color: red;
 }
+
 
 form {
     max-width: none !important;
@@ -90,6 +107,17 @@ form {
         margin-left: auto;
         margin-right: auto;
     }
+
+    table {
+        border: 1px solid #000;
+        background-color: #fff;
+
+        thead {
+            background-color: #f9b473;
+
+        }
+    }
+
 }
 
 .btn-view-add {

@@ -5,6 +5,8 @@ import axios from "axios";
 import styles from "./add.module.scss";
 import { Alert, Snackbar } from "@mui/material";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -24,18 +26,20 @@ function AddSemester({ rerender }) {
     }),
     onSubmit: (values) => {
       axios
-        .post("/semester/add", values)
+        .post(`${backendURL}/semester/add`, values)
         .then((res) => res.data)
         .then((data) => {
-          formik.resetForm();
-          console.log(data);
+          // formik.resetForm();
+          if (data.status === 200) {
+            setOpenSnackBarSuccess(true);
+            rerender((prev) => !prev);
+          } else {
+            toast.error(data.message);
+          }
         })
         .catch((err) => {
           console.log(err);
         });
-
-      setOpenSnackBarSuccess(true);
-      rerender((prev) => !prev);
     },
   });
 

@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import BoardHeader from "~/components/headeritem";
 import { toast } from "react-toastify";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -22,11 +23,10 @@ function ListBoardAdmin() {
   const [isShowAdd, setShowAdd] = useState(false);
   const [rerender, setRerender] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [deleteId, setDeleteId] = useState("");
   const [subjects, setSubjects] = useState([]);
   const [idDelete, setIdDelete] = useState(0);
 
-  const handleClose = (id) => {
+  const handleClose = () => {
     setShowConfirm(false);
   };
 
@@ -37,13 +37,9 @@ function ListBoardAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get(`/evalution/getall`, {
-        withCredentials: true,
-      });
-      const req2 = await axios.get(`/semester/getall`, {
-        withCredentials: true,
-      });
-      const req3 = await axios.get("/subject/getall");
+      const req1 = await axios.get(`${backendURL}/evalution/getall`, {});
+      const req2 = await axios.get(`${backendURL}/semester/getall`);
+      const req3 = await axios.get(`${backendURL}/subject/getall`);
 
       return axios.all([req1, req2, req3]).then(
         axios.spread((listAvaluation, listSemester, listSubjects) => {
@@ -63,7 +59,7 @@ function ListBoardAdmin() {
   }
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/evalution/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/evalution/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);
@@ -72,12 +68,12 @@ function ListBoardAdmin() {
   }
 
   return (
-    <div className="">
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <BoardHeader message={"Evaluations"} />
         <div className={cx("btns")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
+            {isShowAdd ? "View" : "+Add"}
           </Button>
         </div>
       </div>
@@ -110,7 +106,7 @@ function ListBoardAdmin() {
             </select>
           </div>
 
-          <Table striped bordered hover className="text-center">
+          <Table bordered hover className="text-center">
             <thead>
               <tr>
                 <th scope="col">ID</th>

@@ -8,6 +8,7 @@ import { faUserTie, faKey } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames/bind";
 import styles from "./login.module.scss";
 import { Header } from "~/components/layouts/header";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -32,7 +33,7 @@ function LoginTeacher() {
     event.preventDefault();
 
     axios
-      .post("/loginteacher", {
+      .post(`${backendURL}/loginteacher`, {
         username,
         password,
       })
@@ -46,7 +47,7 @@ function LoginTeacher() {
           navigate("/teacher");
         } else {
           console.log(data.data);
-          // setError(data.data.message);
+          setError(data.data.message);
         }
       })
       .catch((err) => {
@@ -93,7 +94,15 @@ function LoginTeacher() {
             />
             <span className={cx("form-message")}></span>
           </div>
-          {error.length > 0 && <p>{error}</p>}
+          {error.length > 0 && (
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {error}
+            </p>
+          )}
           <button type="submit" className={cx("form-submit")}>
             Login
           </button>

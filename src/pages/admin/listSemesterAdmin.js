@@ -3,6 +3,7 @@ import AddSemester from "../create/AddSemester";
 import styles from "./admin.module.scss";
 import classNames from "classnames/bind";
 import BoardHeader from "~/components/headeritem";
+import moment from "moment";
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -10,7 +11,13 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashCan,
+  faForwardFast,
+  faAtom,
+  faPlaneUp,
+} from "@fortawesome/free-solid-svg-icons";
+import backendURL from "~/URL_BACKEND/urlbackend";
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +27,7 @@ function ListSemesterAdmin() {
   const [rerender, setRerender] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
-
+  const currentTime = moment().format("YYYY-MM-DD");
   const handleClose = () => {
     setShowConfirm(false);
   };
@@ -32,7 +39,7 @@ function ListSemesterAdmin() {
 
   useEffect(() => {
     async function fetchData() {
-      const req1 = await axios.get("/semester/getall");
+      const req1 = await axios.get(`${backendURL}/semester/getall`);
 
       return axios.all([req1]).then(
         axios.spread((semesters) => {
@@ -46,7 +53,7 @@ function ListSemesterAdmin() {
   }, [rerender]);
 
   async function handleDelete() {
-    const req3 = await axios.delete(`/semester/${idDelete}`);
+    const req3 = await axios.delete(`${backendURL}/semester/${idDelete}`);
     if (req3.data.status === 200) {
       setRerender(!rerender);
       setShowConfirm(false);
@@ -55,21 +62,21 @@ function ListSemesterAdmin() {
   }
 
   return (
-    <div>
+    <div className={cx("container")}>
       <div className={cx("container-header")}>
         <div className={cx("title")}>
           <BoardHeader message={"Semesters"} />
         </div>
         <div className={cx("btn-view-add")}>
           <Button active onClick={() => setShowAdd(!isShowAdd)}>
-            {isShowAdd ? "View" : "Add+"}
+            {isShowAdd ? "View" : "+Add"}
           </Button>
         </div>
       </div>
       {isShowAdd ? (
         <AddSemester rerender={setRerender} />
       ) : (
-        <Table striped bordered hover>
+        <Table bordered hover>
           <thead className="text-center">
             <tr>
               <th>ID</th>
@@ -77,11 +84,19 @@ function ListSemesterAdmin() {
               <th>Session</th>
               <th>Start time</th>
               <th>End time</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {semesters?.map((semester, i) => {
+              const isSemCurrent =
+                semester.StartTime.slice(0, 10) <= currentTime &&
+                semester.EndTime.slice(0, 10) >= currentTime
+                  ? 0
+                  : currentTime < semester.StartTime.slice(0, 10)
+                  ? 1
+                  : -1;
               return (
                 <tr key={i}>
                   <td className="text-center">{semester.Id}</td>
@@ -93,6 +108,37 @@ function ListSemesterAdmin() {
                   <td className="text-center">
                     {semester.EndTime.slice(0, 10)}
                   </td>
+                  {isSemCurrent > 0 ? (
+                    <td
+                      className={cx("text-center")}
+                      style={{
+                        backgroundColor: "#fe7d7d",
+                        fontWeight: "bolder",
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faPlaneUp} /> Future
+                    </td>
+                  ) : isSemCurrent < 0 ? (
+                    <td
+                      className={cx("text-center")}
+                      style={{
+                        backgroundColor: "#b3aeae",
+                        fontWeight: "bolder",
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faForwardFast} /> Past
+                    </td>
+                  ) : (
+                    <td
+                      className={cx("text-center")}
+                      style={{
+                        backgroundColor: "#9ffd74",
+                        fontWeight: "bolder",
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faAtom} /> On going
+                    </td>
+                  )}
                   <td className="text-center">
                     <button
                       className={cx("btn-dl")}
