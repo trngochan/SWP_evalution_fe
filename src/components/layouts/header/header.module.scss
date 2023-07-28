@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Yellow House Font';
-    src: url('../../font/yellowhouse-yw9j5.otf') format('opentype');
+    font-family: 'Brandon Printed Font Family';
+    src: url('../../font/HvDTrial_Brandon_Printed_Two_Shadow-BF64c1d1b912041.ttf') format('truetype');
 }
 
 .container {
@@ -11,15 +11,14 @@
     align-items: center;
     background-color: #F6FAFF;
     border-bottom: 2px solid #000;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
     padding: 0px 50px 0 50px;
 
     .title {
         font-size: 4rem;
-        color: #E88F7C;
-        font-weight: bold;
-        font-family: 'Yellow House Font', sans-serif;
+        color: #ec7a60;
+        font-family: 'Brandon Printed Font Family', sans-serif;
 
         @keyframes jump {
             0% {
@@ -57,24 +56,22 @@
     padding: 30px 50px 20px 50px;
     background-color: #F6FAFF;
     border-bottom: 2px solid #000;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
 
 
     .logo {
         width: 147px;
         height: 57px;
         margin-left: 10px;
+        cursor: pointer;
     }
 
     .title {
         margin-top: 15px;
-        font-weight: bold;
-        color: #E88F7C;
+        color: #ec7a60;
         font-size: 4rem;
-        font-family: 'Yellow House Font';
-
-
+        font-family: 'Brandon Printed Font Family';
 
         @keyframes jump {
             0% {

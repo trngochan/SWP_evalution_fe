@@ -16,7 +16,7 @@ function Header() {
   return (
     <div className={cx("container")}>
       <img className={cx("logo")} alt="FPT" src={fptlogo} />
-      <h1 className={cx("title")}><FontAwesomeIcon icon={faGraduationCap} /> FPT Evaluation Project  </h1>
+      <h1 className={cx("title")}><FontAwesomeIcon icon={faGraduationCap} /> FPT EVALUATION PROJECT </h1>
     </div>
   );
 }
@@ -39,7 +39,7 @@ function Header2() {
   return (
     <div className={cx("header")}>
       <img className={cx("logo")} alt="FPT" src={fptlogo} onClick={handleImgClick} />
-      <h1 className={cx("title")}><FontAwesomeIcon icon={faGraduationCap} /> FPT Evaluation Project  </h1>
+      <h1 className={cx("title")}><FontAwesomeIcon icon={faGraduationCap} /> FPT EVALUATION PROJECT </h1>
       <Infor name={cookies.user?.username} />
     </div>
   )

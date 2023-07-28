@@ -111,10 +111,10 @@ function SubjectDetails() {
             <tbody>
               {courses.map((course, i) => {
                 const semnow = semesterList.find(
-                  (sem) => sem.Id == course.SemesterId
+                  (sem) => sem.Id === course.SemesterId
                 );
                 const teachernow = teachers.find(
-                  (teacher) => teacher.id == course.LectureId
+                  (teacher) => teacher.id === course.LectureId
                 );
                 return (
                   <tr key={i}>
