@@ -34,7 +34,14 @@
     }
 
     .head-title {
-        text-align: center;
+        align-items: center;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+
+        h2 {
+            margin: auto;
+        }
     }
 
 }

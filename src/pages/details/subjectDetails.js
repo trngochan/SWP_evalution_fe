@@ -75,8 +75,8 @@ function SubjectDetails() {
 
   async function handleAddCourse() {
     if (
-      semesterAdd != 0 &&
-      teacherAdd != 0 &&
+      semesterAdd !== 0 &&
+      teacherAdd !== 0 &&
       nameCourseAdd.length > 0 &&
       setNameCourseAdd.length > 0
     ) {
@@ -131,8 +131,7 @@ function SubjectDetails() {
               fontSize: "20px",
             }}
           >
-            List course in subject
-            {/* <div className={cx("btn-view-add")}> */}
+            <h2 className={cx("title")}>List course in subject</h2>
             <Button
               className={cx("btn-add")}
               active
@@ -236,9 +235,9 @@ function SubjectDetails() {
               className={cx("form-select")}
               name="semesterId"
               onChange={(e) => setSemesterAdd(e.target.value)}
-              // onBlur={formik.handleBlur}
-              // onChange={formik.handleChange}
-              // value={formik.values.semesterId}
+            // onBlur={formik.handleBlur}
+            // onChange={formik.handleChange}
+            // value={formik.values.semesterId}
             >
               <option value={0}>Select Semester</option>
               {semesterList.map((semester, i) => (
@@ -258,9 +257,9 @@ function SubjectDetails() {
               className={cx("form-select")}
               name="semesterId"
               onChange={(e) => setTeacherAdd(e.target.value)}
-              // onBlur={formik.handleBlur}
-              // onChange={formik.handleChange}
-              // value={formik.values.semesterId}
+            // onBlur={formik.handleBlur}
+            // onChange={formik.handleChange}
+            // value={formik.values.semesterId}
             >
               <option value={0}>Select Lecture</option>
               {teachers.map((teacher, i) => (
@@ -281,9 +280,9 @@ function SubjectDetails() {
               placeholder="Enter name"
               type="text"
               onChange={(e) => setNameCourseAdd(e.target.value)}
-              // name="birthday"
-              // value={formik.values.birthday}
-              // onChange={formik.handleChange}
+            // name="birthday"
+            // value={formik.values.birthday}
+            // onChange={formik.handleChange}
             />
             {/* {formik.errors.birthday && formik.touched.birthday && (
               <span className={"form-message"}>{formik.errors.birthday}</span>
