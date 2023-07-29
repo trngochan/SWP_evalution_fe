@@ -155,7 +155,7 @@ function ListBoardTeacher() {
                       <td className="text-center">{item.StartTime} </td>
                       <td className="text-center">{item.EndTime} </td>
                       {isSemCurrent > 0 ? (
-                        <td
+                        <td className={cx("text-center")}
                           style={{
                             backgroundColor: "#fe7d7d",
                             fontWeight: "bolder",
