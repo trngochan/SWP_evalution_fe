@@ -112,7 +112,7 @@ function ListBoardAdmin() {
                 <th scope="col">ID</th>
                 <th scope="col">Semester</th>
                 <th scope="col">Subject</th>
-                <th scope="col">Name</th>
+                <th scope="col">Course</th>
                 <th scope="col">Room</th>
                 <th scope="col">Time start</th>
                 <th scope="col">Time end</th>

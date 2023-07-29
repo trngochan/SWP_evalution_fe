@@ -160,7 +160,7 @@ function ListProjectAdmin() {
                 <th>Semester</th>
                 <th>Subject</th>
                 <th>Course</th>
-                <th>Name</th>
+                <th>Project</th>
                 {/* <th>Notion</th> */}
                 <th>Action</th>
               </tr>

@@ -159,7 +159,7 @@ function BoardDetail() {
       if (data.status === 201) {
         setListProOutBoard(data.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function handlePublic(id, marked, quan) {
@@ -187,7 +187,7 @@ function BoardDetail() {
       } else {
         setError("Error: at handleShowAddTeacher");
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function handleAddTeacherInBoard(teacherId) {
@@ -472,7 +472,7 @@ function BoardDetail() {
                               onClick={() => {
                                 if (
                                   item.teacherMark.teacherQuanMarked ==
-                                    item.teacherMark.teacherQuan &&
+                                  item.teacherMark.teacherQuan &&
                                   item.teacherMark.teacherQuan > 0
                                 ) {
                                   handlePublic(

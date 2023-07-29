@@ -71,7 +71,7 @@ function ListBoardTeacher() {
   return (
     <div className={cx("container")}>
       <div className="column mt-3">
-        <p className="mb-5">List evaluations of lecturer {cookies.user.name}</p>
+        <p className="mb-5">List of courses evaluated by lecturer <a>{cookies.user.name}</a></p>
         <div className="col-5">
           <select
             className={cx("form-select")}
@@ -97,7 +97,7 @@ function ListBoardTeacher() {
                 <th scope="col">Semester</th>
                 <th scope="col">Subject</th>
                 <th scope="col">
-                  <FontAwesomeIcon icon={faPaperPlane} /> Name
+                  <FontAwesomeIcon icon={faPaperPlane} /> Course
                 </th>
                 <th scope="col">Room</th>
                 <th scope="col">Date</th>
@@ -121,11 +121,11 @@ function ListBoardTeacher() {
                   );
                   const isSemCurrent =
                     semnow.StartTime.slice(0, 10) <= currentTime &&
-                    semnow.EndTime.slice(0, 10) >= currentTime
+                      semnow.EndTime.slice(0, 10) >= currentTime
                       ? 0
                       : currentTime < semnow.StartTime.slice(0, 10)
-                      ? 1
-                      : -1;
+                        ? 1
+                        : -1;
                   return (
                     <tr key={index}>
                       <td className="text-center">{item.Id} </td>

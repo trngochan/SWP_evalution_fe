@@ -9,15 +9,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #F6FAFF;
-    border-bottom: 2px solid #000;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
+    // background-color: #F6FAFF;
+    background-image: url('../../img/background.jpg');
+    background-size: cover;
+    border-bottom: 3px solid #000;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
     padding: 0px 50px 0 50px;
 
     .title {
         font-size: 4rem;
-        color: #ec7a60;
+        color: #de674c;
         font-family: 'Brandon Printed Font Family', sans-serif;
 
         @keyframes jump {
@@ -35,7 +37,7 @@
         }
 
         &:hover {
-            color: #FEAE65;
+            color: #f57a08;
             animation-name: jump;
             animation-duration: 0.5s;
             animation-timing-function: ease-in-out;
@@ -54,10 +56,12 @@
     display: flex;
     justify-content: space-between;
     padding: 30px 50px 20px 50px;
-    background-color: #F6FAFF;
-    border-bottom: 2px solid #000;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
+    // background-color: #F6FAFF;
+    background-image: url('../../img/background.jpg');
+    background-size: cover;
+    border-bottom: 3px solid #000;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
 
 
     .logo {
@@ -69,7 +73,7 @@
 
     .title {
         margin-top: 15px;
-        color: #ec7a60;
+        color: #de674c;
         font-size: 4rem;
         font-family: 'Brandon Printed Font Family';
 
@@ -88,7 +92,7 @@
         }
 
         &:hover {
-            color: #FEAE65;
+            color: #f57a08;
             animation-name: jump;
             animation-duration: 0.5s;
             animation-timing-function: ease-in-out;

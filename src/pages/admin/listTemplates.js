@@ -126,7 +126,7 @@ function ListTemplatesAdmin() {
             <thead className="text-center">
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Name</th>
+                <th scope="col">Course</th>
                 <th scope="col">Subject Id</th>
                 <th scope="col">Status</th>
                 <th scope="col">Apply Date</th>

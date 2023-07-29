@@ -71,7 +71,7 @@ function ListSubjectAdmin() {
           <thead className="text-center">
             <tr>
               <th>ID</th>
-              <th>Name</th>
+              <th>Subject</th>
               <th>Description</th>
               <th>Action</th>
             </tr>

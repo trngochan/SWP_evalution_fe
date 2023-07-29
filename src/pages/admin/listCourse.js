@@ -119,7 +119,7 @@ function ListCourseAdmin() {
                 <th>Course ID</th>
                 <th>Semester</th>
                 <th>Subject</th>
-                <th>Name</th>
+                <th>Course</th>
                 <th>Teacher</th>
                 <th>Action</th>
               </tr>

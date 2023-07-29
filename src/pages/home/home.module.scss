@@ -1,14 +1,14 @@
 //home-main
 .body {
-  margin-top: 150px;
+  margin-top: 140px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 200px;
   width: 1100px;
-  height: 200px;
+  height: 220px;
   background-color: #FEAE65;
   align-items: center;
-  border-radius: 40px;
+  border-radius: 30px;
   border: 3px solid #000000;
 
   .links {
@@ -17,7 +17,7 @@
 
   .login {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 40px;
     font-weight: bolder;
     color: #fff;
     font-size: 3.5rem;
@@ -46,20 +46,22 @@
 
 .container-student {
   width: auto;
-  height: 100vh;
-  background-color: #fff;
-  border-radius: 50px;
+  height: 120vh;
+  // background-color: #fff;
+  background-image: url('../../components/img/background3.jpg');
+  background-size: cover;
+  border-radius: 40px;
   margin-right: auto;
   margin-left: auto;
   padding: 50px;
   border: 2px solid #f00c0c;
-  margin: 60px 50px;
+  margin: 2px 5px 100px 5px;
 
 
   .container-select {
     width: auto;
     height: auto;
-    background-color: #fff8f8;
+    background-color: #fff;
     border: 2px solid #f00c0c;
     border-radius: 40px;
     padding: 30px 0 30px 0;
@@ -70,7 +72,7 @@
 
   .form-select {
     border-radius: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border: 2px solid #000;
     text-align: center;
     background-color: #f29d9d;
@@ -80,7 +82,7 @@
     list-style: none;
 
     .course-btn {
-      width: 120px;
+      width: 160px;
       margin-bottom: 1px;
       border: 1px solid #000;
       border-radius: 20px;
@@ -104,7 +106,7 @@
   .result-table {
     width: auto;
     height: auto;
-    background-color: #fff8f8;
+    background-color: #fff;
     border: 2px solid #f00c0c;
     border-radius: 40px;
     padding: 30px 0 30px 0;
@@ -128,23 +130,10 @@
 
     img {
       border-radius: 100px;
-      margin: 100px 0 10px 280px;
+      margin: 100px 0 10px 270px;
       width: 40%;
       height: 40%;
-      border: 3px solid #91b2ff;
-    }
-
-    .image {
-      filter: brightness(90%);
-      /* Áp dụng hiệu ứng mờ */
-      transition: filter 0.3s;
-
-      /* Thêm hiệu ứng chuyển đổi mượt khi hover */
-      &:hover {
-        filter: brightness(110%);
-        border: 3px solid #000;
-        /* Sáng lên khi hover */
-      }
+      border: 3px solid #000;
     }
 
   }
@@ -152,13 +141,14 @@
 
 //home-teacher
 .container-teacher {
-  background-color: #fff;
+  // background-color: #fff;
+  background-image: url('../../components/img/background3.jpg');
+  background-size: cover;
   width: auto;
   height: 100%;
-  margin: 40px auto 10px auto;
-  border: 2px solid #f00c0c;
+  border: 2px solid #000;
   border-radius: 40px;
-  margin: 100px 60px 150px 60px;
+  margin: 2px 5px 100px 5px;
 
   img {
     width: 86%;
@@ -177,7 +167,7 @@
     margin-top: 30px;
     width: auto;
     height: auto;
-    background-color: #fff8f8;
+    background-color: #fef9f9;
     border: 2px solid #f00c0c;
     border-radius: 40px;
     padding: 30px 10px 30px 10px;
@@ -195,7 +185,7 @@
 
 //home-admin
 .container-admin {
-  margin: 5px 0 100px 0;
+  margin: 2px 0 100px 0;
   background-color: #fff;
   border: 2px solid #e88c37;
   border-radius: 40px 50px 50px 40px;
