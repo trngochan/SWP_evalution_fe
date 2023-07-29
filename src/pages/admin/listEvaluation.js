@@ -5,11 +5,12 @@ import classNames from "classnames/bind";
 import Table from "react-bootstrap/Table";
 import { Modal, Button as Btn } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import AddBoard from "../create/AddBoard";
 import styles from "./admin.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faCircleInfo, faPlaneUp, faForwardFast, faAtom } from "@fortawesome/free-solid-svg-icons";
 import BoardHeader from "~/components/headeritem";
 import { toast } from "react-toastify";
 import backendURL from "~/URL_BACKEND/urlbackend";
@@ -25,6 +26,7 @@ function ListBoardAdmin() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [idDelete, setIdDelete] = useState(0);
+  const currentTime = moment().format("YYYY-MM-DD");
 
   const handleClose = () => {
     setShowConfirm(false);
@@ -117,6 +119,7 @@ function ListBoardAdmin() {
                 <th scope="col">Time start</th>
                 <th scope="col">Time end</th>
                 <th scope="col">Date</th>
+                <th scope="col">Status</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -133,6 +136,13 @@ function ListBoardAdmin() {
                   const sub = subjects.find(
                     (subject) => subject.Id === item.SubjectId
                   );
+                  const isSemCurrent =
+                    sem.StartTime.slice(0, 10) <= currentTime &&
+                      sem.EndTime.slice(0, 10) >= currentTime
+                      ? 0
+                      : currentTime < sem.StartTime.slice(0, 10)
+                        ? 1
+                        : -1;
                   return (
                     <tr key={index}>
                       <td className="text-center">{item.Id}</td>
@@ -152,6 +162,37 @@ function ListBoardAdmin() {
                       <td className="text-center">{item.StartTime} </td>
                       <td className="text-center">{item.EndTime} </td>
                       <td className="text-center">{item.Date.slice(0, 10)} </td>
+                      {isSemCurrent > 0 ? (
+                        <td
+                          className={cx("text-center")}
+                          style={{
+                            backgroundColor: "#fe7d7d",
+                            fontWeight: "bolder",
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faPlaneUp} /> Future
+                        </td>
+                      ) : isSemCurrent < 0 ? (
+                        <td
+                          className={cx("text-center")}
+                          style={{
+                            backgroundColor: "#b3aeae",
+                            fontWeight: "bolder",
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faForwardFast} /> Past
+                        </td>
+                      ) : (
+                        <td
+                          className={cx("text-center")}
+                          style={{
+                            backgroundColor: "#9ffd74",
+                            fontWeight: "bolder",
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faAtom} /> On going
+                        </td>
+                      )}
                       <td className="text-center">
                         <button
                           className={cx("btn-dl")}
