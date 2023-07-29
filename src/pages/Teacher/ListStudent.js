@@ -17,14 +17,14 @@ function StudentsInCourse() {
   useEffect(() => {
     async function fetchData() {
       const req1 = await axios.get(
-        `${backendURL}/student/${cookies.course.Id}/course`,
+        `${backendURL}/score/${cookies.course.Id}/course`,
         {}
       );
 
       return axios.all([req1]).then(
         axios.spread((listStudent) => {
           // Xử lý response từ request1 và requests
-          setStudent(listStudent.data);
+          setStudent(listStudent.data.data);
         })
       );
     }
@@ -44,16 +44,26 @@ function StudentsInCourse() {
             <tr>
               <th>Code</th>
               <th>Name</th>
-              <th>Adress</th>
+              <th>Score</th>
+              <th>Results</th>
             </tr>
           </thead>
           <tbody>
             {students?.map((student, i) => {
               return (
                 <tr key={i}>
-                  <td className="text-center">{student.code}</td>
-                  <td className="text-center">{student.name}</td>
-                  <td className="text-center">{student.address}</td>
+                  <td className="text-center">{student.Code}</td>
+                  <td className="text-center">{student.Name}</td>
+                  <td className="text-center">
+                    {student.Score || "No public"}
+                  </td>
+                  <td className="text-center">
+                    {student.Score
+                      ? student.Result
+                        ? "Passed"
+                        : "Not passed"
+                      : "No public"}
+                  </td>
                 </tr>
               );
             })}
