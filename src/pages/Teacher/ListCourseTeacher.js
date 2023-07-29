@@ -93,7 +93,7 @@ function ListCourseTeacher() {
                 <th scope="col">Subject</th>
                 <th scope="col">Course ID</th>
                 <th scope="col">
-                  <FontAwesomeIcon icon={faSeedling} /> Name
+                  <FontAwesomeIcon icon={faSeedling} /> Course
                 </th>
               </tr>
             </thead>

@@ -29,9 +29,9 @@ const cx = classNames.bind(styles);
 function HomeAdmin() {
   const [activeButton, setActiveButton] = useState("board");
 
-  const handleButtonClick = (buttonName) => {
-    setActiveButton(buttonName);
-  };
+  const handleButtonClick = (buttonname) => {
+    setActiveButton(buttonname);
+  }
 
   return (
     <>
