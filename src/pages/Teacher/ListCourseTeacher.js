@@ -108,7 +108,7 @@ function ListCourseTeacher() {
                     (sem) => sem.Id === course.SemesterId
                   );
                   const subnow = subjects.find(
-                    (sem) => (sem.Id = course.SubjectId)
+                    (sem) => sem.Id === course.SubjectId
                   );
                   return (
                     <tr key={i}>
