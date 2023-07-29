@@ -73,6 +73,8 @@ function ListCourseAdmin() {
       setRerender(!rerender);
       setShowConfirm(false);
       toast.success("Delele successfully");
+    } else {
+      toast.error("Delete error");
     }
   }
 
