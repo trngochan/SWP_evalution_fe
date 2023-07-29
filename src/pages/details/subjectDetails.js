@@ -27,7 +27,6 @@ function SubjectDetails() {
   const [rerender, setRerender] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState(false);
 
-
   const handleClose = () => {
     setShowModalAdd(false);
     setShowModalAdd(false);
@@ -70,7 +69,35 @@ function SubjectDetails() {
     fetchData();
   }, [rerender]);
 
-  console.log(teachers);
+  const [semesterAdd, setSemesterAdd] = useState(0);
+  const [teacherAdd, setTeacherAdd] = useState(0);
+  const [nameCourseAdd, setNameCourseAdd] = useState("");
+
+  async function handleAddCourse() {
+    if (
+      semesterAdd != 0 &&
+      teacherAdd != 0 &&
+      nameCourseAdd.length > 0 &&
+      setNameCourseAdd.length > 0
+    ) {
+      try {
+        const respone = await axios.post(`${backendURL}/course/add`, {
+          subjectId: inforSubject.Id,
+          semesterId: semesterAdd,
+          LectureId: teacherAdd,
+          name: nameCourseAdd,
+        });
+        if (respone.data.status === 200) {
+          handleClose();
+          toast.success("Add course added successfully");
+          setRerender((prev) => !prev);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
   return (
     <>
       <Header2 />
@@ -106,12 +133,16 @@ function SubjectDetails() {
           >
             List course in subject
             {/* <div className={cx("btn-view-add")}> */}
-          <Button active onClick={() => handleAdd()}>
-            + Add
-          </Button>
-        {/* </div> */}
+            <Button
+              className={cx("btn-add")}
+              active
+              onClick={() => handleAdd()}
+            >
+              + Add
+            </Button>
+            {/* </div> */}
           </th>
-          
+
           <Table bordered hover>
             <thead className="text-center">
               <tr>
@@ -196,65 +227,67 @@ function SubjectDetails() {
 
       <Modal show={showModalAdd} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add project</Modal.Title>
+          <Modal.Title>Add Course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form >
-          <label className={cx("form-label", "mb-2")}>Semester:</label>
-          <select
-            className={cx("form-select")}
-            name="semesterId"
-            // onBlur={formik.handleBlur}
-            // onChange={formik.handleChange}
-            // value={formik.values.semesterId}
-          >
-            <option value="">Select Semester</option>
-            {/* {semesters.map((semester, i) => (
-              <option key={i} value={semester.Id}>
-                {semester.Year} {semester.Session}
-              </option>
-            ))} */}
-          </select>
-          {/* {formik.errors.semesterId && formik.touched.semesterId && (
+          <form>
+            <label className={cx("form-label", "mb-2")}>Semester:</label>
+            <select
+              className={cx("form-select")}
+              name="semesterId"
+              onChange={(e) => setSemesterAdd(e.target.value)}
+              // onBlur={formik.handleBlur}
+              // onChange={formik.handleChange}
+              // value={formik.values.semesterId}
+            >
+              <option value={0}>Select Semester</option>
+              {semesterList.map((semester, i) => (
+                <option key={i} value={semester.Id}>
+                  {semester.Year}-{semester.Session}
+                </option>
+              ))}
+            </select>
+            {/* {formik.errors.semesterId && formik.touched.semesterId && (
             <span className={cx("form-message")}>
               {formik.errors.semesterId}
             </span>
           )} */}
 
-        <label className={cx("form-label", "mb-2")}>Lecture:</label>
-          <select
-            className={cx("form-select")}
-            name="semesterId"
-            // onBlur={formik.handleBlur}
-            // onChange={formik.handleChange}
-            // value={formik.values.semesterId}
-          >
-            <option value="">Select Lecture</option>
-            {/* {semesters.map((semester, i) => (
-              <option key={i} value={semester.Id}>
-                {semester.Year} {semester.Session}
-              </option>
-            ))} */}
-          </select>
-          {/* {formik.errors.semesterId && formik.touched.semesterId && (
+            <label className={cx("form-label", "mb-2")}>Lecture:</label>
+            <select
+              className={cx("form-select")}
+              name="semesterId"
+              onChange={(e) => setTeacherAdd(e.target.value)}
+              // onBlur={formik.handleBlur}
+              // onChange={formik.handleChange}
+              // value={formik.values.semesterId}
+            >
+              <option value={0}>Select Lecture</option>
+              {teachers.map((teacher, i) => (
+                <option key={i} value={teacher.id}>
+                  {teacher.name}
+                </option>
+              ))}
+            </select>
+            {/* {formik.errors.semesterId && formik.touched.semesterId && (
             <span className={cx("form-message")}>
               {formik.errors.semesterId}
             </span>
           )} */}
 
-          <label>Name:</label>
+            <label>Name course:</label>
             <input
               className={"form-control"}
               placeholder="Enter name"
               type="text"
+              onChange={(e) => setNameCourseAdd(e.target.value)}
               // name="birthday"
               // value={formik.values.birthday}
               // onChange={formik.handleChange}
             />
             {/* {formik.errors.birthday && formik.touched.birthday && (
               <span className={"form-message"}>{formik.errors.birthday}</span>
-            )} */}    
-            
+            )} */}
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -268,7 +301,7 @@ function SubjectDetails() {
           <Btn
             type="submit"
             variant="primary"
-            // onClick={formik.handleSubmit}
+            onClick={handleAddCourse}
             className={cx("btn-bt")}
           >
             Add

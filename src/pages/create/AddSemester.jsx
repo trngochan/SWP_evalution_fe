@@ -31,6 +31,7 @@ function AddSemester({ rerender }) {
         .then((data) => {
           // formik.resetForm();
           if (data.status === 200) {
+            formik.resetForm();
             setOpenSnackBarSuccess(true);
             rerender((prev) => !prev);
           } else {

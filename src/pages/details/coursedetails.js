@@ -10,6 +10,7 @@ import Button from "~/components/button";
 import styles from "./details.module.scss";
 import classNames from "classnames/bind";
 import backendURL from "~/URL_BACKEND/urlbackend";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -105,7 +106,6 @@ function CourseDetails() {
           `${backendURL}/teacher/${inforCourse.LectureId}`
         );
         setInforSem(response.data.data?.[0]);
-        console.log(req2.data);
         setInforSub(req2.data?.[0]);
         setInforTeach(req3.data.data?.[0]);
       }
@@ -137,6 +137,31 @@ function CourseDetails() {
 
   const handleAdd = () => {
     setShowModalAdd(true);
+  };
+
+  const [projectNameAdd, setProjectNameAdd] = useState("");
+  const [noteAdd, setNoteAdd] = useState("");
+
+  function handleAddProject() {
+    if (projectNameAdd != "" && noteAdd != "") {
+      axios
+        .post(`${backendURL}/project/add`, {
+          name: projectNameAdd,
+          notion: noteAdd,
+          courseId: inforCourse?.Id,
+        })
+        .then((res) => res.data)
+        .then((data) => {
+          if (data.status === 200) {
+            setRerender((prev) => !prev);
+            handleClose();
+            toast.success("Add project successfully");
+            setNoteAdd("");
+            setProjectNameAdd("");
+          } else {
+          }
+        });
+    }
   }
 
   return (
@@ -208,10 +233,7 @@ function CourseDetails() {
           >
             Add student
           </Button>
-          <Button
-            className={cx("mb-5 mt-5 show")}
-            onClick={() => handleAdd()}
-          >
+          <Button className={cx("mb-5 mt-5 show")} onClick={() => handleAdd()}>
             Add project
           </Button>
         </div>
@@ -339,7 +361,7 @@ function CourseDetails() {
           <Modal.Title>Add project</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form >
+          <form>
             <label htmlFor="name">Project Name:</label>
             <input
               className={"form-control"}
@@ -347,7 +369,7 @@ function CourseDetails() {
               // type="text"
               // name="name"
               // value={formik.values.name}
-              // onChange={formik.handleChange}
+              onChange={(e) => setProjectNameAdd(e.target.value)}
             />
             {/* {formik.errors.name && formik.touched.name && (
               <span className={"form-message"}>{formik.errors.name}</span>
@@ -358,6 +380,7 @@ function CourseDetails() {
             <input
               className={"form-control"}
               placeholder="Enter note"
+              onChange={(e) => setNoteAdd(e.target.value)}
               // type="date"
               // name="birthday"
               // value={formik.values.birthday}
@@ -367,8 +390,6 @@ function CourseDetails() {
               <span className={"form-message"}>{formik.errors.birthday}</span>
             )} */}
             <br />
-
-            
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -382,7 +403,7 @@ function CourseDetails() {
           <Btn
             type="submit"
             variant="primary"
-            // onClick={formik.handleSubmit}
+            onClick={handleAddProject}
             className={cx("btn-bt")}
           >
             Add
