@@ -13,6 +13,7 @@ const cx = classNames.bind(styles);
 function StudentsInCourse() {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [students, setStudent] = useState([]);
+  const [studentnoproject, setStudentnohasproject] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,11 +21,15 @@ function StudentsInCourse() {
         `${backendURL}/score/${cookies.course.Id}/course`,
         {}
       );
+      const req2 = await axios.get(
+        `${backendURL}/student/${cookies.course.Id}/nothaveproject`
+      );
 
-      return axios.all([req1]).then(
-        axios.spread((listStudent) => {
+      return axios.all([req1, req2]).then(
+        axios.spread((listStudent, listStudentNoProject) => {
           // Xử lý response từ request1 và requests
           setStudent(listStudent.data.data);
+          setStudentnohasproject(listStudentNoProject.data.data);
         })
       );
     }
@@ -50,6 +55,24 @@ function StudentsInCourse() {
           </thead>
           <tbody>
             {students?.map((student, i) => {
+              return (
+                <tr key={i}>
+                  <td className="text-center">{student.Code}</td>
+                  <td className="text-center">{student.Name}</td>
+                  <td className="text-center">
+                    {student.Score || "No public"}
+                  </td>
+                  <td className="text-center">
+                    {student.Score
+                      ? student.Result
+                        ? "Passed"
+                        : "Not passed"
+                      : "No public"}
+                  </td>
+                </tr>
+              );
+            })}
+            {studentnoproject?.map((student, i) => {
               return (
                 <tr key={i}>
                   <td className="text-center">{student.Code}</td>
