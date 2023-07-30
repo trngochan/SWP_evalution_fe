@@ -65,7 +65,6 @@ function StudentsInCourse() {
     }
 
     if (studentnoproject && studentnoproject.length > 0) {
-      result.push(["Code", "Name", "Project", "Score", "Results"]);
       studentnoproject.map((student, index) => {
         let arr = [];
         arr[0] = student.Code;
@@ -91,7 +90,7 @@ function StudentsInCourse() {
             List student of course {cookies.course.Name}
           </h2>
           <CSVLink
-            filename={"students.csv"}
+            filename={`students_${cookies.course.Name}.csv`}
             className="btn btn-primary btn-lg"
             data={dataExport}
             asyncOnClick={true}
