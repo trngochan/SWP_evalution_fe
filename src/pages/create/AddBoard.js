@@ -78,7 +78,7 @@ function AddBoard({ rerender }) {
   return (
     <div className={cx("login")}>
       <form onSubmit={formik.handleSubmit} className={cx("form")}>
-        <h2 className={cx("heading")}>Add Board</h2>
+        <h2 className={cx("heading")}>Add Committee</h2>
 
         <div className={cx("form-group")}>
           <label className={cx("form-label")}>Course:</label>

@@ -73,9 +73,9 @@ function StudentsInCourse() {
                   <td className="text-center">
                     {student.Score
                       ? student.Result
-                        ? "Passed"
-                        : "Not passed"
-                      : "No public"}
+                        ? <span style={{ backgroundColor: "rgb(18, 122, 18)", color: "#fff", padding: "5px" }}>Passed</span>
+                        : <span style={{ backgroundColor: "#eb1515", color: "#fff", padding: "5px" }}>Not passed</span>
+                      : <span>No public</span>}
                   </td>
                 </tr>
               );
