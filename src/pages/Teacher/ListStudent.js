@@ -32,7 +32,7 @@ function StudentsInCourse() {
           // Xử lý response từ request1 và requests
           setStudent(listStudent.data.data);
           setStudentnohasproject(listStudentNoProject.data.data);
-          setProjects(listProject.data.data);
+          setProjects(listProject.data);
         })
       );
     }
@@ -59,14 +59,14 @@ function StudentsInCourse() {
           </thead>
           <tbody>
             {students?.map((student, i) => {
-              const pro = projects.find(
+              const p = projects.find(
                 (project) => project.Id === student.ProjectId
               );
               return (
                 <tr key={i}>
                   <td className="text-center">{student.Code}</td>
                   <td className="text-center">{student.Name}</td>
-                  <td className="text-center">{pro.Name}</td>
+                  <td className="text-center">{p.Name}</td>
                   <td className="text-center">
                     {student.Score || "No public"}
                   </td>
