@@ -85,16 +85,9 @@ function StudentsInCourse() {
                 <tr key={i}>
                   <td className="text-center">{student.Code}</td>
                   <td className="text-center">{student.Name}</td>
-                  <td className="text-center">
-                    {student.Score || "No public"}
-                  </td>
-                  <td className="text-center">
-                    {student.Score
-                      ? student.Result
-                        ? "Passed"
-                        : "Not passed"
-                      : "No public"}
-                  </td>
+                  <td className="text-center">{student.Score || ""}</td>
+                  <td className="text-center">{student.Score || ""}</td>
+                  <td className="text-center"></td>
                 </tr>
               );
             })}
