@@ -79,4 +79,15 @@
             background-color: #fff;
         }
     }
+
+    .list-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        & h2 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
 }

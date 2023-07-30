@@ -63,45 +63,46 @@ function StudentsInCourse() {
         result.push(arr);
       });
     }
-  
+
     if (studentnoproject && studentnoproject.length > 0) {
       result.push(["Code", "Name", "Project", "Score", "Results"]);
       studentnoproject.map((student, index) => {
         let arr = [];
         arr[0] = student.Code;
         arr[1] = student.Name;
-        arr[2] = "Not yet available"; 
-        arr[3] = "Not yet available";
-        arr[4] = "Not yet available"; 
+        arr[2] = "Not yet ";
+        arr[3] = "Not yet ";
+        arr[4] = "Not yet ";
         result.push(arr);
       });
     }
-  
+
     setDataExport(result);
     done();
   };
-  
+
 
   return (
     <div>
       <Header2 />
       <div className={cx("container-list")}>
-        <div>
+        <div className={cx("list-header")}>
           <h2 className="mt-3 mb-3">
             List student of course {cookies.course.Name}
           </h2>
           <CSVLink
-              filename={"students.csv"}
-              className="btn btn-primary btn-lg"
-              data={dataExport}
-              asyncOnClick={true}
-              onClick={getStudentsExport}
-            >
-              <i>
-                <FontAwesomeIcon icon={faFileArrowDown} />
-              </i>
-              Export
-            </CSVLink>
+            filename={"students.csv"}
+            className="btn btn-primary btn-lg"
+            data={dataExport}
+            asyncOnClick={true}
+            onClick={getStudentsExport}
+            style={{ paddingBottom: "0" }}
+          >
+            <i>
+              <FontAwesomeIcon icon={faFileArrowDown} />
+            </i>
+            Export
+          </CSVLink>
         </div>
         <Table bordered hover className="text-center">
           <thead>
