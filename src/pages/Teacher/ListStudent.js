@@ -14,6 +14,7 @@ function StudentsInCourse() {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [students, setStudent] = useState([]);
   const [studentnoproject, setStudentnohasproject] = useState([]);
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -24,12 +25,14 @@ function StudentsInCourse() {
       const req2 = await axios.get(
         `${backendURL}/student/${cookies.course.Id}/nothaveproject`
       );
+      const req3 = await axios.get(`${backendURL}/project/all`);
 
-      return axios.all([req1, req2]).then(
-        axios.spread((listStudent, listStudentNoProject) => {
+      return axios.all([req1, req2, req3]).then(
+        axios.spread((listStudent, listStudentNoProject, listProject) => {
           // Xử lý response từ request1 và requests
           setStudent(listStudent.data.data);
           setStudentnohasproject(listStudentNoProject.data.data);
+          setProjects(listProject.data.data);
         })
       );
     }
@@ -49,16 +52,21 @@ function StudentsInCourse() {
             <tr>
               <th>Code</th>
               <th>Name</th>
+              <th>Project</th>
               <th>Score</th>
               <th>Results</th>
             </tr>
           </thead>
           <tbody>
             {students?.map((student, i) => {
+              const pro = projects.find(
+                (project) => project.Id === student.ProjectId
+              );
               return (
                 <tr key={i}>
                   <td className="text-center">{student.Code}</td>
                   <td className="text-center">{student.Name}</td>
+                  <td className="text-center">{pro.Name}</td>
                   <td className="text-center">
                     {student.Score || "No public"}
                   </td>
