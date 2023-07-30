@@ -25,7 +25,7 @@ function StudentsInCourse() {
       const req2 = await axios.get(
         `${backendURL}/student/${cookies.course.Id}/nothaveproject`
       );
-      const req3 = await axios.get(`${backendURL}/project/all`);
+      const req3 = await axios.get(`${backendURL}/project/getall`);
 
       return axios.all([req1, req2, req3]).then(
         axios.spread((listStudent, listStudentNoProject, listProject) => {
