@@ -41,7 +41,7 @@ function AddSubject() {
       <form onSubmit={formik.handleSubmit} className={cx("form")}>
         <h2 className={cx("heading")}>Add Subject</h2>
         <div className={cx("form-group")}>
-          <label className={cx("form-label")}>Name:</label>
+          <label className={cx("form-label")}>Subject:</label>
           <input
             className={cx("form-control")}
             placeholder="Enter name"

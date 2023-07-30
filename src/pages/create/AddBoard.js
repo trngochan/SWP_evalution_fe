@@ -72,7 +72,7 @@ function AddBoard({ rerender }) {
       }
 
       fetchData();
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   return (
@@ -81,10 +81,10 @@ function AddBoard({ rerender }) {
         <h2 className={cx("heading")}>Add Board</h2>
 
         <div className={cx("form-group")}>
-          <label className={cx("form-label")}>Name:</label>
+          <label className={cx("form-label")}>Course:</label>
           <input
             className={cx("form-control")}
-            placeholder="Enter name"
+            placeholder="Enter course"
             type="text"
             name="name"
             value={formik.values.name}

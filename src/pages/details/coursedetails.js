@@ -209,33 +209,39 @@ function CourseDetails() {
 
       <div className={cx("table-2")}>
         <div className={cx("title-table")}>
-          <Button
-            className={cx("mb-5 mt-5 show")}
-            onClick={handleShowTableProjects}
-            small={isProjectsButtonPrimary}
-          >
-            List projects
-          </Button>
-          <Button
-            className={cx("mb-5 mt-5 show")}
-            onClick={handleShowTableStudents}
-            small={isStudentsButtonPrimary}
-          >
-            List students
-          </Button>
-          <Button
-            className={cx("mb-5 mt-5 show")}
-            onClick={() => {
-              handleShowTableStudentsNotInCourse();
-              handleShowStudentNotInCourse();
-            }}
-            small={isStudentsNotInCourseButtonPrimary}
-          >
-            Add student
-          </Button>
-          <Button className={cx("mb-5 mt-5 show")} onClick={() => handleAdd()}>
-            Add project
-          </Button>
+          <div className={cx("btn-list")}>
+            <Button
+              className={cx("mb-5 mt-5 show")}
+              onClick={handleShowTableProjects}
+              small={!isProjectsButtonPrimary}
+              list={isProjectsButtonPrimary}
+            >
+              List projects
+            </Button>
+            <Button
+              className={cx("mb-5 mt-5 show")}
+              onClick={handleShowTableStudents}
+              small={!isStudentsButtonPrimary}
+              list={isStudentsButtonPrimary}
+            >
+              List students
+            </Button>
+          </div>
+          <div className={cx("btn-add")}>
+            <Button
+              className={cx("mb-5 mt-5 show")}
+              onClick={() => {
+                handleShowTableStudentsNotInCourse();
+                handleShowStudentNotInCourse();
+              }}
+              small={isStudentsNotInCourseButtonPrimary}
+            >
+              + Add student
+            </Button>
+            <Button className={cx("mb-5 mt-5 show")} onClick={() => handleAdd()}>
+              + Add project
+            </Button>
+          </div>
         </div>
 
         <div className="table-list">
@@ -381,10 +387,10 @@ function CourseDetails() {
               className={"form-control"}
               placeholder="Enter note"
               onChange={(e) => setNoteAdd(e.target.value)}
-              // type="date"
-              // name="birthday"
-              // value={formik.values.birthday}
-              // onChange={formik.handleChange}
+            // type="date"
+            // name="birthday"
+            // value={formik.values.birthday}
+            // onChange={formik.handleChange}
             />
             {/* {formik.errors.birthday && formik.touched.birthday && (
               <span className={"form-message"}>{formik.errors.birthday}</span>

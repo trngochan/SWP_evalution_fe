@@ -192,7 +192,7 @@ function ListStdAdmin() {
               </th>
               <th>
                 <div className={cx("sort-header")}>
-                  <span>Name</span>
+                  <span>Student Name</span>
                   <span>
                     <i>
                       <FontAwesomeIcon

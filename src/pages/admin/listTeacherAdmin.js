@@ -152,7 +152,7 @@ function ListTeacherAdmin() {
           <thead className="text-center">
             <tr>
               <th>ID</th>
-              <th>Name</th>
+              <th>Lecturer Name</th>
               <th>Phone Number</th>
               <th>Birthday</th>
               <th>Address</th>

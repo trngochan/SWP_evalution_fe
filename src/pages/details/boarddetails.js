@@ -19,7 +19,7 @@ import backendURL from "~/URL_BACKEND/urlbackend";
 const cx = classNames.bind(styles);
 
 function BoardDetail() {
-  const [show, setShow] = useState("add");
+  const [, setShow] = useState("add");
   const [projects, setListProject] = useState([]);
 
   const [success, setSuccess] = useState("");
@@ -30,7 +30,6 @@ function BoardDetail() {
   const [projectsPucliced, setProjectsPucliced] = useState([]);
 
   const [rerender, setRerender] = useState(false);
-  const [editId, setEditId] = useState(null);
   const [showModalTeachers, setShowModalTeachers] = useState(false);
   const [showModalProjects, setShowModalProjects] = useState(false);
   const [showTableListTeachers, setShowTableListTeachers] = useState(true);
@@ -331,20 +330,24 @@ function BoardDetail() {
 
       <div className={cx("table-2")}>
         <div className={cx("title-table")}>
-          <Button
-            className={cx("btn-show")}
-            onClick={handleShowTableTeachers}
-            small={isTeachersButtonPrimary}
-          >
-            <span>List teacher</span>
-          </Button>
-          <Button
-            className={cx("mb-5 mt-5")}
-            onClick={handleShowTableProjects}
-            small={isProjectsButtonPrimary}
-          >
-            List project
-          </Button>
+          <div>
+            <Button
+              className={cx("btn-show")}
+              onClick={handleShowTableTeachers}
+              small={!isTeachersButtonPrimary}
+              list={isTeachersButtonPrimary}
+            >
+              <span>List lecturer</span>
+            </Button>
+            <Button
+              className={cx("mb-5 mt-5")}
+              onClick={handleShowTableProjects}
+              small={!isProjectsButtonPrimary}
+              list={isProjectsButtonPrimary}
+            >
+              List project
+            </Button>
+          </div>
 
           <div className={cx("show")}>
             <button
@@ -365,7 +368,7 @@ function BoardDetail() {
                 }
               }}
             >
-              Add teacher into evaluation board
+              Add lecturer into evaluation board
             </button>
             <button
               className={cx("btn-showadd")}
@@ -396,8 +399,8 @@ function BoardDetail() {
               <Table bordered hover>
                 <thead className="text-center">
                   <tr>
-                    <th>Teacher ID</th>
-                    <th>Name</th>
+                    <th>Lecturer ID</th>
+                    <th>Lecturer Name</th>
                     <th>PhoneNumber</th>
                     <th>Action</th>
                   </tr>
@@ -411,7 +414,6 @@ function BoardDetail() {
                           <td className="text-center">{item.Name}</td>
                           <td className="text-center">{item.PhoneNumber}</td>
                           <td className="text-center">
-                            <Button small>Details</Button>
                             <button
                               className={cx("btn-dl")}
                               onClick={() => handleClickDelete(item.Id)}
@@ -431,10 +433,10 @@ function BoardDetail() {
           <div className="row">
             {showTableListProjects && (
               <Table bordered hover>
-                <thead>
+                <thead className="text-center">
                   <tr>
                     <th>Project ID</th>
-                    <th>Name</th>
+                    <th>Project Name</th>
                     <th>Note</th>
                     <th>Overview</th>
                     <th>Action</th>
@@ -444,8 +446,8 @@ function BoardDetail() {
                   {projects.map((item, index) => {
                     return (
                       <tr key={index}>
-                        <td>{item.id}</td>
-                        <td
+                        <td className="text-center">{item.id}</td>
+                        <td className="text-center"
                           onClick={() => {
                             navigate(
                               `/projectdetails/${item.CourseId}/${item.id}`
@@ -454,15 +456,15 @@ function BoardDetail() {
                         >
                           {item.name}
                         </td>
-                        <td>{item.notion}</td>
-                        <td>
+                        <td className="text-center">{item.notion}</td>
+                        <td className="text-center">
                           {item.teacherMark.teacherQuanMarked}/
                           {item.teacherMark.teacherQuan}
                         </td>
-                        <td>
+                        <td className="text-center">
                           {projectsPucliced.some(
                             (projectPucliced) =>
-                              projectPucliced.ProjectId == item.id
+                              projectPucliced.ProjectId === item.id
                           ) ? (
                             <button className={cx("btn-publiced")}>
                               Publiced
@@ -471,7 +473,7 @@ function BoardDetail() {
                             <Button
                               onClick={() => {
                                 if (
-                                  item.teacherMark.teacherQuanMarked ==
+                                  item.teacherMark.teacherQuanMarked ===
                                   item.teacherMark.teacherQuan &&
                                   item.teacherMark.teacherQuan > 0
                                 ) {
@@ -567,19 +569,19 @@ function BoardDetail() {
           dialogClassName="custom-modal"
           className={cx("custom-modal")}
         >
-          <Modal.Header closeButton>
+          <Modal.Header closeButton >
             <Modal.Title>
               <h2>List project out evaluation...</h2>
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body >
             {listProOutBoard.length > 0 ? (
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%" }}>
                   <thead className="text-center">
                     <tr>
                       <th>Project ID</th>
-                      <th>Name</th>
+                      <th>Project Name</th>
                       <th>Note</th>
                       <th>Action</th>
                     </tr>
@@ -588,42 +590,28 @@ function BoardDetail() {
                     {listProOutBoard.map((item, index) => (
                       <React.Fragment key={index}>
                         <tr key={index}>
-                          <td>{item.Id}</td>
-                          <td>{item.Name}</td>
-                          <td>{item.Notion}</td>
-                          <td>
+                          <td className="text-center">{item.Id}</td>
+                          <td className="text-center">{item.Name}</td>
+                          <td className="text-center">{item.Notion}</td>
+                          <td className="text-center">
                             <Button
                               onClick={() => {
                                 handleAddProjectInBoard(item.Id, index);
                               }}
                             >
-                              Add
+                              +Add
                             </Button>
                           </td>
                         </tr>
                         <tr>
                           <td>
-                            <input
-                              min={1}
-                              name={`intendTime_${index}`}
-                              placeholder="Enter intend time..."
-                              type="time"
-                            />
+                            <input min={1} name={`intendTime_${index}`} placeholder="Enter intend time..." type="time" />
                           </td>
                           <td>
-                            <input
-                              min={1}
-                              name={`order_${index}`}
-                              placeholder="Enter order..."
-                              type="number"
-                            />
+                            <input min={1} name={`order_${index}`} placeholder="Enter order..." type="number" />
                           </td>
                           <td>
-                            <input
-                              name={`protectTime_${index}`}
-                              placeholder="Enter protect time..."
-                              type="number"
-                            />
+                            <input name={`protectTime_${index}`} placeholder="Enter protect time..." type="number" />
                           </td>
                         </tr>
                       </React.Fragment>

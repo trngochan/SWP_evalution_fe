@@ -111,7 +111,7 @@ function SubjectDetails() {
                 <td>{inforSubject.Id}</td>
               </tr>
               <tr>
-                <th>Name</th>
+                <th>Subject Name</th>
                 <td>{inforSubject.Name}</td>
               </tr>
               <tr>
@@ -147,8 +147,8 @@ function SubjectDetails() {
               <tr>
                 <th>Semester ID</th>
                 <th>Course ID</th>
-                <th>Name</th>
-                <th>Teacher</th>
+                <th>Course Name</th>
+                <th>Lecturer</th>
                 <th>Details</th>
               </tr>
             </thead>
@@ -225,11 +225,11 @@ function SubjectDetails() {
       </Modal>
 
       <Modal show={showModalAdd} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Course</Modal.Title>
+        <Modal.Header closeButton >
+          <Modal.Title style={{ fontWeight: "bold", fontSize: "20px", color: "#0d6efd", marginLeft: "20px" }}>Add Course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          <form className={cx("form-popup")}>
             <label className={cx("form-label", "mb-2")}>Semester:</label>
             <select
               className={cx("form-select")}
@@ -252,7 +252,7 @@ function SubjectDetails() {
             </span>
           )} */}
 
-            <label className={cx("form-label", "mb-2")}>Lecture:</label>
+            <label className={cx("form-label", "mb-2")}>Lecturer:</label>
             <select
               className={cx("form-select")}
               name="semesterId"
@@ -274,7 +274,7 @@ function SubjectDetails() {
             </span>
           )} */}
 
-            <label>Name course:</label>
+            <label>Course name:</label>
             <input
               className={"form-control"}
               placeholder="Enter name"

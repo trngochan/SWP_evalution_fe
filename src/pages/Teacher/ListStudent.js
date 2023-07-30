@@ -11,7 +11,7 @@ import backendURL from "~/URL_BACKEND/urlbackend";
 const cx = classNames.bind(styles);
 
 function StudentsInCourse() {
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies, ,] = useCookies();
   const [students, setStudent] = useState([]);
   const [studentnoproject, setStudentnohasproject] = useState([]);
   const [projects, setProjects] = useState([]);

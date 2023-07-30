@@ -247,16 +247,17 @@ function ProjectDetails() {
           <Button
             className={cx("mb-5 mt-5 show")}
             onClick={handleShowTableStudents}
-            small={isStudentsButtonPrimary}
+            small={!isStudentsButtonPrimary}
+            list={isStudentsButtonPrimary}
           >
             List students
           </Button>
           <Button
             className={cx("mb-5 mt-5 show")}
             onClick={handleShowTableStudentsNoInCourse}
-            small={isStudentsNoInCourseButtonPrimary}
+            active={isStudentsNoInCourseButtonPrimary}
           >
-            Add student
+            + Add student
           </Button>
         </div>
 
@@ -266,10 +267,9 @@ function ProjectDetails() {
               <thead className="text-center">
                 <tr>
                   <th>Student CODE</th>
-                  <th>Name</th>
+                  <th>Student Name</th>
                   <th>Address</th>
                   <th>Remove</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -295,14 +295,6 @@ function ProjectDetails() {
                         <FontAwesomeIcon icon={faTrashCan} /> Remove
                       </Button>
                     </td>
-                    <td
-                      className="text-center"
-                      style={{
-                        display: "flex",
-                      }}
-                    >
-                      <Button>Details</Button>
-                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -316,7 +308,7 @@ function ProjectDetails() {
               <thead className="text-center">
                 <tr>
                   <th>Student CODE</th>
-                  <th>Name</th>
+                  <th>Student Name</th>
                   <th>Address</th>
                   <th>Action</th>
                 </tr>

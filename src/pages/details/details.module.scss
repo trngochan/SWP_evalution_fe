@@ -151,3 +151,19 @@ button span::before {
     border: 1px solid #000;
     margin-left: 10px;
 }
+
+
+//button coursedetail
+.title-table {
+    justify-content: space-between;
+
+    .btn-add {
+        button {
+            background-color: #6de8db;
+
+            &:hover {
+                background-color: #0fd2bf;
+            }
+        }
+    }
+}
