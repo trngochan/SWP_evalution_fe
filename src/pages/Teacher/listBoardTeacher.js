@@ -97,7 +97,7 @@ function ListBoardTeacher() {
                 <th scope="col">Semester</th>
                 <th scope="col">Subject</th>
                 <th scope="col">
-                  <FontAwesomeIcon icon={faPaperPlane} /> Course
+                  <FontAwesomeIcon icon={faPaperPlane} /> Evaluation board
                 </th>
                 <th scope="col">Room</th>
                 <th scope="col">Date</th>
