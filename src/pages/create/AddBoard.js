@@ -81,7 +81,7 @@ function AddBoard({ rerender }) {
         <h2 className={cx("heading")}>Add Committee</h2>
 
         <div className={cx("form-group")}>
-          <label className={cx("form-label")}>Course:</label>
+          <label className={cx("form-label")}>Name:</label>
           <input
             className={cx("form-control")}
             placeholder="Enter course"
