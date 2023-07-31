@@ -99,7 +99,15 @@ function LoginAdmin() {
             />
             <span className={cx("form-message")}></span>
           </div>
-          {error?.length > 0 && <p>{error}</p>}
+          {error?.length > 0 && (
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {error}
+            </p>
+          )}
           <button type="submit" className={cx("form-submit")}>
             Login
           </button>
